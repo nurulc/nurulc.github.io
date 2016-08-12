@@ -1,3 +1,3 @@
 # nurulc.github.io
 
-[Go to the site](https://nurulc.githun.io)
+[Go to the site](https://nurulc.github.io/)
