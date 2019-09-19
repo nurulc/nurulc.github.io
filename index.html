@@ -1,34 +1,79 @@
 <!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
     <title>RxInput demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <script>
+      window.hide_header = true;
+    </script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react-dom.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.30.2/react-bootstrap.min.js"></script>
-  <link href="demo.css" rel="stylesheet"><link href="demo.css" rel="stylesheet"></head>
-<body>
-  <section class="page-header">
-      <h1 class="project-name">Nurulc.GitHub.io</h1>
-      <h2 class="project-tagline">Test page from RegEX base realtime input validation</h2>
-  </section>
-<section class="main-content">
-  <div id="demo"></div>
-<footer class="site-footer">
+  <!-- <link href="demo.css" rel="stylesheet"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">react-rxinput</h1>
+      <h2 class="project-tagline">Test page RxInput</h2>
+    </section>
+
+    <section class="main-content">
+         <p>Project to demonstrate the power of regular expression during input validation</p>
+         <p>This is a react-bootstrap component that performs reglur expression checking as you type.
+            This capability uses another project <b><i>incr-regex-package</i></b>. This is a specialised regular expression
+            matcher that can perform incremental regular expression matching.
+        </p>
+        <b>Note:</b>
+        <p class="large-text">
+          Added link to visualise regexp (just below some of the input elements)</em><img src="railroad.png">
+        </p>
+
+        <p>
+          Clearly, this is useful for input validation. In particular it was to provide a more standard
+          way to support <a href="https://github.com/insin/react-maskedinput">masked input</a>.
+          Firstly, I would like to say that the <b><i>Masked Input</i></b> package is
+          very useful and easy to use.
+          </p>
+          What I did not like as the method for defining the mask. It works very well, but I found the method of defining
+          input mask rather limited. The package has nice documentation and I highly recommend you look at it.
+          It would have been nice if the mask could be defined using a regular expression.
+          That turns out to be hard, becuase regular expression will match the entire input after you have entered it,
+          but I have found no way to check the input as you are typing it in, check if the partial string matches
+          the regular expression.
+
+          <b><i>Some notes:</i>i></b>
+          <ul>
+            <li>Undo <code>crtl+z</code></li>
+            <li>Redo <code>crtl+y</code></li>
+            <li>Performns appropriate upper/lover case conversion</li>
+            <li><b><i></em>What are the funnny characters I see in the mask dispalyed</i></b></li>
+            <ul>
+            <li>'<b>&#x22ef;</b>' &nbsp; - <i>0 or more match (as may as you like including none)</i></li>
+            <li>'<b>&#x25d1;</b>' &nbsp; - <i>optionally match (may or may not be there)</i> </li>
+            </ul>
+          </ul>
+
+        </p>
+        <hr />
+        <h1>Demo Examples</h1>
+        <p></p><a href="https://regexper.com/">Link to Regexp visualizer</a></p>
+        <a href="https://github.com/nurulc/react-rxinput/blob/master/demo/src/index.js">Demo code here</a>
+         <div id="demo"></div>
+        <footer class="site-footer">
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-</footer>
-</section>
-<script type="text/javascript" src="demo.js"></script>
-</body>
+      </footer>
+
+    </section>
+
+  <script type="text/javascript" src="demo.js"></script>
+  </body>
 </html>
