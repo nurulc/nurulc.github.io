@@ -46,7 +46,7 @@
         let x = pos % n;
         let xE = Math.min(x+sz, n);
         let yE = Math.min(y+sz, n);
-        console.log({n,x,y,xE,yE});
+        //console.log({n,x,y,xE,yE});
         for(; y<yE; y++, pos += n) {
             for(let xp=x; xp<xE; xp++) {
                 arr[pos+xp] = val;
