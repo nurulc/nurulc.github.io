@@ -68,16 +68,17 @@
         return arr;
     }
 	
-    function routeZ(arr, orig=[], col=0, fn) {
+    function routeZ(arr, orig=[], col=0, fn, cmp) {
         let n = Math.sqrt(arr.length)|0;
         let last = n*n-1;
         fn = fn || (x => x);
+        cmp = (a,b) => a<b;
         let score = 0;
         let res = '';
         for(let pos=0;pos<=last; ) {
             let below = pos+n<=last ? fn(arr[pos+n]):-1;
             let right = (pos+1) % n ? fn(arr[pos+1]):-1;
-            if(below<right) {
+            if(cmp(below,right)) {
             	res+='R'; 
                 orig[pos]=col;
                 score += arr[pos];
