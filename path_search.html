@@ -142,9 +142,8 @@
         _av = fillArr(500);
         _path = _av.slice();
         best_score=0, huristic_score=0, random_score=0;
-        showImage(_av,'pic') ;
-        showScore()
-        pr(_av)
+        show() ;
+        
     }
 
     function addBox() {
@@ -158,7 +157,7 @@
        var res = scoreZ(_av);
        best_score = res[0];
        routeZ(res,_path);
-       document.getElementById('best').innerHTML = 'best: '+best_score;
+       showScore();
        showImage(_path,'pic') ;
        //
     }
