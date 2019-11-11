@@ -16,15 +16,15 @@
        RANDOM PATH
     </button>
     
-    <button onclick="huristic()" 
+    <button onclick="heuristic()" 
       style="background-color: rgba(0,125,0,0.2)">
-      HURISTIC PATH
+      HEURISTIC PATH
     </button>
     
     <button onclick="show()">BEST PATH</button>
     <div id="random" 
      style="color: rgb(0,0,225)">randon: 0 </div>
-    <div id="huristic" style="color: rgb(0,100,0)">huristic: 0 </div>
+    <div id="heuristic" style="color: rgb(0,100,0)">heuristic: 0 </div>
     <div id="best">best: 0 </div>
     <div id="pic" style="background-color: rgba(255,255,255,0.2)"></div>
 <script>
@@ -138,11 +138,11 @@
     }
 
    var _av=fillArr(500);
-   var _path, best_score=0, huristic_score=0, random_score=0;
+   var _path, best_score=0, heuristic_score=0, random_score=0;
     function rewRect() {
         _av = fillArr(500);
         _path = _av.slice();
-        best_score=0, huristic_score=0, random_score=0;
+        best_score=0, heuristic_score=0, random_score=0;
         show() ;
         
     }
@@ -150,7 +150,7 @@
     function addBox() {
         fillRect(_av, rnd(_av.length-1),30);
         _path = _av.slice();
-        best_score=0, huristic_score=0, random_score=0;
+        best_score=0, heuristic_score=0, random_score=0;
         show();
     }
     function show(){
@@ -162,10 +162,10 @@
        //
     }
     
-    function huristic(){
+    function heuristic(){
        var [actions, score] =routeZ(_av,_path,-1);
-       huristic_score = score;
-       document.getElementById('huristic').innerHTML = 'huristic: '+score;
+       heuristic_score = score;
+       document.getElementById('heuristic').innerHTML = 'heuristic: '+score;
        showImage(_path,'pic') ;
        //
     }
@@ -179,7 +179,7 @@
     
     function showScore() {
       document.getElementById('random').innerHTML = 'random: '+random_score;
-      document.getElementById('huristic').innerHTML = 'huristic: '+huristic_score;
+      document.getElementById('heuristic').innerHTML = 'heuristic: '+heuristic_score;
       document.getElementById('best').innerHTML = 'best: '+best_score;
     }
 
