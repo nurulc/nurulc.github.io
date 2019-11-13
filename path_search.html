@@ -40,7 +40,7 @@
       return range(n*n).map(i => f());
     }
     
-    function fillRect(arr, pos, sz, val=30) {
+    function fillRect(arr, pos, sz, val=100) {
         let n = Math.sqrt(arr.length);
         let y = Math.trunc(pos/n);
         let x = pos % n;
@@ -140,10 +140,11 @@
    var _av=fillArr(500);
    var _path, best_score=0, heuristic_score=0, random_score=0;
     function rewRect() {
-        _av = fillArr(500);
+        _av = fillArr(500,()=>rnd(30));
         _path = _av.slice();
         best_score=0, heuristic_score=0, random_score=0;
-        show() ;
+        showScore();
+        showImage(_av,'pic') ;
         
     }
 
