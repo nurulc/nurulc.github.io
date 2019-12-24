@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Find the best route through a randomly initialized grid</h1>
+
+<p>The onclick event is used to trigger a function when SHOW is clicked on.</p>
+
+<p>This is a demo to show how to do an efficient search</p>
+
+    <button onclick="rewRect()">NEW</button>
+    <button onclick="addBox()">RECT</button>
+
+	<button onclick="drunk()" 
+       style="background-color: rgba(0,0,225,0.2)">
+       RANDOM PATH
+    </button>
+    
+    <button onclick="heuristic()" 
+      style="background-color: rgba(0,125,0,0.2)">
+      HEURISTIC PATH
+    </button>
+    
+    <button onclick="show()">BEST PATH</button>
+    <div id="random" 
+     style="color: rgb(0,0,225)">randon: 0 </div>
+    <div id="heuristic" style="color: rgb(0,100,0)">heuristic: 0 </div>
+    <div id="best">best: 0 </div>
+    <div id="pic" style="background-color: rgba(255,255,255,0.2)"></div>
+<script>
+    var range = (n) => {
+      let res = [];
+      for( let i=0; i< n; i++) res.push(i);
+      return res;
+    }
+
+    function rnd(sz=100) { return Math.trunc(sz * Math.random()+1); }
+
+    function fillArr(n, f=rnd) {
+      return range(n*n).map(i => f());
+    }
+    
+    function fillRect(arr, pos, sz, val=100) {
+        let n = Math.sqrt(arr.length);
+        let y = Math.trunc(pos/n);
+        let x = pos % n;
+        let xE = Math.min(x+sz, n);
+        let yE = Math.min(y+sz, n);
+        //console.log({n,x,y,xE,yE});
+        for(; y<yE; y++, pos += n) {
+            for(let xp=x; xp<xE; xp++) {
+                arr[pos+xp] = val;
+            }
+        }
+        return arr;
+    }
+    
+    function scoreZ(arrIn) {
+        let arr = arrIn.slice();
+        let n = Math.sqrt(arr.length)|0;
+        let pos = n*n-2;
+        let last = pos-n+1;
+        for(;pos>=0; pos--) {
+            let below = pos>last?-1:arr[pos+n];
+            let right = (pos+1) % n ? arr[pos+1]:-1;
+            arr[pos] += Math.max(below,right)
+        }
+        return arr;
+    }
+	
+    function routeZ(arr, orig=[], col=0, fn, cmp) {
+        let n = Math.sqrt(arr.length)|0;
+        let last = n*n-1;
+        fn = fn || (x => x);
+        cmp = (a,b) => a<b;
+        let score = 0;
+        let res = '';
+        for(let pos=0;pos<=last; ) {
+            let below = pos+n<=last ? fn(arr[pos+n]):-1;
+            let right = (pos+1) % n ? fn(arr[pos+1]):-1;
+            if(cmp(below,right)) {
+            	res+='R'; 
+                orig[pos]=col;
+                score += arr[pos];
+                pos++; 
+            }
+            else {
+            	res+='D';  
+                orig[pos]=col; 
+                score += arr[pos];
+                pos+=n;
+            }
+        }
+        return [res, score];
+    }
+   
+    function showImage(array,id) {
+        var n = Math.sqrt(array.length);
+        var canvas = document.createElement("canvas");
+        canvas.width = n;
+        canvas.height = n;
+        var div = document.getElementById(id);
+        while (div.hasChildNodes()) {
+            div.removeChild(div.lastChild);
+        }
+        div.appendChild(canvas)
+        var ctx = canvas.getContext("2d");
+       
+        var map = ctx.getImageData(0,0,canvas.width,canvas.height);
+        var imdata = map.data;
+        let s = 0;
+        for(var p = 0, len = imdata.length; p < len; p+=4) {
+                let ix = p >> 2;
+                let v = array[ix];
+                 s+= v;
+                 imdata[p] = 0;
+                 imdata[p+1] = 0;
+                 imdata[p+2] = 0;
+                 if( v>0 ) {
+                     imdata[p+(v%3)] = 255;
+                     imdata[p+3] =v; // set transparency
+                 } else { 
+                 	imdata[p+3] = 255;
+                    if(v===-1) imdata[p+1] = 125;
+                    else if(v===-2) imdata[p+2] = 255;
+                    else imdata[p] = 0;
+                 }
+        }
+        ctx.putImageData(map,0,0);
+		return s;
+    }
+    function pr(arr, n=Math.sqrt(arr.length)|0) {
+      for(let i=0; i<n; i++) {
+        //console.log(arr.slice(i*n,i*n+n));
+      }
+      //console.log('-----');
+      return arr;
+    }
+
+   var _av=fillArr(500);
+   var _path, best_score=0, heuristic_score=0, random_score=0;
+    function rewRect() {
+        _av = fillArr(500,()=>rnd(30));
+        _path = _av.slice();
+        best_score=0, heuristic_score=0, random_score=0;
+        showScore();
+        showImage(_av,'pic') ;
+        
+    }
+
+    function addBox() {
+        fillRect(_av, rnd(_av.length-1),30);
+        _path = _av.slice();
+        best_score=0, heuristic_score=0, random_score=0;
+        show();
+    }
+    function show(){
+       var res = scoreZ(_av);
+       best_score = res[0];
+       routeZ(res,_path);
+       showScore();
+       showImage(_path,'pic') ;
+       //
+    }
+    
+    function heuristic(){
+       var [actions, score] =routeZ(_av,_path,-1);
+       heuristic_score = score;
+       document.getElementById('heuristic').innerHTML = 'heuristic: '+score;
+       showImage(_path,'pic') ;
+       //
+    }
+    function drunk(){
+       var [actions, score] = routeZ(_av,_path,-2,rnd);
+       random_score = score;
+       document.getElementById('random').innerHTML = 'random: '+score;
+       showImage(_path,'pic') ;
+       //
+    }
+    
+    function showScore() {
+      document.getElementById('random').innerHTML = 'random: '+random_score;
+      document.getElementById('heuristic').innerHTML = 'heuristic: '+heuristic_score;
+      document.getElementById('best').innerHTML = 'best: '+best_score;
+    }
+
+</script>
+
+</body>
+</html>
