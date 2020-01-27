@@ -1,31 +1,125 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+body {
+   transform: scale(0.8);
+   transform-origin: 0 0;
+   // add prefixed versions too.
+}
+#info {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#info td, #info th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#info tr:nth-child(even){background-color: #f2f2f2;}
+
+#info tr:hover {background-color: #ddd;}
+
+#info th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+</style>
+</head>
 <body>
 
 <h1>Find the best route through a randomly initialized grid</h1>
 
-<p>The onclick event is used to trigger a function when SHOW is clicked on.</p>
+<p>This is a demo to show how to do an efficient search. The problen is to find path with the highest score</p>
 
-<p>This is a demo to show how to do an efficient search</p>
+<p>The score for a path is the sum of all the cell values on the path. The path starts from the top left and finishes 
+at the bottom right cell. Each step on the path can ove either right or down one cell.</p>
 
-    <button onclick="rewRect()">NEW</button>
-    <button onclick="addBox()">RECT</button>
+<p>
+There are more paths (10 ^ 300) through this grid than there are atoms in the universe, To find the best path requires a little more finesse than a brute force search. But the actual problem is much easer beacuse we randomly initialize the cells. So even a random path is not too bad. We can usually do better by using a simple heuristic, at each point move to the cell with the highest score. But the best route is much tricker. 
+</p>
+
+<div class="slidecontainer">
+  <p>
+		Cell Value Range: (1 - <span id="sliderVal">100</span>) Use the slider below to change the value range<br />
+		All the cells in the grid below will ib initialized randomly with values in that range.
+	</p>
+  <input type="range" min="1" max="100" value="100" class="slider" id="myRange" 
+				oninput="sliderChange()" onchange="newRect()" />
+</div>
 
 	<button onclick="drunk()" 
+	     title="find a path by moving to the next cell (right or down) selected randomly"
        style="background-color: rgba(0,0,225,0.2)">
        RANDOM PATH
     </button>
     
-    <button onclick="heuristic()" 
+    <button onclick="huristic()" 
+		  title="find a path by moving to the next cell (right or down) by moving to the higher value"
       style="background-color: rgba(0,125,0,0.2)">
-      HEURISTIC PATH
+      HURISTIC PATH
     </button>
     
-    <button onclick="show()">BEST PATH</button>
-    <div id="random" 
-     style="color: rgb(0,0,225)">randon: 0 </div>
-    <div id="heuristic" style="color: rgb(0,100,0)">heuristic: 0 </div>
-    <div id="best">best: 0 </div>
+    <button onclick="show()">BEST PATH</button> <br/>
+		<br/>
+	  <button onclick="newRect()" title="cretae a new grid">NEW GRID</button>
+    <button onclick="addBox()" title="randomly add a 30X30 rect with value 100">ADD ISLAND</button>
+
+		Show the scored for earh type of path.
+    <table id="info">
+    <tr>
+      <td>randon path score:<div id="random" style="color: rgb(0,0,225)"> 0 </div></td>
+      <td>huristic path score: <div id="huristic" style="color: rgb(0,100,0)">0 </div></td>
+      <td>best path score:<div id="best"> 0 </div></td>
+		</tr>
+		<tr>
+      	<td>average cell value:<div id="avg"> 0 </div></td>
+				<td title=>expected random:<div id="rnd"> 0 </div></td>
+				<td>expected heuristic:<div id="heur"> 0 </div></td>
+		</tr>
+    
+    </table>
     <div id="pic" style="background-color: rgba(255,255,255,0.2)"></div>
 <script>
     var range = (n) => {
@@ -40,13 +134,13 @@
       return range(n*n).map(i => f());
     }
     
-    function fillRect(arr, pos, sz, val=100) {
+    function fillRect(arr, pos, sz, val=99) {
         let n = Math.sqrt(arr.length);
         let y = Math.trunc(pos/n);
         let x = pos % n;
         let xE = Math.min(x+sz, n);
         let yE = Math.min(y+sz, n);
-        //console.log({n,x,y,xE,yE});
+        console.log({n,x,y,xE,yE});
         for(; y<yE; y++, pos += n) {
             for(let xp=x; xp<xE; xp++) {
                 arr[pos+xp] = val;
@@ -55,40 +149,59 @@
         return arr;
     }
     
+		// for every grid point compute the maximum possible scure starting from that grid point
     function scoreZ(arrIn) {
         let arr = arrIn.slice();
         let n = Math.sqrt(arr.length)|0;
         let pos = n*n-2;
         let last = pos-n+1;
         for(;pos>=0; pos--) {
-            let below = pos>last?-1:arr[pos+n];
-            let right = (pos+1) % n ? arr[pos+1]:-1;
+            let below = pos>last?-1:arr[pos+n]; // points from the cell below
+            let right = (pos+1) % n ? arr[pos+1]:-1; // points from the cell to the right
             arr[pos] += Math.max(below,right)
         }
         return arr;
     }
+		
+		function V(arr, invalid=0) {
+		    const N =  Math.sqrt(arr.length)|0;
+				const last = N*N-1;
+				return (pos) => {
+				   if( pos > last || (pos+1) % N === 0) return invalid;
+					 return arr[pos]
+				}
+		}
 	
-    function routeZ(arr, orig=[], col=0, fn, cmp) {
+	
+    // Find a route through the grid
+		// Used to find:
+		//    random path
+		//    huristic path
+		//    best path
+		//
+		//  
+    function routeZ(arr, orig=[], col=0, scoringFunc=(x => x)) {
         let n = Math.sqrt(arr.length)|0;
         let last = n*n-1;
-        fn = fn || (x => x);
-        cmp = (a,b) => a<b;
-        let score = 0;
-        let res = '';
+        const onBottomRow = (pos => pos+n>last);
+				const onRightCol = (pos => (pos+1) % n === 0); 
+        let score = 0; // score for the apth
+        let res = '';  // actions that define the path, a sequence of 'R' or "D" (go right, go down)
         for(let pos=0;pos<=last; ) {
-            let below = pos+n<=last ? fn(arr[pos+n]):-1;
-            let right = (pos+1) % n ? fn(arr[pos+1]):-1;
-            if(cmp(below,right)) {
-            	res+='R'; 
-                orig[pos]=col;
+            let downScore = !onBottomRow(pos)   ?  scoringFunc(arr[pos+n]) :-1;
+            let rightScore = !onRightCol(pos) ?  scoringFunc(arr[pos+1]) :-1;
+						// use the score to choose the direction
+            if(rightScore>downScore) {
+            	  res+='R'; 
+                orig[pos]=col; // set color for the path
                 score += arr[pos];
-                pos++; 
+                pos++; // move right
             }
             else {
             	res+='D';  
                 orig[pos]=col; 
                 score += arr[pos];
-                pos+=n;
+                pos+=n; // move down
             }
         }
         return [res, score];
@@ -136,22 +249,41 @@
       //console.log('-----');
       return arr;
     }
-
-   var _av=fillArr(500);
-   var _path, best_score=0, heuristic_score=0, random_score=0;
-    function rewRect() {
-        _av = fillArr(500,()=>rnd(30));
+		
+	let MAX = 100;	
+	function sliderChange() {
+   var slider = document.getElementById("myRange");
+   let v = +slider.value;//e.value + "value";
+   let el = document.getElementById("sliderVal");
+   el.innerHTML = (v);
+	 MAX = v;
+	 //newRect()
+	}	
+		
+   const SIZE = 500;
+	
+	 const doFill = () => fillArr(SIZE, () => rnd(MAX))
+   var _av= doFill();
+   var _path, best_score=0, huristic_score=0, random_score=0;
+	 function avgCell() { return Math.trunc((_av.reduce((a,b) => a+b))/_av.length); }
+	 function pathLen() { return Math.trunc(2*Math.sqrt(_av.length)-1);}
+    function newRect() {
+        _av = doFill();
         _path = _av.slice();
-        best_score=0, heuristic_score=0, random_score=0;
-        showScore();
+        best_score=0, huristic_score=0, random_score=0;
         showImage(_av,'pic') ;
-        
+        showScore()
+        //pr(_av)
     }
 
     function addBox() {
-        fillRect(_av, rnd(_av.length-1),30);
+		    let n =  Math.round(Math.sqrt(_av.length));
+				let x = rnd(n-20), y = rnd(n-20);
+				let pos = n*y+x; 
+        fillRect(_av, pos,20);
         _path = _av.slice();
-        best_score=0, heuristic_score=0, random_score=0;
+        best_score=0, huristic_score=0, random_score=0;
+        
         show();
     }
     function show(){
@@ -163,27 +295,37 @@
        //
     }
     
-    function heuristic(){
+    function huristic(){
        var [actions, score] =routeZ(_av,_path,-1);
-       heuristic_score = score;
-       document.getElementById('heuristic').innerHTML = 'heuristic: '+score;
+       huristic_score = score;
+       //document.getElementById('huristic').innerHTML = 'huristic: '+score;
+			 showScore();
        showImage(_path,'pic') ;
        //
     }
+		
+		// Find a random path through the grid
     function drunk(){
-       var [actions, score] = routeZ(_av,_path,-2,rnd);
-       random_score = score;
-       document.getElementById('random').innerHTML = 'random: '+score;
+       var [actions, score] = routeZ(_av,_path,-2,Math.random);
+        random_score = score;
+        showScore();
        showImage(_path,'pic') ;
        //
     }
+		
+		function percent(x,random=Math.trunc(avgCell()*pathLen())) { 
+			return !x? "" : ' ('+Math.round((x-random)/random*100)+'%)'; 
+		}
     
     function showScore() {
-      document.getElementById('random').innerHTML = 'random: '+random_score;
-      document.getElementById('heuristic').innerHTML = 'heuristic: '+heuristic_score;
-      document.getElementById('best').innerHTML = 'best: '+best_score;
+      document.getElementById('random').innerHTML = ''+random_score + percent(random_score);
+      document.getElementById('huristic').innerHTML = "" +huristic_score +percent(huristic_score);
+      document.getElementById('best').innerHTML = ''+best_score+ percent(best_score);
+			document.getElementById('avg').innerHTML = ''+avgCell()
+			document.getElementById('rnd').innerHTML = "steps: "+pathLen() + " score: "+Math.trunc(avgCell()*pathLen()); 
+			document.getElementById('heur').innerHTML = "steps: "+pathLen() + " score: "+Math.trunc(4/3*avgCell()*pathLen());
     }
-
+		newRect();
 </script>
 
 </body>
