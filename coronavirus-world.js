@@ -1,5 +1,5 @@
 window.covid19 = (function() {
-	const notChinaData = [
+	const notChina = [
   // 1/20    1/21     22    23     24      25     26    27    28       29     30     31      1      2      3      4      5      
 	0,       0,     9,   15,    30,     40,    56,   66,   84,     102,   131,   159,   173,    186,   190,  221,   248,
   //   2/6      7      8      9     10      11     12    13    14       15     16     17     18     19     20     
@@ -10,7 +10,7 @@ window.covid19 = (function() {
      29256
 	];
 
-	const worldData = [
+	const world = [
   // 1/20 1/21  22  23    24    25    26    27    28    29    30     31      1      2      3      4      5      
       282, 362, 555, 653, 941, 2040, 2757, 4464, 6057, 7783, 9821, 11948, 14551, 17387, 20900, 24641, 28365,   //2020-02-05
   //   2/6      7      8      9     10     11     12     13     14     15     16     17     18     19     20
@@ -20,7 +20,7 @@ window.covid19 = (function() {
   //     08
      109991	
        ];
-	const chinaAdjustedData = sum([
+	const chinaAdjusted = sum([
 		  359,   461,    707,   831,  1198,  2599,  3512, 5687, 
 		  7717, 9916,  12513, 15223, 18539, 22152, 26628, 31395, 
 		 36140, 40175, 44540, 47846, 52696, 54921, 57552, 59283, 
@@ -28,7 +28,7 @@ window.covid19 = (function() {
 		 77673, 78651, 79619, 80088, 80828, 81828, 83112, 84615, 
 		 86604, 88581, 90439, 93012, 95310, 98419, 102046, 106103,
 		 109991
-	],negate(notChinaData));
+	],negate(notChina));
 	
 	
 	const italy = [
@@ -53,9 +53,9 @@ window.covid19 = (function() {
 			   100, 124, 158, 221, 319, 435, 541, 704, 994, 1301 
 	   ];
 	
-           const china = sum(worldData, negate(notChinaData));
+           const china = sum(world, negate(notChina));
 
-     return { italy: italy, usa: usa, notChinaData: notChinaData, chinaAdjustedData: chinaAdjustedData, china: china};
+     return { italy: italy, usa: usa, notChina: notChina, chinaAdjusted: chinaAdjusted, china: china};
 	
      /* *********************************************************************************************************** */
 	function Identity(x) { return x; }
