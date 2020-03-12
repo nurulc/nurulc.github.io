@@ -52,10 +52,19 @@ window.covid19 = (function() {
 			   15, 15, 15, 15, 15,  15, 35, 35, 35, 53, 57, 60, 60, 63, 68, 75, 
 			   100, 124, 158, 221, 319, 435, 541, 704, 994, 1301 
 	   ];
+	 let spain = [
+		// 2                             3  0                     1
+		// 0  1  2  3  4  5  7  8  9, 0  1  1  2  3  4  5 6 7 8 9 0 1 2 3 4 
+		   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,
+		// 1                    2                                       3
+		// 5    6  7    8   9   0   1   2   3                           1
+		   2,  2,  2,   2,  2   2,  2,	2,  2,  3,  9, 13, 25, 33,  58, 84,
+		   120, 165, 228, 282, 401, 525, 674, 1231, 1695, 2277
+		 ];
 	
            const china = sum(world, negate(notChina));
 
-     return { italy: italy, usa: usa, notChina: notChina, chinaAdjusted: chinaAdjusted, china: china};
+     return { italy: italy, usa: usa, notChina: notChina, chinaAdjusted: chinaAdjusted, china: china, spain: spain};
 	
      /* *********************************************************************************************************** */
 	function Identity(x) { return x; }
