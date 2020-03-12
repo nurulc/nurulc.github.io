@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Coronavirus Infection Modeler</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="corona.css" rel="stylesheet">
+
+<!-- 
+  Bootstrap docs: https://getbootstrap.com/docs
+-->
+<script>
+window.baseOptions = {
+    // Model parameters
+    initial: 63, // initial people infected
+    daysOfSickness: 20, // days from infection to well or death
+    becomeSpreader: 4, // days after infection you become a spreader
+
+    daysAsSpreader: 6, // how many days you a spreader can infect new people before he/she gets too sick to spread
+    symptomsAppear: 9, // days after infection visible symptoms appear (recognized as beeing infected)
+
+    // Simulation parameters
+    infectPerDay: 2.03, // how may people a spreader infects every day
+    percentRecorded: 0.02, // percent of people who are sick that are identified
+    lockdown: 28, // day of lockdown from original start date
+    spreadReduction: 0.90, // reduction in spreading after lockdown
+    lockdown2: 28, // day of lockdown from original start date
+    spreadReduction2: 0.90, // reduction in spreading after lockdown
+    percentRecorded2: 0.02, // percent of people who are sick that are identified
+    administrativeDelay: 2, // days after symptom appears and person at hospital authorities record
+    dateAdjust: 33, // alligh the sickness daily list to align with actual statistics date
+    susceptible: 10000000, // total number of people succeptable to infection
+    maxNewInfection: 400000, // maximum new infection per day
+    daysOfSimulation: 140,
+    reportingChange: 1.0, // increase in reporting
+    showReal: 0,
+    official: 1,
+    simulated: 1,
+    isLog: 1,
+    newCases: 1,
+    ticks: 4
+
+  };
+</script>
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-md-4">
+      <div class="page-header">
+        <!-- <a href="http://bit.ly/3b6zq2b">Link to interface builder</a> -->
+        <h1>
+          Coronavirus Infection Modeling Tool 
+        </h1>
+      </div>
+      <address>
+        <strong>Nurul Choudhury</strong> <i class="fa fa-road"></i>
+        <div class="my-tooltip text-right"><small class="link text-muted" data-toggle="collapse" data-target="#writeup"> Read Modeler's Full Writeup </small><br>
+            <span class="my-tooltiptext">click here to read full description of the model and how it works</span>
+
+       </div>
+       <br>Jan 31, 2020 <span class="small">(Updated: 2020-02-05)</span>
+      </address>
+
+    </div>
+    <div class="col-md-8">
+       <h2>
+        <span>Summary</span>
+      </h2>
+      <p>
+      <span>This is a coronavirus infection modeller. The model makes many assumptions and contains many tunable parameters. This is an infection modeler and allow anybody to play with the model and adjust any of the parameters. Further the complete live editable of the model is available for anybody to change or improve the model as more information becomes available.</span></p>
+      <div class="row">
+        <div class="col-md-6">
+          <i class="fas fa-angle-double-right"></i>
+          <a href="https://github.com/nurulc/coronavirus/blob/master/README.md" target="_blank">More details here</a>
+        </div>
+      <div class="col-md-6">
+        <i class="fas fas fa-angle-right"></i>
+        <a href="https://github.com/nurulc/coronavirus/blob/master/new_updates.md" target="_blank">
+        Latest News and Updates
+        </a> 
+      </div>
+      <div class="col-md-6">
+        <i class="fas fas fa-angle-right"></i>
+        <a href="https://www.worldometers.info/coronavirus/" target="_blank">Live Info</a>       
+      </div>
+     </div>
+  </div>
+  <div class="row collapse" id="writeup">
+    
+    <div class="row">
+      <img id="model" src="https://nurulc.github.io/coronavirus_stages.svg" alt="Stages of corona vires infection" >
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="my-tooltip  col-md-4">
+    <span>Fit Error against official data: &nbsp;</span><span id="error_val" class="font-weight-bold red"></span>
+    <span class="text-secondary"> &nbsp; adjust the sliders to make this value as small as possible.</span>
+    <button type="button" class="btn-xs btn-outline-info" data-toggle="modal" data-target="#errorExplain"> Explain error </button>
+
+<!-- Modal -->
+<div class="modal fade" id="errorExplain" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Error Explanation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+        The error function is the RMS of official values and predicted lavues. Since we are dealing with exponential growth, a simple RMS would be too concerned about large values 
+        and put very little on the smaller values earlier in time. The best way to way to account for this is to take the log of the values. This gives a more balanced error function.
+        </p>
+        <p>
+        <i>More formally we get the equation:</i>
+        </p>
+        <img id="err_fn" src="https://nurulc.github.io/error.svg" alt="compute error" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+    <span class="my-tooltiptext ">To redece the value below (in red), the suggested items to adjust are, infectPerDay, spreadReduction, and Initially infected</span>
+  </div>
+  <div class="col-md-1 text-right" id="scenario_div_title">
+    Select Scenario
+  </div>
+  <div class="col-md-3" id="scenario_div">
+  </div>
+  <div class="col-md-2" id="scenario_div_explain">
+  </div>
+  <div class="col-md-2" id="optimize_div">
+    <button type="button" class="btn btn-primary" id="optimize_button">
+        Optimize Parameters
+    </button>
+  </div>
+  <div class="col-md-1" id="add_scenario"></div>
+ <!-- <div class="col-md-1" id="reset_scenario"><button id="do_reset">Reset Scenarios</button></div>-->
+</div>
+<div class="row">
+  <div class="col-md-12" id="model_target">
+    
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js" ></script>
+<script sr="https://raw.githubusercontent.com/gka/d3-jetpack/master/build/d3v4%2Bjetpack.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+<script src="https://nurulc.github.io/coronavirus-world.js"></script>
+<script src="corona.js"></script>
+<div class="my-tooltip text-right">
+ <small class="link  official" >Official Reported Infections:</small> &nbsp; <input type="checkbox" id="official" checked>
+     <span class="my-tooltiptext ">Show the official data reported by China</span>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<script>
+   var __official =  document.getElementById("official");
+        __official.onchange = function() {
+       updateData("official", __official.checked?1:0);
+   }
+</script>
+<span class="bg-info text-white">Simulation</span> (
+<div class="my-tooltip text-right">
+ <small class="link  blue" > Show Reported Infections:</small> &nbsp; <input type="checkbox" id="simulated" checked>
+     <span class="my-tooltiptext ">Show the reported (simulated) infections</span>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<script>
+   var __simulated =  document.getElementById("simulated");
+      __simulated.onchange = function() {
+       updateData("simulated", __simulated.checked?1:0);
+   }
+</script>
+<div class="my-tooltip text-right">
+ <small class="link  red" > Show All Infections:</small> &nbsp; <input type="checkbox" id="showReal" checked>
+     <div class="my-tooltiptext ">Show the all (simulated) infections as well <br>as the reported. Turning this off shows the reported information more clearly</div>
+</div> )
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<script>
+   var __showReal =  document.getElementById("showReal");
+      __showReal.onchange = function() {
+       updateData("showReal", __showReal.checked?1:0);
+   }
+</script>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="my-tooltip text-right">
+ <small class="link" >Show Log Scale Y(Infected):</small> &nbsp; <input type="checkbox" id="showLog" >
+     
+     <span class="my-tooltiptext ">Show Vertical Axix Log scale, this is good for showing data where there are both small values and very large values</span>
+</div>
+<small class="text-secondary font-italic text-xsm-left text-wrap">
+    &nbsp;&nbsp;Click on to the log scale show information more clearly, but visually less impressive
+</small>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<script>
+   var __showLog =  document.getElementById("showLog");
+      __showLog.onchange = function() {
+       updateData("isLog", __showLog.checked?1:0);
+   }
+</script>
+<div id="interface" >
+
+<!--  REMOVE THIS -->
+
+<!-- END REMOVE -->
+</div>
+<div id='graph' class="row">
+  <div id="graph_area" class="col-md-12">
+  Hi
+    <svg id="svgLine" width="800" height="400" />
+  </div>
+</div>
+<div id="controls" class="row">
+  <div class="slidecontainer">
+
+  </div>
+</div>
+
+<script>
+  //setUp();
+  // Get the last <li> element ("Milk") of <ul> with id="myList2"
+  var itm = document.getElementById("model");
+
+// Copy the <li> element and its child nodes
+  var htmlText = itm.outerHTML;
+  
+  //console.log("here i am: "+htmlText)
+
+// Append the cloned <li> element to <ul> with id="myList1"
+document.getElementById("graph_area").innerHTML = htmlText;
+</script>
+
+ 
+</body>
