@@ -3,7 +3,7 @@
 let POP = 10000000; // area population suseptable
 let MAX_NEW_INFECTION = 100000; // fudge factor to limit new infections based to the population = 120;
 let SIMULATION_DAYS = 140;
-let SCENARIO_VERSION = "V20.03.12-10";
+let SCENARIO_VERSION = "V20.03.13-3";
 let SCENARIO_VERSION_NAME = 'scenario_version';
 let localVersion = window.localStorage.getItem(SCENARIO_VERSION_NAME);
 
@@ -237,32 +237,32 @@ let scenarios = [
 	more: "Investigate lower R0 value, with known best parameters and medical relevance  ",
 	modelName: "britain",
 	opts: {
-			reportingChange: 1.0,
-			lockdown2: 69.3,
-			spreadReduction2: 0.85,
-			preInfectPerDay: 0.7822303080900876,
-			initial: 5.009309754043867,
-			daysOfSickness: 18,
-			becomeSpreader: 2.962158453967465,
-			daysAsSpreader: 5.206405979122721,
-			symptomsAppear: 6.24139390798965,
-			infectPerDay: 1.0052441230136053,
-			percentRecorded: 0.17321617796458563,
-			lockdown: 52.9,
-			spreadReduction: 0.17,
-			percentRecorded2: 0.02,
-			administrativeDelay: 5.189285765558464,
-			dateAdjust: 24,
-			susceptible: 13599999.96750324,
-			maxNewInfection: 580000,
-			daysOfSimulation: 140,
-			showReal: 1,
-			official: 1,
-			simulated: 1,
-			isLog: 1,
-			newCases: 1,
-			ticks: 4,
-			predictionDate: "2020-03-12"
+		reportingChange: 1,
+		lockdown2: 44.800000000000004,
+		spreadReduction2: 0.84,
+		preInfectPerDay: 0.58,
+		initial: 4.4,
+		daysOfSickness: 18,
+		becomeSpreader: 2.844356356244538,
+		daysAsSpreader: 5.308181985114484,
+		symptomsAppear: 4.6000000000000005,
+		infectPerDay: 1.008516272035117,
+		percentRecorded: 0.4,
+		lockdown: 21,
+		spreadReduction: 0.5700000000000001,
+		percentRecorded2: 0.02,
+		administrativeDelay: 9.600000000000001,
+		dateAdjust: 19,
+		susceptible: 13599999.96750324,
+		maxNewInfection: 580000,
+		daysOfSimulation: 140,
+		showReal: 1,
+		official: 1,
+		simulated: 1,
+		isLog: 1,
+		newCases: 1,
+		ticks: 4,
+		predictionDate: "2020-03-12"
 	    }
 	},
 	{
@@ -830,14 +830,18 @@ console.log(JSON.stringify(baseOptions));
 setTimeout(() => {
 	    CUR_SCENARIO = window.localStorage.getItem('cur_scenario')||LATEST_SCENARIO;
 	    let opts = window.localStorage.getItem('baseOptions');
+
 	    loadScenarios(true);
 	    if(localVersion !== SCENARIO_VERSION) {
 	    	_resetScenarios(true);
 	    	localVersion = SCENARIO_VERSION;
 	    	window.localStorage.setItem(SCENARIO_VERSION_NAME, localVersion);
+	    	window.localStorage.setItem('baseOptions', '');
+	    	window.localStorage.setItem('cur_scenario', LATEST_SCENARIO);
+	    	window.localStorage.setItem('scenarios', JSON.stringify(scenarios));
 	    	CUR_SCENARIO = LATEST_SCENARIO;
 	    	opts = undefined;
-	    }
+	    } 
 		//_resetScenarios(true);
 		buildInterface();
 
