@@ -3,7 +3,7 @@
 let POP = 10000000; // area population suseptable
 let MAX_NEW_INFECTION = 100000; // fudge factor to limit new infections based to the population = 120;
 let SIMULATION_DAYS = 140;
-let SCENARIO_VERSION = "V20.03.12-8";
+let SCENARIO_VERSION = "V20.03.12-10";
 let SCENARIO_VERSION_NAME = 'scenario_version';
 let localVersion = window.localStorage.getItem(SCENARIO_VERSION_NAME);
 
@@ -57,7 +57,7 @@ const	ico_down = makeIcon('fa-arrow-circle-o-down fa-lg'),
 
 function toData(arr) { return arr.map((v,i) => ({date: addDays(new Date("2020-01-20"),i).getTime(), official: v})); }
 
-const {notChina, world, china, chinaAdjusted, usa, italy, spain}= covid19;
+const {notChina, world, china, chinaAdjusted, usa, italy, spain, britain, korea}= covid19;
  
 // const notChinaData = [
 //    // 1/20    1/21     22    23     24      25     26    27    28       29     30     31      1      2      3      4      5      
@@ -98,6 +98,8 @@ const restOfTheWorldData = toData(notChina.map(x => x<=1?1:+x));
 const usaData = toData(usa.map(x => x<=1?1:+x)).slice(26);
 const italyData = toData(italy.map(x => x<=1?1:+x)).slice(26);
 const spainData = toData(spain.map(x => x<=1?1:+x)).slice(26);
+const britainData = toData(britain.map(x => x<=1?1:+x)).slice(26);
+const koreaData = toData(korea.map(x => x<=1?1:+x)).slice(26);
 
 let g_officialData = chinaOfficialData;
 let g_reportingPercent = chinaReportingPrecentage;
@@ -161,7 +163,7 @@ let scenarios = [
 		isLog: 1,
 		newCases: 1,
 		ticks: 4,
-		predictionDate: "2020-02-23"
+		predictionDate: "2020-03-12"
 	    }
 	},
 	{
@@ -194,7 +196,7 @@ let scenarios = [
 			isLog: 1,
 			newCases: 1,
 			ticks: 4,
-			predictionDate: "2020-02-23"
+			predictionDate: "2020-03-12"
 	    }
 	},
 	{
@@ -227,7 +229,73 @@ let scenarios = [
 			isLog: 1,
 			newCases: 1,
 			ticks: 4,
-			predictionDate: "2020-02-23"
+			predictionDate: "2020-03-12"
+	    }
+	},
+	{
+	desc: "United Kingdom Mar 12",
+	more: "Investigate lower R0 value, with known best parameters and medical relevance  ",
+	modelName: "britain",
+	opts: {
+			reportingChange: 1.0,
+			lockdown2: 69.3,
+			spreadReduction2: 0.85,
+			preInfectPerDay: 0.7822303080900876,
+			initial: 5.009309754043867,
+			daysOfSickness: 18,
+			becomeSpreader: 2.962158453967465,
+			daysAsSpreader: 5.206405979122721,
+			symptomsAppear: 6.24139390798965,
+			infectPerDay: 1.0052441230136053,
+			percentRecorded: 0.17321617796458563,
+			lockdown: 52.9,
+			spreadReduction: 0.17,
+			percentRecorded2: 0.02,
+			administrativeDelay: 5.189285765558464,
+			dateAdjust: 24,
+			susceptible: 13599999.96750324,
+			maxNewInfection: 580000,
+			daysOfSimulation: 140,
+			showReal: 1,
+			official: 1,
+			simulated: 1,
+			isLog: 1,
+			newCases: 1,
+			ticks: 4,
+			predictionDate: "2020-03-12"
+	    }
+	},
+	{
+	desc: "South Korea Mar 12",
+	more: "Investigate lower R0 value, with known best parameters and medical relevance  ",
+	modelName: "korea",
+	opts: {
+		reportingChange: 1,
+		lockdown2: 69.3,
+		spreadReduction2: 0.85,
+		preInfectPerDay: 0.8217616231126796,
+		initial: 44.50104313326268,
+		daysOfSickness: 18,
+		becomeSpreader: 2.982952083592766,
+		daysAsSpreader: 4.980093373304881,
+		symptomsAppear: 6.248574605294945,
+		infectPerDay: 0.9923591323904843,
+		percentRecorded: 0.5143865597947499,
+		lockdown: 21.400000000000002,
+		spreadReduction: 0.8974872173625102,
+		percentRecorded2: 0.02,
+		administrativeDelay: 5.189885358299998,
+		dateAdjust: 23,
+		susceptible: 13599999.964592947,
+		maxNewInfection: 580000,
+		daysOfSimulation: 140,
+		showReal: 1,
+		official: 1,
+		simulated: 1,
+		isLog: 1,
+		newCases: 1,
+		ticks: 4,
+		predictionDate: "2020-03-12"
 	    }
 	},
 
@@ -489,6 +557,18 @@ const models = {
 		baseDate: "2020-02-20",
 		ignore: 15
 	},
+	britain: {
+		official: britainData,
+		reportingPercent: stdReportingPrecentage,
+		baseDate: "2020-02-20",
+		ignore: 15
+	},
+	korea: {
+		official: koreaData,
+		reportingPercent: stdReportingPrecentage,
+		baseDate: "2020-02-20",
+		ignore: 15
+	},
 	spain: {
 		official: spainData,
 		reportingPercent: stdReportingPrecentage,
@@ -499,24 +579,24 @@ const models = {
 
 
 
-  function dupObj(o) {
-  	if(Array.isArray(o)) return o.map(dupObj);
-  	if(typeof o === 'object') return Object.assign({}, o);
-  	return o;
-  }
+function dupObj(o) {
+	if(Array.isArray(o)) return o.map(dupObj);
+	if(typeof o === 'object') return Object.assign({}, o);
+	return o;
+}
 
   const BASE_SCENARIOS = scenarios.map(s => Object.assign({}, s));
 
-  window.factoryScenarios = function () {
-  	if(confirm("Factory Reset - removes all your scenarios")){
-  	  	scenarios = dupObj(BASE_SCENARIOS);
-  	  	window.localStorage.setItem('scenarios', JSON.stringify(scenarios));
-  	  	window.localStorage.setItem('baseOptions','');
-  	  	//console.log(scenarios);
-  	  	//selScenario(scenarios[0]);
-  	  	window.location = window.location;
-  	}
-  }
+window.factoryScenarios = function () {
+	if(confirm("Factory Reset - removes all your scenarios")){
+	  	scenarios = dupObj(BASE_SCENARIOS);
+	  	window.localStorage.setItem('scenarios', JSON.stringify(scenarios));
+	  	window.localStorage.setItem('baseOptions','');
+	  	//console.log(scenarios);
+	  	//selScenario(scenarios[0]);
+	  	window.location = window.location;
+	}
+}
 
  function _resetScenarios(flag) {
  	if(flag) {
