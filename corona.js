@@ -104,6 +104,7 @@ const koreaData = toData(korea.map(x => x<=1?1:+x)).slice(26);
 let g_officialData = chinaOfficialData;
 let g_reportingPercent = chinaReportingPrecentage;
 let g_ignore = 0; // how much initial data to ignore while iptimizing
+let g_model = 'china';
 
 
 
@@ -200,27 +201,27 @@ let scenarios = [
 	    }
 	},
 	{
-	desc: "Spain Mar 12",
+	desc: "Spain Mar 17",
 	more: "Investigate lower R0 value, with known best parameters and medical relevance  ",
 	modelName: "spain",
 	opts: {
-			reportingChange: 1.0,
-			lockdown2: 69.3,
-			spreadReduction2: 0.85,
-			preInfectPerDay: 0.7822303080900876,
-			initial: 5.009309754043867,
+			reportingChange: 1,
+			lockdown2: 65.10000000000001,
+			spreadReduction2: 0.89,
+			preInfectPerDay: 0.6194223122238569,
+			initial: 5.025807635011083,
 			daysOfSickness: 18,
-			becomeSpreader: 2.962158453967465,
-			daysAsSpreader: 5.206405979122721,
-			symptomsAppear: 6.24139390798965,
-			infectPerDay: 1.0052441230136053,
-			percentRecorded: 0.17321617796458563,
-			lockdown: 52.9,
-			spreadReduction: 0.17,
+			becomeSpreader: 2.9190428881048325,
+			daysAsSpreader: 5.096515665529859,
+			symptomsAppear: 4.91923482655213,
+			infectPerDay: 1.0313857334778818,
+			percentRecorded: 0.2024614964414242,
+			lockdown: 42.5,
+			spreadReduction: 0.79,
 			percentRecorded2: 0.02,
-			administrativeDelay: 5.189285765558464,
+			administrativeDelay: 5.100271596999163,
 			dateAdjust: 24,
-			susceptible: 13599999.96750324,
+			susceptible: 13599999.968943458,
 			maxNewInfection: 580000,
 			daysOfSimulation: 140,
 			showReal: 1,
@@ -605,10 +606,12 @@ window.factoryScenarios = function () {
  		}
  	}
 	let _scenarios = scenarios.filter( s => !BASE_SCENARIOS.find( s1 => s1.desc === s.desc)); // remove all the base scenarios
-	_scenarios = BASE_SCENARIOS.slice(0).concat(_scenarios)
+	//_scenarios = BASE_SCENARIOS.slice(0).concat(_scenarios)
+	_scenarios = _scenarios.concat( BASE_SCENARIOS );
 	//_scenarios = scenarios.map(getBase);
 	window.localStorage.setItem('scenarios', JSON.stringify(_scenarios));
-	scenarios = dupObj(_scenarios);
+	scenarios = dupObj(_scenarios).map(fixScenario);
+
 	//createScenarios();
 	let cur = curScenario() || curScenario(LATEST_SCENARIO);
 	baseOptions = OPTS((cur||BASE_SCENARIOS[0]).opts);
@@ -660,7 +663,7 @@ window.factoryScenarios = function () {
 		 //if( sct /*&& sct.value !== CUR_SCENARIO */) sct.defaultValue="nurul";//sct.defaultValue = CUR_SCENARIO;
 		if(update) setTimeout( () =>{
 				//uiForAddScenario(CUR_SCENARIO, more||'')
-				CUR_SCENARIO = _curScenario;
+				_setScenario(curScenario(_curScenario));
 				renderScenarioActions();
 				setOptionValues();
 				simulate();
@@ -674,7 +677,8 @@ function _setScenario(aScenario) {
 	//USE_ADJUSTED_OFFICIAL_DATA =  aScenario.modelName === 'china2' ;
 	// console.log(models);
 	// console.log(aScenario, aScenario.modelName, models[aScenario.modelName||'china']);
-	let modelToUse = models[aScenario.modelName||'china'];
+	g_model = aScenario.modelName||'china';
+	let modelToUse = models[g_model];
 
 	g_officialData =  modelToUse.official;
 	g_ignore = modelToUse.ignore;
@@ -830,6 +834,7 @@ console.log(JSON.stringify(baseOptions));
 setTimeout(() => {
 	    CUR_SCENARIO = window.localStorage.getItem('cur_scenario')||LATEST_SCENARIO;
 	    let opts = window.localStorage.getItem('baseOptions');
+	    setOptionValues(opts);
 
 	    loadScenarios(true);
 	    if(localVersion !== SCENARIO_VERSION) {
@@ -887,6 +892,8 @@ function loadScenarios(flag) {
  			sc = scenarios;
  		}
  	}
+    //sc = undefined;  //debug delete this line
+
  	if( sc) scenarios = sc;//localVersion = window.localStorage.getItem(SCENARIO_VERSION_NAME);
  	if(localVersion !== SCENARIO_VERSION || !curScenario(LATEST_SCENARIO)) {
  		// new standard scenarios added, perform a reset scenarios
@@ -901,8 +908,11 @@ function loadScenarios(flag) {
  	createScenarios(scenarios);
 }
 
-function  addScenario(desc, more, opts) {
+const MODEL = PICK('modelName');
+
+function  addScenario(desc, more, opts, modelName) {
  	if(!opts)return;
+ 	modelName = modelName || g_model || 'china';
  	let today = dateFormatter(new Date());
  	opts = Object.assign({}, opts, { predictionDate: today});
  	let f = scenarios.find(o => o.desc === desc);
@@ -910,7 +920,7 @@ function  addScenario(desc, more, opts) {
  		f.more = (more||"nbsp;").replace(/\n/g, "<br>");
  		f.opts = opts;
  	}
- 	else scenarios.push({ desc,more, opts});
+ 	else scenarios.push({ desc,more, modelName, opts});
  	window.localStorage.setItem('scenarios', JSON.stringify(scenarios));
  	CUR_SCENARIO = desc;
  	ID("scenario_desc").innerHTML = scenarioContent();
@@ -1358,6 +1368,7 @@ function getGradientDescent(computeGradients, incrProps) {
 				if(err < bestErr) {
 					bestErr = err;
 					bestOpts = Object.assign(bestOpts, props);
+					bestOpts.predictionDate= dateFormatter(new Date());
 				}
 				if(Math.abs(err-lastError) < 0.0000000001 && i > 0.25*steps) return false;
 				//if(i && (i%100) === 0 ) display(props);
