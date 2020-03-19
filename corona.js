@@ -29,6 +29,34 @@ function PICK(x) { return o => o[x]; }
 const VAL = PICK('value');
 const OFFICIAL = PICK('official');
 let DEBUG = 0; 
+let WORLD_DATA_SRC = 'https://covid.ourworldindata.org/data/full_data.csv';
+const { Frame, frameFromBuffer, csvLine, arrProd, gb} = DataFrame;
+let g_frame;
+
+function finalizeData(_corona, _continents){
+	let corona = frameFromBuffer(_corona, '', csvLine),
+	    continents = frameFromBuffer(_continents, '', csvLine);
+
+	let projCols = arrProd('1.', corona.columns).map(r =>r[0]+r[1]).concat(['2.continent']);
+    let conts = continents.groupBy(['Country_Name', gb.min('Continent_Name', 'continent')]);
+    conts = conts.project(['location', 'Country_Name', 'continent'], {location: r => r.Country_Name.split(/,| \(/)[0] },true)
+    var _corona = corona.leftJoin(conts, projCols, 'location');//.filter(r => r.location === 'Azerbaijan');
+    showFrame(_corona.groupBy(['location', 'continent', gb.max('total_cases'), gb.max('total_deaths')]))
+    g_frame = _corona;
+}
+
+function showFrame(aFrame,name='world') {
+  var aDiv = document.getElementById(name);
+  if(!aDiv) {
+  	aDiv = document.createElement("div");
+	aDiv.id = name;  
+	aDiv.class = 'data-frame';
+	document.body.appendChild(aDiv);
+	aDiv = ID(name);
+  }
+  aDiv.innerHTML = aFrame.sort(['-total_cases', 'location'])._toHtml();
+  
+}
 
 function isObj(o) {
 	if(Array.isArray(o)) return false;
@@ -705,7 +733,7 @@ function fixScenario(aScenario) {
 }
 
 function  curScenario(name=CUR_SCENARIO) {
-	return scenarios.find(e => e.desc === name)
+	return scenarios.find(e => e.desc === name) || scenarios[0];
 }
 
   function createScenarios() {
@@ -831,9 +859,19 @@ console.log(JSON.stringify(baseOptions));
  * AT STARTUP
  * 
  */
-setTimeout(() => {
+//setTimeout(() => {
+worldData.then(([_corona, _contiments]) => {
 	    CUR_SCENARIO = window.localStorage.getItem('cur_scenario')||LATEST_SCENARIO;
-	    let opts = window.localStorage.getItem('baseOptions');
+	    let _opts = window.localStorage.getItem('baseOptions'),
+	        opts;
+	    try {
+	    		opts = JSON.parse(opts);
+	    		if(typeof opts !== 'object' || !Object.keys(opts).contains('daysOfSimulation'))
+	    			opts = undefined;
+	    } catch (e) {
+	    	
+	    }
+	    if(!opts) opts = curScenario().opts;
 	    setOptionValues(opts);
 
 	    loadScenarios(true);
@@ -852,7 +890,7 @@ setTimeout(() => {
 
 		//setOptionValues();
 
-		
+		finalizeData(_corona, _contiments);
 		selScenario(curScenario(),false);
 		HAS_INITIALIZED = true;
 	    if(opts) {
@@ -2038,12 +2076,13 @@ function dateFormatter(time) {
 
   function setOptionValues(opts) {
 	 let b = opts || fixOptions(baseOptions);
+	 if(typeof b === 'string') throw new Error('Object expected but recieved a string: "'+b+'"');
 	 getInterfaceInfo(true).forEach((e) => {
 		let {name, step, percent} = e;
 		step = step || 1;
 		let actualV = b[name];
 		if(actualV === undefined) {
-			console.log({name, actualV, b, bval: b[name]});
+			console.log({name, actualV, b, bval: b[name]},b);
 			return;
 		}
 		let val = Math.round(actualV/step);
@@ -2476,3 +2515,7 @@ window.printScenario = function (s) {
 };
 
 
+function fetchWorldData() {
+	var inp = fetch("https://covid.ourworldindata.org/data/full_data.csv");
+	inp.then( s=> s.text()).then(s => frame = frameFromBuffer(s, DataFrame.csvLine))
+}
