@@ -3,7 +3,7 @@
 let POP = 10000000; // area population suseptable
 let MAX_NEW_INFECTION = 100000; // fudge factor to limit new infections based to the population = 120;
 let SIMULATION_DAYS = 140;
-let SCENARIO_VERSION = "V20.03.13-3";
+let SCENARIO_VERSION = "V20.03.23-1";
 let SCENARIO_VERSION_NAME = 'scenario_version';
 let localVersion = window.localStorage.getItem(SCENARIO_VERSION_NAME);
 
@@ -20,7 +20,7 @@ const NEW_REPORTING_DATE = "2020-02-12";
 const MS_PER_DAY = 60*60*24*1000;
 let USE_ADJUSTED_OFFICIAL_DATA = false;
 let OPTIMIZATION_STEPS = 4000;
-let LATEST_SCENARIO = "USA Mar 12";
+let LATEST_SCENARIO = "USA Mar 23";
 let CUR_SCENARIO = window.localStorage.getItem('cur_scenario')||LATEST_SCENARIO;
 //baseOptions = undefined; //_setScenario(curScenario());
 let HAS_INITIALIZED = false;

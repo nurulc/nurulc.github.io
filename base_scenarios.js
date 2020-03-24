@@ -377,7 +377,7 @@ let g_scenarios = [
 	[   '2020-03-23',
 		[
 			{
-	        desc: "USA Mar 21",
+	        desc: "USA Mar 23",
 	        more: "Investigate lower R0 value, with known best parameters and medical relevance  ",
 	        modelName: "usa",
 	        opts: {
