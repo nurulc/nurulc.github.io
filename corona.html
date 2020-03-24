@@ -152,8 +152,53 @@ window.baseOptions = {
  <!-- <div class="col-md-1" id="reset_scenario"><button id="do_reset">Reset Scenarios</button></div>-->
 </div>
 <div class="row">
-  <div class="col-md-12" id="model_target">
+  <div class="col-md-4" id="model_target">
     
+  </div>
+  <div class="col-md-8">
+<!-- START -->
+<div class="container">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#home">Statistics</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#continent_tab">By Continent</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#country_tab">By Country</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="home" class="container tab-pane active"><br>
+      <div class="row">
+        <div class="col-md-2 font-weight-bold" style="font-size: 2em;">Info</div>
+      </div>
+        <div id="covid-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+    </div>
+    <div id="continent_tab" class="container tab-pane fade"><br>
+      <div class="row">
+        <div class="col-md-2 font-weight-bold" style="font-size: 2em;">Continents</div>
+        <div class="col-md-10" id="data-select">
+          <div id="continent_sel" class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary">Infected</button>
+            <button type="button" class="btn btn-secondary">Deaths</button>
+            <button type="button" class="btn btn-secondary">Recovered</button>
+          </div>
+        </div>
+      </div>
+      <div id="continents_data">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+    <div id="country_tab" class="container tab-pane fade"><br>
+      <h3>Country</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+  </div>
+</div>
+<!-- END -->
   </div>
 </div>
 
