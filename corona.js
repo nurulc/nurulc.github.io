@@ -562,7 +562,7 @@ function saveCurrentProps() {
 
 function loadScenarios(flag) {
  	let sc = window.localStorage.getItem('scenarios');
- 	if( !sc ) sc = scenarios;
+ 	if( !sc || !Array.isArray(sc) || !sc.every(isScenario) ) sc = scenarios;
  	else {
  		try {
  			sc = JSON.parse(sc);

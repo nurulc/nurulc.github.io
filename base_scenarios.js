@@ -1,3 +1,19 @@
+const SCENARIO_KEYS = [
+	"reportingChange",
+	"lockdown2",
+	"spreadReduction2",
+	"preInfectPerDay",
+	"initial",
+	"daysOfSickness",
+	"becomeSpreader",
+	"daysAsSpreader",
+	"symptomsAppear",
+];
+
+function hasKey(obj) {
+	return k => obj[k] !== undefined;
+}
+
 let g_scenarios = [
 	[ '2020-03-17',
 		[
@@ -611,7 +627,13 @@ let g_scenarios = [
 function findScenario(aDate) {
     let res = g_scenarios.find(([date]) => aDate === date);
     if(!res) res = g_scenarios[g_scenarios.length-1][1];
+    else res = res[1];
     return res;
+}
+
+function isScenario(aScenario) {
+	if(!aScenario || !aScenario.desc || !aScenario.opts) return false;
+	return SCENARIO_KEYS.every(hasKey(aScenario.opts));
 }
 
 window.scenarios = findScenario('2020-03-23');
