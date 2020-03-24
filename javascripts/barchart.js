@@ -1,5 +1,6 @@
-function barChart(data, id, {
+function frameBarChart(data, id, {
   height, width, title, axisX, axisY, source,
+  background, bar
 }) {
   const sData = data;
   id = id || genID();
@@ -9,6 +10,8 @@ function barChart(data, id, {
   axisX = axisX || 'Keys';
   axisY = axisY || 'Values';
   source = source || '';
+  bar = bar || '#80cbc4';     
+  background = background || '#2F4A6D';
   const values = data.map(d => d.value);
   const maxV = au.arrMax(values);
   const minV = au.arrMin(values);
@@ -19,10 +22,10 @@ function barChart(data, id, {
     }
 
     div#${id} {
-      width: 1000px;
-      height: 600px;
+      width: ${width}px;
+      height: ${height}px;
       margin: auto;
-      background-color: #2F4A6D;
+      background-color: ${background};
     }
 
     svg {
@@ -31,7 +34,7 @@ function barChart(data, id, {
     }
 
     .${id}bar {
-      fill: #80cbc4;
+      fill: ${bar};
     }
 
     text {
@@ -93,19 +96,23 @@ function barChart(data, id, {
     </div>
     `);
     makeID(id,html);
-    doit();
+    doit(width,height);
 
     //===================================================
-    function doit(){
+    function doit(_width,_height, margin=80){
         const svg = d3.select(`#${id}svg`);
         const svgContainer = d3.select(`#${id}`);
-        const sample = (${sData});
+        const sample = sData;
         
 
-        const margin = 80;
-        const width = ${width} - 2 * margin;
-        const height = ${height} - 2 * margin;
         
+        width = _width - 2 * margin;
+        height = _height - 2 * margin;
+
+        function pos(y, ybase, delta) {
+          if(Math.abs(ybase - y) < 1.5*delta) return ybase+delta;
+          return y+delta;
+        }
         const chart = svg.append('g')
           .attr('transform', `translate(${margin}, ${margin})`);
 
