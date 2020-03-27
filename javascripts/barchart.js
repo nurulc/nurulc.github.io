@@ -1,21 +1,22 @@
 function frameBarChart(data, id, {
-  height, width, title, axisX, axisY, source,
-  background, bar
+  height, width, value, key, title, axisX, axisY, source,
+  background, bar, margin
 }) {
   const sData = data;
   id = id || genID();
-
+  margin = margin || 80;
   height = height || 600;
-  width = width || 1000;
-  axisX = axisX || 'Keys';
-  axisY = axisY || 'Values';
+  width =  Math.max( (width||1000), (80*data.length+2*margin) );
+  axisX =  axisX || 'Keys';
+  axisY =  axisY || 'Values';
   source = source || '';
   bar = bar || '#80cbc4';     
   background = background || '#2F4A6D';
-  const values = data.map(d => d.value);
+
+  const values = data.map(d => d[value]);
   const maxV = au.arrMax(values);
   const minV = au.arrMin(values);
-  connst html=(`
+  const html=(`
     <style>
     div#${id}barlayout {
       text-align: center;
@@ -96,7 +97,7 @@ function frameBarChart(data, id, {
     </div>
     `);
     makeID(id,html);
-    doit(width,height);
+    doit(width,height,margin);
 
     //===================================================
     function doit(_width,_height, margin=80){
@@ -118,7 +119,7 @@ function frameBarChart(data, id, {
 
         const xScale = d3.scaleBand()
           .range([0, width])
-          .domain(sample.map((s) => s.key))
+          .domain(sample.map((s) => s[key]))
           .padding(0.4)
 
         const yScale = d3.scaleLinear()
@@ -148,7 +149,7 @@ function frameBarChart(data, id, {
         const barGroups = chart.selectAll()
           .data(sample)
           .enter()
-          .append('g')
+          .append('g');
 
         barGroups
           .append('rect')
@@ -320,7 +321,7 @@ function frameChart(aFrame, id,  props) {
   } = (props || {});
   key = key || aFrame.columns[0];
   values = (values || aFrame.columns.slice()).filter(v => v !== key);
-  const id = genID();
+  id = id || genID();
 
   height = height || 500;
   width = width || 960;
@@ -437,7 +438,7 @@ function doit(data, key, columns,id) {
             .attr("fill", "#000")
             .attr("font-weight", "bold")
             .attr("text-anchor", "start")
-            .text(${J(axisY)});
+            .text(J(axisY));
 
         var legend = g.append("g")
             .attr("font-family", "sans-serif")
@@ -467,7 +468,7 @@ function doit(data, key, columns,id) {
         .attr('x', width / 2 + margin.left)
         .attr('y', height + margin.top + margin.bottom * 0.7)
         .attr('text-anchor', 'middle')
-        .text(${J(axisX)});
+        .text(J(axisX));
 
       svg
         .append('text')
@@ -476,20 +477,20 @@ function doit(data, key, columns,id) {
         .attr('y', -4+margin.left / 2.4)
         .attr('transform', 'rotate(-90)')
         .attr('text-anchor', 'middle')
-        .text(${J(axisY)})
+        .text(J(axisY))
 
       svg.append('text')
         .attr('class', 'titlec')
         .attr('x', width / 2 + margin.left)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
-        .text(${J(title)})
+        .text(J(title))
 
       svg.append('text')
         .attr('class', 'source')
         .attr('x', width - margin.right / 2)
         .attr('y', height + margin.top * 1.7)
         .attr('text-anchor', 'start')
-        .text(${J(source)});
+        .text(J(source));
   }
 }

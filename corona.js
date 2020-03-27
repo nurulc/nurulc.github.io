@@ -29,20 +29,26 @@ function PICK(x) { return o => o[x]; }
 const VAL = PICK('value');
 const OFFICIAL = PICK('official');
 let DEBUG = 0; 
-let WORLD_DATA_SRC = 'https://covid.ourworldindata.org/data/full_data.csv';
+//let WORLD_DATA_SRC = 'https://covid.ourworldindata.org/data/full_data.csv'; //https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide.csv
+
 const { Frame, frameFromBuffer, csvLine, arrProd, gb} = DataFrame;
-let g_frame;
+let g_worldDataFrame;
+let g_continents;
 
 function finalizeData(_corona, _continents){
-	let corona = frameFromBuffer(_corona, '', csvLine),
+	let worldCorona = frameFromBuffer(_corona, '', csvLine),
 	    continents = frameFromBuffer(_continents, '', csvLine);
 
-	let projCols = arrProd('1.', corona.columns).map(r =>r[0]+r[1]).concat(['2.continent']);
-    let conts = continents.groupBy(['Country_Name', gb.min('Continent_Name', 'continent')]);
-    conts = conts.project(['location', 'Country_Name', 'continent'], {location: r => r.Country_Name.split(/,| \(/)[0] },true)
-    var _corona = corona.leftJoin(conts, projCols, 'location');//.filter(r => r.location === 'Azerbaijan');
-    showFrame(_corona.groupBy(['location', 'continent', gb.max('total_cases'), gb.max('total_deaths')]))
-    g_frame = _corona;
+ // let projCols = arrProd('1.', corona.columns).map(r =>r[0]+r[1]).concat(['2.continent']);
+ //    let conts = continents.groupBy(['Country_Name', gb.min('Continent_Name', 'continent')]);
+ //    conts = conts.project(['location', 'Country_Name', 'continent'], {location: r => r.Country_Name.split(/,| \(/)[0] },true)
+ //    var _corona = corona.leftJoin(conts, projCols, 'location');//.filter(r => r.location === 'Azerbaijan');
+ //    showFrame(_corona.groupBy(['location', 'continent', gb.max('total_cases'), gb.max('total_deaths')]))
+
+    let res = organizeData(worldCorona, continents)
+    g_worldDataFrame = res;
+    showFrame(res.groupBy(['location', 'continent', gb.max('total_cases'), gb.max('total_deaths'), gb.max('date', 'As Of')]));
+
 }
 
 function showFrame(aFrame,name='world') {
