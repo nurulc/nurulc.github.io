@@ -1,28 +1,46 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<title>ACE in Action</title>
-<style type="text/css" media="screen">
-    #editor1 { 
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+    <title>CodeJar</title>
+    <style type="text/css" media="screen">
+    .editor {
+        color: #fff;
+        background: #282a36;
+        border-radius: 6px;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        font-family: monospace;
+        font-size: 14px;
+        font-weight: 400;
+        min-height: 240px;
+        letter-spacing: normal;
+        line-height: 20px;
+        padding: 10px;
+        tab-size: 4;
     }
-</style>
+    </style>
 </head>
 <body>
+<div class="editor language-js">function fibonacci(n) {
+	let num;
 
-<div id="editor">function foo(items) {
-    var x = "All this is syntax highlighted";
-    return x;
+	if (n >= 2) {
+		num = fibonacci(n - 1) + fibonacci(n - 2);
+	} else {
+		num = n
+	}
+
+	return num;
 }</div>
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/javascript");
+
+<script type="module" id="code">
+  import {CodeJar} from "https://medv.io/codejar/codejar.js?"
+
+  const jar = new CodeJar(
+    document.querySelector(".editor"), 
+    Prism.highlightElement
+  )
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
 </html>
