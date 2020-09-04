@@ -30,14 +30,15 @@ Small utility to create code to perform tryit functionality
 </div>
 ```
 
-!tryit
+<!--tryit
 var x = {value: 1/2.0, name: 'This is my Name'};
 x
-!md
+-->
 # hello
-!tryit
+<!--tryit
 y = 5
 
-!tryit
+
 
 z = 1
+-->
