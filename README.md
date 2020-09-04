@@ -29,3 +29,8 @@ Small utility to create code to perform tryit functionality
   <div id="tryit1-display" class="tryit-display"></div>
 </div>
 ```
+
+!tryit
+var x = {value: 1/2.0, name: 'This is my Name'};
+x
+!md
