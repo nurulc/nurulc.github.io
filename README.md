@@ -14,7 +14,7 @@ TryIt
 
 Small utility to create code to perform tryit functionality
 
-
+```html
 <div id="tryit1-container" >
   <div class="tryit-cotrol">
     <button onclick="tryIt('tryit1')">Tryit</button>
@@ -28,6 +28,4 @@ Small utility to create code to perform tryit functionality
   <div id='tryit1-error' class="tryit-error"></div>
   <div id="tryit1-display" class="tryit-display"></div>
 </div>
-<script>
-
-</script>
+```
