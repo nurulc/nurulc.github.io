@@ -34,3 +34,10 @@ Small utility to create code to perform tryit functionality
 var x = {value: 1/2.0, name: 'This is my Name'};
 x
 !md
+# hello
+!tryit
+y = 5
+
+!tryit
+
+z = 1
