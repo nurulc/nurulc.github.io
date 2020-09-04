@@ -31,7 +31,7 @@ Small utility to create code to perform tryit functionality
 ```
 
 <pre>tryit
-var x = {value: 1/2.0, name: 'This is my Name'};
+var x = {value: 1/2.0, name: 'This is my Name'}; 1< x && x>5
 x
 </pre>
 # hello
