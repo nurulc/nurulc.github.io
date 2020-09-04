@@ -9,7 +9,9 @@ Remember to disable pre and post install scripts in **NPM**
 npm config  set ignore-scripts true
 `
 
-
+<script>
+  warn('hello');
+</script>
 TryIt
 
 Small utility to create code to perform tryit functionality
