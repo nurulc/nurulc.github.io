@@ -1,21 +1,47 @@
-function frameBarChart(data, id, {
+const ChartColors0 = ['#30497d', '#7d5030', "#7d7730", "#70307d", "#aaaa33"];
+const ChartColors1 = [ '#DC3D24', '#232B2B', '#FFFFFF',  '#E3AE57', "#aaaa33" ];
+const ChartColors2 = [ "#eFFeFF", "#053067", "#464a49", "#1B1B1B", "#aaaa33" ]; // 80cbc4
+const ChartColors3 = [ "#2F4A6D", "#ff0000", "#80cbc4", "#ffffff", "#e41b74" ]; // 80cbc4
+
+const ChartColors = ChartColors3;
+
+function frameBarChart(aFrame, id, {
   height, width, value, key, title, axisX, axisY, source,
-  background, bar, margin
+  background, bar, margin, isLog, offset, tickText, titleColor
 }) {
-  const sData = data;
+
+  if(!key || !value) {
+    let numerics = frameNumericColumns(aFrame);
+    let nonNums = arrRemove(aFrame.columns, numerics);
+    key = opts.key || nonNums[0];
+    value = value || numerics[0];
+  }
+
+  if(aFrame.columns.indexOf(key) === -1) throw new Error('Key column not found: "'+key+'"')
+  if(aFrame.columns.indexOf(value) === -1) throw new Error('Value column not found: "'+value+'"');
+  
+  const OFFSET = offset || 30;
+  const {arrMax, arrMin} = DataFrame;
   id = id || genID();
   margin = margin || 80;
   height = height || 600;
-  width =  Math.max( (width||1000), (80*data.length+2*margin) );
+  width =  Math.max( (width||1000), (80*aFrame.length+2*margin) );
   axisX =  axisX || 'Keys';
   axisY =  axisY || 'Values';
   source = source || '';
-  bar = bar || '#80cbc4';     
-  background = background || '#2F4A6D';
 
-  const values = data.map(d => d[value]);
-  const maxV = au.arrMax(values);
-  const minV = au.arrMin(values);
+  bar = bar || ChartColors[2];     
+  background = background || ChartColors[0];
+  tickText = tickText || ChartColors[1];
+  titleColor = titleColor || ChartColors[3];
+
+
+  const data = aFrame.map(d => ({ key: d[key], value: +d[value]}));
+  const values = data.map(d => d.value);
+  const maxV = arrMax(values);
+  const minV = arrMin(values);
+  isLog = !!isLog;
+  const _base = isLog?1:0;
   const html=(`
     <style>
     div#${id}barlayout {
@@ -29,7 +55,7 @@ function frameBarChart(data, id, {
       background-color: ${background};
     }
 
-    svg {
+    svg#${id}svg  {
       width: 100%;
       height: 100%;
     }
@@ -38,16 +64,21 @@ function frameBarChart(data, id, {
       fill: ${bar};
     }
 
-    text {
+    .${id}svg  text {
       font-size: 12px;
-      fill: #fff;
+      /*fill: #fff;*/
+      fill: grey;
     }
 
-    path {
-      stroke: gray;
+    text.${id}svg  {
+      stroke: red;
     }
 
-    line {
+    .tick text  {
+      fill: ${tickText};
+    }
+
+    .${id}svg line {
       stroke: gray;
     }
 
@@ -72,17 +103,26 @@ function frameBarChart(data, id, {
     }
 
     text.${id}value {
-      font-size: 14px;
+      font-size: 16px;
+      fill: ${ChartColors[4]};
     }
 
     text.title {
       font-size: 22px;
       font-weight: 600;
+      fill: black;
     }
 
-    text.label {
-      font-size: 14px;
+    text.label-x {
+      font-size: 2rem;
       font-weight: 400;
+      fill: red;
+    }
+
+    text.label-y {
+      font-size: 2rem;
+      font-weight: 400;
+      fill: red;
     }
 
     text.source {
@@ -90,20 +130,19 @@ function frameBarChart(data, id, {
     }
     </style>
     <div id='${id}barlayout'>
-        <!-- <h2>Bar chart example</h2> -->
         <div id="${id}">
-          <svg id="${id}svg" width="${width}" height="${height}"/>
+          <svg id="${id}svg" width="${width}" height="${height}" class="${id}barchart"/>
         </div>
     </div>
     `);
     makeID(id,html);
-    doit(width,height,margin);
+    doit(data, width,height,margin);
 
     //===================================================
-    function doit(_width,_height, margin=80){
+    function doit(sample, _width,_height, margin=80) {
         const svg = d3.select(`#${id}svg`);
         const svgContainer = d3.select(`#${id}`);
-        const sample = sData;
+        //const sample = sData;
         
 
         
@@ -119,7 +158,7 @@ function frameBarChart(data, id, {
 
         const xScale = d3.scaleBand()
           .range([0, width])
-          .domain(sample.map((s) => s[key]))
+          .domain(sample.map((s) => s.key))
           .padding(0.4)
 
         const yScale = d3.scaleLinear()
@@ -135,9 +174,10 @@ function frameBarChart(data, id, {
           .call(d3.axisBottom(xScale));
 
         chart.append('g')
+          .attr('class', 'c-axis')
           .call(d3.axisLeft(yScale));
 
-            console.log(sample,svgContainer);
+            //console.log(sample,svgContainer);
 
         chart.append('g')
           .attr('class', 'grid')
@@ -172,6 +212,7 @@ function frameBarChart(data, id, {
             const y = yScale(actual.value)
 
             line = chart.append('line')
+              .attr('class', `${id}line`)
               .attr('id', `${id}limit`)
               .attr('x1', 0)
               .attr('y1', y)
@@ -181,11 +222,12 @@ function frameBarChart(data, id, {
             barGroups.append('text')
               .attr('class', `${id}divergence`)
               .attr('x', (a) => xScale(a.key) + xScale.bandwidth() / 2)
-              .attr('y', (a) => yScale(a.value) + 30)
+              //.attr('y', (a) => yScale(a.value) + 30)
+               .attr('y', (a) => pos(yScale(a.value), yScale(_base), OFFSET))
               .attr('fill', 'white')
               .attr('text-anchor', 'middle')
               .text((a, idx) => {
-                const divergence = (a.value - actual.value).toFixed(1)
+                const divergence = (a.value - actual.value).toFixed(0)
 
                 let text = ''
                 if (divergence > 0) text += '+'
@@ -213,21 +255,22 @@ function frameBarChart(data, id, {
           .append('text')
           .attr('class', `${id}value`)
           .attr('x', (a) => xScale(a.key) + xScale.bandwidth() / 2)
-          .attr('y', (a) => yScale(a.value) + 30)
+          //.attr('y', (a) => yScale(a.value) + 30)
+          .attr('y', (a) => pos(yScale(a.value), yScale(_base), OFFSET))
           .attr('text-anchor', 'middle')
           .text((a) => a.value)
 
         svg
           .append('text')
-          .attr('class', 'label')
+          .attr('class', 'label-x')
           .attr('x', -(height / 2) - margin)
-          .attr('y', margin / 2.4)
+          .attr('y', margin / 2.4 - 10)
           .attr('transform', 'rotate(-90)')
           .attr('text-anchor', 'middle')
           .text(axisY)
 
         svg.append('text')
-          .attr('class', 'label')
+          .attr('class', 'label-y')
           .attr('x', width / 2 + margin)
           .attr('y', height + margin * 1.7)
           .attr('text-anchor', 'middle')

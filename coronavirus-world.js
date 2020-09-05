@@ -9,7 +9,7 @@ window.covid19 = (function() {
   //    08      09     10     11     12     13     14     15          
      29256,  33627, 38170, 45421, 53763, 64659, 75809, 88733, 101609, 117340, 137894, 163966, 194589,
   //    21             23              25       26
-    223982, 256396, 297659, 341356, 389750, 450525
+    223982, 256396, 297659, 341356, 389750, 450525, 514972, 581688, 641951, 703220
 	];
 
 	const world = [
@@ -21,8 +21,10 @@ window.covid19 = (function() {
       77673, 78651, 79205, 80087,  80828, 81820, 83112, 84615, 86604, 88581, 90439, 93012, 95310, 98419, 102050, 106099,  //2020-03-07
   //     08       09      10      11      12      13      14      15                                     20
       109991, 114381, 118948, 126214, 134576, 145483, 156653, 169593, 182490, 198234, 218822, 244933, 275597,
-  //     21
-      304979, 337489, 378830, 422574, 471035, 531865  
+  //     21                               25                                      30
+      304979, 337489, 378830, 422574, 471035, 531865, 596366, 663127,  723390, 786006, 859798, 936851, 1016948,
+  //     03                 04                06                08
+     118684, 1275007, 1349051, 1434167, 1518614, 1604252, 1698881     
        ];
 	const chinaAdjusted = sum([
 		  359,   461,    707,   831,  1198,  2599,  3512, 5687, 
@@ -33,8 +35,10 @@ window.covid19 = (function() {
 		 86604, 88581, 90439, 93012, 95310, 98419, 102050, 106099,  //2020-03-07
      //     08       09      10      11      12      13      14      15                     19             20
          109991, 114381, 118948, 126214, 134576, 145483, 156653, 169593, 182490, 198234, 218822, 244933, 275597,
-     //     21
-         304979, 337489, 378830, 422574, 471035, 531865    
+     //     21                               25                                      30      31      01       02
+         304979, 337489, 378830, 422574, 471035, 531865, 596366, 663127, 723390, 786006, 859798, 936851, 1016948,
+     //     03                 04                06                08
+         118684, 1275007, 1349051, 1434167, 1518614, 1604252, 1698881          
 	],negate(notChina));
 	
 	//feb 15 Italy
@@ -50,8 +54,8 @@ window.covid19 = (function() {
 			   889, 1128, 1701, 2036, 2502, 3089,3858, 4636, 5883, 7375, 9172, 10149,
 			//    11     12     13     14     15            17                   20
 			   12462, 15113, 17660, 21157, 24747, 27980, 31506, 35713, 41035, 47021,
-			//    21
-			   53578, 59138, 63927, 69176, 74386, 80589
+			//    21            23                   26
+			   53578, 59138, 63927, 69176, 74386, 80589, 86498, 92472, 97689, 101739
 	   ];
 
 
@@ -66,8 +70,8 @@ window.covid19 = (function() {
 			   100, 124, 158, 221, 319, 435, 541, 704, 994, 1301, 1697, 2247,
 			//   14    15           17                  20            22     23
 			   2943,  3680, 4663, 6411, 9259, 13789, 19383, 24207, 33566, 43735,
-			//    24
-			   54856, 68211, 85435
+			//    24            26                              30
+			   54856, 68211, 85435, 104126, 123578, 143491, 163788
 	   ];
 
 	 const spain = [
@@ -80,7 +84,9 @@ window.covid19 = (function() {
 		    //   2    3    4    5    6    7    8    9   10    11    12    13
 			   120, 165, 228, 282, 401, 525, 674, 1231, 1695, 2277, 3146, 5232,
 		   //   14    15           17                   20
-		      6391, 7988, 9942, 11826, 14769, 18077, 21571, 25496, 28768, 35136 
+		      6391, 7988, 9942, 11826, 14769, 18077, 21571, 25496, 28768, 35136,
+		   //   24     
+		     42058, 49515, 57786, 65719, 73235, 80110, 87956 
 			 ];
 	britain = [
             // 2                             3  0                     1
@@ -94,7 +100,7 @@ window.covid19 = (function() {
 			//   14    15          17                20
 			   1140, 1391, 1543, 1950, 2626, 3269, 3983, 5018, 5683, 6650,
 			//   24           26
-			   8077, 9529, 11658
+			   8077, 9529, 11658, 14543, 17089, 19522, 22141
 			  ];
 
 	korea = [
@@ -150,10 +156,11 @@ window.covid19 = (function() {
 //	const WORLD_DATA_SRC = CORS_PROXY+"https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide.csv"  ;
 
 	const WORLD_DATA_SRC = CORS_PROXY+"https://opendata.ecdc.europa.eu/covid19/casedistribution/csv";
-	const CONTINENTS = "https://pkgstore.datahub.io/JohnSnowLabs/country-and-continent-codes-list/country-and-continent-codes-list-csv_csv/data/b7876b7f496677669644f3d1069d3121/country-and-continent-codes-list-csv_csv.csv"
+	//const CONTINENTS = "https://pkgstore.datahub.io/JohnSnowLabs/country-and-continent-codes-list/country-and-continent-codes-list-csv_csv/data/b7876b7f496677669644f3d1069d3121/country-and-continent-codes-list-csv_csv.csv"
+	//const CONTINENTS = "https://pkgstore.datahub.io/JohnSnowLabs/country-and-continent-codes-list/country-and-continent-codes-list-csv_csv/data/b7876b7f496677669644f3d1069d3121/country-and-continent-codes-list-csv_csv.csv"
     //var {Frame, frameFromBuffer, csvLine, tsvLine, gb} = DataFrame;
     let world = fetch(WORLD_DATA_SRC).then(d => d.text()),
-        continents = fetch(CONTINENTS).then(d => d.text());
+        continents = Promise.resolve(strContinents); //fetch(CONTINENTS).then(d => d.text());
     w.worldData = Promise.all([world,continents]);
     console.log("World Data primise ready");
 

@@ -47,22 +47,39 @@ function finalizeData(_corona, _continents){
 
     let res = organizeData(worldCorona, continents)
     g_worldDataFrame = res;
-    showFrame(res.groupBy(['location', 'continent', gb.max('total_cases'), gb.max('total_deaths'), gb.max('date', 'As Of')]));
-
+    showFrame(res.groupBy(
+    				['location', 'continent', gb.max('total_cases'), gb.max('total_deaths'), gb.max('date', 'As Of')]
+    		).sort(['-total_cases']),
+    		'countries'
+    );
+    frameBarChart(g_worldDataFrame.groupBy(['continent', gb.max('total_cases'), gb.max('total_deaths')]), 
+    	"continents_data",{width: 800, height: 600, key: "continent", value: "total_cases"});
+    makeScrollableTables();
 }
 
 function showFrame(aFrame,name='world') {
+  const asHtml = aFtame => {
+  	 let ss = aFrame.sort(['-total_cases', 'location'])._toHtml();
+  	 return ss.substr(ss.indexOf('<table'));
+  };
   var aDiv = document.getElementById(name);
   if(!aDiv) {
   	aDiv = document.createElement("div");
-	aDiv.id = name;  
-	aDiv.class = 'data-frame';
+	aDiv.id = name; 
 	document.body.appendChild(aDiv);
 	aDiv = ID(name);
   }
-  aDiv.innerHTML = aFrame.sort(['-total_cases', 'location'])._toHtml();
-  
+
+  let s = aFrame._toHtml(); //asHtml(aFrame);
+  // console.log(s);
+  elemAddClass(aDiv,'data-frame')
+     .innerHTML = s;
+
+
+
 }
+
+
 
 function isObj(o) {
 	if(Array.isArray(o)) return false;
@@ -93,38 +110,7 @@ function toData(arr) { return arr.map((v,i) => ({date: addDays(new Date("2020-01
 
 const {notChina, world, china, chinaAdjusted, usa, italy, spain, britain, korea}= covid19;
  
-// const notChinaData = [
-//    // 1/20    1/21     22    23     24      25     26    27    28       29     30     31      1      2      3      4      5      
-// 	   0,       0,     9,   15,    30,     40,    56,   66,   84,     102,   131,   159,   173,    186,   190,  221,   248,
-//   //   2/6      7      8      9     10      11     12    13    14       15     16     17     18     19     20     
-// 	   278,   330,    354,   382,  461,    481,   526,  587,  608,     697,   781,   896,   999,   1124,  1212, 
-//   //    21     22      23     24      25     26    27      28     29   3/1    02       03     04     05     06     07
-// 	  1385,  1715,   2055,  2429,   2764,  3323, 4288,   5364,  6780, 8555,10288,   12742, 14906, 17872, 21398,  25403,
-//   //    08
-//      29256
-// ];
 
-// let worldData = [
-//      // 1/20 1/21  22  23    24    25    26    27    28    29    30     31      1      2      3      4      5      
-// 		282, 362, 555, 653, 941, 2040, 2757, 4464, 6057, 7783, 9821, 11948, 14551, 17387, 20900, 24641, 28365,   //2020-02-05
-//      //   2/6      7      8      9     10     11     12     13     14     15     16     17     18     19     20
-// 		31532, 34958, 37552, 40553, 43099, 45134, 59287, 64438, 67100, 69197, 71329, 73332, 75184, 75700, 76677, //2020-02-20
-//      //    21     22     23     24      25     26    27      28     29   3/1    02       03     04     05     06       07
-// 		77673, 78651, 79205, 80087,  80828, 81820, 83112, 84615, 86604, 88581, 90439, 93012, 95310, 98419, 102046, 106103,  //2020-03-07
-// 	//     08
-// 	   109991	
-// ];
-
-
-// const chinaAdjustedData = toData(sum([
-// 	  359,   461,    707,   831,  1198,  2599,  3512, 5687, 
-// 	  7717, 9916,  12513, 15223, 18539, 22152, 26628, 31395, 
-// 	 36140, 40175, 44540, 47846, 52696, 54921, 57552, 59283, 
-// 	 64437, 67100, 69169, 71329, 73332, 75198, 75700, 76677, 
-// 	 77673, 78651, 79619, 80088, 80828, 81828, 83112, 84615, 
-// 	 86604, 88581, 90439, 93012, 95310, 98419, 102046, 106103,
-// 	 109991
-// ],negate(notChinaData)) );
 
 const chinaAdjustedData = toData(chinaAdjusted)
 const chinaOfficialData = toData(china);
@@ -382,13 +368,13 @@ function  curScenario(name=CUR_SCENARIO) {
 	return scenarios.find(e => e.desc === name) || scenarios[0];
 }
 
-  function createScenarios() {
+function createScenarios() {
 	var array = scenarios.map( s=> s.desc);
 	let parent = ID("scenario_div");
 	if( !parent ) throw new Error(scenario_div+" not found");
 	parent.innerHTML = null;
 	scenarios.forEach(fixScenario);
-	
+
 	//Create and append select list
 	//console.log("CREATE SCENARIOS")
 	var selectList = document.createElement("select");
@@ -399,7 +385,7 @@ function  curScenario(name=CUR_SCENARIO) {
 		if(!aScenario) { console.log("scenario ", selectList.value, " not found"); return false; }
 		selScenario(aScenario);		
 	};
-	
+
 	parent.appendChild(selectList);
 
 	//Create and append the options
@@ -411,7 +397,7 @@ function  curScenario(name=CUR_SCENARIO) {
 		if(array[i] === CUR_SCENARIO) option.selected = true;
 	}
 	renderScenarioActions();
-  }
+}
 
 function AB(name,click,klass, target, btnClass="btn-primary") {
 	klass = klass || '';
@@ -505,8 +491,8 @@ console.log(JSON.stringify(baseOptions));
  * AT STARTUP
  * 
  */
-//setTimeout(() => {
-worldData.then(([_corona, _contiments]) => {
+setTimeout(() => {
+
 	    CUR_SCENARIO = window.localStorage.getItem('cur_scenario')||LATEST_SCENARIO;
 	    let _opts = window.localStorage.getItem('baseOptions'),
 	        opts;
@@ -533,10 +519,12 @@ worldData.then(([_corona, _contiments]) => {
 	    } 
 		//_resetScenarios(true);
 		buildInterface();
+		finalizeData(coronaWorls , strContinents)
 
 		//setOptionValues();
-
-		finalizeData(_corona, _contiments);
+        setTimeout( () =>
+				worldData.then(([_corona, _contiments]) => finalizeData(_corona, _contiments))
+		,5000);
 		selScenario(curScenario(),false);
 		HAS_INITIALIZED = true;
 	    if(opts) {
@@ -2164,4 +2152,12 @@ window.printScenario = function (s) {
 function fetchWorldData() {
 	var inp = fetch("https://covid.ourworldindata.org/data/full_data.csv");
 	inp.then( s=> s.text()).then(s => frame = frameFromBuffer(s, DataFrame.csvLine))
+}
+
+function elemAddClass(element, aCssClass) {
+  let arr = element.className.split(" ");
+  if (arr.indexOf(aCssClass) == -1) {
+    element.className += " " + aCssClass;
+  }
+  return element;
 }

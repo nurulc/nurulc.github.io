@@ -14,7 +14,10 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css" rel="stylesheet">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
   <link href="corona.css" rel="stylesheet">
-
+  <script src="/continents.js"></script>
+	<script src="/corona_initial_data.js"></script>
+</head>
+<body>
 <!-- 
   Bootstrap docs: https://getbootstrap.com/docs
 -->
@@ -152,10 +155,10 @@ window.baseOptions = {
  <!-- <div class="col-md-1" id="reset_scenario"><button id="do_reset">Reset Scenarios</button></div>-->
 </div>
 <div class="row">
-  <div class="col-md-4" id="model_target">
+  <div class="col-md-5" id="model_target">
     
   </div>
-  <div class="col-md-8">
+  <div class="col-md-7">
 <!-- START -->
 <div class="container">
   <!-- Nav tabs -->
@@ -194,7 +197,8 @@ window.baseOptions = {
     </div>
     <div id="country_tab" class="container tab-pane fade"><br>
       <h3>Country</h3>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+      <div id="countries"><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+      </div>S	
     </div>
   </div>
 </div>
@@ -207,11 +211,14 @@ window.baseOptions = {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js" ></script>
 <script sr="https://raw.githubusercontent.com/gka/d3-jetpack/master/build/d3v4%2Bjetpack.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
-<script src="https://unpkg.com/str-data-frame@0.2.1/dist/bundle.js"></script>
+<script src="https://unpkg.com/str-data-frame@0.2.4/dist/bundle.js"></script>
 <script src="/coronavirus-world.js"></script>
 <script src="/base_scenarios.js"></script>
 <script src="/javascripts/barchart.js"></script>
+<script src="/javascripts/utils.js"></script>
+
 <script src="/create-world-data.js"></script>
+
 
 
 <script src="corona.js"></script>
@@ -300,6 +307,6 @@ window.baseOptions = {
 // Append the cloned <li> element to <ul> with id="myList1"
 document.getElementById("graph_area").innerHTML = htmlText;
 </script>
-
- 
+</div>
 </body>
+</html>

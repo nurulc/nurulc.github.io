@@ -6,6 +6,10 @@ body {
    height: 200rem;
 }
 
+/*  table thead { display:block; }
+  table tbody { height:300px; overflow-y:scroll; display:block; }
+*/
+
 .row {
   background: #f8f9fa;
   margin-top: 20px;
@@ -154,6 +158,39 @@ body {
         font-weight: bold;
   }
 
+/* Frame */
+.data-frame {
+  height: 50rem;
+  overflow-y: auto;
+}
+
+/*.ftable  { font-family: arial, sans-serif; color: blue !important; } 
+td, th, tr { border: 1px solid #000000; text-align: left; } 
+th {color: red !important}
+tr:nth-child(even) { background-color: #dddddd; } }*/
+  .ftable  { 
+    font-family: arial, sans-serif; 
+    color: blue !important; 
+    border-collapse: collapse; 
+    border-spacing: 0; 
+    border: 1px solid #000; 
+    font-size: 1rem;
+  } 
+  .ftable thead {
+     text-align: left; 
+     background-color: lightgrey;
+     border: 1px solid #000; 
+  } 
+  .ftable tr { border: 1px solid #000000; text-align: left;  }
+  .ftable th { 
+    border: 1px solid #000000;  
+    text-align: center; 
+    color: red !important;
+    background-color: #e4bcbc;
+  } 
+  .ftable td { border: 1px solid #000000; text-align: left;  }
+  .ftable tbody > tr:nth-child(even) { background-color: #44dddd !important; }
+  .ftable tbody > tr:nth-child(odd) { background-color: white !important; }
 
 /* Slider start */
 input[type=range] {
@@ -248,3 +285,4 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 /* Slider end */
+

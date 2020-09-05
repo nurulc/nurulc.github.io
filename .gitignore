@@ -1,3 +1,5 @@
 index-old.html
 *.bak
 images/master-files-back
+node_modules
+
