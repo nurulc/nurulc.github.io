@@ -1,0 +1,19 @@
+.tryit-error {
+  color: red;
+  border-style: dotted;
+  width: 80%;
+  display: none
+}
+
+.tryit-code {
+  border-style: solid;
+  width: 80%;
+  background-color: lightgrey;
+  height: 7rem;
+}
+
+.tryit-display {
+  border-style: solid;
+  width: 80%;
+  min-height: 1rem
+}

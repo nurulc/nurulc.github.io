@@ -1,3 +1,4 @@
+
 function $e(name) {
   var e = document.getElementById(name);
   if (!e) return { innerText: "" };
@@ -42,10 +43,6 @@ function makeEditor() {
   list.map( e => e.id).forEach(_makeEditor);
 }
 
-// function globalEval(expression) {
-//     return Function(expression)();
-//   }
-globalEval = eval;
 function display(d) {
   if(d && d._toHtml ) {
      return d._toHtml();
@@ -107,13 +104,8 @@ function removeTag(tag) {
   return true;
 
 }
+class A {};
 
-function jumpX(h){
-    var url = location.href;               //Save down the URL without hash.
-    location.href = "#"+h;                 //Go to the target element.
-    history.replaceState(null,null,url);   //Don't like hashes. Changing it back.
-    alert("***Jump #"+h);
-}
 
 function totalOffsetTop (e)
 {
@@ -124,17 +116,10 @@ function totalOffsetTop (e)
     return offset;
 }
 
-
-function jumpZ(h) {
-    //var top = document.getElementById(h).offsetTop; //Getting Y of target element
-    var top = totalOffsetTop(document.getElementById(h)); //Getting Y of target element
-    window.scrollTo(0, top); 
-    alert("--Jump #"+h+" pos: "+top);                       //Go there directly or some transition
-}
 function jump(h) {
-    //var top = document.getElementById(h).offsetTop; //Getting Y of target element
+    
     document.location.hash = "_"+h;
-    //alert("--Jump #_"+h);                       //Go there directly or some transition
+    setTimeout(() => window.scrollBy(0,-70),0)
 }
 
 function tryIt(divName,editor) {
@@ -340,3 +325,4 @@ function showPopup(timeout, action){
 
 //   return MessageBox;
 // }();
+
