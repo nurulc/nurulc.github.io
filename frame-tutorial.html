@@ -1,0 +1,117 @@
+
+<!doctype html>
+<html>
+<head>
+<title>Data Frame Examples</title>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/cobalt.min.css"/>
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/reset.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/site.min.css">
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/container.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/image.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/menu.min.css">
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/divider.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/segment.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/list.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/sidebar.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.css">
+<script src="https://unpkg.com/str-data-frame@0.2.9/dist/bundle.js"></script>
+<style>
+body { 
+    padding: 3rem;
+    padding-right: 8rem;
+    overflow-x: hidden;
+    min-width: 320px;
+    background: #fff;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 1.4285em;
+    color: rgba(0,0,0,.87);
+}
+</style></head>
+<body>
+<h1 id="introduction">Introduction</h1>
+<p>Lorem ipsum est sint id amet nulla laborum do minim proident irure minim et magna dolor consectetur ut dolor dolor anim reprehenderit elit officia. Consequat officia aliqua culpa nulla eu ut cillum quis nulla reprehenderit mollit in non occaecat sed quis ex est ea minim voluptate non minim ut in deserunt mollit cupidatat ullamco irure ut dolore laboris eiusmod exercitation reprehenderit dolor nostrud mollit exercitation culpa sunt dolor nulla sit aute tempor tempor ex incididunt ad proident voluptate cupidatat minim consectetur veniam dolore nostrud consectetur consectetur commodo sunt veniam qui reprehenderit ea cupidatat ea veniam nisi elit laborum fugiat et consequat dolor aliquip nisi esse qui adipisicing tempor dolore dolore officia cillum laborum aute sunt commodo nisi fugiat fugiat qui excepteur ut voluptate do ut labore ut dolore deserunt mollit sed sed ea sed dolor excepteur ullamco eiusmod sed exercitation veniam ut minim laboris qui excepteur in pariatur veniam cillum fugiat aliquip nulla excepteur laborum est voluptate incididunt laboris pariatur ut elit nisi deserunt duis duis in ut laborum dolor ut labore cupidatat fugiat mollit ad adipisicing ut officia duis id sunt adipisicing dolore nostrud ex exercitation dolor duis do in esse cillum incididunt officia nostrud laborum sunt culpa.</p>
+
+<div class="tryit-container" >
+	<textarea class="tryit" id="tryit1">
+var {Frame} = DataFrame;
+
+	</textarea>
+	<div id="tryit1-error" class="tryit-error"></div>
+	<div id="tryit1-display" class="tryit-display"></div>
+</div
+<h2 id="getsomedata">Get some data</h2>
+<p>We will use world covid-19 daily statistics</p>
+
+<div class="tryit-container" >
+	<textarea class="tryit" id="tryit2">
+	fetch('')
+
+	</textarea>
+	<div id="tryit2-error" class="tryit-error"></div>
+	<div id="tryit2-display" class="tryit-display"></div>
+</div
+<h2 id="createaframefromthedata">Create a frame from the data</h2>
+
+<div class="tryit-container" >
+	<textarea class="tryit" id="tryit3">
+  var covid = 1
+
+	</textarea>
+	<div id="tryit3-error" class="tryit-error"></div>
+	<div id="tryit3-display" class="tryit-display"></div>
+</div
+<h2 id="getthefirst11rows">Get the first 11 rows</h2>
+
+<div class="tryit-container" >
+	<textarea class="tryit" id="tryit4">
+covid.slice(0,11)
+
+	</textarea>
+	<div id="tryit4-error" class="tryit-error"></div>
+	<div id="tryit4-display" class="tryit-display"></div>
+</div
+<h2 id="showcolumnnames">Show column names</h2>
+
+<div class="tryit-container" >
+	<textarea class="tryit" id="tryit5">
+covid.columns
+
+	</textarea>
+	<div id="tryit5-error" class="tryit-error"></div>
+	<div id="tryit5-display" class="tryit-display"></div>
+</div
+<h2 id="getridofunnecessarycolumns">Get rid of unnecessary columns</h2>
+<p>In sql we can do this using <em>select</em> columns <em>from</em> table, further the select operation can rename the columns, add new columns, and transform data is columns</p>
+<p>We use a similar operation for a data frames using the project</p>
+<pre><code class="js language-js">     frame.project()
+</code></pre>
+<h2 id="getdataforbrazil">Get data for Brazil</h2>
+
+<div class="tryit-container" >
+	<textarea class="tryit" id="tryit6">
+covid.filter()
+	</textarea>
+	<div id="tryit6-error" class="tryit-error"></div>
+	<div id="tryit6-display" class="tryit-display"></div>
+</div
+<h2 id="getthefirst11rows">Get the first 11 rows</h2>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.js"></script>
+</body>
+</html>
+
