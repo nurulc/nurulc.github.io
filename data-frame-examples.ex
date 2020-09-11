@@ -37,7 +37,7 @@
 <!-- Semantic UI theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 <script src="javascripts/prettyprint.js"></script>
-<script src="https://unpkg.com/str-data-frame@0.2.17/dist/bundle.js"></script>
+<script src="https://unpkg.com/str-data-frame@0.2.18/dist/bundle.js"></script>
 <script src="javascripts/tryit.js"></script>
 <link rel="stylesheet" type="text/css" href="tryit.css">
 
@@ -133,8 +133,20 @@ The operations include the ability to do the following:
 The inspiration for data frame came from two sources, SQL and the powerful python pandas utility. Frame does not attempt to provide all the functionality of pandas or that of SQL. The examples provided here will
 give a taste of some of the things it can do.
 
-> code assumes
-> 
+###Overview
+
+* Data Frames strongly support a functional style of programming
+   * One a Frame is created it is never modified 
+   * All Frame operations create a new Frame
+   * Frames use data sharing to minimize the memory footprint
+   * Internally the data is stored as an array of arrays
+       * **_aFrame.data_** is an array of rows
+       * Each row is an array of column values
+   * aFrame.columns is an array of strings representing the columns names
+   * Rarely will you have to access the data directly, 
+       * You must never modify the column or data array
+       * Accessing the column data using a index is very inconvinent and rarely do you have to do this
+           * For your convinence a _row object_ is created for ease access  
 
 #Getting started
 
@@ -261,6 +273,14 @@ summary
 !md
 
 ### Show the data summary as a Frame
+!tryit
+var data =[ ["rows",'', ''+covidFrame.length],
+        ...nonNumericColumns.map(col => ['Numeric', col, ''+cf.groupBy([gb.count(col)]).data[0][0]]),
+        ...numericColumns.map(col => ['Alpha', col, ''+cf.groupBy([gb.count(col)]).data[0][0]])];
+
+new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
+     .sort(['-Non_empty_cells','Col_Name'])
+
 
 !tryit
 var data =[ ["rows",'', ''+covidFrame.length],
@@ -289,6 +309,7 @@ We also can reorder the columns by chosing the order of the columns, the example
 how to create a new frem from a subset of the original columns and renaming a column
 
 **Note** We can also add new columns by adding a new column name
+
 
 
 !tryit
@@ -328,7 +349,17 @@ Here we will use a simpler version of select that keeps all the columns as is an
 
 !tryit
 frame.filter(r => r.country === 'Brazil')
+!md
 
+###Move country information into another frame
+
+!tryit
+var y = covidFrame.select(['iso_code', 'location', 'continent', 
+              'population', 'diabetes_prevalence',
+              'gdp_per_capita'
+             ],ro => ro.continent === 'Europe').distinct();
+//frameWithIndex(y).filter(ro => ro.__index$ < 5) 
+display
 !md
 ### Summary of cases by country
 

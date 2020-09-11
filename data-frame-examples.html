@@ -39,7 +39,7 @@
 <!-- Semantic UI theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 <script src="javascripts/prettyprint.js"></script>
-<script src="https://unpkg.com/str-data-frame@0.2.17/dist/bundle.js"></script>
+<script src="https://unpkg.com/str-data-frame@0.2.18/dist/bundle.js"></script>
 <script src="javascripts/tryit.js"></script>
 <link rel="stylesheet" type="text/css" href="tryit.css">
 
@@ -127,9 +127,21 @@ function isClass(d) { return false;
 <h2 id="introduction">Introduction</h2>
 <p>The inspiration for data frame came from two sources, SQL and the powerful python pandas utility. Frame does not attempt to provide all the functionality of pandas or that of SQL. The examples provided here will
 give a taste of some of the things it can do.</p>
-<blockquote>
-  <p>code assumes</p>
-</blockquote>
+<h3 id="overview">Overview</h3>
+<ul>
+<li>Data Frames strongly support a functional style of programming</li>
+<li>One a Frame is created it is never modified </li>
+<li>All Frame operations create a new Frame</li>
+<li>Frames use data sharing to minimize the memory footprint</li>
+<li>Internally the data is stored as an array of arrays<ul>
+<li><strong><em>aFrame.data</em></strong> is an array of rows</li>
+<li>Each row is an array of column values</li></ul></li>
+<li>aFrame.columns is an array of strings representing the columns names</li>
+<li>Rarely will you have to access the data directly, <ul>
+<li>You must never modify the column or data array</li>
+<li>Accessing the column data using a index is very inconvinent and rarely do you have to do this<ul>
+<li>For your convinence a <em>row object</em> is created for ease access  </li></ul></li></ul></li>
+</ul>
 <h1 id="gettingstarted">Getting started</h1>
 <p>we have to bring in the str-data-frame npm module. We have several choices, using javascript es6+ module symtax,
 using webpack or similar bundler, or just as a script. For rhe purposed of this tutorial I am using the good old script method. I creates in the global namesapce <em>DataFrame</em> variable.</p>
@@ -372,10 +384,10 @@ summary
 <div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit10">
 var data =[ ["rows",'', ''+covidFrame.length],
         ...nonNumericColumns.map(col =&gt; ['Numeric', col, ''+cf.groupBy([gb.count(col)]).data[0][0]]),
-       ...covidFrame.numericColumns.map(col =&gt; ['Alpha', col, ''+cf.groupBy([gb.count(col)]).data[0][0]])];
+        ...numericColumns.map(col =&gt; ['Alpha', col, ''+cf.groupBy([gb.count(col)]).data[0][0]])];
 
-new Frame(data, ['Type',"Name", "Count"])
-     .sort(['Count','Name'])
+new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
+     .sort(['-Non_empty_cells','Col_Name'])
 
 	</textarea></div>
 <a id="_end_tryit10">
@@ -384,6 +396,29 @@ new Frame(data, ['Type',"Name", "Count"])
 	<div id="tryit10-display" class="tryit-display rendered_html"></div>
 </div><div class="ui top attached label">
                 <button id="tryit10-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                  Run
+                </button>
+             </div>
+             </div></div>
+
+<a id="_tryit11">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit11">
+var data =[ ["rows",'', ''+covidFrame.length],
+        ...nonNumericColumns.map(col =&gt; ['Numeric', col, ''+cf.groupBy([gb.count(col)]).data[0][0]]),
+       ...covidFrame.numericColumns.map(col =&gt; ['Alpha', col, ''+cf.groupBy([gb.count(col)]).data[0][0]])];
+
+new Frame(data, ['Type',"Name", "Count"])
+     .sort(['Count','Name'])
+
+	</textarea></div>
+<a id="_end_tryit11">
+&nbsp;</a>
+	<div id="tryit11-error" class="tryit-error"></div>
+	<div id="tryit11-display" class="tryit-display rendered_html"></div>
+</div><div class="ui top attached label">
+                <button id="tryit11-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
                   Run
                 </button>
              </div>
@@ -403,10 +438,10 @@ We also can reorder the columns by chosing the order of the columns, the example
 how to create a new frem from a subset of the original columns and renaming a column</p>
 <p><strong>Note</strong> We can also add new columns by adding a new column name</p>
 
-<a id="_tryit11">&nbsp</a>
+<a id="_tryit12">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 <div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit11">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit12">
 var SELECTED_COLUMNS = [
   ['iso_code', (iso, ro) =&gt; iso || ro.location], // note you have to use the original names to the renamed ones
   'location=country', // rename location to country
@@ -433,29 +468,6 @@ frame.slice(0,20)
   
   
 	</textarea></div>
-<a id="_end_tryit11">
-&nbsp;</a>
-	<div id="tryit11-error" class="tryit-error"></div>
-	<div id="tryit11-display" class="tryit-display rendered_html"></div>
-</div><div class="ui top attached label">
-                <button id="tryit11-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
-                  Run
-                </button>
-             </div>
-             </div></div>
-<h2 id="getdataforbrazil">Get data for Brazil</h2>
-<p>Here we will use a simpler version of select that keeps all the columns as is and filters out some of the rows. This is the same as the following sql</p>
-<blockquote>
-  <p>select * from covidFrame where country = 'Brazil' </p>
-</blockquote>
-
-<a id="_tryit12">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit12">
-frame.filter(r =&gt; r.country === 'Brazil')
-
-	</textarea></div>
 <a id="_end_tryit12">
 &nbsp;</a>
 	<div id="tryit12-error" class="tryit-error"></div>
@@ -466,12 +478,57 @@ frame.filter(r =&gt; r.country === 'Brazil')
                 </button>
              </div>
              </div></div>
-<h3 id="summaryofcasesbycountry">Summary of cases by country</h3>
+<h2 id="getdataforbrazil">Get data for Brazil</h2>
+<p>Here we will use a simpler version of select that keeps all the columns as is and filters out some of the rows. This is the same as the following sql</p>
+<blockquote>
+  <p>select * from covidFrame where country = 'Brazil' </p>
+</blockquote>
 
 <a id="_tryit13">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 <div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 <div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit13">
+frame.filter(r =&gt; r.country === 'Brazil')
+	</textarea></div>
+<a id="_end_tryit13">
+&nbsp;</a>
+	<div id="tryit13-error" class="tryit-error"></div>
+	<div id="tryit13-display" class="tryit-display rendered_html"></div>
+</div><div class="ui top attached label">
+                <button id="tryit13-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                  Run
+                </button>
+             </div>
+             </div></div>
+<h3 id="movecountryinformationintoanotherframe">Move country information into another frame</h3>
+
+<a id="_tryit14">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit14">
+var y = covidFrame.select(['iso_code', 'location', 'continent', 
+              'population', 'diabetes_prevalence',
+              'gdp_per_capita'
+             ],ro =&gt; ro.continent === 'Europe').distinct();
+//frameWithIndex(y).filter(ro =&gt; ro.__index$ &lt; 5) 
+display
+	</textarea></div>
+<a id="_end_tryit14">
+&nbsp;</a>
+	<div id="tryit14-error" class="tryit-error"></div>
+	<div id="tryit14-display" class="tryit-display rendered_html"></div>
+</div><div class="ui top attached label">
+                <button id="tryit14-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                  Run
+                </button>
+             </div>
+             </div></div>
+<h3 id="summaryofcasesbycountry">Summary of cases by country</h3>
+
+<a id="_tryit15">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit15">
 var {sum, count, max, mean} = gb; // aggrigator functions for groupBy
 
 var summary = frame.groupBy(
@@ -487,22 +544,22 @@ var summary = frame.groupBy(
 summary
 
 	</textarea></div>
-<a id="_end_tryit13">
+<a id="_end_tryit15">
 &nbsp;</a>
-	<div id="tryit13-error" class="tryit-error"></div>
-	<div id="tryit13-display" class="tryit-display rendered_html"></div>
+	<div id="tryit15-error" class="tryit-error"></div>
+	<div id="tryit15-display" class="tryit-display rendered_html"></div>
 </div><div class="ui top attached label">
-                <button id="tryit13-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                <button id="tryit15-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
                   Run
                 </button>
              </div>
              </div></div>
 <h2 id="letstrytoimprovethedisplayofnumbers">Lets try to improve the display of numbers</h2>
 
-<a id="_tryit14">&nbsp</a>
+<a id="_tryit16">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 <div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit14">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit16">
 function addCommas(nStr) {
     nStr += '';
     var x = nStr.split('.');
@@ -527,52 +584,6 @@ Frame.HTMLFormat.number = toStr;
 summary
 
 	</textarea></div>
-<a id="_end_tryit14">
-&nbsp;</a>
-	<div id="tryit14-error" class="tryit-error"></div>
-	<div id="tryit14-display" class="tryit-display rendered_html"></div>
-</div><div class="ui top attached label">
-                <button id="tryit14-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
-                  Run
-                </button>
-             </div>
-             </div></div>
-<h1 id="summarizetheinformationbycontinent">Summarize the information by continent</h1>
-<p>This section will reformat the data by trans to create summary by continent</p>
-
-<a id="_tryit15">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit15">
-//summary.groupBy(['continent', 'country'])
-var continent_summary = 
-    summary.groupBy(['continent', sum('deaths'),  count('country', 'countries'), mean('deaths', 'avg_by_country'), sum('cases'), sum('population')]);
-
-// Display it
-
-	</textarea></div>
-<a id="_end_tryit15">
-&nbsp;</a>
-	<div id="tryit15-error" class="tryit-error"></div>
-	<div id="tryit15-display" class="tryit-display rendered_html"></div>
-</div><div class="ui top attached label">
-                <button id="tryit15-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
-                  Run
-                </button>
-             </div>
-             </div></div>
-<h3 id="transpose">Transpose</h3>
-<p>Transpose will rotate the table, the column name comes from the row in the country column. Pay special attention
-the 'country' column is call the transpose pivot and it is important all the values in this column are unique. If the values are not unique the result of the transpose will look very weird and may violate the requirement that all the column names rae unique.</p>
-
-<a id="_tryit16">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit16">
-transpose(continent_summary, 'country')
-
-## Sample 1% (0.01) of the data and show the first 20
-	</textarea></div>
 <a id="_end_tryit16">
 &nbsp;</a>
 	<div id="tryit16-error" class="tryit-error"></div>
@@ -583,15 +594,19 @@ transpose(continent_summary, 'country')
                 </button>
              </div>
              </div></div>
+<h1 id="summarizetheinformationbycontinent">Summarize the information by continent</h1>
+<p>This section will reformat the data by trans to create summary by continent</p>
 
 <a id="_tryit17">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 <div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 <div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit17">
-var sample = frame.filter(()=&gt; Math.random() &lt; 0.01 ) // take random 1% of data
-    .slice(0,20)                          // take the first 20 
-    .sort(['continent', 'country'])      // sort by continent and country
-sample
+//summary.groupBy(['continent', 'country'])
+var continent_summary = 
+    summary.groupBy(['continent', sum('deaths'),  count('country', 'countries'), mean('deaths', 'avg_by_country'), sum('cases'), sum('population')]);
+
+// Display it
+
 	</textarea></div>
 <a id="_end_tryit17">
 &nbsp;</a>
@@ -603,16 +618,58 @@ sample
                 </button>
              </div>
              </div></div>
+<h3 id="transpose">Transpose</h3>
+<p>Transpose will rotate the table, the column name comes from the row in the country column. Pay special attention
+the 'country' column is call the transpose pivot and it is important all the values in this column are unique. If the values are not unique the result of the transpose will look very weird and may violate the requirement that all the column names rae unique.</p>
+
+<a id="_tryit18">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit18">
+transpose(continent_summary, 'country')
+
+## Sample 1% (0.01) of the data and show the first 20
+	</textarea></div>
+<a id="_end_tryit18">
+&nbsp;</a>
+	<div id="tryit18-error" class="tryit-error"></div>
+	<div id="tryit18-display" class="tryit-display rendered_html"></div>
+</div><div class="ui top attached label">
+                <button id="tryit18-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                  Run
+                </button>
+             </div>
+             </div></div>
+
+<a id="_tryit19">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit19">
+var sample = frame.filter(()=&gt; Math.random() &lt; 0.01 ) // take random 1% of data
+    .slice(0,20)                          // take the first 20 
+    .sort(['continent', 'country'])      // sort by continent and country
+sample
+	</textarea></div>
+<a id="_end_tryit19">
+&nbsp;</a>
+	<div id="tryit19-error" class="tryit-error"></div>
+	<div id="tryit19-display" class="tryit-display rendered_html"></div>
+</div><div class="ui top attached label">
+                <button id="tryit19-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                  Run
+                </button>
+             </div>
+             </div></div>
 <h2 id="createsomeutilityfunctiontoroundanumericstring">Create some utility function to round a numeric string</h2>
 <ul>
 <li>Since all data is stored as strings or number, empty values are represented ny the empty string</li>
 <li>The round function will conver it to a numeric round the value convert back to a string</li>
 </ul>
 
-<a id="_tryit18">&nbsp</a>
+<a id="_tryit20">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 <div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit18">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit20">
 // Since all data is stored as strings
 // The round function will convert empty strings to '0', will round the value
 
@@ -635,12 +692,12 @@ var testS = ({
 testS
 
 	</textarea></div>
-<a id="_end_tryit18">
+<a id="_end_tryit20">
 &nbsp;</a>
-	<div id="tryit18-error" class="tryit-error"></div>
-	<div id="tryit18-display" class="tryit-display rendered_html"></div>
+	<div id="tryit20-error" class="tryit-error"></div>
+	<div id="tryit20-display" class="tryit-display rendered_html"></div>
 </div><div class="ui top attached label">
-                <button id="tryit18-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                <button id="tryit20-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
                   Run
                 </button>
              </div>
@@ -652,57 +709,16 @@ testS
 us the list of those column names</li>
 </ul>
 
-<a id="_tryit19">&nbsp</a>
+<a id="_tryit21">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 <div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit19">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit21">
 var {arrProd} = DataFrame;
 var p1 = arrProd(['a','b','c'], 'x'); // [ ['a', 'x'], ['b', 'x'], ['c', 'x'], ]
 var p2 = arrProd('x', ['a','b','c']); // [ ['x', 'a'], ['x', 'b'], ['x', c'], ]
 var p3 = arrProd(['a','b'], ['X', 'Y'])// [ ['a', 'X'],['a', 'Y'], ['b', 'X'], ['b', 'Y'], ]
 JSON.stringify([p1, p2, p3])
 
-	</textarea></div>
-<a id="_end_tryit19">
-&nbsp;</a>
-	<div id="tryit19-error" class="tryit-error"></div>
-	<div id="tryit19-display" class="tryit-display rendered_html"></div>
-</div><div class="ui top attached label">
-                <button id="tryit19-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
-                  Run
-                </button>
-             </div>
-             </div></div>
-
-<a id="_tryit20">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit20">
-function forceZero(v) { return round(v || '0')}
-
-var NUMERIC_COLS = frame.numericColumns;
-var col_update_list = arrProd(NUMERIC_COLS,forceZero);
-var TO_ZERO = Object.fromEntries(col_update_list);
-
-	</textarea></div>
-<a id="_end_tryit20">
-&nbsp;</a>
-	<div id="tryit20-error" class="tryit-error"></div>
-	<div id="tryit20-display" class="tryit-display rendered_html"></div>
-</div><div class="ui top attached label">
-                <button id="tryit20-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
-                  Run
-                </button>
-             </div>
-             </div></div>
-
-<a id="_tryit21">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit21">
-// Update the frame so that all empty value in numeric columns is set to zero 
-frame = frame.update(TO_ZERO)
-frame
 	</textarea></div>
 <a id="_end_tryit21">
 &nbsp;</a>
@@ -714,12 +730,53 @@ frame
                 </button>
              </div>
              </div></div>
-<h3 id="creatasummaryofcoviddata">Creat a summary of covid data</h3>
 
 <a id="_tryit22">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 <div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 <div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit22">
+function forceZero(v) { return round(v || '0')}
+
+var NUMERIC_COLS = frame.numericColumns;
+var col_update_list = arrProd(NUMERIC_COLS,forceZero);
+var TO_ZERO = Object.fromEntries(col_update_list);
+
+	</textarea></div>
+<a id="_end_tryit22">
+&nbsp;</a>
+	<div id="tryit22-error" class="tryit-error"></div>
+	<div id="tryit22-display" class="tryit-display rendered_html"></div>
+</div><div class="ui top attached label">
+                <button id="tryit22-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                  Run
+                </button>
+             </div>
+             </div></div>
+
+<a id="_tryit23">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit23">
+// Update the frame so that all empty value in numeric columns is set to zero 
+frame = frame.update(TO_ZERO)
+frame
+	</textarea></div>
+<a id="_end_tryit23">
+&nbsp;</a>
+	<div id="tryit23-error" class="tryit-error"></div>
+	<div id="tryit23-display" class="tryit-display rendered_html"></div>
+</div><div class="ui top attached label">
+                <button id="tryit23-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                  Run
+                </button>
+             </div>
+             </div></div>
+<h3 id="creatasummaryofcoviddata">Creat a summary of covid data</h3>
+
+<a id="_tryit24">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+<div class="ui sizer vertical segment bottom">	<textarea class="tryit ui " id="tryit24">
 var round_some_columns =  { 
     total_cases: round, 
     max_new_cases_in_a_day: round,
@@ -736,12 +793,12 @@ frame.groupBy(['continent','country', // columns to group on
     .update( {...round_some_columns, avg_new_cases_in_a_day: (v,ro) =&gt; round(ro.total_cases/ro.rows)} )
     .sort(['-rows', '-continent','-total_cases']) // rows, continent and total_cases is sorted in descending order: 
 	</textarea></div>
-<a id="_end_tryit22">
+<a id="_end_tryit24">
 &nbsp;</a>
-	<div id="tryit22-error" class="tryit-error"></div>
-	<div id="tryit22-display" class="tryit-display rendered_html"></div>
+	<div id="tryit24-error" class="tryit-error"></div>
+	<div id="tryit24-display" class="tryit-display rendered_html"></div>
 </div><div class="ui top attached label">
-                <button id="tryit22-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
+                <button id="tryit24-run" class="ui  disabled right labeled icon button texec"><i class="caret square right icon"></i>
                   Run
                 </button>
              </div>
