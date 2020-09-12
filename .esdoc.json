@@ -1,0 +1,11 @@
+{
+  "source": "../data-frame/src",
+  "destination": "./frame/docs",
+  "plugins": [
+  		{"name": "esdoc-standard-plugin" },
+  		{
+        "name": "esdoc-type-inference-plugin",
+        "option": {"enable": false }
+    	}
+   ]
+}

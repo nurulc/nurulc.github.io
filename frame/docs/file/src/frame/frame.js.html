@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/frame/frame.js | nurulc.github.io</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="general web site"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="nurulc.github.io"><meta property="twitter:description" content="general web site"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/nurulc/nurulc.github.io"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#array">array</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrCMP">arrCMP</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrEQ">arrEQ</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-FLATTEN">FLATTEN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-flatten">flatten</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrProd">arrProd</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-reord">reord</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__ARRAY__">__ARRAY__</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reord">reord</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#array-arrayutils">array/arrayutils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrConcat">arrConcat</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrCountVal">arrCountVal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrCurry">arrCurry</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrDiff">arrDiff</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrDistinct">arrDistinct</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrHash">arrHash</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrIntersect">arrIntersect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrOf">arrOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrRemove">arrRemove</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrSplit">arrSplit</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrUnion">arrUnion</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrZip">arrZip</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-filterIX">filterIX</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-last">last</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-newArray">newArray</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-redim">redim</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-safeDedup">safeDedup</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setHash">setHash</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-vecAdd">vecAdd</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-xor">xor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dictToZip">dictToZip</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dictToZipB">dictToZipB</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-zipToDict">zipToDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrConcat">arrConcat</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrCount">arrCount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrCurry">arrCurry</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrDedup">arrDedup</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrDiff">arrDiff</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrHash">arrHash</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrIntersect">arrIntersect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrMax">arrMax</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrMean">arrMean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrMin">arrMin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrOf">arrOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrRemove">arrRemove</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrSplit">arrSplit</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrSum">arrSum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrUnion">arrUnion</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrZip">arrZip</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-last">last</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-newArray">newArray</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-redim">redim</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-safeDedup">safeDedup</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-vecAdd">vecAdd</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-xor">xor</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#array-intset">array/intset</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-asSortedSet">asSortedSet</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dedupSortedArr">dedupSortedArr</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-findIndexOf">findIndexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-hasNoDups">hasNoDups</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-intersect">intersect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-intersectL">intersectL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isSorted">isSorted</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-max">max</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-range">range</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-similarity">similarity</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-subtract">subtract</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unionL">unionL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-asSortedSet">asSortedSet</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dedupSortedArr">dedupSortedArr</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-findIndexOf">findIndexOf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-hasNoDups">hasNoDups</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-intersect">intersect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-intersectL">intersectL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-isSorted">isSorted</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-max">max</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-range">range</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-similarity">similarity</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-subtract">subtract</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-unionL">unionL</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dict">dict</a><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__DICT__">__DICT__</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#dict-utils">dict/utils</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dict/utils/Accum.js~Accum.html">Accum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dict/utils/MultiDict.js~MultiDict.html">MultiDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dict/utils/MultiDictSet.js~MultiDictSet.html">MultiDictSet</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/dict/utils/SumDict.js~SumDict.html">SumDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-groupByToDict">groupByToDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-groupToDict">groupToDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-zipTo">zipTo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-groupByToDict">groupByToDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-groupToDict">groupToDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-zipTo">zipTo</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame">frame</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/frame/BaseFrame.js~BaseFrame.html">BaseFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrToCol">arrToCol</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createAccesClass">createAccesClass</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-genColIxFunc">genColIxFunc</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getColIx">getColIx</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-groupBy">groupBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-haveFrame">haveFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-_makeUnique">_makeUnique</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-arrayUniq">arrayUniq</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-sortFrameBy">sortFrameBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toHTML">toHTML</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__FRAME__">__FRAME__</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrToCol">arrToCol</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-haveFrame">haveFrame</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameSum">frameSum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameToString">frameToString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameWithIndex">frameWithIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transpose">transpose</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameCount">frameCount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameFromBuffer">frameFromBuffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameSum">frameSum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameToString">frameToString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameWithIndex">frameWithIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-transpose">transpose</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-unionFrame">unionFrame</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-groupby-utils">frame/groupby-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-accStr">accStr</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbCount">gbCount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbMax">gbMax</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbMean">gbMean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbMerge">gbMerge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbMergeU">gbMergeU</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbMin">gbMin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbStdDiv">gbStdDiv</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbSum">gbSum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-gbVal">gbVal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-accStr">accStr</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gb">gb</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbCount">gbCount</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbMax">gbMax</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbMean">gbMean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbMerge">gbMerge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbMergeU">gbMergeU</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbMin">gbMin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbStdDiv">gbStdDiv</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbSum">gbSum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-gbVal">gbVal</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-join-utils">frame/join-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-changeNameTo">changeNameTo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-colName">colName</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fullInnerJoin">fullInnerJoin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDict">getDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getTransform">getTransform</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-indexFrameColumn">indexFrameColumn</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-innerJoin">innerJoin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-joinOp">joinOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-leftJoin">leftJoin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-localGroupBy">localGroupBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-matchIt">matchIt</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-outerJoin">outerJoin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-project">project</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-reverseProjectList1">reverseProjectList1</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-reverseProjectList2">reverseProjectList2</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EMPTY_KEY">EMPTY_KEY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-changeNameTo">changeNameTo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-colName">colName</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fullInnerJoin">fullInnerJoin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-getDict">getDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-getTransform">getTransform</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-indexFrameColumn">indexFrameColumn</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinOp">joinOp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-localGroupBy">localGroupBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-matchIt">matchIt</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-project">project</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#string">string</a><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__STRING__">__STRING__</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#string-csv">string/csv</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-csvLine">csvLine</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-dataSplit">dataSplit</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-psvLine">psvLine</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-trimListElements">trimListElements</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-tsvLine">tsvLine</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-csvLine">csvLine</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dataSplit">dataSplit</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-psvLine">psvLine</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-trimListElements">trimListElements</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-tsvLine">tsvLine</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#string-strdict">string/strdict</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/string/strdict/StrDict.js~StrDict.html">StrDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-strEq">strEq</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-strHash">strHash</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-strEq">strEq</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-strHash">strHash</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#string-strutil">string/strutil</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-countCh">countCh</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-padTo">padTo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-prefixHead">prefixHead</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-prefixLen">prefixLen</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-prefixTail">prefixTail</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-prod">prod</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-reverse">reverse</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-strJoin">strJoin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-countCh">countCh</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-padTo">padTo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-prefixHead">prefixHead</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-prefixLen">prefixLen</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-prefixTail">prefixTail</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-prod">prod</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-reverse">reverse</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-strJoin">strJoin</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils">utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-AND">AND</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-FALSE">FALSE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-NOT">NOT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-OR">OR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-TRUE">TRUE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-primeAround">primeAround</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-renameColumns">renameColumns</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EMPTY_ARRAY">EMPTY_ARRAY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-EMPTY_STR">EMPTY_STR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-K">K</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-SEPARATOR_STRING">SEPARATOR_STRING</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ZERO_DECIMAL">ZERO_DECIMAL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ZERO_STR">ZERO_STR</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__UTILS__">__UTILS__</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-renameColumns">renameColumns</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils-objutils">utils/objutils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-filterDict">filterDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fromKeyValueList">fromKeyValueList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fromKeyValueListV">fromKeyValueListV</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-genFilterFunction">genFilterFunction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-genObjMapper">genObjMapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-keys">keys</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-memoize">memoize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-pickRaw">pickRaw</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setKey">setKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-setKeyV">setKeyV</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-shallow">shallow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toKeyValueList">toKeyValueList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toKeyValueListV">toKeyValueListV</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-access">access</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-filterDict">filterDict</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fromKeyValueList">fromKeyValueList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-fromKeyValueListV">fromKeyValueListV</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-genFilterFunction">genFilterFunction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-genObjMapper">genObjMapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-keys">keys</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-mapOver">mapOver</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-memoize">memoize</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-pick">pick</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-pickRaw">pickRaw</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-setKey">setKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-setKeyV">setKeyV</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-shallow">shallow</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-toKeyValueList">toKeyValueList</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-toKeyValueListV">toKeyValueListV</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-isA">isA</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils-sort-helper">utils/sort-helper</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cmpNumOrStrBy">cmpNumOrStrBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cmpStr">cmpStr</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-cmpStrNum">cmpStrNum</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-combineCmp">combineCmp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-revCmp">revCmp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-toNumber">toNumber</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-cmpNumOrStrBy">cmpNumOrStrBy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-combineCmp">combineCmp</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-revCmp">revCmp</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#utils-types">utils/types</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isArray">isArray</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isEmpty">isEmpty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isFunction">isFunction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isString">isString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-isArray">isArray</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-isEmpty">isEmpty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-isFunction">isFunction</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-isString">isString</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/frame/frame.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">// jshint undef:true
+// jshint unused:true
+/*
+Copyright (c) 2020, Nurul Choudhury
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot; AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*/
+// Frame - similar to pandas in python
+
+//import { getFreq } from &apos;./frequency&apos;;
+import BaseFrame from &apos;./BaseFrame&apos;;
+import { createAccesClass } from &apos;./frame_element&apos;;
+import sortFrameBy from &apos;./sortframe&apos;;
+import {groupBy} from &apos;./groupby&apos;;
+import frameWithIndex from &apos;./frame-utils/frameWithIndex&apos;;
+import { arrRemove, arrDedup, newArray } from &apos;../array&apos;;
+import {EMPTY_ARRAY} from &apos;../utils/constants&apos;;
+import {K,isA, isEmpty} from &apos;../utils&apos;;
+import {toNumber} from &apos;../utils/sort-helper&apos;;
+import {innerJoin, leftJoin, outerJoin} from &apos;./join-utils&apos;;
+//import {combineCmp, cmpNumOrStrBy, toNumber, revCmp} from &apos;../utils/sort-helper&apos;;
+//import genColIxFunc from &apos;./genColIxFunc&apos;;
+import haveFrame from &apos;./haveFrame&apos;;
+import arrEqual from &apos;../array/arrEQ&apos;;
+import toHTML from &apos;./toHTML&apos;;
+//import {arrayUniq, _makeUnique} from &apos;./makeUnique&apos;;
+import {_makeUnique} from &apos;./makeUnique&apos;;
+import {vecAdd,zipToDict} from &apos;../array/arrayutils&apos;;
+
+
+
+const isString = isA.str;
+const isFunc = isA.func;
+const arrOfStr = isA.arrayOf(isA.str);
+function isNum(v) {return v !== &apos;&apos; &amp;&amp; !isNaN(+v); }
+function Identity(x) { return x; }
+
+
+
+// function objName(o) {
+// 	if(typeof o === &apos;object&apos; ) return o.constructor.name;
+// 	return typeof o;
+// }
+
+
+
+
+/**
+ * This pure data structure represent a database like table
+ * internally it consists of rows and columns representing a generalized 2d matrix
+ * You can also think of this like a limited excel sheet.
+ * No operation will visibly modify the Frame, all operations create a new frame
+ * The class takes considerable effort to reuse as much of the internal data as possible
+ * to minimize the amount of garbage collection that is necessary.
+ *
+ * It easily handles large number of rows and columns and has been tested to work well
+ * with over 1 million rows with hundreds of columns. The real limitation is the amount of ram
+ * available to Javascript.
+ * 
+ */
+export class Frame extends BaseFrame {
+	/**
+	 * construct a new frame, Note once you have passed the data and column arguments, you no longer own those
+	 * two items and should not modify them or any of their content
+	 * 
+	 * @param  {Array} data    the data fot the frame is an array of rows and each row is an array of strings or numbers
+	 * @param  {Array} columns array of strings representing the column names
+	 * @param  {[type]} name    optional name for the frame
+	 * @param  {[type]} keyFunc optional function that is present will return the column represinting the unique key
+	 */
+	constructor(data,columns,name,keyFunc) {
+		super(data,columns,name,keyFunc);
+		this._unique = undefined;
+		this._sortCols = EMPTY_ARRAY;
+		this._row = undefined;
+		this.AccessClass = columns?createAccesClass(this._columns):undefined;
+		this.showLen = 400;
+		this._hash = -1;
+	}
+
+	
+
+	// ======================================================================
+	/**
+	 * [asObj description]
+	 * @param  {[type]} ix [description]
+	 * @return {[type]}    [description]
+	 */
+	asObj(ix) { return this._rowObj(this.data[ix], ix); }
+	
+	/**
+	 * Get an array of row objects
+	 * @return {[RowObject]} array of row objects
+	 */
+	get rows() { 
+		if(this._rows === undefined) 
+			this._rows = this.asObjList();
+		return this._rows; 
+	}
+
+
+
+	/**
+	 * Convert several columns into a single column, 
+	 *   the elements rae converted to theeir string representation
+	 *
+	 *   e.g aFrame.columns = [&apos;name&apos;,&apos;street&apos;,&apos;city&apos;,&apos;state&apos;,&apos;zip&apos;]
+	 *     but we want to convert it into a [&apos;name&apos;, &apos;address&apos;] 
+	 *     so: [&apos;street&apos;,&apos;city&apos;,&apos;state&apos;,&apos;zip&apos;] =&gt; [&apos;address&apos;]
+	 *
+	 *   newFrame = aFrame.mergeCols(null, [&apos;street&apos;,&apos;city&apos;,&apos;state&apos;,&apos;zip&apos;], &apos;address&apos;,  &quot;, &quot;);
+	 * 
+	 * @param  {array&lt;string&gt;} cols         columns to keep (may ne null or undefined)
+	 * @param  {array&lt;string&gt;} someColsToMerge     [description]
+	 * @param  {String} newNameForMergerCol [description]
+	 * @param  {string|function} sepOrMergeFunc      [description]
+	 * @return {Frame}                     [description]
+	 */
+	mergeCols(cols, someColsToMerge, newNameForMergerCol, sepOrMergeFunc) {
+		
+		if( !cols || cols.length === 0) {
+			cols = arrRemove(this.columns, someColsToMerge);
+		}
+		sepOrMergeFunc = sepOrMergeFunc === undefined?&apos;,&apos;:sepOrMergeFunc;
+		let mergeFunc = isString(sepOrMergeFunc)? (arr =&gt; arr.join(sepOrMergeFunc)) : sepOrMergeFunc;
+		if( !isFunc(mergeFunc)) throw new Error(&apos;Merge function of seperator expected&apos;);
+		let nf = this.project(cols);
+		let mergeCols = this.project(someColsToMerge);
+		
+		return new Frame( 
+			nf.data.map((row,ix) =&gt; row.concat(joinColsAt(ix)) ),	
+			cols.concat([newNameForMergerCol]),
+			this._name, 
+			this.keyFunc );
+		// =======
+		function joinColsAt(ix) {
+			return [mergeFunc(mergeCols.data[ix].filter(x =&gt; x))];
+		}
+	}
+
+	/**
+	 * [asObjList description]
+	 * @return {[type]} [description]
+	 */
+	asObjList() {
+		return this.data.map((x,i) =&gt; this._rowObj(x,i));
+	}
+	/**
+	 * _rowObj This is an code efficient mathod of accessing the element of the &apos;rowLikeArray&apos; 
+	 * using the columns names of the frame. The RowElement created is a facade to the rowLikeArray,
+	 * it does not actuall copy the elements of the array to itself. It is just a convinient way
+	 * of retrieving the elements of the array by name.
+	 *
+	 * e.g. if the this.columns : [&apos;name&apos;, &apos;age&apos;, &apos;sex&apos;]
+	 *
+	 * let arr = [&apos;Jane&apos;, 21, &apos;Female&apos;];
+	 * let ro = this._rowObj(arr,5);
+	 *
+	 * ro.sex   is the same as arr[2] == &apos;Female&apos;
+	 * ro.name  === arr[0]
+	 * ro._index$ === 5
+	 *
+	 * Finally:
+	 * arr[2] = &apos;Male&apos;;
+	 * ro.sex === &apos;Male&apos;
+	 * 
+	 * @param  {row} rowLikeArray array representing the row, this array should have the same length as the rows in the frame
+	 * @param  {int32} ix row number
+	 * @return {RowObject}      row object representing the element
+	 */
+	_rowObj(rowLikeArray,ix) {
+		return new this.AccessClass(rowLikeArray,ix);
+	}
+
+	/**
+	 * withIndex add an index column to the befining of the frame or at the end of the frame
+	 * @param  {boolean} indexName Name of the index defaults to _INDEX
+	 * @param  {boolean} atEnd if true the index is placed on the last column, otherwise it is the first column
+	 * @return {[type]} [description]
+	 */
+	withIndex(indexName=&apos;_INDEX&apos;,atEnd) {
+		return frameWithIndex(this,indexName,atEnd);
+	}
+
+
+	/**
+	 * find a row using the test function fn. The test function recieves a row ia s RowObject facade, see _rowObj method.
+	 * @param  {Function} fn function with a test criterion for the find operation 
+	 * @return {row_object}      undefined if nothing found or a RowObject for the row matching the test function
+	 */
+	find(fn) {
+		let row = this._rowObj();
+		let v = this.data.find((x,i) =&gt; fn(row.__unsafeSet(x,i),i));
+		return v ? this._rowObj(v): undefined;
+	}
+
+
+	/**
+	 * [description]
+	 * @param  {function} fn	f(rowObject, )
+	 * @return {Array}     [description]
+	 */
+	map(fn) { return this.mapF(fn); }
+
+	/**
+	 * Similar to Array.map
+	 * @param  {function} fn	takes fn(rowObject, index, this.data )
+	 * @return {Array}     [description]
+	 */
+	mapF(fn) { 
+		let ro = this._rowObj();
+		return this.data.map((row,i,arr) =&gt; fn(ro._unsafeSet(row,i),i,arr)); 
+	}	
+
+	/**
+	 * Similar to arry reduce except it works on frames
+	 * @param  {function} fn   reduce function (acc:T, r:RowObject, index, array)
+	 * @param  {T}   ini  initial value  of accumulator type T
+	 * @return {T}        return the accumulator
+	 */
+	reduce(fn, ini) { return this.data.reduce( (acc, x, ix, arr) =&gt; fn(acc, this._rowObj(x,ix), ix, arr), ini); }
+	
+	/**
+	 * Concatinate frames and return a new frame (does not modify any of the input frames)
+	 * @param  {...Frame} frames list of frames
+	 * @return {Frame}           concatination of all the frames
+	 */
+	concat(...frames) {
+		frames = frames.map(haveFrame);
+		frames = frames.filter( f =&gt; f &amp;&amp; f.length &gt; 0);
+		if( frames.length === 0) return this;
+		frames.forEach(f =&gt; {
+			let notSame = this.columns.find( v =&gt; f.columns.indexOf(v) === -1);
+			if( notSame ) throw new Error(&apos;incompatible columns: [&apos;+this.columns.join(&apos;,&apos;)+&apos;] &lt;&gt; [&apos;+f.columns.join(&apos;,&apos;)+&apos;]&apos;);
+		});
+		let arrays = frames.map( 
+			f =&gt; arrEqual(this.columns, f.columns)? 
+				f.data : 
+				f.project(this.columns).data
+		);
+		let res = [].concat(...[this.data,...arrays]);
+		return new this.constructor(res, this._columns, this._name, this.keyFunc);
+	}
+	
+
+	/**
+	 * similar to an array forEach
+	 * @param  {function} fn 	takes function(row:array, ix, array)
+	 */
+	forEachF(fn) { this.data.forEach((row, ix, arr) =&gt; fn(this._rowObj(row,ix), ix, arr)); }
+
+	/**
+	 * same as filter but returns the index of the filtered lines
+	 * @param  {function} func filter function
+	 * @return {[int32]}  returns an array of row indexes (indicies)
+	 */
+	filterIX(func) {  
+		if ( ! (typeof func === &apos;function&apos;) &amp;&amp; this) 
+			throw new TypeError();
+		var data = this.data;
+		var len = data.length &gt;&gt;&gt; 0,
+			res = [],//new Array(len), // preallocate array
+			i = -1;
+		
+		while (++i !== len) if (func(data[i], i, this.asObj(i))) res.push(i); //res[c++] = i;
+		//res.length = c; // shrink down array to proper size
+		return res;
+	}	
+
+	/**
+	 * Takes a filter function or an array of row indicies and returns a new Frame with the selected rows
+	 * @param  {function_array} fnOrArray filter function (r:RowObject,ix,array) or an array of index into the data
+	 * @return {[type]}           A new frame with rows filtered out
+	 */
+	filter(fnOrArray) { 
+		if(!this) throw new TypeError(&apos;Filter cannot be use as a raw function&apos;);
+		if ( typeof fnOrArray === &apos;function&apos;)  {
+			let fn = fnOrArray;
+			let row = this._rowObj();
+			return new this.constructor(
+				this.data.filter( (x,ix,arr) =&gt; fn(row.__unsafeSet(x,ix),ix,arr)), 
+				this._columns, this._name, 
+				this.keyFunc); 
+		}
+		else if( Array.isArray(fnOrArray) ) { // expects an array of integer index into the frame return s teh values for all valid index
+			let elements = fnOrArray;
+			let len = elements.length &gt;&gt;&gt; 0;
+			let res = []; //new Array(len);
+			let data = this.data;
+			let dlen = data.length;
+			let i = -1;
+			let newColName = fnOrArray.map(i =&gt; this._columns[i] || &apos;COL_&apos;+i);
+			while(++i !== len) {
+				let ix = elements[i];
+				if(typeof ix !== &apos;number&apos;) continue;
+				if(ix &lt;0 || ix &gt;= dlen) continue;
+				let r = data[ix];
+				if(r !== undefined) res.push(r);
+			} 
+			return new this.constructor(res, newColName, this._name, this.keyFunc); 
+		}
+	}
+
+	/**
+	 * remove all redundent copies of strings, this is the only destructive operation oan aframe
+	 * while still maintaining functional purity
+	 * @return {[type]}        [description]
+	 */
+	makeUnique() {
+		//if(this._unique) return this;
+		let len = this.columns.length;
+		let columns = this.columns, data = this.data;
+		let res = {};
+		for(let i=0; i&lt;len; i++) {
+			res[columns[i]] = Object.keys(_makeUnique(data, i)).sort();
+		}
+		//this._unique = retain?res:true;
+		return this;
+	}
+
+
+	/**
+	 * 
+	 *   colsMapping can be a 
+	 *   		1. rearranged list of col names from the frame e.g [ &apos;B&apos;, &apos;A&apos;, &apos;F&apos;]
+	 *   		2. or rearranged list of col names [ 
+	 *   		   ...(&apos;columnName&apos; | &apos;oldName=newName&apos; | &apos;newColumnName&apos;)
+	 *   		   ] 
+	 *   example of usage:
+	 *   list - Frame with list.data:
+	 *
+	 *			   [ [ &apos;jan&apos;, &apos;mon&apos;, 1, 2 ],
+	 *				 [ &apos;jan&apos;, &apos;tue&apos;, 2, 6 ],
+	 *				 [ &apos;jan&apos;, &apos;wed&apos;, 3, 4 ],
+	 *				 [ &apos;jan&apos;, &apos;thu&apos;, undefined, 1 ],
+	 *				 ...
+	 *
+	 *
+	 *			  list.columns: [ &apos;mon&apos;, &apos;weekday&apos;, &apos;v1&apos;, &apos;v2&apos; ],
+	 *
+	 *	add column &apos;nurul&apos; with value 123, change &apos;weekday&apos; to uppercase, &apos;v1&apos; conver undefined to 0		  
+	 *			
+	 *			// Note the names if mapper are the new column names
+	 *			var mapper = {
+	 *				 nurul: (v, rowObj, i,row) =&gt; &quot;123&quot;,
+	 *				 weekday: (v) =&gt; v.toUpperCase(),
+	 *				 v1: (v) =&gt; v===undefined?0:v
+	 *			};
+	 *
+	 *			list.project([ &apos;mon&apos;, &apos;weekday&apos;,&apos;nurul&apos; , &apos;v1&apos;, &apos;v2&apos; ], mapper);
+	 *
+	 *	result:
+	 *	
+	 *			 [ 	[ &apos;jan&apos;, &apos;MON&apos;, &apos;123&apos;, 1, 2 ],
+	 *				[ &apos;jan&apos;, &apos;TUE&apos;, &apos;123&apos;, 2, 6 ],
+	 *				[ &apos;jan&apos;, &apos;WED&apos;, &apos;123&apos;, 3, 4 ],
+	 *				  &apos;jan&apos;, &apos;THU&apos;, &apos;123&apos;, 0, 1 ],
+	 *				...
+	 *
+	 *    another expample:
+	 *    
+	 *            // Note the use. of the now column names
+	 *            function toNm(x) { x? (+x) : 0; }
+	 *            var mapper1 = {
+	 *			     nurul: () =&gt; &quot;123&quot;,
+	 *			     &quot;Week Day&quot;: v =&gt; v?v.toUpperCase(): &apos;&apos;,
+	 *			     v1: (v) =&gt; v===undefined?0:v,
+	 *			     v3: (v, rowObj) =&gt; toNm(rowObj.v1) + toNm(rowObj.v2) // sum of v1 and v2
+	 *		      }; 
+	 *		      list.project([ &apos;mon=Month&apos;, &apos;weekday=Week Day&apos;,&apos;nurul&apos; , &apos;v1&apos;, &apos;v2&apos;, &apos;v3&apos; ], mapper);	    
+	 *
+	 *	the result is the same as the previous example, but the columns names will now be
+	 *			[&apos;Month&apos;, &apos;Week Day&apos;, &apos;nurul&apos;, &apos;v1&apos;, &apos;v2&apos;, &apos;v3&apos; ]
+	 * 
+	 * [project description]
+	 * @param  {selected_columns}  colsMapping array of strings
+	 * @param  {Object}  mappingObj  a mapping object with { newColumnNam: mappingFunction(oldCellValue, rowObj, rowNumber, rawRowArray)}
+	 * @param  {function}  filter    a filter function applied to the original row to determine if the row should be included
+	 * @param  {function}  tester    if a function to test if a column/row should have a mapping applied
+	 * @return {Frame}              a new Frame with the selected columns, mappings, and filters applied 
+	 */
+	project(colsMapping,mappingObj,filter=undefined, tester=undefined) {
+		if(filter &amp;&amp; !isA.func( filter ) ) throw new TypeError(&apos;filter must be a function&apos;);
+		if(tester &amp;&amp; !isA.func(tester) ) throw new TypeError(&apos;tester must be a function&apos;);
+		if(mappingObj &amp;&amp; !isA.obj(mappingObj)) throw new TypeError(&apos;mappingObj must be a object&apos;);
+		if(colsMapping !== undefined) {
+			if(isA.func(colsMapping)) {
+				colsMapping = colsMapping(this, mappingObj); // apply the function to get the actual mapping
+			}
+			if( !isEmpty(colsMapping) &amp;&amp; !arrOfStr(colsMapping) ) {
+				throw new TypeError(&apos;colsMapping must be an array of strings or undefined&apos;);
+			}
+		}
+		if( isEmpty(colsMapping) &amp;&amp; isEmpty(mappingObj) &amp;&amp; isEmpty(filter) ) return this; //someCols = this.columns.slice(0);
+		if( isEmpty(colsMapping) ) colsMapping = this.columns;
+		if( filter &amp;&amp; !isFunc(filter)) throw new TypeError(&apos;Filter: &apos;+filter+&apos; must be a function&apos;);
+		let mappedCols = colsMapping
+			.map(n =&gt; n.split(&apos;=&apos;)) // convert &apos;original column name&apos; and &apos;new column name&apos; pair 
+			.map(([originalName,newName]) =&gt; [originalName, newName||originalName] );
+		//check if we are only renaming the columns, then the data does can stay the same, just the columns are renamed
+		if( mappingObj === undefined &amp;&amp; filter === undefined &amp;&amp; arrEqual(this.columns,mappedCols.map(([a]) =&gt; a)) ) {
+			return new this.constructor(this.data,mappedCols.map(([,b]) =&gt; b), this.name + &apos;1&apos;);
+		}
+
+		let ixList = mappedCols.map( ([name]) =&gt; this.colIx(name));// get index of column in the original data
+
+		let newCols = mappedCols.map(([,newName]) =&gt; newName);
+		if( arrDedup(newCols).length !== newCols.length) {
+			throw new Error(&apos;project - new column names must be uinque [&apos;+ newCols.join(&apos;,&apos;)+&apos;]&apos;);
+		}
+		const len = this.data.length;
+		const data = this.data;
+		let result = filter?[]:newArray(len,[]);
+		
+		
+		let len2 = ixList.length;
+		let fn;
+
+		if( mappingObj ){
+			let colMapFn = newCols.map(name =&gt; mappingObj[name]);
+			let roV = this._rowObj();
+			for(let i=0; i&lt;len; i++) {
+				let row = [];//newArray(len2,dummy);
+				let inrow = data[i];
+				let ro = (tester || mappingObj || filter) ? roV.__unsafeSet(inrow,i): undefined;
+				if(filter &amp;&amp; !filter(ro)) continue;
+				for(let j=0; j&lt;len2; j++) {
+					let pos = ixList[j];
+					let v = pos === -1?&apos;&apos;: inrow[pos];
+
+					if(tester &amp;&amp; !tester(ro, newCols[j])) row.push(v);
+					else {
+						if( (fn = colMapFn[j]) !== undefined) v = fn(v, ro, pos, inrow);
+						row.push(v!==undefined?v:&apos;&apos;);
+					}
+				}
+				if(filter) result.push(row); 
+				else result[i] = row;
+			}
+
+		}
+		else {
+			let ro = this._rowObj();
+			for(let i=0; i&lt;len; i++) {
+				let row =[];
+				let inrow = data[i];
+				if(filter) {
+					//ro = ro.__unsafeSet(inrow,i);
+					if(!filter(ro.__unsafeSet(inrow,i)) ) continue;
+				}
+				for(let j=0; j&lt;len2; j++) {
+					let pos = ixList[j]; // get position (index) in origimal data
+					let v = pos === -1?&apos;&apos;: inrow[pos];
+					row.push(v);
+				}	
+				if(filter) result.push(row); 
+				else result[i] = row;			
+			}
+				
+		}
+
+		
+		//result = this.data.map(row =&gt; projectRow(row, ixList));
+		return new this.constructor( result, newCols, this._name, this.keyFunc);
+	}
+	/**
+	 * select a more convinient interface to project
+	 * The primary diffenrence is the setting of new columns or adding new columns has 
+	 * been made more convinient
+	 *
+	 *  Example of setting columns
+	 *   [&apos;column&apos;, 
+	 *   	&apos;oldColumn=newColumnName&apos;, 
+	 *   	[&apos;oldCol1=newColName1&apos;, (v,ro) =&gt; some-operation],
+	 *   	[&apos;newCol&apos;, someValue],
+	 *   	[&apos;newCol2&apos;, (v,ro) =&gt; someComputedValue]
+	 *   ]
+	 * 
+	 * @param  {[type]} columns [description]
+	 * @param  {[type]} where   this is a filter function similar to SQL select ... from table where expr
+	 * @return {[type]}         [description]
+	 */
+	select(columns, where) {
+		let cols = columns.map( name =&gt; {
+			let nameStr = name;
+			let func;
+
+			if(Array.isArray(name)) [nameStr,func] = name;
+			
+			if( !isString(nameStr)) throw new TypeError(&apos;expected a column name&apos;);
+			let [oldName, newName] = nameStr.split(&apos;=&apos;);
+			return [oldName, (newName|| oldName), func];
+		});
+
+		function toFunc(v) {
+			if(isFunc(v)) return v;
+			return K(v);
+		}
+		let mapper = cols.filter(([ , ,fn]) =&gt; fn !== undefined)
+			.map(([ ,nn,fn]) =&gt; [nn, toFunc(fn)]);
+		let colMap = undefined;
+		if(mapper.length) colMap = zipToDict(mapper);
+		
+		return this.project(
+			cols.map(([oldName, newName]) =&gt; oldName+&apos;=&apos;+newName),
+			colMap, 
+			where);
+
+	}
+	/**
+	 * Convinience method as an alias for the __project__ methos
+	 * @param  {[type]}  mapper [description]
+	 * @param  {[type]}  filter [description]
+	 * @param  {[type]}  tester [description]
+	 * @return {[type]}         [description]
+	 */
+	update(mapper,filter,tester) {
+		return this.project(undefined,mapper,filter,tester);
+	}
+
+	/**
+	 * Returns a function that can be used iteratively to project one array to another.
+	 * This is 
+	 * @param  {[type]}  colsMapping [description]
+	 * @param  {[type]}  mappingObj  [description]
+	 * @return {function}            mapping function (inputArray, outputArray) rearranges the input array to the output array
+	 */
+	trProject(colsMapping,mappingObj) {
+		if( !colsMapping || colsMapping.length === 0 ) return () =&gt; []; //nothing to maporiginalName
+		let mappedCols = colsMapping
+			.map(n =&gt; n.split(&apos;=&apos;)) // convert &apos;original column name&apos; and &apos;new column name&apos; pair 
+			.map(([originalName,newName]) =&gt; [originalName, newName||originalName] );
+
+
+		//check if we are only renaming the columns, then the data does can stay the same, just the columns are renamed
+		if( mappingObj === undefined &amp;&amp; arrEqual(this.columns,mappedCols.map(([originalName,newName]) =&gt; originalName)) ) {
+			return (inrow,row) =&gt; {
+				if(!row) return inrow.slice(0);
+				for(let i =0; inrow.length; i++) row[i] = inrow[i];
+				return row;
+			};
+		}
+
+		let ixList = mappedCols.map( ([name]) =&gt; this.colIx(name));//.filter( x =&gt; x != -1);
+		//let someCols = mappedCols.map(([name]) =&gt; name);
+		let newCols = mappedCols.map(([,newName]) =&gt; newName);
+		let nc = arrDedup(newCols);
+		if( nc.length !== newCols.length) {
+			throw new Error(&apos;project - new column names must be uinque [&apos;+ newCols.join(&apos;,&apos;)+&apos;]&apos;);
+		}
+		
+		let len2 = ixList.length;
+		
+		//element mapping function supplied
+		if( mappingObj !== undefined){
+			let colMapFn = newCols.map(name =&gt; mappingObj[name]);
+			return (
+				(inrow, row,ix=0) =&gt; {
+					let fn;
+					const push = ( row === undefined) ? 
+						( v =&gt; row.push(v)) :
+						( (v,j) =&gt; row[j] = v );
+					row = row || [];
+					for(let j=0; j&lt;len2; j++) {
+						let pos = ixList[j]|0;
+						let v = pos === -1?&apos;&apos;: inrow[pos];
+						if( (fn = colMapFn[j]) !== undefined) {
+							v = fn(v, this._rowObj(inrow), ix, inrow);
+						}
+						push(v,j);
+					}
+					return row;
+				}
+			);
+
+		}
+		else { // no
+			return (inrow, row) =&gt; {
+				if( row === undefined) {
+					row = [];
+					for(let j=0; j&lt;len2; j++) {
+						let pos = ixList[j]|0;
+						let v = pos === -1?&apos;&apos;: inrow[pos];
+						row.push(v);
+					}	
+				}else {
+					for(let j=0; j&lt;len2; j++) {
+						let pos = ixList[j]|0;
+						let v = pos === -1?&apos;&apos;: inrow[pos];
+						row[j] = v;
+					}
+				}
+				return row;			
+			};
+				
+		}
+	}
+
+	/**
+	 * Creates a filter function the for the additional join checck
+	 * Note the primary joining action (primary criterion) is the joinOp which look like this
+	 * joinOp =&gt; &apos;commonColumnNameInBothFrames&apos; or &apos;colFram1==colFrame2&apos;
+	 * 
+	 * @param  {Function} fn function to compare 2 rows a and b 
+	 * @param  {[type]}   aFrame
+	 * @return {[type]}
+	 */
+	_genAuxJoinFilter(fn,aFrame) {
+		let self = this;
+		if( fn === undefined ) return fn;
+		let roSelf = self._rowObj(),
+			roAFrame = aFrame._rowObj();
+		return function(a,b) {
+			if( Array.isArray(a) &amp;&amp; Array.isArray(b) ) return fn(roSelf.__unsafeSet(a), roAFrame.__unsafeSet(b));
+			return fn(a,b);
+		};
+	}
+
+	/**
+	 * [innerJoin description]
+	 * @param  {Frame} aFrame    [description]
+	 * @param  {Array} colsToMap array of array of (strings) representing column names &apos;1.colName&apos; or &apos;2.colName&apos; 
+	 * @param  {string} joinOn    &apos;colFromThis==colFrom_aFrame&apos;
+	 * @param  {function} filter    [description]
+	 * @return {Frame}           [description]
+	 */
+	innerJoin(aFrame, colsToMap, joinOn, filter) {
+		return innerJoin(this,aFrame, colsToMap, joinOn, this._genAuxJoinFilter(filter,aFrame));
+	}
+
+
+	/**
+	 * [leftJoin description]
+ 	 * @param  {Frame} aFrame    [description]
+	 * @param  {Array} colsToMap array of (strings) representing column names &apos;1.colName&apos; or &apos;2.colName&apos; 
+	 * @param  {string} joinOn    &apos;colFromThis==colFrom_aFrame&apos;
+	 * @param  {function} filter    [description]
+	 * @return {Frame}           [description]
+	 */
+	leftJoin(aFrame, colsToMap, joinOn, filter) {
+		return leftJoin(this,aFrame, colsToMap, joinOn, this._genAuxJoinFilter(filter,aFrame));
+	}
+
+	/**
+	 * [outerJoin description]
+	 * @param  {Frame} aFrame    [description]
+	 * @param  {Array} colsToMap array of array of (strings) representing column names &apos;1.colName&apos; or &apos;2.colName&apos; 
+	 * @param  {string} joinOn    &apos;colFromThis==colFrom_aFrame&apos;
+	 * @param  {function} filter    [description]
+	 * @return {Frame}           [description]
+	 */
+	outerJoin(aFrame, colsToMap, joinOn, filter) {
+		return outerJoin(this,aFrame, colsToMap, joinOn, this._genAuxJoinFilter(filter,aFrame));
+	}
+
+
+	/** 
+	 * similar semantics to SQL groupBy, assumes list has bee sorted by &apos;groupCols&apos;
+	 * aFrame.groupBy([&apos;mon&apos;,&quot;weekday&quot;], [gbSum(&apos;v1&apos;,&apos;sumV1&apos;), gbCount(&apos;weekday&apos;, &apos;numWeekDays&apos;),
+	 *                                  	gbMin(&apos;v2&apos;, &apos;minV2&apos;), gbMax(&apos;v1&apos;,&apos;maxV1&apos;),
+	 *                                    	gbMean(&apos;v1&apos;,&apos;meanV1&apos;)
+	 *									  ])
+	 * 
+	 * @param  {[type]} groupCols                  [description]
+	 * @param  {[type]} listOfAccumulatorFunctions [description]
+	 * @param  {[type]} toSort                     [description]
+	 * @return {[type]}                            [description]
+	 */
+	groupBy(groupCols, listOfAccumulatorFunctions, toSort) {
+		let aFrame = this;
+		if(toSort === undefined || toSort === true) {
+			aFrame.sorted = undefined;
+			aFrame = aFrame.sort(groupCols.filter(name =&gt; isString(name)));
+		}
+		return groupBy(groupCols, aFrame, listOfAccumulatorFunctions);
+	}
+
+	/**
+	 * [sort description]
+	 * @param  {[type]} colNames [description]
+	 * @param  {[type]} cmpFn    [description]
+	 * @return {[type]}          [description]
+	 */
+	sort(colNames,cmpFn) { // the cmpFn is optional
+		return sortFrameBy(colNames,this,cmpFn);
+	}
+
+	get unique() {
+		if(this._unique === undefined) {
+			this.makeUnique();
+		}
+		return this._unique;
+	}
+
+	get numericColumns() {
+		const threshold = Math.trunc(this.length * 0.9);
+		const a = this.data.map(row =&gt; row.map(v =&gt; ((isNum(v) || !v) ? 1 : 0)));
+		const sums = a.reduce(vecAdd);
+
+		return this.columns.map((c, i) =&gt; ((sums[i] &gt; threshold) ? c : undefined)).filter(Identity);
+	}
+	/**
+	 * The default behavior of this method is to convert numeric strings into and return
+	 * a new frame will the converted data. It tries to reuse as much of the data as possible
+	 * 
+	 * If a conversion list is supplied, each element of the list consists of the following
+	 *    [ 
+	 *    	testFunc(aValue) -- This takes a value a returns true or false
+	 *    	convertFn(aValue) -- and returns the new value
+	 *    ]
+	 * for each cell we apply the testFunc if false then try the next testFunc in the list
+	 * if the testFunc return true, the apply the convertFn to the cell value to the new value
+	 * if non of the testFn succeeds then the cell remains unchanged
+	 * 
+	 * @param  {[[testFn, convertFn]...} convList this parameter is optional 
+	 * @return {Frame}          returns a new Frame with the converted values
+	 */
+	convertData(convList) {
+		let _data = newArray(this.length, []);
+		if(convList === undefined || convList.length === 0) {
+			let len = this.length;
+			let data = this.data;
+			for(let i = 0; i&lt;len; i++) {
+				let row = data[i];
+				if( row.some(x =&gt; typeof x === &apos;string&apos; &amp;&amp; isNum(x)) ) {
+					row = row.map(v =&gt; isNum(v) ?toNumber(v): v);
+				}
+				_data[i] = row;
+			}
+		} else {
+			//throw new Error(&apos;custom conversion is not supported&apos;);
+			
+			let len = this.length;
+			let data = this.data;
+			let dummy = data.length?data[0].slice(0):[];
+			let rlen = this.columns.length;
+
+			let cLen = convList.length;
+			for(let i = 0; i&lt;len; i++) {
+				let row = data[i];
+				let changed = false;
+				for(let col=0; col&lt;rlen; col++) {
+					dummy[col] = row[col];
+					for(let k=0; k&lt;cLen; k++) {
+						if(convList[k][0](row[col])) {
+							dummy[col] = convList[k][1](row[col]);
+							changed = true;
+							break;	
+						} 
+					}
+				}
+				if(changed) _data[i] = dummy.slice(0);
+				else _data[i] = row;
+			}
+
+		}
+		if(arrEqual(this.data,_data)) {
+			// nothing changed
+			return this;
+		}
+		return this.constructor(_data,this.columns,this.name,this.keyFunc);
+	}
+
+	
+	/*
+	 * return a frame where all rows are unique, i.e. remove duplicate rows,
+	 * @return {Frame} returns a sorted frame with no duplicates
+	 */
+	distinct() {
+		return this.groupBy(this.columns,undefined,true);
+	}
+	
+
+	/**
+	 * Return a string represent of the frame formatted as an HTML table
+	 * @return {[type]} [description]
+	 */
+	_toHtml() {
+		return toHTML(this);
+	}
+
+
+}
+
+function toString(x) {
+	return x.toString();
+}
+
+Frame.HTMLFormat = {	
+	number: toString,
+	other: toString
+};
+
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

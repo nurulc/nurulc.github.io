@@ -1,0 +1,1067 @@
+{
+  "coverage": "40.64%",
+  "expectCount": 433,
+  "actualCount": 176,
+  "files": {
+    "src/array/arrayutils/arrConcat.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrCountVal.js": {
+      "expectCount": 2,
+      "actualCount": 2,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrCurry.js": {
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        56
+      ]
+    },
+    "src/array/arrayutils/arrDiff.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrDistinct.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrHash.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        19
+      ]
+    },
+    "src/array/arrayutils/arrIntersect.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrOf.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrRemove.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrSplit.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrUnion.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/arrZip.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/filterIX.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/index.js": {
+      "expectCount": 22,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47,
+        50,
+        53,
+        56,
+        59,
+        62,
+        65,
+        68,
+        71,
+        74,
+        77,
+        80
+      ]
+    },
+    "src/array/arrayutils/last.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/newArray.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/redim.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/safeDedup.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/setHash.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/vecAdd.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/xor.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrayutils/zipToDict.js": {
+      "expectCount": 3,
+      "actualCount": 1,
+      "undocumentLines": [
+        29,
+        32
+      ]
+    },
+    "src/array/arrCMP.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/arrEQ.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        46
+      ]
+    },
+    "src/array/flatten.js": {
+      "expectCount": 4,
+      "actualCount": 2,
+      "undocumentLines": [
+        27,
+        39
+      ]
+    },
+    "src/array/index.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        9,
+        13
+      ]
+    },
+    "src/array/intset/asSortedSet.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/dedupSortedArr.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/findIndexOf.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/hasNoDups.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/index.js": {
+      "expectCount": 12,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47,
+        50
+      ]
+    },
+    "src/array/intset/intersect.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/intersectL.js": {
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        46
+      ]
+    },
+    "src/array/intset/isSorted.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/max.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/range.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/similarity.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/subtract.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/array/intset/unionL.js": {
+      "expectCount": 4,
+      "actualCount": 2,
+      "undocumentLines": [
+        38,
+        90
+      ]
+    },
+    "src/array/prod.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        23
+      ]
+    },
+    "src/array/reord.js": {
+      "expectCount": 3,
+      "actualCount": 1,
+      "undocumentLines": [
+        6,
+        10
+      ]
+    },
+    "src/dict/index.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        2
+      ]
+    },
+    "src/dict/utils/Accum.js": {
+      "expectCount": 13,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24,
+        34,
+        38,
+        39,
+        40,
+        41,
+        42
+      ]
+    },
+    "src/dict/utils/groupByToDict.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/dict/utils/groupToDict.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/dict/utils/index.js": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        19,
+        24,
+        27
+      ]
+    },
+    "src/dict/utils/MultiDict.js": {
+      "expectCount": 13,
+      "actualCount": 7,
+      "undocumentLines": [
+        22,
+        23,
+        26,
+        67,
+        82,
+        92
+      ]
+    },
+    "src/dict/utils/MultiDictSet.js": {
+      "expectCount": 4,
+      "actualCount": 4,
+      "undocumentLines": []
+    },
+    "src/dict/utils/SumDict.js": {
+      "expectCount": 14,
+      "actualCount": 2,
+      "undocumentLines": [
+        22,
+        23,
+        24,
+        25,
+        28,
+        38,
+        39,
+        40,
+        42,
+        53,
+        70,
+        87
+      ]
+    },
+    "src/dict/utils/zipTo.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        17
+      ]
+    },
+    "src/frame/arrToCol.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/BaseFrame.js": {
+      "expectCount": 27,
+      "actualCount": 16,
+      "undocumentLines": [
+        35,
+        36,
+        37,
+        38,
+        50,
+        68,
+        71,
+        72,
+        73,
+        76,
+        81
+      ]
+    },
+    "src/frame/frame-utils/frameCount.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/frame-utils/frameFromBuffer.js": {
+      "expectCount": 5,
+      "actualCount": 1,
+      "undocumentLines": [
+        38,
+        45,
+        56,
+        62
+      ]
+    },
+    "src/frame/frame-utils/frameSum.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/frame-utils/frameToString.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/frame-utils/frameWithIndex.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/frame-utils/index.js": {
+      "expectCount": 7,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35
+      ]
+    },
+    "src/frame/frame-utils/transpose.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/frame-utils/unionFrame.js": {
+      "expectCount": 3,
+      "actualCount": 1,
+      "undocumentLines": [
+        28,
+        38
+      ]
+    },
+    "src/frame/frame.js": {
+      "expectCount": 45,
+      "actualCount": 29,
+      "undocumentLines": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        105,
+        696,
+        703,
+        777,
+        793
+      ]
+    },
+    "src/frame/frame_element.js": {
+      "expectCount": 8,
+      "actualCount": 2,
+      "undocumentLines": [
+        156,
+        176,
+        184,
+        186,
+        190,
+        197
+      ]
+    },
+    "src/frame/genColIxFunc.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/getColIx.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        17
+      ]
+    },
+    "src/frame/groupby-utils/accStr.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        17
+      ]
+    },
+    "src/frame/groupby-utils/gbCount.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/groupby-utils/gbMax.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        40
+      ]
+    },
+    "src/frame/groupby-utils/gbMean.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/groupby-utils/gbMerge.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/groupby-utils/gbMergeU.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/groupby-utils/gbMin.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        43
+      ]
+    },
+    "src/frame/groupby-utils/gbStdDiv.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/groupby-utils/gbSum.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/groupby-utils/gbVal.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/groupby-utils/index.js": {
+      "expectCount": 11,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        41,
+        44,
+        47
+      ]
+    },
+    "src/frame/groupby.js": {
+      "expectCount": 8,
+      "actualCount": 1,
+      "undocumentLines": [
+        22,
+        84,
+        109,
+        110,
+        116,
+        138,
+        155
+      ]
+    },
+    "src/frame/haveFrame.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        20
+      ]
+    },
+    "src/frame/index.js": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        23,
+        24,
+        25
+      ]
+    },
+    "src/frame/join-utils/changeNameTo.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/colName.js": {
+      "expectCount": 4,
+      "actualCount": 4,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/fullInnerJoin.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/getDict.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        19
+      ]
+    },
+    "src/frame/join-utils/getTransform.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/index.js": {
+      "expectCount": 11,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38,
+        42,
+        45,
+        49
+      ]
+    },
+    "src/frame/join-utils/indexFrameColumn.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/innerJoin.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/joinOp.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/leftJoin.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/localGroupBy.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        18,
+        24
+      ]
+    },
+    "src/frame/join-utils/matchIt.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/outerJoin.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/join-utils/project.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        17
+      ]
+    },
+    "src/frame/join-utils/reverseProjectList1.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        37
+      ]
+    },
+    "src/frame/makeUnique.js": {
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        26
+      ]
+    },
+    "src/frame/sortFrame.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/frame/toHTML.js": {
+      "expectCount": 4,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        24,
+        50,
+        81
+      ]
+    },
+    "src/string/csv/csvLine.js": {
+      "expectCount": 4,
+      "actualCount": 0,
+      "undocumentLines": [
+        18,
+        19,
+        20,
+        30
+      ]
+    },
+    "src/string/csv/dataSplit.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        17
+      ]
+    },
+    "src/string/csv/index.js": {
+      "expectCount": 5,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20,
+        23,
+        26,
+        29
+      ]
+    },
+    "src/string/csv/psvLine.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        19
+      ]
+    },
+    "src/string/csv/trimListElements.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        18
+      ]
+    },
+    "src/string/csv/tsvLine.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        19
+      ]
+    },
+    "src/string/index.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        18
+      ]
+    },
+    "src/string/strdict/index.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20
+      ]
+    },
+    "src/string/strdict/StrDict.js": {
+      "expectCount": 10,
+      "actualCount": 6,
+      "undocumentLines": [
+        35,
+        36,
+        37,
+        95
+      ]
+    },
+    "src/string/strdict/strEq.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        17
+      ]
+    },
+    "src/string/strdict/strHash.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/string/strutil/countCh.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/string/strutil/index.js": {
+      "expectCount": 8,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20,
+        23,
+        26,
+        29,
+        32,
+        35,
+        38
+      ]
+    },
+    "src/string/strutil/padTo.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/string/strutil/prefixHead.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/string/strutil/prefixLen.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/string/strutil/prefixTail.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/string/strutil/prod.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/string/strutil/reverse.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/string/strutil/strJoin.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/constants.js": {
+      "expectCount": 11,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        29,
+        30,
+        31
+      ]
+    },
+    "src/utils/index.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        24,
+        26
+      ]
+    },
+    "src/utils/objutils/filterDict.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/fromKeyValueList.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/fromKeyValueListV.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/genFilterFunction.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/genObjMapper.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/index.js": {
+      "expectCount": 16,
+      "actualCount": 0,
+      "undocumentLines": [
+        18,
+        21,
+        24,
+        27,
+        30,
+        33,
+        36,
+        39,
+        42,
+        45,
+        48,
+        51,
+        54,
+        57,
+        60,
+        63
+      ]
+    },
+    "src/utils/objutils/isA.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        17
+      ]
+    },
+    "src/utils/objutils/keys.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        17
+      ]
+    },
+    "src/utils/objutils/mapOver.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        35
+      ]
+    },
+    "src/utils/objutils/memoize.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/pickRaw.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/setKey.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/setKeyV.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/shallow.js": {
+      "expectCount": 4,
+      "actualCount": 0,
+      "undocumentLines": [
+        18,
+        38,
+        54,
+        81
+      ]
+    },
+    "src/utils/objutils/toKeyValueList.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/objutils/toKeyValueListV.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/primes.js": {
+      "expectCount": 2,
+      "actualCount": 0,
+      "undocumentLines": [
+        15,
+        33
+      ]
+    },
+    "src/utils/renameColumns.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        15
+      ]
+    },
+    "src/utils/sort-helper/cmpNumOrStrBy.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/sort-helper/cmpStr.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/sort-helper/cmpStrNum.js": {
+      "expectCount": 3,
+      "actualCount": 1,
+      "undocumentLines": [
+        19,
+        20
+      ]
+    },
+    "src/utils/sort-helper/combineCmp.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/sort-helper/index.js": {
+      "expectCount": 3,
+      "actualCount": 0,
+      "undocumentLines": [
+        20,
+        23,
+        26
+      ]
+    },
+    "src/utils/sort-helper/revCmp.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/sort-helper/toNumber.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        18
+      ]
+    },
+    "src/utils/types/index.js": {
+      "expectCount": 4,
+      "actualCount": 0,
+      "undocumentLines": [
+        17,
+        20,
+        23,
+        26
+      ]
+    },
+    "src/utils/types/isArray.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/types/isEmpty.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/types/isFunction.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "src/utils/types/isString.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    }
+  }
+}
