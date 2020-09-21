@@ -33,8 +33,8 @@
 <script src="javascript/tryit.js"></script>
 <title>Data Frame Examples</title>
 
-<!--<script src="https://unpkg.com/str-data-frame@0.2.21/dist/bundle.js"></script> -->
-<script src="/frame/bundle.js"></script>
+<script src="https://unpkg.com/str-data-frame@0.2.25/dist/bundle.js"></script>
+<!--<script src="/frame/bundle.js"></script> -->
 <script>
 
 function D(d) {
@@ -144,7 +144,9 @@ function isClass(d) { return false;
 <h1 id="dataframe">Data Frame</h1>
 <h2 id="summary">Summary</h2>
 <p><a href="/frame/docs/class/src/frame/frame.js~Frame.html" target="_blank">Frame Docs</a></p>
-<p>This is a database like data manipulation library that provides the ability to perform simple database type operations on tabular data. The principle component of the library is a Frame. This is a data structure that represent a tabular data consisting of rows and columns. Each column has a name, and just like a database the column names must be unique. The tool has been tested with 1 million rows with good performance. The total amount of data is limited by the memory of your browser or node instance. All elements (cells) are stored as strings or numbers. That conversion is done by the <em><strong>frameFromBuffer</strong></em> function.  Please note thst the frame is aware that some numbers may be stored as strings, and most of the utilities will treat numbers in string format as if they were numbers. Strictly speaking you can store any any javascript primitive is a cell, but that has not been fully tested and so buyer be aware.</p>
+<p>This is a database like data manipulation library. It lets you do simple database SQL like operations on in-memory tabular data. The main component of the library is a Frame. This is a data structure that contains tabular data made up of of rows and columns. Each column has a name, and just like the columns of a database table the names must be unique. The tool has been tested with 1 million rows with good performance. The total amount of data is limited by the memory of your browser or node instance. All elements (cells/column) are stored as strings or numbers. </p>
+<p>A Frame 
+That conversion is done by the <em><strong>frameFromBuffer</strong></em> function.  Please note thst the frame is aware that some numbers may be stored as strings, and most of the utilities will treat numbers in string format as if they were numbers. Strictly speaking you can store any any javascript primitive is a cell, but that has not been fully tested and so buyer be aware.</p>
 <p>The operations include the ability to do the following:</p>
 <ul>
 <li><p>Convert CSV, TSV data to a frame</p></li>
@@ -240,7 +242,7 @@ data
 		<div id="tryit1-error" class="tryit-error"></div>
 		<div id="tryit1-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit1-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit1-run" title="Execute script" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_1" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
 	</div>

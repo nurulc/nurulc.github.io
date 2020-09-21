@@ -3,7 +3,10 @@
 
 <a href="/frame/docs/class/src/frame/frame.js~Frame.html" target="_blank">Frame Docs</a>
 
-This is a database like data manipulation library that provides the ability to perform simple database type operations on tabular data. The principle component of the library is a Frame. This is a data structure that represent a tabular data consisting of rows and columns. Each column has a name, and just like a database the column names must be unique. The tool has been tested with 1 million rows with good performance. The total amount of data is limited by the memory of your browser or node instance. All elements (cells) are stored as strings or numbers. That conversion is done by the _**frameFromBuffer**_ function.  Please note thst the frame is aware that some numbers may be stored as strings, and most of the utilities will treat numbers in string format as if they were numbers. Strictly speaking you can store any any javascript primitive is a cell, but that has not been fully tested and so buyer be aware.
+This is a database like data manipulation library. It lets you do simple database SQL like operations on in-memory tabular data. The main component of the library is a Frame. This is a data structure that contains tabular data made up of of rows and columns. Each column has a name, and just like the columns of a database table the names must be unique. The tool has been tested with 1 million rows with good performance. The total amount of data is limited by the memory of your browser or node instance. All elements (cells/column) are stored as strings or numbers. 
+
+A Frame 
+That conversion is done by the _**frameFromBuffer**_ function.  Please note thst the frame is aware that some numbers may be stored as strings, and most of the utilities will treat numbers in string format as if they were numbers. Strictly speaking you can store any any javascript primitive is a cell, but that has not been fully tested and so buyer be aware.
 
 The operations include the ability to do the following:
 
