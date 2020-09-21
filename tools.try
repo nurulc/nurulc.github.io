@@ -1,0 +1,54 @@
+<script>
+
+function D(d) {
+	if(d === undefined ) return "<undef>";
+	//if(isClass(d)) return d.prototype.constructor.toString();
+	if(typeof d === 'function') return "<func body>"; 
+	if(d instanceof Date) return d.toString;
+	if(typeof d === 'object') return JSON.stringify(d)
+	return d.toString();
+}
+
+function getType(d) {
+	if(d === undefined) return 'undefined'
+	if(Array.isArray(d)) return 'Array';
+	return typeof d;
+
+}
+
+function textArea(s) {
+  return `<textarea>${asHTML(this.s.substr(0,2000))}</textarea>`;
+}
+
+function Text(s) {
+  if(s === undefined || s.length < 100) return JSON.stringify(s);
+  return ({
+   s,
+   "_toHtml" : textArea 
+  });
+}
+
+function isClass(d) { return false;
+  // try {
+  // 	if( typeof d !== "function" ) return false; 
+  // 	var x = new d;
+
+  // 	let name = x.constructor ? x.constructor.name : '';
+  // 	return (name !== '' && name !==  'Array' && name !== 'Function');
+  //  } catch(e) {
+  //  	  return false;
+  //  }
+}
+
+
+  // const isCtorClass = obj.constructor
+  //     && obj.constructor.toString().substring(0, 5) === 'class'
+  // if(obj.prototype === undefined) {
+  //   return isCtorClass
+  // }
+  // const isPrototypeCtorClass = obj.prototype.constructor 
+  //   && obj.prototype.constructor.toString
+  //   && obj.prototype.constructor.toString().substring(0, 5) === 'class'
+  // return isCtorClass || isPrototypeCtorClass
+
+</script>

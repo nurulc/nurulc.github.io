@@ -1,0 +1,41 @@
+
+#Getting started
+
+we have to bring in the str-data-frame npm module. We have several choices, using javascript es6+ module symtax,
+using webpack or similar bundler, or just as a script. For rhe purposed of this tutorial I am using the good old script method. I creates in the global namesapce _DataFrame_ variable.
+
+## DataFrame package 
+
+Lets do a quick look a what is defined in the package.
+In this html page we use the following _**unpkg.com**_ to load the str-data-frame package. The exported name from the Package is _**DataFrame**_.
+
+```html
+<script src="https://unpkg.com/str-data-frame@0.2.18/dist/bundle.js"></script>
+```
+
+* Get the names (keys) in the module using ```Object.keys(DataFrame)``` 
+* map the list of names to name/value pair *[name, value]*
+* map the [name, value] to [name, _**type of value**_, **display string of the value**] note 
+* result is put into _**data**_ 
+
+Note: We use he two following helper function 
+
+**Display function** _D(value)_
+```javascript
+  function D(d) {
+  	if(d === undefined ) return "<undef>";
+  	if(typeof d === 'function') return "<func body>"; 
+  	if(d instanceof Date) return d.toString;
+  	if(typeof d === 'object') return JSON.stringify(d)
+  	return d.toString();
+  }
+
+function getType(d) {
+  if(d === undefined) return 'undefined'
+  if(Array.isArray(d)) return 'Array';
+  if(isClass(d)) return "class";
+  return typeof d;
+
+}
+
+```
