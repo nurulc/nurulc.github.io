@@ -2784,6 +2784,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/frame/frame.js~frame#rename",
+    "class/src/frame/frame.js~Frame.html#instance-method-rename",
+    "src/frame/frame.js~Frame#rename",
+    "method"
+  ],
+  [
     "src/frame/frame.js~frame#rows",
     "class/src/frame/frame.js~Frame.html#instance-get-rows",
     "src/frame/frame.js~Frame#rows",

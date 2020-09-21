@@ -311,11 +311,18 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 import {Frame} from &apos;../frame&apos;;
 import {dataSplit} from &apos;../../string/csv&apos;;
 /**
- * default splitter is pipe seperated values
- * @param  {[type]} buffer    [description]
+ * Create a Frame from a string buffer (string reat from a file)
+ * * Lines are seperaed into columns using a &apos;splitter&apos; supports
+ *    * TSV : tab seperated columns  - tsvLine
+ *    * CSV : comma seperated values - csvLine
+ *    * PSV : pipe (|) seperated values popular in healthcare - tsvLine
+ *  
+ *  Default splitter (tsvLine) is tab seperated values
+ *  
+ * @param  {string} buffer    [description]
  * @param  {function} splitter    function to split a string representing a row to an array of strings
  * @param  {{ noConvert: boolen,name: string, Fr: SomeFrameClass}} options
- * @return {[type]}           [description]
+ * @return {Frame}           Frame created from the buffer
  */
 export default function frameFromBuffer(buffer,splitter,options={}) {
     let {Fr, name, noConvert} = options;
@@ -330,7 +337,7 @@ export default function frameFromBuffer(buffer,splitter,options={}) {
 }
 
 function cleanData(columns, array) {
-	if( !hasNoEmptyElem(columns) ) throw new Error(&quot;Invalid frame column&quot;);
+	if( !hasNoEmptyElem(columns) ) throw new Error(&apos;Invalid frame column&apos;);
 	let n = columns.length;
 	return [columns, array.map(_cleanData(n)).filter(s =&gt; s)];
 }

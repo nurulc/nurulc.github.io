@@ -1552,13 +1552,23 @@ return an array of 2 strings [oldName, newName]</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span><span class="code" data-ice="signature">(buffer: <span>[type]</span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span><span class="code" data-ice="signature">(buffer: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>default splitter is pipe seperated values</p>
+        <div data-ice="description"><p>Create a Frame from a string buffer (string reat from a file)</p>
+<ul>
+<li><p>Lines are seperaed into columns using a &apos;splitter&apos; supports</p>
+<ul>
+<li>TSV : tab seperated columns  - tsvLine</li>
+<li>CSV : comma seperated values - csvLine</li>
+<li>PSV : pipe (|) seperated values popular in healthcare - tsvLine</li>
+</ul>
+<p>Default splitter (tsvLine) is tab seperated values</p>
+</li>
+</ul>
 </div>
       </div>
     </td>
@@ -7140,18 +7150,28 @@ result od the code above
     
     
     
-    <span class="code" data-ice="name">frameFromBuffer</span><span class="code" data-ice="signature">(buffer: <span>[type]</span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span>[type]</span></span>
+    <span class="code" data-ice="name">frameFromBuffer</span><span class="code" data-ice="signature">(buffer: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/frame/frame-utils/frameFromBuffer.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/frame/frame-utils/frameFromBuffer.js.html#lineNumber33">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import frameFromBuffer from &apos;<span><a href="file/src/frame/frame-utils/frameFromBuffer.js.html#lineNumber26">nurulc.github.io/src/frame/frame-utils/frameFromBuffer.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import frameFromBuffer from &apos;<span><a href="file/src/frame/frame-utils/frameFromBuffer.js.html#lineNumber33">nurulc.github.io/src/frame/frame-utils/frameFromBuffer.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>default splitter is pipe seperated values</p>
+  <div data-ice="description"><p>Create a Frame from a string buffer (string reat from a file)</p>
+<ul>
+<li><p>Lines are seperaed into columns using a &apos;splitter&apos; supports</p>
+<ul>
+<li>TSV : tab seperated columns  - tsvLine</li>
+<li>CSV : comma seperated values - csvLine</li>
+<li>PSV : pipe (|) seperated values popular in healthcare - tsvLine</li>
+</ul>
+<p>Default splitter (tsvLine) is tab seperated values</p>
+</li>
+</ul>
 </div>
 
   
@@ -7166,7 +7186,7 @@ result od the code above
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">buffer</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>[description]</p>
 </td>
@@ -7194,8 +7214,8 @@ result od the code above
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>[type]</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>[description]</p>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Frame created from the buffer</p>
 </td>
         </tr>
       </tbody>

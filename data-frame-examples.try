@@ -1,0 +1,542 @@
+!head
+<title>Data Frame Examples</title>
+
+<script src="https://unpkg.com/str-data-frame@0.2.25/dist/bundle.js"></script>
+<!--<script src="/frame/bundle.js"></script> -->
+@@include tools.try
+
+!html
+
+!md
+@@include summary.try
+@@include introduction.try
+@@include getting-started.try
+### Contents of DataFrame package
+
+* Get all the entries in the DataFrame (package object).
+
+!tryit
+var data = Object
+  .entries(DataFrame)
+  .map(([key,value]) => [key , getType(value), D(value)]);
+
+// Display the data [ [ [key, type-of-value, value ] ...]
+data
+
+!md
+
+## Convert the data into a Frame
+
+!tryit
+var {Frame} = DataFrame;
+
+// Note data is and array of rows,
+// and each row is an array of strings, number or boolean
+
+var df = new Frame(data, ['Name', 'Type', 'Value']);
+
+// Display the frame created
+df
+!md
+###Frame structure
+
+![](image/data-frame-structure.PNG)
+
+###Frame attributes
+
+* length -- number of rows
+* columns -- the columns names
+* data    --
+* Row Object
+
+#### length property
+
+This property gives us the number of rows in a frame and is just a shorthand for df.data.length
+
+!tryit
+df.length
+!md
+#### columns property
+
+This give us the names of the columns
+!tryit
+json(df.columns)
+!md
+#### data property
+This is the data actual in the Frame __df__
+!tryit
+df.data
+
+!md
+This data is just the array used to create the frame in the first place
+
+#### Row Object df.asObj(i)
+The row data is rather anoying to to access the data so a proxy object is created refered to as a RowObject what allows you to access the columns by name. The implementation is very efficient and there is little penalty using it. We will discuss this a little later. 
+!tryit
+// access the first row
+let r = df.asObj(0);
+let d = df.data[0];
+
+json([r.Name === d[0], r.Type === d[1], r.Value === d[2] ]);
+
+!md
+#### find method to search for a row
+
+The _df.find_ method takes a test function as its only argument, the test fuction recieves a row object for each row of the frame until matching row is found - when the function returns true. The find method returns _undefined_ if ther is no matching row is found, otherwise __find__ returns the matching row object. 
+
+This is a low level method and usually ther are better ways to do this.
+
+!tryit
+// look for a row with the name 'select'
+var r = df.find(ro => ro.Name === 'trimListElements');
+
+// display r
+[r]
+
+
+!md
+
+## Group BY operations
+
+We borrow a concept from SQL the group by - this creates groups of rows that have the same value in a set of selected __column(s)__ and perform some operation on each of those row
+groups. Some of the operations include (they are all in the namesapce _**gb**_ )
+
+     * gb.count // count the number of non-empty values is a group
+     * gb.max - // maximun value of a column in a group
+ 
+As you can see every row in Frame __df__ has a __Type__ and a __value__  columns. We can use the __.groupBy()__ to do many grouping operations. The following snippets will give a flavor of the things that can be done.
+
+### Find all unique values is a column
+
+The simplest use is to show the unique values of a coulmn or a set of columns, we will see more of that later.
+
+!tryit
+
+// How many different values do we have in the 'Type' column
+df.groupBy(['Type'])
+
+!md
+
+So we have 5 different values in the Type column, but we do not the se how many occurences of each of the value do we
+have in the Frame.
+
+### Counting groups
+
+We can count the number using __gb.count__ this function takes two arguments:
+
+1. The column value to count, __Note:__ count only counts non-empty values in that column for the group
+1. What nat should be given to this count
+
+
+
+!tryit
+var {gb} = DataFrame; // group by operations
+
+
+var types = df.groupBy(['Type', gb.count('Type', 'Count#')])
+
+//display types
+types
+
+!md
+### Transpose
+To convert rows to columns we can use the transpose method.
+![](image/MATRIX-TRANSPOSE.jpg)
+
+!tryit
+var {transpose} = DataFrame; // group by operations
+transpose(types)
+
+!md
+You will notice the headings are just the row index. But transpose supports us telling the column that should be used 
+as the column names. The important property of the column is that all the values must be unique. Although for the sake of robustness this version of transpose can deal with a few duplicate as lonk as that is rare. 
+
+In our case the 'Type' column has the attributes we are looking for
+
+!tryit
+ transpose(types, 'Type')
+!md
+# Frame objInfo
+
+Th
+
+!tryit
+
+objInfo(Frame)
+
+
+
+!md
+## Turn objInfo to a array
+
+First we will turn the object to rows and columns suitable for turning it to a frame
+
+!tryit
+var {arrProd} = DataFrame;
+var frameDesc = Object.entries( objInfo(Frame) ).flatMap( ([key, list]) => arrProd( key, list) ); 
+json(frameDesc)
+!md
+## Turn the array to a Frame
+
+!tryit
+var aFrame = new Frame(frameDesc, ['Type', 'Method_Name'])
+// display it
+aFrame
+
+
+
+!md
+# Get some data - World ovid Report
+
+## Use fetch to get raw data
+
+We will use world covid-19 daily statistics, this is a csv file that we will split into an array of lines. We can use the fetch
+function to pull data from the public repository on Github. Once the promise resolves, the data eill
+
+!tryit
+	
+	var csvData;
+	
+	var WORLD_DATA_SRC ='https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv';
+	var p = fetch(WORLD_DATA_SRC)
+  		.then(response => response.text())
+  		.then(data => 
+          Promise.resolve(csvData = data)
+      );
+
+// The result from the last expression is displayed automatically.
+// The in-built display facility is Promise aware, and will unwrap the promise 
+// before displaying the data.
+
+p  // note p is a promise, the display will wait for the promise to resolve
+
+/*p.then(str => 
+    str.split('\n').slice(0,10).join('\n') // split the large csv string into lines and display the first 10 lines.
+)*/
+
+!md
+##Create a frame from the data
+
+!tryit
+  var {frameFromBuffer, csvLine, arrProd} = DataFrame;
+
+// frameFromBuffer is at its core the following code
+//    var lines = csvData.split('\n').map(csvLine);
+//    var covidFrame = new Frame(lines.slice(1), lines[0]);
+
+  var covidFrame = frameFromBuffer(csvData, csvLine);
+  // Display the first 11 results
+  covidFrame.slice(0,11);
+  
+  
+!md
+## Show the size of the frame and the column names
+
+* Length of the frame  _(covidFrame.length)_
+* All column Names _(covidFrame.columns)_
+* List the columns that are mostly numeric _(covidFrame.numericColumns)_
+
+!tryit
+var {arrRemove} = DataFrame;
+
+
+var cf = covidFrame;
+var {columns, numericColumns} = cf;
+var nonNumericColumns = arrRemove(columns,numericColumns)
+
+var summary = ({ rows: covidFrame.length, 
+   "Non Numeric Columns":nonNumericColumns, 
+   "Numeric Columns": covidFrame.numericColumns
+});
+
+// display
+json(summary)
+
+
+!md
+
+### Show the data summary as a Frame
+!tryit
+// Helper function to count number of non-empty values  in a column in the frame _cf_
+let countColumn = (cf,colName) => cf.groupBy( [gb.count(colName,'count')] ).asObj(0).count ;
+
+
+var data =
+    [                                   ["rows",    '',  cf.length],
+        ...nonNumericColumns.map(col => ['Numeric', col, countColumn(cf, col)]),
+        ...numericColumns.map(col =>    ['Alpha', col,   countColumn(cf, col) ])
+    ];
+
+new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
+     .sort(['-Non_empty_cells','Col_Name'])
+
+!md
+ ## An alternative way of creating the data      
+
+
+!tryit
+// Create a frame for column type
+let numericSet = new Set(numericColumns);
+let colCategoryData = cf.columns.map(colName => [ (numuricSet,has(colName)?'Numeric': 'NonNumeric'),  colName]);
+var category = new Frame(colCategoryData, ['Type', 'Name']);
+
+function counts(columns) { return columns.map(col => gb.count(col); }
+var countOfCol = cf.groupBy(count(cf.columns))
+var colType = new Frame([ ...arrProd('Numeric', numericColumns), ...arrProd('NonNumeric', nonNumericColumns), ['Type', 'Name'])
+                         
+colType
+
+//new Frame(data, ['Type',"Name", "Count"])
+//     .sort(['Count','Name'])
+
+!md
+##Get rid of unnecessary columns
+
+In sql we can do this using _select_ columns _from_ table, further the select operation can rename the columns, add new columns, and transform data is columns
+
+We use a similar operation for a data frames using the project
+
+```js
+     frame.project([ list of columns])
+```
+* We can change a column name with the following code, change _location_ to **_country_**
+```js
+   [..., "location=country",...]
+```
+!rem `
+We also can reorder the columns by chosing the order of the columns, the example below shows
+how to create a new frem from a subset of the original columns and renaming a column
+
+**Note** We can also add new columns by adding a new column name
+
+
+
+!tryit
+let SELECTED_COLUMNS = [
+  ['iso_code', (iso, ro) => iso || ro.location], // note you have to use the ro.location (original name) and not ro.country
+  'location=country', // rename location to country
+  ['continent', (c,ro) => c || ro.location], // if no continent data use the ro.location (country) name as the continent
+  'date',
+  'total_cases',
+  'new_cases',
+  'total_deaths',
+  'new_deaths',
+  'new_tests',
+  'total_tests',
+  'positive_rate',
+  'population',
+  ['INDEX', (value, row) => row.__index$]  // create a new column (INDEX) use the row number as the index
+];
+
+var frame = covidFrame.select(
+      SELECTED_COLUMNS
+      ,ro => ro.total_cases > 0 // only keep the rows for a country start from the date of the first case 
+);
+
+// show first 20
+frame.slice(0,20)
+  
+  
+!md
+##Get data for Brazil
+
+Here we will use a simpler version of select that keeps all the columns as is and filters out some of the rows. This is the same as the following sql
+
+```
+ select * from covidFrame where country = 'Brazil' 
+```
+
+
+!tryit
+frame.filter(r => r.country === 'Brazil')
+!md
+
+###Move country information into another frame
+
+!tryit
+var y = covidFrame.select(['iso_code', 'location', 'continent', 
+              'population', 'diabetes_prevalence',
+              'gdp_per_capita'
+             ],ro => ro.continent === 'Europe').distinct();
+//frameWithIndex(y).filter(ro => ro.__index$ < 5) 
+display
+
+
+
+!md
+### Summary of cases by country
+
+!tryit
+var {sum, count, max, mean} = gb; // aggrigator functions for groupBy
+
+var summary = frame.groupBy(
+  ['country','continent', 
+    max('total_deaths','deaths'), // show the maximum value of 'total_deaths' and call it deaths 
+    count('INDEX', 'count'),      // count the number of entries (daily info) for each country
+    max('total_cases','cases'),   // show the maximum value of 'total_cases' and call it 'cases' 
+    'population'
+  ])
+  .sort(['continent', '-cases']);  // sort continent and cases, the cases in descending order
+
+//display
+summary
+
+!md
+## Lets try to improve the display of numbers
+
+!tryit
+function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
+function toStr(str) {
+  let num = (+str);
+  if(Math.abs(Math.round(num)-num) < 1e-6) num = Math.round(num);
+  return addCommas(num.toString());
+
+}
+Frame.HTMLFormat.number = toStr;
+
+
+// Display
+summary
+
+!md
+
+#Summarize the information by continent
+
+This section will reformat the data by trans to create summary by continent
+
+
+!tryit
+//summary.groupBy(['continent', 'country'])
+var continent_summary = 
+    summary.groupBy(['continent', sum('deaths'),  count('country', 'countries'), mean('deaths', 'avg_by_country'), sum('cases'), sum('population')]);
+
+// Display it
+continent_summary
+
+
+!md
+### Transpose 
+
+Transpose will rotate the table, the column name comes from the row in the country column. Pay special attention
+the 'country' column is call the transpose pivot and it is important all the values in this column are unique. If the values are not unique the result of the transpose will look very weird and may violate the requirement that all the column names rae unique.
+
+!tryit
+transpose(continent_summary, 'country')
+
+
+
+!md
+## Sample 1% (0.01) of the data and show the first 20
+!tryit
+var sample = frame.filter(()=> Math.random() < 0.01 ) // take random 1% of data
+    .slice(0,20)                          // take the first 20 
+    .sort(['continent', 'country'])      // sort by continent and country
+sample
+!md
+## Create some utility function to round a numeric string
+
+* Since all data is stored as strings or number, empty values are represented ny the empty string
+* The round function will conver it to a numeric round the value convert back to a string
+
+
+!tryit
+// Since all data is stored as strings
+// The round function will convert empty strings to '0', will round the value
+
+
+
+function round(v) {
+    var r = +v;
+    if(isNaN(r)) return '0';
+    return Math.round(r);
+}
+
+// Test the function
+var testS = ({
+  "Round a non-numeric": round('abc'),
+  "Round an integer": round("124"),
+  "Round a negetive integer": round("-125"),
+  "Round an real": round("124.3"),
+  "Round a negetive real": round("-125.6")
+});
+
+//Display testS
+testS
+
+!md
+##Make sure no numeric column has empty values
+
+To do this we use the frame.update method, this method take an **_update object_** as a parameter
+
+* We need to find columns that are mostly numeric '90%' or empty, _frame.numericColumns_ will get
+us the list of those column names
+
+!tryit
+var {arrProd} = DataFrame;
+var p1 = arrProd(['a','b','c'], 'x'); // [ ['a', 'x'], ['b', 'x'], ['c', 'x'], ]
+var p2 = arrProd('x', ['a','b','c']); // [ ['x', 'a'], ['x', 'b'], ['x', c'], ]
+var p3 = arrProd(['a','b'], ['X', 'Y'])// [ ['a', 'X'],['a', 'Y'], ['b', 'X'], ['b', 'Y'], ]
+JSON.stringify([p1, p2, p3])
+
+!tryit
+function forceZero(v) { return round(v || '0')}
+
+var NUMERIC_COLS = frame.numericColumns;
+var col_update_list = arrProd(NUMERIC_COLS,forceZero);
+var TO_ZERO = Object.fromEntries(col_update_list);
+
+!tryit
+// Update the frame so that all empty value in numeric columns is set to zero 
+frame = frame.update(TO_ZERO)
+frame
+!md
+###Create a summary of covid data
+!tryit
+
+
+var round_some_columns =  { 
+    total_cases: round, 
+    max_new_cases_in_a_day: round,
+    avg_new_cases_in_a_day: round
+};
+
+frame.groupBy(['continent','country', // columns to group on
+               gb.count('date', 'rows'), // count the number of values in the date column after grouping
+               gb.max('total_cases'), // get the max value in the total_cases column for the group 
+               gb.max('new_cases', 'max_new_cases_in_a_day'), // get the max value in the total_cases 
+                                                             // column for the group and give it the name 'max_new_cases_in_a_day 
+               gb.mean('new_cases', 'avg_new_cases_in_a_day') // get the average value for new cases
+              ])
+    .update( {...round_some_columns, avg_new_cases_in_a_day: (v,ro) => round(ro.total_cases/ro.rows)} )
+    .sort(['-rows', '-continent','-total_cases']) // rows, continent and total_cases is sorted in descending order: 
+!md
+## Normalizing data
+
+As you will notice in the covidFrame there is a lot of redundent data, for example most of the country data is repeated
+on ever row for thar country and there is some missing data for example iso_code is not present for every locaton. Since we would like to use the `iso_code` as the unique key for every country, let us find the locations with missing `iso_code`
+
+!tryit
+
+covidFrame.groupBy(['iso_code', 'location']).filter(ro => !.iso_code) 
+
+
+!html
+<div id="msgbox-area" class="msgbox-area"></div>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+!end

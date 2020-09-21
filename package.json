@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "reload .",
-    "build": "nodemon  --ext \"ex js\" gen-tryit.js",
-    "gen:doc": "esdoc"
+    "build": "nodemon  --ext \"try\" --exec \"tryitjs data-frame-examples.try\" ",
+    "gen:doc": "esdoc",
+    "copy:frame": "copy ..\\data-frame\\dist\\bundle.js frame\\",
+    "latest": "npm install -g ../tryitjs/tryitjs-0.1.9.tgz && tryitjs data-frame-examples.try"
   },
   "repository": {
     "type": "git",

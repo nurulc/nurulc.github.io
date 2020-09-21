@@ -309,23 +309,36 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
 export const isA = {
-	array: function isArray(arr) {
+	array: isArray,
+	notNull,
+	func: isFunc,
+	str: isStr,
+	num: isNum,
+	bool: isBool,
+	obj: isObj,
+	map: isMap,
+	set: isSet,
+	arrayOf
+};
+
+function isArray(arr) {
 		if( !arr) return undefined;
 		if(Array.isArray(arr)) return arr;
 		return (arr.constructor === Array)?arr:undefined;
-	},
-	notNull: function notNull(obj) { return (obj !== null &amp;&amp; obj !== undefined)?obj: undefined; },
-	func: function isFunc(fun) {return (typeof fun === &apos;function&apos;)?fun:undefined; },
-	str: function isStr(str) {return (typeof str === &apos;string&apos;)?str:undefined; },
-	num: function isNum(num) {return (typeof num === &apos;number&apos;)?num:undefined; },
-	bool: function isBool(val) {return (typeof val === &apos;boolean&apos;)?val:undefined; },
-	obj: function(obj) {return (!Array.isArray(obj) &amp;&amp; typeof obj === &apos;object&apos;)?obj:undefined; },
-	map: function(aMap) {return (aMap instanceof Map)?aMap:undefined; },
-	set: function(aSet) {return (aSet instanceof Set)?aSet:undefined; },
-	arrayOf: function(contract=notNull) {
-		return (obj) =&gt; isArray(obj) &amp;&amp; (obj.every(contract)?obj:undefined);
-	}
-};
+}
+
+function notNull(obj) { return (obj !== null &amp;&amp; obj !== undefined)?obj: undefined; }
+function isFunc(fun) {return (typeof fun === &apos;function&apos;)?fun:undefined; }
+function isStr(str) {return (typeof str === &apos;string&apos;)?str:undefined; }
+function isNum(num) {return (typeof num === &apos;number&apos;)?num:undefined; }
+function isBool(val) {return (typeof val === &apos;boolean&apos;)?val:undefined; }
+function isObj(_obj) {return (!Array.isArray(_obj) &amp;&amp; typeof _obj === &apos;object&apos;)?_obj:undefined; }
+function isMap(aMap) {return (aMap instanceof Map)?aMap:undefined; }
+function isSet(aSet) {return (aSet instanceof Set)?aSet:undefined; }
+function arrayOf(contract=notNull) {
+		return arr =&gt; Array.isArray(arr) &amp;&amp; (arr.every(contract)? arr : undefined);
+}
+
 
 </code></pre>
 

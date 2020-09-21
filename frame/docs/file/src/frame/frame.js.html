@@ -344,7 +344,10 @@ function Identity(x) { return x; }
 // 	return typeof o;
 // }
 
-
+function eqaulRow(row1, row2) {
+	if( row1 === row2 ) return true;
+	return ( row1.length === row2.length &amp;&amp; arrEqual(row1, row2));
+}
 
 
 /**
@@ -492,8 +495,13 @@ export class Frame extends BaseFrame {
 	 */
 	find(fn) {
 		let row = this._rowObj();
-		let v = this.data.find((x,i) =&gt; fn(row.__unsafeSet(x,i),i));
-		return v ? this._rowObj(v): undefined;
+		let len = this.length;
+		let data = this.data;
+		for(let i=0; i&lt;len; i++) {
+			let x = data[i];
+			if(fn(row.__unsafeSet(x,i),i)) return this._rowObj(x,i);
+		}
+		return undefined;
 	}
 
 
@@ -577,12 +585,13 @@ export class Frame extends BaseFrame {
 	filter(fnOrArray) { 
 		if(!this) throw new TypeError(&apos;Filter cannot be use as a raw function&apos;);
 		if ( typeof fnOrArray === &apos;function&apos;)  {
-			let fn = fnOrArray;
-			let row = this._rowObj();
-			return new this.constructor(
-				this.data.filter( (x,ix,arr) =&gt; fn(row.__unsafeSet(x,ix),ix,arr)), 
-				this._columns, this._name, 
-				this.keyFunc); 
+			return this.project(undefined, undefined, fnOrArray);
+			// let fn = fnOrArray;
+			// let row = this._rowObj();
+			// return new this.constructor(
+			// 	this.data.filter( (x,ix,arr) =&gt; fn(row.__unsafeSet(x,ix),ix,arr)), 
+			// 	this._columns, this._name, 
+			// 	this.keyFunc); 
 		}
 		else if( Array.isArray(fnOrArray) ) { // expects an array of integer index into the frame return s teh values for all valid index
 			let elements = fnOrArray;
@@ -700,8 +709,27 @@ export class Frame extends BaseFrame {
 			.map(n =&gt; n.split(&apos;=&apos;)) // convert &apos;original column name&apos; and &apos;new column name&apos; pair 
 			.map(([originalName,newName]) =&gt; [originalName, newName||originalName] );
 		//check if we are only renaming the columns, then the data does can stay the same, just the columns are renamed
-		if( mappingObj === undefined &amp;&amp; filter === undefined &amp;&amp; arrEqual(this.columns,mappedCols.map(([a]) =&gt; a)) ) {
-			return new this.constructor(this.data,mappedCols.map(([,b]) =&gt; b), this.name + &apos;1&apos;);
+		
+		if( mappingObj === undefined &amp;&amp;  arrEqual(this.columns,mappedCols.map(([a]) =&gt; a)) ) {
+			// Note with no mappingObj - tester plays no part even if it is defined
+			// column order is unchanges, no value mapping, but column name may change and some rows may be filtered away
+			let data = this.data; // assume no filtering operation
+			if(filter !== undefined) {
+				// some filtering is potentially happening
+				let row = this._rowObj();
+				data = this.data.filter( (x,ix,arr) =&gt; fn(row.__unsafeSet(x,ix),ix,arr));
+			}
+			
+			let columns = mappedCols.map(([,b]) =&gt; b);
+			let name = (this.name||&apos;&apos;)+&apos;1&apos;;
+			if( arrEqual(this.columns, columns)) {
+				// no column name change
+				columns = this.columns;
+				name = this.name;
+			}
+
+			if( columns === this.columns &amp;&amp; data === this.data) return this; // no change
+			return new this.constructor(data,columns, name);
 		}
 
 		let ixList = mappedCols.map( ([name]) =&gt; this.colIx(name));// get index of column in the original data
@@ -798,8 +826,10 @@ export class Frame extends BaseFrame {
 			if(isFunc(v)) return v;
 			return K(v);
 		}
-		let mapper = cols.filter(([ , ,fn]) =&gt; fn !== undefined)
+		let mapper = cols
+			.filter(([ , ,fn]) =&gt; fn !== undefined)
 			.map(([ ,nn,fn]) =&gt; [nn, toFunc(fn)]);
+			
 		let colMap = undefined;
 		if(mapper.length) colMap = zipToDict(mapper);
 		
@@ -810,11 +840,28 @@ export class Frame extends BaseFrame {
 
 	}
 	/**
-	 * Convinience method as an alias for the __project__ methos
-	 * @param  {[type]}  mapper [description]
-	 * @param  {[type]}  filter [description]
-	 * @param  {[type]}  tester [description]
-	 * @return {[type]}         [description]
+     * Rename columns, format for which [ &apos;oldColumnName=newColumnName&apos; ...]
+     * @param  {[string]} list Array of strings
+     * @return {Frame}      A new Frame with the renamed columns, since these are immutable data structures all unmodified data are shared with the original frame
+     */
+	rename(list) {
+		if( !list || !arrOfStr(list)) {
+			throw new TypeError(&apos;Expected a list of strings&apos;);
+		}
+		let pairs = zipToDict(list.map(name =&gt; name.split(&apos;=&apos;)));
+		let notPresent = arrRemove(Object.keys(pairs), this.columns);
+		if(notPresent.length) {
+			throw new Error(&apos;These column name(s) not found in frame &apos;+JSON.stringify(notPresent));
+		}
+		let cols = this.columns.map(name =&gt; pairs[name]? `${name}=${pairs[name]}`: name);
+		return this.select(cols);
+	}
+	/**
+	 * Convinience method as an alias for the __project__ method
+	 * @param  {Object}  mapper Is an object with the keys being the column name to and the value is an update function or a constant
+	 * @param  {function}  filter Optional filter function that will only keep rows if the filter function returns true, the filter operates on the original row not the result of the update
+	 * @param  {function}  tester Optional tester function on the original row, if it returns true the update is performed other no update is done to the row
+	 * @return {Frame}         A new Frame is created with the updated rows base on the mapper filter and tester
 	 */
 	update(mapper,filter,tester) {
 		return this.project(undefined,mapper,filter,tester);

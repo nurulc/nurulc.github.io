@@ -1,7 +1,7 @@
 {
-  "coverage": "40.64%",
-  "expectCount": 433,
-  "actualCount": 176,
+  "coverage": "39.77%",
+  "expectCount": 445,
+  "actualCount": 177,
   "files": {
     "src/array/arrayutils/arrConcat.js": {
       "expectCount": 1,
@@ -387,10 +387,10 @@
       "expectCount": 5,
       "actualCount": 1,
       "undocumentLines": [
-        38,
         45,
-        56,
-        62
+        52,
+        63,
+        69
       ]
     },
     "src/frame/frame-utils/frameSum.js": {
@@ -435,25 +435,26 @@
       ]
     },
     "src/frame/frame.js": {
-      "expectCount": 45,
-      "actualCount": 29,
+      "expectCount": 47,
+      "actualCount": 30,
       "undocumentLines": [
         40,
         41,
         42,
         43,
         44,
-        81,
-        82,
-        83,
+        53,
         84,
         85,
         86,
-        105,
-        696,
-        703,
-        777,
-        793
+        87,
+        88,
+        89,
+        108,
+        743,
+        750,
+        824,
+        840
       ]
     },
     "src/frame/frame_element.js": {
@@ -914,10 +915,20 @@
       ]
     },
     "src/utils/objutils/isA.js": {
-      "expectCount": 1,
+      "expectCount": 11,
       "actualCount": 0,
       "undocumentLines": [
-        17
+        17,
+        30,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
       ]
     },
     "src/utils/objutils/keys.js": {

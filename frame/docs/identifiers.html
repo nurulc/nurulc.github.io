@@ -3353,13 +3353,23 @@ usage sortFrameBy([&apos;+surname&apos;, &apos;givenName&apos;, &apos;-age&apos;
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span><span class="code" data-ice="signature">(buffer: <span>[type]</span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span><span class="code" data-ice="signature">(buffer: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>default splitter is pipe seperated values</p>
+        <div data-ice="description"><p>Create a Frame from a string buffer (string reat from a file)</p>
+<ul>
+<li><p>Lines are seperaed into columns using a &apos;splitter&apos; supports</p>
+<ul>
+<li>TSV : tab seperated columns  - tsvLine</li>
+<li>CSV : comma seperated values - csvLine</li>
+<li>PSV : pipe (|) seperated values popular in healthcare - tsvLine</li>
+</ul>
+<p>Default splitter (tsvLine) is tab seperated values</p>
+</li>
+</ul>
 </div>
       </div>
     </td>
