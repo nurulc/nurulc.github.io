@@ -1,5 +1,5 @@
-
-#Getting started
+!md
+# Getting started
 
 we have to bring in the str-data-frame npm module. We have several choices, using javascript es6+ module symtax,
 using webpack or similar bundler, or just as a script. For rhe purposed of this tutorial I am using the good old script method. I creates in the global namesapce _DataFrame_ variable.

@@ -1,8 +1,44 @@
 !head
 <title>Data Frame Examples</title>
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
 
 <script src="https://unpkg.com/str-data-frame@0.2.26/dist/bundle.js"></script>
-<!--<script src="/frame/bundle.js"></script> -->
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- font-family: font-family: 'Dosis', sans-serif; -->
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<!-- font-family: 'Titillium Web', sans-serif; -->
+<style>
+h1, h2, h3, h4, h5, p, ul, li {
+  /*font-family: 'Dosis', sans-serif;*/
+  font-family: 'Titillium Web', sans-serif;
+}
+
+p {
+  font-size: 1.4em;
+}
+
+ul, li {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+ul ul {
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+ul ul ul {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+
+
+h1 {
+  padding-bottom: 1.5rem;
+}
+</style>
+
 @@include tools.try
 
 !html
@@ -11,7 +47,11 @@
 @@include summary.try
 @@include introduction.try
 @@include getting-started.try
-### Contents of DataFrame package
+@@include simple-example.try
+
+
+
+## Contents of DataFrame package 
 
 * Get all the entries in the DataFrame (package object).
 
@@ -30,7 +70,7 @@ data
 !tryit
 var {Frame} = DataFrame;
 
-// Note data is and array of rows,
+// Note data is and array of rows, div genElement
 // and each row is an array of strings, number or boolean
 
 var df = new Frame(data, ['Name', 'Type', 'Value']);
@@ -38,9 +78,9 @@ var df = new Frame(data, ['Name', 'Type', 'Value']);
 // Display the frame created
 df
 !md
-###Frame structure
+## Frame structure
 
-![](image/data-frame-structure.PNG)
+![](../../image/data-frame-structure.PNG)
 
 ###Frame attributes
 
@@ -60,7 +100,7 @@ df.length
 
 This give us the names of the columns
 !tryit
-json(df.columns)
+df.columns
 !md
 #### data property
 This is the data actual in the Frame __df__
@@ -70,17 +110,32 @@ df.data
 !md
 This data is just the array used to create the frame in the first place
 
-#### Row Object df.asObj(i)
+# Row Object df.asObj(i)
 The row data is rather anoying to to access the data so a proxy object is created refered to as a RowObject what allows you to access the columns by name. The implementation is very efficient and there is little penalty using it. We will discuss this a little later. 
+
 !tryit
 // access the first row
-let r = df.asObj(0);
-let d = df.data[0];
 
-json([r.Name === d[0], r.Type === d[1], r.Value === d[2] ]);
+const ROW = 0;
+let r = df.asObj(ROW);
+let d = df.data[ROW];
+//=============== DISPLAY ============================= 
+
+$$.HTML("<p><b>Different methods of accessing row data</b></p>");
+$$.D("JSON",JSON.stringify(r));
+$$.D([
+  ['Name',r.Name , d[0]], 
+  ['Type', r.Type, d[1]], 
+  ['Value', r.Value, d[2]] 
+]);
+
+$$.HTML( "<p><b>Display the row</b></p>"); 
+$$.D(r);
+r.__data     
+
 
 !md
-#### find method to search for a row
+### find method to search for a row
 
 The _df.find_ method takes a test function as its only argument, the test fuction recieves a row object for each row of the frame until matching row is found - when the function returns true. The find method returns _undefined_ if ther is no matching row is found, otherwise __find__ returns the matching row object. 
 
@@ -96,7 +151,7 @@ var r = df.find(ro => ro.Name === 'trimListElements');
 
 !md
 
-## Group BY operations
+# Group BY operations
 
 We borrow a concept from SQL the group by - this creates groups of rows that have the same value in a set of selected __column(s)__ and perform some operation on each of those row
 groups. Some of the operations include (they are all in the namesapce _**gb**_ )
@@ -139,9 +194,15 @@ var types = df.groupBy(['Type', gb.count('Type', 'Count#')])
 types
 
 !md
-### Transpose
+# Reoragizing Frame
+
+In this section we will show you how to reorganize rows and columns. To do this in a useful way, it is ideal to have a column that is the _primary key_. 
+
+## What is a primary key
+
+## Transpose
 To convert rows to columns we can use the transpose method.
-![](image/MATRIX-TRANSPOSE.jpg)
+![](../../image/MATRIX-TRANSPOSE.jpg)
 
 !tryit
 var {transpose} = DataFrame; // group by operations
@@ -152,6 +213,10 @@ You will notice the headings are just the row index. But transpose supports us t
 as the column names. The important property of the column is that all the values must be unique. Although for the sake of robustness this version of transpose can deal with a few duplicate as lonk as that is rare. 
 
 In our case the 'Type' column has the attributes we are looking for
+
+## Common use of transpose on column
+
+* Transpose on a primary key - making values of the primary key the column headers
 
 !tryit
  transpose(types, 'Type')
@@ -174,7 +239,7 @@ First we will turn the object to rows and columns suitable for turning it to a f
 !tryit
 var {arrProd} = DataFrame;
 var frameDesc = Object.entries( objInfo(Frame) ).flatMap( ([key, list]) => arrProd( key, list) ); 
-json(frameDesc)
+$$.json(frameDesc)
 !md
 ## Turn the array to a Frame
 
@@ -250,7 +315,7 @@ var summary = ({ rows: covidFrame.length,
 });
 
 // display
-json(summary)
+$$.json(summary)
 
 
 !md
@@ -271,7 +336,7 @@ new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
      .sort(['-Non_empty_cells','Col_Name'])
 
 !md
- ## An alternative way of creating the data      
+## An alternative way of creating the data      
 
 
 !tryit
@@ -398,16 +463,21 @@ function addCommas(nStr) {
 }
 
 function toStr(str) {
+  const {abs,round} = Math;
   let num = (+str);
-  if(Math.abs(Math.round(num)-num) < 1e-6) num = Math.round(num);
+  if(abs(round(num)-num) < 1e-6) num = Math.round(num);
+  else if(abs(num)>1000) num = round(num);
+  else if(abs(num)>1) num = round(num*100)/100;
   return addCommas(num.toString());
-
 }
 Frame.HTMLFormat.number = toStr;
 
 
 // Display
 summary
+
+
+
 
 !md
 

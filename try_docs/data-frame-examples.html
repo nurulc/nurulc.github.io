@@ -1,38 +1,22 @@
-
-<!doctype html>
-<html>
-<head>
+<!DOCTYPE html>
+<html><head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/cobalt.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/container.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/divider.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/image.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/list.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/menu.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/reset.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/segment.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/sidebar.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/site.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/popup.min.css" />
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
-<link rel="stylesheet" href="https://unpkg.com/tryitjs@0.1.11/stylesheets/tryit.css" />
+<link rel="stylesheet" href="./stylesheets/tryit.css" />
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/mode/javascript/javascript.min.js"></script>
-<script src="https://unpkg.com/tryitjs@0.1.11/ref/javascript/prettyprint.js"></script>
-<script src="https://unpkg.com/tryitjs@0.1.11/ref/javascript/tryit.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/addon/edit/matchbrackets.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/addon/comment/continuecomment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/addon/comment/comment.js"></script>
+<script src="./javascript/prettyprint.js"></script>
+<script src="./javascript/tryit.js"></script>
 <title>Data Frame Examples</title>
 
 <script src="https://unpkg.com/str-data-frame@0.2.26/dist/bundle.js"></script>
@@ -92,11 +76,10 @@ function isClass(d) { return false;
 </script>
 </head>
 <body>
-	<div class="ui grid">
-    <div class="three wide column" id="toc_container">
-      <div id="toc_inner">
-        <div class="toc_title">Contents</div>
-        <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('dataframe')">Data Frame</a></div>
+<div class="ui sidebar inverted vertical menu">
+<div class="logo"> <a href="https://github.com/nurulc/tryitjs"><img src="https://unpkg.com/tryitjs@0.2.4/tryit-small.png"></a></div>  
+<div class="item toc_title">Contents</div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('dataframe')">Data Frame</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('summary')">Summary</a></div>
 <div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('introduction')">Introduction</a></div>
 <div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('overview')">Overview</a></div>
@@ -136,12 +119,11 @@ function isClass(d) { return false;
 <div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('makesurenonumericcolumnhasemptyvalues')">Make sure no numeric column has empty values</a></div>
 <div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('createasummaryofcoviddata')">Create a summary of covid data</a></div>
 <div class="toc1"> 4&nbsp;&nbsp;<a onclick="jumpTag('normalizingdata')">Normalizing data</a></div>
-      </div>  
-    </div>
-    </div> 
-	<div class="ui grid">
-		<div class="three wide column"></div>
-		<div class="twelve wide column" id="tryit_body">
+      </div>
+      <div class="pusher">
+      <div class="ui grid">
+    <div class="two wide column" onclick="toggle()" title="Click to show sidebar"></div>
+    <div class="thirteen wide column" id="tryit_body">
 
 <h1 id="dataframe">Data Frame</h1>
 <h2 id="summary">Summary</h2>
@@ -236,38 +218,7 @@ var data = Object
 
 // Display the data [ [ [key, type-of-value, value ] ...]
 data
-var data = Object
-  .entries(DataFrame)
-  .map(([key,value]) => [key , getType(value), D(value)]);
 
-// Display the data [ [ [key, type-of-value, value ] ...]
-$$.HTML(
-`<div class="ui card" data-html="<div class='header'>User Rating</div><div class='content'><div class='ui star rating'><i class='active icon'></i><i class='active icon'></i><i class='active icon'></i><i class='active icon'></i><i class='active icon'></i></div></div>">
-  <div class="image">
-    <img src="https://semantic-ui.com/images/movies/totoro-horizontal.jpg">
-  </div>
-  <div class="content">
-    <div class="header">My Neighbor Totoro</div>
-    <div class="description">
-      Two sisters move to the country with their father in order to be closer to their hospitalized mother, and discover the surrounding trees are inhabited by magical spirits.
-    </div>
-  </div>
-  <div class="ui two bottom attached buttons">
-    <div class="ui button">
-      <i class="add icon"></i>
-      Queue
-    </div>
-    <div class="ui primary button">
-      <i class="play icon"></i>
-      Watch
-    </div>
-  </div>
-</div>`
-);
-
-data
-
-      
 			</textarea>
 		</div>
 		<a id="_end_tryit1">
@@ -275,7 +226,7 @@ data
 		<div id="tryit1-error" class="tryit-error"></div>
 		<div id="tryit1-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit1-run" data-html="<b>Has Executed, Execute script</b>" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit1-run" title="Execute script" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_1" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
 	</div>
@@ -309,7 +260,7 @@ df
 	</div>
 </div>
 <h3 id="framestructure">Frame structure</h3>
-<p><img src="image/data-frame-structure.PNG" alt="" /></p>
+<p><img src="../../image/data-frame-structure.PNG" alt="" /></p>
 <h3 id="frameattributes">Frame attributes</h3>
 <ul>
 <li>length -- number of rows</li>
@@ -346,7 +297,7 @@ df.length
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit4">
-json(df.columns)
+df.columns
 			</textarea>
 		</div>
 		<a id="_end_tryit4">
@@ -393,8 +344,8 @@ df.data
 // access the first row
 let r = df.asObj(0);
 let d = df.data[0];
-
-json([r.Name === d[0], r.Type === d[1], r.Value === d[2] ]);
+// 
+$$.D([r.Name === d[0], r.Type === d[1], r.Value === d[2] ]);
 
 			</textarea>
 		</div>
@@ -500,7 +451,7 @@ types
 </div>
 <h3 id="transpose">Transpose</h3>
 <p>To convert rows to columns we can use the transpose method.
-<img src="image/MATRIX-TRANSPOSE.jpg" alt="" /></p>
+<img src="../../image/MATRIX-TRANSPOSE.jpg" alt="" /></p>
 
 <a id="_tryit10">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
@@ -576,7 +527,7 @@ objInfo(Frame)
 			<textarea class="tryit ui " id="tryit13">
 var {arrProd} = DataFrame;
 var frameDesc = Object.entries( objInfo(Frame) ).flatMap( ([key, list]) =&gt; arrProd( key, list) ); 
-json(frameDesc)
+$$.json(frameDesc)
 			</textarea>
 		</div>
 		<a id="_end_tryit13">
@@ -708,7 +659,7 @@ var summary = ({ rows: covidFrame.length,
 });
 
 // display
-json(summary)
+$$.json(summary)
 
 			</textarea>
 		</div>
@@ -946,10 +897,12 @@ function addCommas(nStr) {
 }
 
 function toStr(str) {
+  const {abs,round} = Math;
   let num = (+str);
-  if(Math.abs(Math.round(num)-num) &lt; 1e-6) num = Math.round(num);
+  if(abs(round(num)-num) &lt; 1e-6) num = Math.round(num);
+  else if(abs(num)&gt;1000) num = round(num);
+  else if(abs(num)&gt;1) num = round(num*100)/100;
   return addCommas(num.toString());
-
 }
 Frame.HTMLFormat.number = toStr;
 
@@ -1224,10 +1177,24 @@ covidFrame.groupBy(['iso_code', 'location']).filter(ro =&gt; !.iso_code)
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
-<div class="three wide column logo"><img src="https://unpkg.com/tryitjs@0.1.11/tryit-small.png"></div>  
-		</div>
-    
-	</div>
+
+          <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <script>
+          $('.activating.element').popup({inline: true, });
+          $('.ui.accordion').accordion();
+          function toggle() {
+            console.log('toggle');
+            $('.ui.sidebar').sidebar('toggle');
+
+          }
+        </script>
+   
+       </div>
+     </div>
+  </div>
 
 </body></html>
-    

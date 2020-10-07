@@ -1,6 +1,5 @@
  
- var $tryit = (
-  function (props) {
+ var $tryit = (function (props) {
     function $e(name) {
       var e = document.getElementById(name);
       if (!e) return { innerText: "" };
@@ -46,13 +45,19 @@
       let lines = textarea.value.split('\n').length;
       let editor = CodeMirror.fromTextArea(textarea, {
         lineNumbers: true,
-        mode: "javascript",
+//        mode: "javascript",
         theme: "cobalt",
+        matchBrackets: true,
+        continueComments: "Enter",
         extraKeys: {
                 "Ctrl-Enter": execCode,
-                "Cmd-Enter": execCode
+                "Cmd-Enter": execCode,
+                "Ctrl-/": "toggleComment"
         },
-        tabSize: 2
+        tabSize: 2,
+        matchBrackets: true,
+        continueComments: "Enter",
+        keyMap: "sublime"
       });
       __editorsPending.push(id);
       __editors.push(id);
@@ -72,6 +77,16 @@
 
     function jumpback() {
       if(__editorsPending.length) jump(__editorsPending[0])
+    }
+
+    function jumpBack() {
+      jumpback();
+      toggle();
+    }
+
+    function _jumpTag(aTag) {
+      jumpTag(aTag);
+      toggle();
     }
 
     function makeEditor() {
@@ -135,17 +150,15 @@
       else if( d ){
         return prettyPrint(d).outerHTML;
       }
-
-      
     }
 
     function objInfo(c) {
       const instanceMethods = Object.getOwnPropertyNames(c.prototype)
             .filter(prop => prop != "constructor");
-
+    //console.log(instanceOnly);
       const staticMethods = Object.getOwnPropertyNames(c)
         .filter(prop => typeof c[prop] === "function");
-
+    //console.log(staticOnly);
       return {instanceMethods, staticMethods};
     }
 
@@ -264,7 +277,7 @@
       _disp.innerHTML = "";
       _disp.style['max-height'] = "30rem";
       
-      setTimeout( () => execute(divName, editor, true, true),toDelay);
+      setTimeout( () => execute(divName, editor, true, true, runLastly),toDelay);
     }
 
     function _runAll(list, item) {
@@ -284,8 +297,8 @@
 
         render(val).then(res => {
             replaceCSSClass(divName, false);
-            _runAll(newList, item)
-        });
+            _runAll(newList, item);
+        }).catch(e => (clearLastly(), alert(e)));
 
       } catch (e) {
         var err = $e(divName + "-error");
@@ -293,6 +306,7 @@
         err.style.display = "block";
         console.log(e.stack);
         clearDisplay();
+        clearLastly();
         setTimeout( () => jump(divName),0);
       }
       
@@ -311,9 +325,9 @@
     }
 
     function scrollToSmoothly(pos, time){
-        /*Time is only applicable for scrolling upwards*/
-        /*Code written by hev1*/
-        /*pos is the y-position to scroll to (in pixels)*/
+    /*Time is only applicable for scrolling upwards*/
+    /*Code written by hev1*/
+    /*pos is the y-position to scroll to (in pixels)*/
          if(isNaN(pos)){
           throw "Position must be a number";
          }
@@ -348,7 +362,8 @@
     }
     // Display utilities
     // 
-    var _displayStack = [];
+    let _displayStack = [];
+    let _lastlyStack = [];
     var NO_DISPLAY = false;
     var dispLen = 0
     function clearDisplay() { _displayStack= []; dispLen = 0;}
@@ -388,13 +403,13 @@
     function __2ToDisplay(title, val) {
       return (
         `<div class="ui segment">
-          <div class="ui left close rail left-row" > <!--style="position: static; width: auto; display: inline-block"-->
+          <div class="ui left close rail left-row" style="position: static; width: auto; display: inline-block">
             <div class="ui segment">${title}</div>
           </div>
-          <div class="ui segment right-row" > <!-- style="display: inline-block; width: 60%; top: -75px" -->
-          <p>${val}</p>
-          <p></p>
-        </div>
+          <div class="ui segment right-row" style="display: inline-block; width: 60%; top: -75px" >
+             <p>${val}</p>
+             <p></p>
+           </div>
         </div>
         ` );
     }
@@ -417,31 +432,61 @@
       else _show(string)
     }
 
+    function _lastly(fn) {
+      _lastlyStack.push(fn);
+    }
+
+    function valOrFunc(v) {
+      try {
+        return  typeof v === 'function'? v() : v;
+      } catch(err) {
+        alert(err);
+      }
+    }
+
+    function runLastly() {
+      let list = _lastlyStack.slice();
+      _lastlyStack = [];
+      return Promise.all(list.map(valOrFunc)).then(valOrFunc).catch(err => alert("Error in lastly"))
+    }
+
+    function clearLastly() {
+      _lastlyStack = [];
+    }
 
     var $$ = {
-      D: _show,
-      D2: _displayEval,
+      D:    _show,
+      D2:   _displayEval,
       HTML: pushDisplay,
       show: _show,
-      clear: clearDisplay,
-      render: render
+      clear:  clearDisplay,
+      render: render,
+      objInfo:objInfo,
+      lastly: _lastly, // pass a function after all items have been displayed, this call be called several
+                      // times, the actions are performed in the order they are posted
+      json: (...v) => _show(...v.map(json))
     };
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        if(hljs) { 
-          document.querySelectorAll('pre code').forEach((block) => {
-                hljs.highlightBlock(block);
-            });
-        }
-        makeEditor();
-    });
-
     return ({
-        //makeEditor$: makeEditor,
-        $$: $$,                                  // display interface
-        getEditors$:  getEditors,
+        makeEditor: makeEditor,
+        $$:         $$,              // display interface
+        getEditors$:getEditors,
+        jumpTag: _jumpTag,
+        jumpBack: jumpBack
+
     });
+  }
+)();
 
-})();
+//==== 
+var {$$, jumpTag, jumpBack} = $tryit;
+var objInfo = $$.objInfo; 
+document.addEventListener('DOMContentLoaded', (event) => {
+    if(hljs) { 
+      document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+    }
+    $tryit.makeEditor();
+});
 
-var $$ = $tryit.$$;  

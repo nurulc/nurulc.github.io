@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html><head>
+<link rel="stylesheet" href="./stylesheets/tryit.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/cobalt.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/continuecomment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/comment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/sublime.min.js"></script>
+<script src="./javascript/prettyprint.js"></script>
+<script src="./javascript/tryit.js"></script>
+<title>Data Frame Examples</title>
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
+
+<script src="https://unpkg.com/str-data-frame@0.2.26/dist/bundle.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- font-family: font-family: 'Dosis', sans-serif; -->
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<!-- font-family: 'Titillium Web', sans-serif; -->
+<style>
+h1, h2, h3, h4, h5, p, ul, li {
+  /*font-family: 'Dosis', sans-serif;*/
+  font-family: 'Titillium Web', sans-serif;
+}
+
+p {
+  font-size: 1.4em;
+}
+
+ul, li {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+ul ul {
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+ul ul ul {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+h1 {S
+  padding-bottom: 1.5rem;
+}
+</style>
+
+<script>
+
+function D(d) {
+	if(d === undefined ) return "<undef>";
+	//if(isClass(d)) return d.prototype.constructor.toString();
+	if(typeof d === 'function') return "<func body>"; 
+	if(d instanceof Date) return d.toString;
+	if(typeof d === 'object') return JSON.stringify(d)
+	return d.toString();
+}
+
+function getType(d) {
+	if(d === undefined) return 'undefined'
+	if(Array.isArray(d)) return 'Array';
+	return typeof d;
+
+}
+
+function textArea(s) {
+  return `<textarea>${asHTML(this.s.substr(0,2000))}</textarea>`;
+}
+
+function Text(s) {
+  if(s === undefined || s.length < 100) return JSON.stringify(s);
+  return ({
+   s,
+   "_toHtml" : textArea 
+  });
+}
+
+function isClass(d) { return false;
+  // try {
+  // 	if( typeof d !== "function" ) return false; 
+  // 	var x = new d;
+
+  // 	let name = x.constructor ? x.constructor.name : '';
+  // 	return (name !== '' && name !==  'Array' && name !== 'Function');
+  //  } catch(e) {
+  //  	  return false;
+  //  }
+}
+
+  // const isCtorClass = obj.constructor
+  //     && obj.constructor.toString().substring(0, 5) === 'class'
+  // if(obj.prototype === undefined) {
+  //   return isCtorClass
+  // }
+  // const isPrototypeCtorClass = obj.prototype.constructor 
+  //   && obj.prototype.constructor.toString
+  //   && obj.prototype.constructor.toString().substring(0, 5) === 'class'
+  // return isCtorClass || isPrototypeCtorClass
+
+</script>
+</head>
+<body>
+<div class="ui sidebar inverted vertical menu">
+<div class="item"> <a href="https://github.com/nurulc/tryitjs" target="_blank"><img src="https://unpkg.com/tryitjs@0.3.0/tryit-small.png"></a></div> 
+<div class="save_all item toc_title ">Save All</div>
+<div class="item toc_title">Contents</div>
+<!--
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('dataframe')">Data Frame</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('summary')">Summary</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('introduction')">Introduction</a></div>
+<div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('overview')">Overview</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('gettingstarted')">Getting started</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('dataframepackage')">DataFrame package</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('quickstart')">Quick Start</a></div>
+<div class="toc2"> 0.1&nbsp;&nbsp;<a onclick="jumpTag('contentsofdataframepackage')">Contents of DataFrame package</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('convertthedataintoaframe')">Convert the data into a Frame</a></div>
+<div class="toc2"> 1.1&nbsp;&nbsp;<a onclick="jumpTag('framestructure')">Frame structure</a></div>
+<div class="toc2"> 1.2&nbsp;&nbsp;<a onclick="jumpTag('frameattributes')">Frame attributes</a></div>
+<div class="toc3"> 1.2.1&nbsp;&nbsp;<a onclick="jumpTag('lengthproperty')">length property</a></div>
+<div class="toc3"> 1.2.2&nbsp;&nbsp;<a onclick="jumpTag('columnsproperty')">columns property</a></div>
+<div class="toc3"> 1.2.3&nbsp;&nbsp;<a onclick="jumpTag('dataproperty')">data property</a></div>
+<div class="toc3"> 1.2.4&nbsp;&nbsp;<a onclick="jumpTag('rowobjectdfasobji')">Row Object df.asObj(i)</a></div>
+<div class="toc3"> 1.2.5&nbsp;&nbsp;<a onclick="jumpTag('findmethodtosearchforarow')">find method to search for a row</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('groupbyoperations')">Group BY operations</a></div>
+<div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('findalluniquevaluesisacolumn')">Find all unique values is a column</a></div>
+<div class="toc2"> 2.2&nbsp;&nbsp;<a onclick="jumpTag('countinggroups')">Counting groups</a></div>
+<div class="toc2"> 2.3&nbsp;&nbsp;<a onclick="jumpTag('transpose')">Transpose</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('frameobjinfo')">Frame objInfo</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('turnobjinfotoaarray')">Turn objInfo to a array</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('turnthearraytoaframe')">Turn the array to a Frame</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('getsomedataworldovidreport')">Get some data - World ovid Report</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('usefetchtogetrawdata')">Use fetch to get raw data</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('createaframefromthedata')">Create a frame from the data</a></div>
+<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('showthesizeoftheframeandthecolumnnames')">Show the size of the frame and the column names</a></div>
+<div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('showthedatasummaryasaframe')">Show the data summary as a Frame</a></div>
+<div class="toc1"> 4&nbsp;&nbsp;<a onclick="jumpTag('analternativewayofcreatingthedata')">An alternative way of creating the data</a></div>
+<div class="toc1"> 5&nbsp;&nbsp;<a onclick="jumpTag('getridofunnecessarycolumns')">Get rid of unnecessary columns</a></div>
+<div class="toc1"> 6&nbsp;&nbsp;<a onclick="jumpTag('getdataforbrazil')">Get data for Brazil</a></div>
+<div class="toc2"> 6.1&nbsp;&nbsp;<a onclick="jumpTag('movecountryinformationintoanotherframe')">Move country information into another frame</a></div>
+<div class="toc2"> 6.2&nbsp;&nbsp;<a onclick="jumpTag('summaryofcasesbycountry')">Summary of cases by country</a></div>
+<div class="toc1"> 7&nbsp;&nbsp;<a onclick="jumpTag('letstrytoimprovethedisplayofnumbers')">Lets try to improve the display of numbers</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('summarizetheinformationbycontinent')">Summarize the information by continent</a></div>
+<div class="toc2"> 0.1&nbsp;&nbsp;<a onclick="jumpTag('transpose')">Transpose</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('sample1001ofthedataandshowthefirst20')">Sample 1% (0.01) of the data and show the first 20</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('createsomeutilityfunctiontoroundanumericstring')">Create some utility function to round a numeric string</a></div>
+<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('makesurenonumericcolumnhasemptyvalues')">Make sure no numeric column has empty values</a></div>
+<div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('createasummaryofcoviddata')">Create a summary of covid data</a></div>
+<div class="toc1"> 4&nbsp;&nbsp;<a onclick="jumpTag('normalizingdata')">Normalizing data</a></div>
+-->
+      </div>
+      <div class="pusher">
+      <div class="ui grid">
+    <div class="two wide column" onclick="toggle()" title="Click to show sidebar"></div>
+    <div class="thirteen wide column" id="tryit_body">
+<h1> Test</h1>
+  <h2> Test 1</h2>
+    <h3> Test 1.1</h3>
+    <h3> Test 1.2</h3>
+    <h3> Test 1.3</h3>
+  <h2>Test 2</h2> 
+    <h3> Test 2.1</h3>
+    <h3> Test 2.2</h3>
+    <h3> Test 2.3</h3>
+  <h2>Test 3</h2> 
+    <h3> Test 3.1</h3>
+    <h3> Test 3.2</h3>
+    <h3> Test 3.3</h3> 
+<div id="msgbox-area" class="msgbox-area"></div>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+
+<button class="ui button page_prev" data-page="4">Prev</button></div> <!--- Summarize the information by continent  @@END_PAGE@@ -->
+
+          <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <script>
+          $('.activating.element').popup({inline: true, });
+          $('.ui.accordion').accordion();
+          function toggle() {
+            console.log('toggle');
+            $('.ui.sidebar').sidebar('toggle');
+
+          }
+        </script>
+   
+       </div>
+     </div>
+  </div>
+
+</body></html>

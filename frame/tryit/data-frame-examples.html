@@ -1,42 +1,61 @@
-
-<!doctype html>
-<html>
-<head>
+<!DOCTYPE html>
+<html><head>
+<link rel="stylesheet" href="./stylesheets/tryit.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/cobalt.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/theme/cobalt.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/container.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/divider.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/dropdown.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/image.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/list.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/menu.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/reset.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/segment.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/sidebar.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/site.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/transition.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/popup.min.css" />
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
-<link rel="stylesheet" href="https://unpkg.com/tryitjs@0.1.11/stylesheets/tryit.css" />
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.57.0/mode/javascript/javascript.min.js"></script>
-<script src="https://unpkg.com/tryitjs@0.1.11/ref/javascript/prettyprint.js"></script>
-<script src="https://unpkg.com/tryitjs@0.1.11/ref/javascript/tryit.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/continuecomment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/comment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/sublime.min.js"></script>
+<script src="./javascript/prettyprint.js"></script>
+<script src="./javascript/tryit.js"></script>
 <title>Data Frame Examples</title>
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
 
 <script src="https://unpkg.com/str-data-frame@0.2.26/dist/bundle.js"></script>
-<!--<script src="/frame/bundle.js"></script> -->
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- font-family: font-family: 'Dosis', sans-serif; -->
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<!-- font-family: 'Titillium Web', sans-serif; -->
+<style>
+h1, h2, h3, h4, h5, p, ul, li {
+  /*font-family: 'Dosis', sans-serif;*/
+  font-family: 'Titillium Web', sans-serif;
+}
+
+p {
+  font-size: 1.4em;
+}
+
+ul, li {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+ul ul {
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+ul ul ul {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+h1 {
+  padding-bottom: 1.5rem;
+}
+</style>
+
 <script>
 
 function D(d) {
@@ -92,29 +111,33 @@ function isClass(d) { return false;
 </script>
 </head>
 <body>
-	<div class="ui grid">
-    <div class="three wide column" id="toc_container">
-      <div id="toc_inner">
-        <div class="toc_title">Contents</div>
-        <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('dataframe')">Data Frame</a></div>
+<div class="ui sidebar inverted vertical menu">
+<div class="item"> <a href="https://github.com/nurulc/tryitjs" target="_blank"><img src="https://unpkg.com/tryitjs@0.3.0/tryit-small.png"></a></div> 
+<div class="save_all item toc_title ">Save All</div>
+<div class="item toc_title">Contents</div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('dataframe')">Data Frame</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('summary')">Summary</a></div>
 <div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('introduction')">Introduction</a></div>
 <div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('overview')">Overview</a></div>
 <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('gettingstarted')">Getting started</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('dataframepackage')">DataFrame package</a></div>
-<div class="toc2"> 1.1&nbsp;&nbsp;<a onclick="jumpTag('contentsofdataframepackage')">Contents of DataFrame package</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('quickstart')">Quick Start</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('contentsofdataframepackage')">Contents of DataFrame package</a></div>
 <div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('convertthedataintoaframe')">Convert the data into a Frame</a></div>
-<div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('framestructure')">Frame structure</a></div>
-<div class="toc2"> 2.2&nbsp;&nbsp;<a onclick="jumpTag('frameattributes')">Frame attributes</a></div>
-<div class="toc3"> 2.2.1&nbsp;&nbsp;<a onclick="jumpTag('lengthproperty')">length property</a></div>
-<div class="toc3"> 2.2.2&nbsp;&nbsp;<a onclick="jumpTag('columnsproperty')">columns property</a></div>
-<div class="toc3"> 2.2.3&nbsp;&nbsp;<a onclick="jumpTag('dataproperty')">data property</a></div>
-<div class="toc3"> 2.2.4&nbsp;&nbsp;<a onclick="jumpTag('rowobjectdfasobji')">Row Object df.asObj(i)</a></div>
-<div class="toc3"> 2.2.5&nbsp;&nbsp;<a onclick="jumpTag('findmethodtosearchforarow')">find method to search for a row</a></div>
-<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('groupbyoperations')">Group BY operations</a></div>
-<div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('findalluniquevaluesisacolumn')">Find all unique values is a column</a></div>
-<div class="toc2"> 3.2&nbsp;&nbsp;<a onclick="jumpTag('countinggroups')">Counting groups</a></div>
-<div class="toc2"> 3.3&nbsp;&nbsp;<a onclick="jumpTag('transpose')">Transpose</a></div>
+<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('framestructure')">Frame structure</a></div>
+<div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('frameattributes')">Frame attributes</a></div>
+<div class="toc3"> 3.1.1&nbsp;&nbsp;<a onclick="jumpTag('lengthproperty')">length property</a></div>
+<div class="toc3"> 3.1.2&nbsp;&nbsp;<a onclick="jumpTag('columnsproperty')">columns property</a></div>
+<div class="toc3"> 3.1.3&nbsp;&nbsp;<a onclick="jumpTag('dataproperty')">data property</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('rowobjectdfasobji')">Row Object df.asObj(i)</a></div>
+<div class="toc2"> 0.1&nbsp;&nbsp;<a onclick="jumpTag('findmethodtosearchforarow')">find method to search for a row</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('groupbyoperations')">Group BY operations</a></div>
+<div class="toc2"> 0.1&nbsp;&nbsp;<a onclick="jumpTag('findalluniquevaluesisacolumn')">Find all unique values is a column</a></div>
+<div class="toc2"> 0.2&nbsp;&nbsp;<a onclick="jumpTag('countinggroups')">Counting groups</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('reoragizingframe')">Reoragizing Frame</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('whatisaprimarykey')">What is a primary key</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('transpose')">Transpose</a></div>
+<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('commonuseoftransposeoncolumn')">Common use of transpose on column</a></div>
 <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('frameobjinfo')">Frame objInfo</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('turnobjinfotoaarray')">Turn objInfo to a array</a></div>
 <div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('turnthearraytoaframe')">Turn the array to a Frame</a></div>
@@ -136,13 +159,13 @@ function isClass(d) { return false;
 <div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('makesurenonumericcolumnhasemptyvalues')">Make sure no numeric column has empty values</a></div>
 <div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('createasummaryofcoviddata')">Create a summary of covid data</a></div>
 <div class="toc1"> 4&nbsp;&nbsp;<a onclick="jumpTag('normalizingdata')">Normalizing data</a></div>
-      </div>  
-    </div>
-    </div> 
-	<div class="ui grid">
-		<div class="three wide column"></div>
-		<div class="twelve wide column" id="tryit_body">
+      </div>
+      <div class="pusher">
+      <div class="ui grid">
+    <div class="two wide column" onclick="toggle()" title="Click to show sidebar"></div>
+    <div class="thirteen wide column" id="tryit_body">
 
+<div id="page-1" class="try-page" data-pagevisible="true">
 <h1 id="dataframe">Data Frame</h1>
 <h2 id="summary">Summary</h2>
 <p><a href="/frame/docs/class/src/frame/frame.js~Frame.html" target="_blank">Frame Docs</a></p>
@@ -188,6 +211,7 @@ give a taste of some of the things it can do.</p>
 <li>Accessing the column data using a index is very inconvinent and rarely do you have to do this<ul>
 <li>For your convinence a <em>row object</em> is created for ease access  </li></ul></li></ul></li>
 </ul>
+<button class="ui button page_next" data-page="1">Next</button></div> <!--- Data Frame  @@END_PAGE@@ --> <div id="page0" class="try-page" data-pagevisible="true">
 <h1 id="gettingstarted">Getting started</h1>
 <p>we have to bring in the str-data-frame npm module. We have several choices, using javascript es6+ module symtax,
 using webpack or similar bundler, or just as a script. For rhe purposed of this tutorial I am using the good old script method. I creates in the global namesapce <em>DataFrame</em> variable.</p>
@@ -220,7 +244,10 @@ function getType(d) {
 
 }
 </code></pre>
-<h3 id="contentsofdataframepackage">Contents of DataFrame package</h3>
+<button class="ui button page_prev" data-page="0">Prev</button><button class="ui button page_next" data-page="2">Next</button></div> <!---  Getting started  @@END_PAGE@@ --> <div id="page1" class="try-page" data-pagevisible="true">
+<h1 id="quickstart">Quick Start</h1>
+<p>So you are in a hurry and would like to see if Frames are yor you. If you have table like data, Data Frames are for you. Think of them as fast in-memory database tables.</p>
+<h2 id="contentsofdataframepackage">Contents of DataFrame package</h2>
 <ul>
 <li>Get all the entries in the DataFrame (package object).</li>
 </ul>
@@ -236,38 +263,7 @@ var data = Object
 
 // Display the data [ [ [key, type-of-value, value ] ...]
 data
-var data = Object
-  .entries(DataFrame)
-  .map(([key,value]) => [key , getType(value), D(value)]);
 
-// Display the data [ [ [key, type-of-value, value ] ...]
-$$.HTML(
-`<div class="ui card" data-html="<div class='header'>User Rating</div><div class='content'><div class='ui star rating'><i class='active icon'></i><i class='active icon'></i><i class='active icon'></i><i class='active icon'></i><i class='active icon'></i></div></div>">
-  <div class="image">
-    <img src="https://semantic-ui.com/images/movies/totoro-horizontal.jpg">
-  </div>
-  <div class="content">
-    <div class="header">My Neighbor Totoro</div>
-    <div class="description">
-      Two sisters move to the country with their father in order to be closer to their hospitalized mother, and discover the surrounding trees are inhabited by magical spirits.
-    </div>
-  </div>
-  <div class="ui two bottom attached buttons">
-    <div class="ui button">
-      <i class="add icon"></i>
-      Queue
-    </div>
-    <div class="ui primary button">
-      <i class="play icon"></i>
-      Watch
-    </div>
-  </div>
-</div>`
-);
-
-data
-
-      
 			</textarea>
 		</div>
 		<a id="_end_tryit1">
@@ -275,9 +271,10 @@ data
 		<div id="tryit1-error" class="tryit-error"></div>
 		<div id="tryit1-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit1-run" data-html="<b>Has Executed, Execute script</b>" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit1-run" title="Execute script" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_1" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_1" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="convertthedataintoaframe">Convert the data into a Frame</h2>
@@ -306,10 +303,11 @@ df
 		<button id="tryit2-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit3" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_2" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_2" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h3 id="framestructure">Frame structure</h3>
-<p><img src="image/data-frame-structure.PNG" alt="" /></p>
+<h2 id="framestructure">Frame structure</h2>
+<p><img src="../../image/data-frame-structure.PNG" alt="" /></p>
 <h3 id="frameattributes">Frame attributes</h3>
 <ul>
 <li>length -- number of rows</li>
@@ -336,6 +334,7 @@ df.length
 		<button id="tryit3-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit4" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_3" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_3" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h4 id="columnsproperty">columns property</h4>
@@ -346,7 +345,7 @@ df.length
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit4">
-json(df.columns)
+df.columns
 			</textarea>
 		</div>
 		<a id="_end_tryit4">
@@ -357,6 +356,7 @@ json(df.columns)
 		<button id="tryit4-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit5" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_4" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_4" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h4 id="dataproperty">data property</h4>
@@ -379,10 +379,12 @@ df.data
 		<button id="tryit5-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit6" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_5" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_5" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <p>This data is just the array used to create the frame in the first place</p>
-<h4 id="rowobjectdfasobji">Row Object df.asObj(i)</h4>
+<button class="ui button page_prev" data-page="1">Prev</button><button class="ui button page_next" data-page="3">Next</button></div> <!---  Quick Start  @@END_PAGE@@ --> <div id="page2" class="try-page" data-pagevisible="true">
+<h1 id="rowobjectdfasobji">Row Object df.asObj(i)</h1>
 <p>The row data is rather anoying to to access the data so a proxy object is created refered to as a RowObject what allows you to access the columns by name. The implementation is very efficient and there is little penalty using it. We will discuss this a little later. </p>
 
 <a id="_tryit6">&nbsp</a>
@@ -391,10 +393,23 @@ df.data
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit6">
 // access the first row
-let r = df.asObj(0);
-let d = df.data[0];
 
-json([r.Name === d[0], r.Type === d[1], r.Value === d[2] ]);
+const ROW = 0;
+let r = df.asObj(ROW);
+let d = df.data[ROW];
+//=============== DISPLAY ============================= 
+
+$$.HTML("&lt;p&gt;&lt;b&gt;Different methods of accessing row data&lt;/b&gt;&lt;/p&gt;");
+$$.D("JSON",JSON.stringify(r));
+$$.D([
+  ['Name',r.Name , d[0]], 
+  ['Type', r.Type, d[1]], 
+  ['Value', r.Value, d[2]] 
+]);
+
+$$.HTML( "&lt;p&gt;&lt;b&gt;Display the row&lt;/b&gt;&lt;/p&gt;"); 
+$$.D(r);
+r.__data     
 
 			</textarea>
 		</div>
@@ -406,9 +421,10 @@ json([r.Name === d[0], r.Type === d[1], r.Value === d[2] ]);
 		<button id="tryit6-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit7" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_6" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_6" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h4 id="findmethodtosearchforarow">find method to search for a row</h4>
+<h3 id="findmethodtosearchforarow">find method to search for a row</h3>
 <p>The <em>df.find</em> method takes a test function as its only argument, the test fuction recieves a row object for each row of the frame until matching row is found - when the function returns true. The find method returns <em>undefined</em> if ther is no matching row is found, otherwise <strong>find</strong> returns the matching row object. </p>
 <p>This is a low level method and usually ther are better ways to do this.</p>
 
@@ -433,9 +449,11 @@ var r = df.find(ro =&gt; ro.Name === 'trimListElements');
 		<button id="tryit7-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit8" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_7" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_7" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h2 id="groupbyoperations">Group BY operations</h2>
+<button class="ui button page_prev" data-page="2">Prev</button><button class="ui button page_next" data-page="4">Next</button></div> <!---  Row Object df.asObj(i)  @@END_PAGE@@ --> <div id="page3" class="try-page" data-pagevisible="true">
+<h1 id="groupbyoperations">Group BY operations</h1>
 <p>We borrow a concept from SQL the group by - this creates groups of rows that have the same value in a set of selected <strong>column(s)</strong> and perform some operation on each of those row
 groups. Some of the operations include (they are all in the namesapce <em><strong>gb</strong></em> )</p>
 <pre><code> * gb.count // count the number of non-empty values is a group
@@ -463,6 +481,7 @@ df.groupBy(['Type'])
 		<button id="tryit8-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit9" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_8" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_8" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <p>So we have 5 different values in the Type column, but we do not the se how many occurences of each of the value do we
@@ -496,11 +515,16 @@ types
 		<button id="tryit9-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit10" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_9" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_9" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h3 id="transpose">Transpose</h3>
+<button class="ui button page_prev" data-page="3">Prev</button><button class="ui button page_next" data-page="5">Next</button></div> <!---  Group BY operations  @@END_PAGE@@ --> <div id="page4" class="try-page" data-pagevisible="true">
+<h1 id="reoragizingframe">Reoragizing Frame</h1>
+<p>In this section we will show you how to reorganize rows and columns. To do this in a useful way, it is ideal to have a column that is the <em>primary key</em>. </p>
+<h2 id="whatisaprimarykey">What is a primary key</h2>
+<h2 id="transpose">Transpose</h2>
 <p>To convert rows to columns we can use the transpose method.
-<img src="image/MATRIX-TRANSPOSE.jpg" alt="" /></p>
+<img src="../../image/MATRIX-TRANSPOSE.jpg" alt="" /></p>
 
 <a id="_tryit10">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
@@ -520,11 +544,16 @@ transpose(types)
 		<button id="tryit10-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit11" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_10" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_10" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <p>You will notice the headings are just the row index. But transpose supports us telling the column that should be used 
 as the column names. The important property of the column is that all the values must be unique. Although for the sake of robustness this version of transpose can deal with a few duplicate as lonk as that is rare. </p>
 <p>In our case the 'Type' column has the attributes we are looking for</p>
+<h2 id="commonuseoftransposeoncolumn">Common use of transpose on column</h2>
+<ul>
+<li>Transpose on a primary key - making values of the primary key the column headers</li>
+</ul>
 
 <a id="_tryit11">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
@@ -542,8 +571,10 @@ as the column names. The important property of the column is that all the values
 		<button id="tryit11-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit12" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_11" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_11" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
+<button class="ui button page_prev" data-page="4">Prev</button><button class="ui button page_next" data-page="6">Next</button></div> <!---  Reoragizing Frame  @@END_PAGE@@ --> <div id="page5" class="try-page" data-pagevisible="true">
 <h1 id="frameobjinfo">Frame objInfo</h1>
 <p>Th</p>
 
@@ -564,6 +595,7 @@ objInfo(Frame)
 		<button id="tryit12-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit13" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_12" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_12" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="turnobjinfotoaarray">Turn objInfo to a array</h2>
@@ -576,7 +608,7 @@ objInfo(Frame)
 			<textarea class="tryit ui " id="tryit13">
 var {arrProd} = DataFrame;
 var frameDesc = Object.entries( objInfo(Frame) ).flatMap( ([key, list]) =&gt; arrProd( key, list) ); 
-json(frameDesc)
+$$.json(frameDesc)
 			</textarea>
 		</div>
 		<a id="_end_tryit13">
@@ -587,6 +619,7 @@ json(frameDesc)
 		<button id="tryit13-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit14" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_13" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_13" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="turnthearraytoaframe">Turn the array to a Frame</h2>
@@ -610,8 +643,10 @@ aFrame
 		<button id="tryit14-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit15" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_14" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_14" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
+<button class="ui button page_prev" data-page="5">Prev</button><button class="ui button page_next" data-page="7">Next</button></div> <!---  Frame objInfo  @@END_PAGE@@ --> <div id="page6" class="try-page" data-pagevisible="true">
 <h1 id="getsomedataworldovidreport">Get some data - World ovid Report</h1>
 <h2 id="usefetchtogetrawdata">Use fetch to get raw data</h2>
 <p>We will use world covid-19 daily statistics, this is a csv file that we will split into an array of lines. We can use the fetch
@@ -652,6 +687,7 @@ p  // note p is a promise, the display will wait for the promise to resolve
 		<button id="tryit15-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit16" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_15" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_15" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="createaframefromthedata">Create a frame from the data</h2>
@@ -682,6 +718,7 @@ p  // note p is a promise, the display will wait for the promise to resolve
 		<button id="tryit16-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit17" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_16" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_16" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="showthesizeoftheframeandthecolumnnames">Show the size of the frame and the column names</h2>
@@ -708,7 +745,7 @@ var summary = ({ rows: covidFrame.length,
 });
 
 // display
-json(summary)
+$$.json(summary)
 
 			</textarea>
 		</div>
@@ -720,6 +757,7 @@ json(summary)
 		<button id="tryit17-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit18" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_17" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_17" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h3 id="showthedatasummaryasaframe">Show the data summary as a Frame</h3>
@@ -751,9 +789,10 @@ new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
 		<button id="tryit18-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit19" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_18" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_18" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<p>## An alternative way of creating the data      </p>
+<h2 id="analternativewayofcreatingthedata">An alternative way of creating the data</h2>
 
 <a id="_tryit19">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
@@ -784,6 +823,7 @@ colType
 		<button id="tryit19-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit20" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_19" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_19" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="getridofunnecessarycolumns">Get rid of unnecessary columns</h2>
@@ -842,6 +882,7 @@ frame.slice(0,20)
 		<button id="tryit20-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit21" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_20" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_20" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="getdataforbrazil">Get data for Brazil</h2>
@@ -865,6 +906,7 @@ frame.filter(r =&gt; r.country === 'Brazil')
 		<button id="tryit21-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit22" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_21" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_21" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h3 id="movecountryinformationintoanotherframe">Move country information into another frame</h3>
@@ -891,6 +933,7 @@ display
 		<button id="tryit22-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit23" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_22" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_22" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h3 id="summaryofcasesbycountry">Summary of cases by country</h3>
@@ -924,6 +967,7 @@ summary
 		<button id="tryit23-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit24" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_23" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_23" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="letstrytoimprovethedisplayofnumbers">Lets try to improve the display of numbers</h2>
@@ -946,10 +990,12 @@ function addCommas(nStr) {
 }
 
 function toStr(str) {
+  const {abs,round} = Math;
   let num = (+str);
-  if(Math.abs(Math.round(num)-num) &lt; 1e-6) num = Math.round(num);
+  if(abs(round(num)-num) &lt; 1e-6) num = Math.round(num);
+  else if(abs(num)&gt;1000) num = round(num);
+  else if(abs(num)&gt;1) num = round(num*100)/100;
   return addCommas(num.toString());
-
 }
 Frame.HTMLFormat.number = toStr;
 
@@ -966,8 +1012,10 @@ summary
 		<button id="tryit24-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit25" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_24" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_24" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
+<button class="ui button page_prev" data-page="6">Prev</button><button class="ui button page_next" data-page="8">Next</button></div> <!---  Get some data - World ovid Report  @@END_PAGE@@ --> <div id="page7" class="try-page" data-pagevisible="true">
 <h1 id="summarizetheinformationbycontinent">Summarize the information by continent</h1>
 <p>This section will reformat the data by trans to create summary by continent</p>
 
@@ -993,6 +1041,7 @@ continent_summary
 		<button id="tryit25-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit26" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_25" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_25" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h3 id="transpose">Transpose</h3>
@@ -1016,6 +1065,7 @@ transpose(continent_summary, 'country')
 		<button id="tryit26-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit27" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_26" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_26" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="sample1001ofthedataandshowthefirst20">Sample 1% (0.01) of the data and show the first 20</h2>
@@ -1039,6 +1089,7 @@ sample
 		<button id="tryit27-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit28" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_27" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_27" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="createsomeutilityfunctiontoroundanumericstring">Create some utility function to round a numeric string</h2>
@@ -1083,6 +1134,7 @@ testS
 		<button id="tryit28-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit29" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_28" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_28" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="makesurenonumericcolumnhasemptyvalues">Make sure no numeric column has empty values</h2>
@@ -1113,6 +1165,7 @@ JSON.stringify([p1, p2, p3])
 		<button id="tryit29-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit30" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_29" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_29" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 
@@ -1137,6 +1190,7 @@ var TO_ZERO = Object.fromEntries(col_update_list);
 		<button id="tryit30-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit31" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_30" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_30" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 
@@ -1158,6 +1212,7 @@ frame
 		<button id="tryit31-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit32" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_31" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_31" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h3 id="createasummaryofcoviddata">Create a summary of covid data</h3>
@@ -1192,6 +1247,7 @@ frame.groupBy(['continent','country', // columns to group on
 		<button id="tryit32-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit33" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_32" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_32" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="normalizingdata">Normalizing data</h2>
@@ -1215,6 +1271,7 @@ covidFrame.groupBy(['iso_code', 'location']).filter(ro =&gt; !.iso_code)
 		<button id="tryit33-run" title="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit34" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_33" title="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_33" title="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <div id="msgbox-area" class="msgbox-area"></div>
@@ -1224,10 +1281,26 @@ covidFrame.groupBy(['iso_code', 'location']).filter(ro =&gt; !.iso_code)
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
-<div class="three wide column logo"><img src="https://unpkg.com/tryitjs@0.1.11/tryit-small.png"></div>  
-		</div>
-    
-	</div>
+
+<button class="ui button page_prev" data-page="7">Prev</button></div> <!--- Summarize the information by continent  @@END_PAGE@@ -->
+
+          <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <script>
+          $('.activating.element').popup({inline: true, });
+          $('.ui.accordion').accordion();
+          function toggle() {
+            console.log('toggle');
+            $('.ui.sidebar').sidebar('toggle');
+
+          }
+        </script>
+   
+       </div>
+     </div>
+  </div>
 
 </body></html>
-    

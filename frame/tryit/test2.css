@@ -108,13 +108,13 @@
 .tryit-error {
   color: red;
   border-style: dotted;
-  width: 80%;
+  width: 90%;
   display: none
 }
 
 .tryit-code {
   border-style: solid;
-  width: 80%;
+  width: 100%;
   background-color: lightgrey;
   height: 7rem;
 }
@@ -155,7 +155,7 @@ body {
 }
 
 textarea.tryit {
-  width: 80%;
+  width: 100%;
 }
 
 h1 {
@@ -164,42 +164,90 @@ h1 {
   font-size: 3rem;
 }
 
-body {
-  counter-reset: h2counter;
+body, #tryit_body {
+    counter-reset: h2counter;
+    counter-reset: h3counter;
+    counter-reset: h4counter;
 }
 
-h1 {
+#tryit_body h1 {
     counter-reset: h2counter;
+    counter-reset: h3counter;
+    counter-reset: h4counter;
 }
-h2:before {
+#tryit_body h2:before {
     content: counter(h2counter) ".\0000a0\0000a0";
     counter-increment: h2counter;
     counter-reset: h3counter;
+    counter-reset: h4counter;
 }
 
-h3:before {
+#tryit_body h3:before {
     content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
     counter-increment: h3counter;
     counter-reset: h4counter;
 }
 
-h4:before {
+#tryit_body h4:before {
     content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0";
     counter-increment: h4counter;
 }
+
+/*div[data-visible="true"] {
+  display: block;
+}
+
+div[data-visible!="true"] {
+  display: none;
+}*/
+
 #toc_container a:hover {
   color: #ddffff !important;
   cursor: pointer;
   background-color: #8888ff;
 }
-
 .logo {
-  position: fixed;
-  z-index: 1000;
   text-align: center;
-  left: 20px;
-  top: 8px;
+  background-color: white;
+  padding-left: -2rem;
 }
+
+.expression {
+    display: inline;
+    width: 30%;
+    min-width: 15rem;
+    background-color: #606080;
+    color: white;
+    padding-right: 2rem;
+    padding-left: 1rem;
+}
+
+.expression::before {
+  content:"eval: ";
+}
+.expression-value {
+    display: inline;
+    padding-left: 2rem
+    width: 60%;
+}
+
+div.D2:nth-child(even)  {
+  display: inline-block;
+  background-color: #ddffdd;
+  width: 20%;
+  font-weight: 800;
+  font-size: 95%;
+}
+
+div.D2:nth-child(odd)  {
+  display: inline-block;
+  width: 70%;
+}
+
+.save_all:hover {
+    color: #00eeff !important;
+}
+
 /* Table of contents TOC */
 #toc_container {
     position: fixed;
@@ -219,15 +267,15 @@ h4:before {
 .toc_title {
     font-weight: 700;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     padding-bottom: 2rem;
 }
 
 .toc0 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-align:center;
   color: #4287f5; 
-  padding-bottom: 1rem;
+  padding-bottom: 1.4rem;
   text-decoration: underline;
   padding-top: 0.5rem;
 }
@@ -235,27 +283,27 @@ h4:before {
 
 
 .toc1 {
-  font-size: 0.7rem;
+  font-size: 1.1rem;
   text-align:left;
   color: #4287f5;
 }
 
 .toc2 {
-  font-size: 0.65rem;
+  font-size: 1rem;
   text-align:left;
   margin-left: 15px;
   color: #4287f5;
 }
 
 .toc3 {
-  font-size: 0.6rem;
+  font-size: 0.9rem;
   text-align:left;
   margin-left: 25px;
   color: #4287f5;
 }
 
 .toc4 {
-  font-size: 0.55rem;
+  font-size: 0.85rem;
   text-align:left;
   margin-left: 35px;
   color: #4287f5;
@@ -274,27 +322,50 @@ h4:before {
 /*@media only screen and (max-height: 50rem) {
   #toc_inner {
   max-height: 40rem;
-  background-color: #88eeee;
+  background-color: #88eeee
+  }
 }*/
 @media only screen and (max-height: 40rem) {
   #toc_inner {
-  max-height: 70vh;
-  /*background-color: #ffeeee;*/
+    max-height: 70vh;
+    /*background-color: #ffeeee;*/
+  }
 }
 
 @media only screen and (max-height: 30rem) {
   #toc_inner {
-  max-height: 65vh;
-  /*background-color: #ffeeff;*/
+    max-height: 65vh;
+    /*background-color: #ffeeff;*/
+  }
 }
 
 
 @media only screen and (max-height: 20rem) {
   #toc_inner {
-  max-height: 50vh;
-  /*background-color: #ffffee;*/
+    max-height: 50vh;
+    /*background-color: #ffffee;*/
+  }
 }
 
+
+.pastel0 {background: #d8f9fd; text-align: right; font-weight: bold; color: #0e1000; }
+.pastel1 { background: #aae8de; text-align: right; font-weight: bold; }
+.pastel2 { background: #ffffb3; text-align: right; font-weight: bold; }
+.pastel3 { background: #bce0f7; text-align: right; font-weight: bold; color: #020258; }
+.pastel4 { background: #fbdfdf; text-align: right; font-weight: bold; color: #020800;}
+.pastel5 { background: #ded9ea; text-align: right; font-weight: bold; color: #0e0113;}
+.pastel6 { background: #ffd8ac; text-align: right; font-weight: bold; }
+.pastel7 { background: #b3de69; text-align: right; font-weight: bold; color: #170404;}
+.pastel8 { background: #fccde5; text-align: right; font-weight: bold; }
+.pastel9 { background: #d9d9d9; text-align: right; font-weight: bold; }
+
+.CodeMirror { 
+    height: auto;
+}
+
+.CodeMirror-scroll {
+  max-height: 50rem;
+}
 
 /*
 .CodeMirror-panel .info-panel {
@@ -302,3 +373,14 @@ h4:before {
     justify-content: space-between;
     height: 32px;
 }*/
+
+/*    PAGE MARKERS    */
+
+div.try-page[data-pagevisible="true"] {
+  display: block;
+  /*background-color: #ddddff;*/
+}
+
+div.try-page[data-pagevisible="false"] {
+  display: none;
+}

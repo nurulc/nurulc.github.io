@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html><head>
+<link rel="stylesheet" href="./stylesheets/tryit.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/cobalt.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/continuecomment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/comment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/sublime.min.js"></script>
+<script src="./javascript/prettyprint.js"></script>
+<script src="./javascript/tryit.js"></script>
+<title>Data Frame Examples</title>
+<meta name="viewport" content="width=device-width, initial-scale=0.8">
+
+<script src="https://unpkg.com/str-data-frame@0.2.26/dist/bundle.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- font-family: font-family: 'Dosis', sans-serif; -->
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<!-- font-family: 'Titillium Web', sans-serif; -->
+<style>
+h1, h2, h3, h4, h5, p, ul, li {
+  /*font-family: 'Dosis', sans-serif;*/
+  font-family: 'Titillium Web', sans-serif;
+}
+
+p {
+  font-size: 1.4em;
+}
+
+ul, li {
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+ul ul {
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+ul ul ul {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+h1 {
+  padding-bottom: 1.5rem;
+}
+</style>
+
+<script>
+
+function D(d) {
+	if(d === undefined ) return "<undef>";
+	//if(isClass(d)) return d.prototype.constructor.toString();
+	if(typeof d === 'function') return "<func body>"; 
+	if(d instanceof Date) return d.toString;
+	if(typeof d === 'object') return JSON.stringify(d)
+	return d.toString();
+}
+
+function getType(d) {
+	if(d === undefined) return 'undefined'
+	if(Array.isArray(d)) return 'Array';
+	return typeof d;
+
+}
+
+function textArea(s) {
+  return `<textarea>${asHTML(this.s.substr(0,2000))}</textarea>`;
+}
+
+function Text(s) {
+  if(s === undefined || s.length < 100) return JSON.stringify(s);
+  return ({
+   s,
+   "_toHtml" : textArea 
+  });
+}
+
+function isClass(d) { return false;
+  // try {
+  // 	if( typeof d !== "function" ) return false; 
+  // 	var x = new d;
+
+  // 	let name = x.constructor ? x.constructor.name : '';
+  // 	return (name !== '' && name !==  'Array' && name !== 'Function');
+  //  } catch(e) {
+  //  	  return false;
+  //  }
+}
+
+  // const isCtorClass = obj.constructor
+  //     && obj.constructor.toString().substring(0, 5) === 'class'
+  // if(obj.prototype === undefined) {
+  //   return isCtorClass
+  // }
+  // const isPrototypeCtorClass = obj.prototype.constructor 
+  //   && obj.prototype.constructor.toString
+  //   && obj.prototype.constructor.toString().substring(0, 5) === 'class'
+  // return isCtorClass || isPrototypeCtorClass
+
+</script>
+</head>
+<body>
+<div class="try-page" data-pagevisible="true">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  <hr />
+</div>
+<div class="try-page" data-pagevisible="true">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  <hr />
+</div>
+<p>below text</p>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+
+          <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <script>
+          $('.activating.element').popup({inline: true, });
+          $('.ui.accordion').accordion();
+          function toggle() {
+            console.log('toggle');
+            $('.ui.sidebar').sidebar('toggle');
+
+          }
+        </script>
+   
+       </div>
+     </div>
+  </div>
+
+</body></html>
