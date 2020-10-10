@@ -405,7 +405,10 @@
 
     function tryIt(divName,editor, toDelay=200) {
 
-      if(!canExecute(divName)) return;
+      if(!canExecute(divName)) {
+        _runAll(__editorsPending, divName);
+        return;
+      }
       var _err = $e(divName + "-error");
       var _disp = $e(divName + "-display");
       _err.style.display = "none";
@@ -419,7 +422,11 @@
 
     function _runAll(list, item) {
       let [divName, ...newList] = list;
-      if(item === divName) return;
+      if(item === divName){ 
+        let editor = editorFor[divName];
+        setTimeout(() => tryIt(divName, editor), 200);
+        return;
+      }
       let _code;
 
       try {
@@ -718,6 +725,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     $q('.page_prev').forEach(e => e.onclick = $tryit.pagePrev);
     $q('.page_next').forEach(e => e.onclick = $tryit.pageNext);
+    if(location.hash) {
+      setTimeout(() =>jumpTag(location.hash.substr(1)),  100);
+    }
 
 });
 

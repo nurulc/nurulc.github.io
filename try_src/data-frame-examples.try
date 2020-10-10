@@ -1,49 +1,22 @@
 !head
 <title>Data Frame Examples</title>
-<meta name="viewport" content="width=device-width, initial-scale=0.8">
-
-<script src="https://unpkg.com/str-data-frame@0.2.26/dist/bundle.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=0.7">
+<!-- Load plotly.js into the DOM -->
+  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script src="https://unpkg.com/str-data-frame@^0.2/dist/bundle.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;800&display=swap" rel="stylesheet">
 <!-- font-family: font-family: 'Dosis', sans-serif; -->
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
 <!-- font-family: 'Titillium Web', sans-serif; -->
-<style>
-h1, h2, h3, h4, h5, p, ul, li {
-  /*font-family: 'Dosis', sans-serif;*/
-  font-family: 'Titillium Web', sans-serif;
-}
-
-p {
-  font-size: 1.4em;
-}
-
-ul, li {
-  font-size: 1.2rem;
-  font-style: italic;
-}
-
-ul ul {
-  font-size: 1.1rem;
-  font-style: italic;
-}
-
-ul ul ul {
-  font-size: 0.9rem;
-  font-style: italic;
-}
 
 
-
-h1 {
-  padding-bottom: 1.5rem;
-}
-</style>
 
 @@include tools.try
 
 !html
 
 !md
+@@include plotly.try
 @@include summary.try
 @@include introduction.try
 @@include getting-started.try
@@ -146,7 +119,7 @@ This is a low level method and usually ther are better ways to do this.
 var r = df.find(ro => ro.Name === 'trimListElements');
 
 // display r
-[r]
+r
 
 
 !md
@@ -163,7 +136,13 @@ As you can see every row in Frame __df__ has a __Type__ and a __value__  columns
 
 ### Find all unique values is a column
 
-The simplest use is to show the unique values of a coulmn or a set of columns, we will see more of that later.
+The simplest use is to show the unique values of a coulmn or a set of columns, we will see more of that later. 
+
+> aFrame.groupBy(['col1', 'col2' , 'col3'])
+
+The code above will all unique combinations of **col1**, **col2**, **col3**
+
+__Note: This is the simplest use of groupBy, later we will see more things you can do with this rather versitile method.
 
 !tryit
 
@@ -172,15 +151,17 @@ df.groupBy(['Type'])
 
 !md
 
-So we have 5 different values in the Type column, but we do not the se how many occurences of each of the value do we
-have in the Frame.
+So we have 5 different values in the Type column, but we do not the se how many occurences of each of the value do we have in the Frame.
+
+Next we will see how to use the aggrigation functons to extract more information from each group.
 
 ### Counting groups
 
 We can count the number using __gb.count__ this function takes two arguments:
 
 1. The column value to count, __Note:__ count only counts non-empty values in that column for the group
-1. What nat should be given to this count
+1. Whatcolumn name should be given to this count
+    1. gb.count(**column-name-to-count**, **name-of-the-resulting-column**)
 
 
 
@@ -198,28 +179,57 @@ types
 
 In this section we will show you how to reorganize rows and columns. To do this in a useful way, it is ideal to have a column that is the _primary key_. 
 
-## What is a primary key
 
 ## Transpose
-To convert rows to columns we can use the transpose method.
-![](../../image/MATRIX-TRANSPOSE.jpg)
+To convert rows to columns of a two dimentional matrix we can use the transpose method.
+
+<img style="width: 15%" src="../../image/MATRIX-TRANSPOSE.jpg">
+
+Frame has a similar method, with one small addition: the column names are treated as the first row. We can see the affect of the transpose method below by transposing the frame **types**
 
 !tryit
 var {transpose} = DataFrame; // group by operations
 transpose(types)
 
 !md
-You will notice the headings are just the row index. But transpose supports us telling the column that should be used 
-as the column names. The important property of the column is that all the values must be unique. Although for the sake of robustness this version of transpose can deal with a few duplicate as lonk as that is rare. 
+You will notice the headings are just the row index. 
 
-In our case the 'Type' column has the attributes we are looking for
+What if we wnt to use one of the columns as the heading? Transpose supports us telling the column that should be used 
+as the column names. 
+
+The important property of the column is that all the values must be unique. In a database we call this the unique key for each row. Although for the sake of robustness this version of transpose can deal with a few duplicate as lonk as that is rare. 
+
+In our case the 'Type' column is the unique key, and thus it has the attributes we are looking for.
 
 ## Common use of transpose on column
+
+### What is a primary key
+
+This is a column uniquely identifies each row in a frame.
 
 * Transpose on a primary key - making values of the primary key the column headers
 
 !tryit
- transpose(types, 'Type')
+ $$.HTML("<p><b>Display the frame <i>types</i></b></p>");
+// Show original frame
+$$.D(types);
+//====================
+//
+// perform the transpose with 'Type' as the primary key
+let tr = transpose(types, 'Type');
+
+$$.HTML("<p><b>Transpose the frame <i>types</i></b></p>")
+$$.D(tr); // display the transpose
+
+//===============================
+// now transpose it back
+$$.HTML("<br/><p><b>Get back the original frame - transpose again</b></p>")
+transpose(tr,'Type'); // notice a transpose of a transpose on the primary key gets ts 
+      
+!md
+As you can see, columns are converted to rows, and the primary key column becomes the column headers of the new frame.
+
+
 !md
 # Frame objInfo
 
@@ -251,7 +261,7 @@ aFrame
 
 
 !md
-# Get some data - World ovid Report
+# Get Data - World Covid Report
 
 ## Use fetch to get raw data
 
@@ -293,7 +303,7 @@ p  // note p is a promise, the display will wait for the promise to resolve
   // Display the first 11 results
   covidFrame.slice(0,11);
   
-  
+!md   
 !md
 ## Show the size of the frame and the column names
 
@@ -321,41 +331,47 @@ $$.json(summary)
 !md
 
 ### Show the data summary as a Frame
+
+In order to create the frame we need to do the following
+1. Function to count the number of non-empty values in a column `countNonEmptyCells(columnName)`
+2. Function to get the __type__ of the column __Numeric__ or __Alpha__ `columnType(colName)`
+
 !tryit
+
 // Helper function to count number of non-empty values  in a column in the frame _cf_
-let countColumn = (cf,colName) => cf.groupBy( [gb.count(colName,'count')] ).asObj(0).count ;
+function countNonEmptyCells(colName){ 
+    return cf.groupBy( [gb.count(colName,'count')] ).asObj(0).count ;
+}
+
+// Function to get the column type
+function columnType(col) { 
+  return (numericColumns.indexOf(col) !== -1) ? 'Numeric' : 'Alpha'; 
+}
+
+// compute the rows of the frame
+let rowsOfTheFrame = 
+  cf.columns.map(
+      colName => [
+        columnType(colName), 
+        colName, 
+        countNonEmptyCells(colName)
+      ]
+  );
 
 
-var data =
-    [                                   ["rows",    '',  cf.length],
-        ...nonNumericColumns.map(col => ['Numeric', col, countColumn(cf, col)]),
-        ...numericColumns.map(col =>    ['Alpha', col,   countColumn(cf, col) ])
+// construct the data for the frame
+let data =
+    [  ["rows",    '',  cf.length],
+       ...rowsOfTheFrame
     ];
 
+// create a frame from the data and display
 new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
-     .sort(['-Non_empty_cells','Col_Name'])
+     .sort(['-Non_empty_cells','Col_Name']) // sort the frame
+
 
 !md
-## An alternative way of creating the data      
-
-
-!tryit
-// Create a frame for column type
-let numericSet = new Set(numericColumns);
-let colCategoryData = cf.columns.map(colName => [ (numuricSet,has(colName)?'Numeric': 'NonNumeric'),  colName]);
-var category = new Frame(colCategoryData, ['Type', 'Name']);
-
-function counts(columns) { return columns.map(col => gb.count(col); }
-var countOfCol = cf.groupBy(count(cf.columns))
-var colType = new Frame([ ...arrProd('Numeric', numericColumns), ...arrProd('NonNumeric', nonNumericColumns), ['Type', 'Name'])
-                         
-colType
-
-//new Frame(data, ['Type',"Name", "Count"])
-//     .sort(['Count','Name'])
-
-!md
-##Get rid of unnecessary columns
+# Get rid of unnecessary columns
 
 In sql we can do this using _select_ columns _from_ table, further the select operation can rename the columns, add new columns, and transform data is columns
 
@@ -368,16 +384,28 @@ We use a similar operation for a data frames using the project
 ```js
    [..., "location=country",...]
 ```
-!rem `
+
 We also can reorder the columns by chosing the order of the columns, the example below shows
 how to create a new frem from a subset of the original columns and renaming a column
 
 **Note** We can also add new columns by adding a new column name
 
+## Removing data redundency
+
+In the covid table there is a great deal of data redendency and unnecessary data  for example for each row has a ```iso_code``` for each country, country name, and continent. 
+In database terminology we say that the data is __not normalized__. In this section we will show how we can normalize the data. 
+
+This section we will look at how to create the following:
+
+1. Create frames with only some of the columns
+2. Create frames to remove redundent data.
+3. How to combine data from two frames
+
+
 
 
 !tryit
-let SELECTED_COLUMNS = [
+var SELECTED_COLUMNS = [
   ['iso_code', (iso, ro) => iso || ro.location], // note you have to use the ro.location (original name) and not ro.country
   'location=country', // rename location to country
   ['continent', (c,ro) => c || ro.location], // if no continent data use the ro.location (country) name as the continent
@@ -398,11 +426,12 @@ var frame = covidFrame.select(
       ,ro => ro.total_cases > 0 // only keep the rows for a country start from the date of the first case 
 );
 
-// show first 20
+$$.D( "Show first 20 rows" );
 frame.slice(0,20)
   
   
 !md
+
 ##Get data for Brazil
 
 Here we will use a simpler version of select that keeps all the columns as is and filters out some of the rows. This is the same as the following sql
@@ -413,20 +442,33 @@ Here we will use a simpler version of select that keeps all the columns as is an
 
 
 !tryit
-frame.filter(r => r.country === 'Brazil')
+covidFrame.filter(r => r.location === 'Brazil')
+
 !md
 
-###Move country information into another frame
+# Split COVID frame 
+
+## Country frame
+
+Create a frame with general country information country information into another frame
+
+
+When we look at the original __covidFrame__ there is a lot of duplication of data. For example, each row of d
 
 !tryit
-var y = covidFrame.select(['iso_code', 'location', 'continent', 
-              'population', 'diabetes_prevalence',
-              'gdp_per_capita'
-             ],ro => ro.continent === 'Europe').distinct();
-//frameWithIndex(y).filter(ro => ro.__index$ < 5) 
-display
+var GENERAL_COLUMNS = [
+    'iso_code', 'location=country', 'continent', 
+    'population', 'diabetes_prevalence',
+    "median_age", "aged_65_older", "aged_70_older",
+    "gdp_per_capita", "extreme_poverty", "cardiovasc_death_rate",
+    "female_smokers", "male_smokers", "handwashing_facilities",
+    "hospital_beds_per_thousand", "life_expectancy", "human_development_index"
+];
 
 
+
+var europe  = covidFrame.select(,ro => ro.continent === 'Europe').distinct();
+europe
 
 !md
 ### Summary of cases by country
