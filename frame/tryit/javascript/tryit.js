@@ -4,23 +4,23 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { return _arrayLikeToArray(arr); } }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _toArray(arr) { return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest(); }
 
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) { return Array.from(iter); } }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) { return; } if (typeof o === "string") { return _arrayLikeToArray(o, minLen); } var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) { n = o.constructor.name; } if (n === "Map" || n === "Set") { return Array.from(o); } if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) { return _arrayLikeToArray(o, minLen); } }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) { len = arr.length; } for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) { return; } var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { [].push(_s.value); if (i && [].length === i) { break; } } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) { _i["return"](); } } finally { if (_d) { throw _e; } } } return []; }
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) { return arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -32,49 +32,35 @@ var $tryit = function () {
   }
 
   function asArray(arrayLike) {
-    if (arrayLike === undefined || arrayLike === null) {
-      return [];
-    }
-
-    if (Array.isArray(arrayLike)) {
-      return arrayLike;
-    }
+    if (arrayLike === undefined || arrayLike === null) return [];
+    if (Array.isArray(arrayLike)) return arrayLike;
 
     if (arrayLike instanceof NodeList || typeof arrayLike.forEach === 'function') {
-      var _a = arrayLike;
-
-      var _f = function (n) {
-        return [].push(n);
-      };
-
-      for (var _i = 0; _i < _a.length; _i++) {
-        _f(_a[_i], _i, _a);
-      }
-
-      undefined;
-      return [];
+      var _res = [];
+      arrayLike.forEach(function (n) {
+        return _res.push(n);
+      });
+      return _res;
     }
 
     if (!arrayLike || arrayLike.length === undefined) {
       return [arrayLike];
     }
 
+    var res = [];
+
     for (var i = 0; i < arrayLike.length; i++) {
-      [].push(arrayLike[i]);
+      res.push(arrayLike[i]);
     }
 
-    return [];
+    return res;
   }
 
   function $e(name) {
     var e = document.getElementById(name);
-
-    if (!e) {
-      return {
-        innerText: ""
-      };
-    }
-
+    if (!e) return {
+      innerText: ""
+    };
     return e;
   }
 
@@ -96,7 +82,9 @@ var $tryit = function () {
   // ----------------------------------------
 
 
+  var __editors = [];
   var __editorsPending = [];
+  var editorFor = {};
 
   var editorData = function () {
     var data = window.localStorage[window.location];
@@ -119,17 +107,9 @@ var $tryit = function () {
 
 
   function saveAll() {
-    var _a2 = Object.keys({});
-
-    var _f2 = function (k) {
-      editorData[k] = {}[k].getValue("\n");
-    };
-
-    for (var _i2 = 0; _i2 < _a2.length; _i2++) {
-      _f2(_a2[_i2], _i2, _a2);
-    }
-
-    undefined;
+    Object.keys(editorFor).forEach(function (k) {
+      editorData[k] = editorFor[k].getValue("\n");
+    });
     window.localStorage[window.location] = JSON.stringify(editorData);
     alert('Save All');
   }
@@ -141,7 +121,7 @@ var $tryit = function () {
 
 
   function save(id) {
-    editorData[id] = {}[id].getValue("\n");
+    editorData[id] = editorFor[id].getValue("\n");
     window.localStorage[window.location] = JSON.stringify(editorData);
   }
 
@@ -180,9 +160,10 @@ var $tryit = function () {
 
       __editorsPending.push(id);
 
-      [].push(id);
+      __editors.push(id);
+
       setEditorHeight(editor, lines);
-      ({})[id] = editor;
+      editorFor[id] = editor;
       document.querySelector("#".concat(id, "-run")).onclick = execCode;
 
       function execCode() {
@@ -195,13 +176,7 @@ var $tryit = function () {
 
   function setEditorHeight(editor, lines) {
     var height = '';
-
-    if (lines < 5) {
-      height = "5rem";
-    } else if (lines > 20) {
-      height = "40rem";
-    } else height = lines * 1.8 + 'rem';
-
+    if (lines < 5) height = "5rem";else if (lines > 20) height = "40rem";else height = lines * 1.8 + 'rem';
     editor.setSize("inherit", height);
     return editor;
   }
@@ -222,10 +197,7 @@ var $tryit = function () {
   function canExecute(tag) {
     var ix = __editorsPending.indexOf(tag);
 
-    if (ix <= 0) {
-      return true;
-    }
-
+    if (ix <= 0) return true;
     showPopup(1, function () {
       return jump(__editorsPending[0]);
     }); //jump(__editorsPending[0]);
@@ -242,29 +214,12 @@ var $tryit = function () {
       var b = $e(next_button);
 
       if (b) {
-        var _a10 = asArray(classToRemove);
-
-        var _f10 = function (cls) {
+        asArray(classToRemove).forEach(function (cls) {
           return b.classList.remove(cls);
-        };
-
-        for (var _i10 = 0; _i10 < _a10.length; _i10++) {
-          _f10(_a10[_i10], _i10, _a10);
-        }
-
-        undefined;
-
-        var _a11 = asArray(classToAdd);
-
-        var _f11 = function (cls) {
+        });
+        asArray(classToAdd).forEach(function (cls) {
           return b.classList.add(cls);
-        };
-
-        for (var _i11 = 0; _i11 < _a11.length; _i11++) {
-          _f11(_a11[_i11], _i11, _a11);
-        }
-
-        undefined;
+        });
         return b;
       }
     }
@@ -279,10 +234,7 @@ var $tryit = function () {
   function replaceCSSClass(tag) {
     var ix = __editorsPending.indexOf(tag);
 
-    if (ix !== 0) {
-      return false;
-    }
-
+    if (ix !== 0) return false;
     __editorsPending = __editorsPending.slice(1);
     addRemoveCSSclass(__editorsPending[0], "yellow", "green").title = "Script ready to execute"; // let next_button = __editorsPending[0];
     // if(next_button) {
@@ -311,10 +263,7 @@ var $tryit = function () {
       return _segment || {};
     }
 
-    if (dataset(elem).pagevisible) {
-      return elem;
-    }
-
+    if (dataset(elem).pagevisible) return elem;
     var segment = elem.closest('div[data-pagevisible]');
     return segment || {};
   }
@@ -326,23 +275,15 @@ var $tryit = function () {
 
 
   function dataset(elem) {
-    if (!elem || !elem.dataset) {
-      return {};
-    }
-
+    if (!elem || !elem.dataset) return {};
     return elem.dataset;
   }
 
   function makeSegmentVisible(elem) {
     arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
-    var _a12 = [undefined, elem];
-    var _r12 = [];
 
-    for (var _i12 = 0; _i12 < _a12.length; _i12++) {
-      _r12.push(findSegment(_a12[_i12], _i12, _a12));
-    }
-
-    var _map2 = _slicedToArray(_r12, 2),
+    var _map = [undefined, elem].map(findSegment),
+        _map2 = _slicedToArray(_map, 2),
         curSeg = _map2[0],
         segment = _map2[1]; // find
 
@@ -368,7 +309,7 @@ var $tryit = function () {
   }
 
   function toHeader(elem) {
-    if (dataset(elem).pageVisible) {
+    if (dataset(elem).pagevisible) {
       return elem.querySelector('h1');
     }
 
@@ -385,10 +326,7 @@ var $tryit = function () {
         targetSeg = _makeSegmentVisible2[0],
         curSeg = _makeSegmentVisible2[1];
 
-    if (targetSeg !== curSeg) {
-      setDisplay(curSeg, 'false');
-    }
-
+    if (targetSeg !== curSeg) setDisplay(curSeg, 'false');
     setTimeout(function () {
       //const lastsScoll = () => elem.scrollIntoView({behavior: "smooth", block: "start"});
       var lastsScoll = function () {
@@ -403,9 +341,7 @@ var $tryit = function () {
   }
 
   function jumpback() {
-    if (__editorsPending.length) {
-      jump(__editorsPending[0]);
-    }
+    if (__editorsPending.length) jump(__editorsPending[0]);
   }
 
   function updateUI(divName) {
@@ -415,12 +351,9 @@ var $tryit = function () {
     replaceCSSClass(divName);
     _addRemoveCSSclass('ra_' + getIDNumber(divName), "green", "grey").title = "Previous scripts executed";
     _addRemoveCSSclass(divName + "-run", ["green", "yellow"], "blue").title = "Script executed and displayed";
-
-    if (toJump) {
-      setTimeout(function () {
-        return jump(divName);
-      }, 0);
-    }
+    if (toJump) setTimeout(function () {
+      return jump(divName);
+    }, 0);
   }
 
   function execute(divName, editor, toUpdateUI, toJump, callback) {
@@ -432,18 +365,9 @@ var $tryit = function () {
       };
 
       render(val).then(function (res) {
-        if (res !== undefined) {
-          show(res);
-        }
-
-        if (toUpdateUI) {
-          updateUI(divName);
-        }
-
-        if (callback) {
-          callback();
-        }
-
+        if (res !== undefined) show(res);
+        if (toUpdateUI) updateUI(divName);
+        if (callback) callback();
         $('.ui.accordion').accordion();
       });
     } catch (e) {
@@ -487,7 +411,7 @@ var $tryit = function () {
         newList = _list.slice(1);
 
     if (item === divName) {
-      var editor = {}[divName];
+      var editor = editorFor[divName];
       setTimeout(function () {
         return tryIt(divName, editor);
       }, 200);
@@ -498,7 +422,7 @@ var $tryit = function () {
 
     try {
       console.log("run all " + divName);
-      var _editor = {}[divName];
+      var _editor = editorFor[divName];
 
       if (!item) {
         console.log("item " + divName + "not found");
@@ -534,25 +458,11 @@ var $tryit = function () {
 
   function easeIn(start, pos, end) {
     var abs = Math.abs;
-
-    if (abs(start - pos) < 100 || abs(end - pos) < 100) {
-      return 2;
-    }
-
+    if (abs(start - pos) < 100 || abs(end - pos) < 100) return 2;
     var diff = abs(start - end);
-
-    if (diff > 5000) {
-      return 100;
-    }
-
-    if (diff > 1000) {
-      return 30;
-    }
-
-    if (diff > 500) {
-      return 10;
-    }
-
+    if (diff > 5000) return 100;
+    if (diff > 1000) return 30;
+    if (diff > 500) return 10;
     return 5;
   }
 
@@ -577,15 +487,15 @@ var $tryit = function () {
     if (currentPos < pos) {
       var t = 10;
 
-      var _loop = function (_i13) {
+      var _loop = function (_i2) {
         t += 10;
         setTimeout(function () {
-          window.scrollTo(0, _i13);
+          window.scrollTo(0, _i2);
         }, t / 2);
       };
 
-      for (var _i13 = currentPos; _i13 <= pos + 15; _i13 += 10) {
-        _loop(_i13);
+      for (var _i2 = currentPos; _i2 <= pos + 15; _i2 += 10) {
+        _loop(_i2);
       }
 
       if (callback) {
@@ -602,10 +512,7 @@ var $tryit = function () {
 
         if (i <= pos) {
           clearInterval(x);
-
-          if (callback) {
-            callback();
-          }
+          if (callback) callback();
         }
       }, time);
     }
@@ -632,16 +539,10 @@ var $tryit = function () {
   function smallArray(a) {
     var depth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var len = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 40;
-
-    if (depth > 1) {
-      return false;
-    }
+    if (depth > 1) return false;
 
     if (Array.isArray(a) && a.length <= len) {
-      if (a.every(isPrimitive)) {
-        return true;
-      }
-
+      if (a.every(isPrimitive)) return true;
       return a.every(function (v) {
         return smallArray(v, depth + 1, 3);
       });
@@ -654,28 +555,13 @@ var $tryit = function () {
     if (d && d._toHtml) {
       return d._toHtml();
     } else if (typeof d === "string") {
-      if (d && d.length > 20000) {
-        d = d.substr(0, 20000) + "... MORE";
-      }
-
-      if (d.length < 100) {
-        return asHTML(d) + "<br/>";
-      }
-
+      if (d && d.length > 20000) d = d.substr(0, 20000) + "... MORE";
+      if (d.length < 100) return asHTML(d) + "<br/>";
       return "<pre>" + asHTML(d) + "</pre>";
-    } else if (isPrimitive(d)) {
-      return d.toString();
-    } else if (smallArray(d)) {
+    } else if (isPrimitive(d)) return d.toString();else if (smallArray(d)) {
       var v = JSON.stringify(d, null, " ");
-
-      if (v.length < 150) {
-        v = JSON.stringify(d);
-      }
-
-      if (v && v.length > 20000) {
-        v = v.substr(0, 20000) + "... MORE";
-      }
-
+      if (v.length < 150) v = JSON.stringify(d);
+      if (v && v.length > 20000) v = v.substr(0, 20000) + "... MORE";
       return "<pre>" + (v || (d !== undefined ? asHTML(d.toString()) : undefined)) + "</pre>";
     } else if (d) {
       return prettyPrint(d).outerHTML;
@@ -707,10 +593,7 @@ var $tryit = function () {
 
   function pushDisplay(s) {
     var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'h';
-
-    if (!(s instanceof Promise) && s !== undefined) {
-      s = Promise.resolve(s);
-    }
+    if (!(s instanceof Promise) && s !== undefined) s = Promise.resolve(s);
 
     _displayStack.push([s, type]);
   }
@@ -720,81 +603,42 @@ var $tryit = function () {
       list[_key] = arguments[_key];
     }
 
-    var _a13 = list;
-
-    var _f13 = function (v) {
+    list.forEach(function (v) {
       return pushDisplay(v, 'd');
-    };
-
-    for (var _i14 = 0; _i14 < _a13.length; _i14++) {
-      _f13(_a13[_i14], _i14, _a13);
-    }
-
-    undefined;
+    });
   }
 
   function render(val) {
-    if (arguments.length > 0) {
-      _show(val);
-    }
+    if (arguments.length > 0) _show(val);
 
-    var _a14 = _displayStack;
+    var promises = _displayStack.map(function (_ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          p = _ref2[0],
+          type = _ref2[1];
 
-    var _f14 = function (_ref3) {
+      return p;
+    });
+
+    var types = _displayStack.map(function (_ref3) {
       var _ref4 = _slicedToArray(_ref3, 2),
           p = _ref4[0],
           type = _ref4[1];
 
-      return p;
-    };
-
-    var _r14 = [];
-
-    for (var _i15 = 0; _i15 < _a14.length; _i15++) {
-      _r14.push(_f14(_a14[_i15], _i15, _a14));
-    }
-
-    var _a15 = _displayStack;
-
-    var _f15 = function (_ref5) {
-      var _ref6 = _slicedToArray(_ref5, 2),
-          p = _ref6[0],
-          type = _ref6[1];
-
       return type;
-    };
+    });
 
-    var _r15 = [];
-
-    for (var _i16 = 0; _i16 < _a15.length; _i16++) {
-      _r15.push(_f15(_a15[_i16], _i16, _a15));
-    }
-
-    var resPromise = Promise.all(_r14).then(function (list) {
+    var resPromise = Promise.all(promises).then(function (list) {
       {
-        var _a16 = list;
-
-        var _f16 = function (v, i) {
-          return [v, _r15[i]];
-        };
-
-        for (var _i17 = 0; _i17 < _a16.length; _i17++) {
-          [].push(_f16(_a16[_i17], _i17, _a16));
-        }
-
-        var _f17 = function (_ref) {
-          var _ref2 = _slicedToArray(_ref, 2),
-              v = _ref2[0],
-              type = _ref2[1];
+        var res = list.map(function (v, i) {
+          return [v, types[i]];
+        });
+        return Promise.resolve('<div class="ui accordion">' + '<div class="active title"><i class="dropdown icon"></i>Results</div>' + '<div class="active content">' + res.map(function (_ref5) {
+          var _ref6 = _slicedToArray(_ref5, 2),
+              v = _ref6[0],
+              type = _ref6[1];
 
           return type === 'h' ? v : display(v);
-        };
-
-        for (var _i18 = 0; _i18 < [].length; _i18++) {
-          [].push(_f17([][_i18], _i18, []));
-        }
-
-        return Promise.resolve("<div class=\"ui accordion\"><div class=\"active title\"><i class=\"dropdown icon\"></i>Results</div><div class=\"active content\">" + [].join('\n') + '</div></div>');
+        }).join('\n') + '</div></div>');
       }
     });
     clearDisplay();
@@ -817,14 +661,7 @@ var $tryit = function () {
     var list = _lastlyStack.slice();
 
     _lastlyStack = [];
-    var _a18 = list;
-    var _r18 = [];
-
-    for (var _i19 = 0; _i19 < _a18.length; _i19++) {
-      _r18.push(valOrFunc(_a18[_i19], _i19, _a18));
-    }
-
-    return Promise.all(_r18).then(valOrFunc).catch(function () {
+    return Promise.all(list.map(valOrFunc)).then(valOrFunc).catch(function () {
       return alert("Error in lastly");
     });
   }
@@ -837,87 +674,32 @@ var $tryit = function () {
     makeEditor: function () {
       var elts = document.querySelectorAll(".tryit");
       var list = Array.prototype.slice.call(elts);
-      var _a9 = list;
-
-      var _f9 = function (e) {
+      list.map(function (e) {
         return e.id;
-      };
-
-      var _r9 = [];
-
-      for (var _i9 = 0; _i9 < _a9.length; _i9++) {
-        _r9.push(_f9(_a9[_i9], _i9, _a9));
-      }
-
-      var _a3 = _r9;
-
-      for (var _i3 = 0; _i3 < _a3.length; _i3++) {
-        _makeEditor(_a3[_i3], _i3, _a3);
-      }
-
-      undefined;
-
-      var _a4 = document.querySelectorAll('div[data-pagevisible="true"]');
-
-      var _f4 = function (e) {
-        return e.style.display = 'none';
-      };
-
-      for (var _i4 = 0; _i4 < _a4.length; _i4++) {
-        _f4(_a4[_i4], _i4, _a4);
-      }
-
-      undefined;
+      }).forEach(_makeEditor);
+      document.querySelectorAll('div[data-pagevisible="true"]').forEach(function (e) {
+        return setDisplay(e, 'false');
+      });
       setDisplay(document.querySelector('div[data-pagevisible]'), 'true');
       (document.querySelector('.save_all') || {}).onclick = saveAll;
-
-      var _a5 = document.querySelectorAll(".jump_next");
-
-      var _f5 = function (n) {
+      document.querySelectorAll(".jump_next").forEach(function (n) {
         var id = n.id.substr(5);
 
         n.onclick = function () {
           return jump(id);
         };
-      };
-
-      for (var _i5 = 0; _i5 < _a5.length; _i5++) {
-        _f5(_a5[_i5], _i5, _a5);
-      }
-
-      undefined;
-
-      var _a6 = document.querySelectorAll(".jump_back");
-
-      var _f6 = function (n) {
+      });
+      document.querySelectorAll(".jump_back").forEach(function (n) {
         n.onclick = jumpback;
-      };
-
-      for (var _i6 = 0; _i6 < _a6.length; _i6++) {
-        _f6(_a6[_i6], _i6, _a6);
-      }
-
-      undefined;
-
-      var _a7 = document.querySelectorAll(".run_all");
-
-      var _f7 = function (n) {
+      });
+      document.querySelectorAll(".run_all").forEach(function (n) {
         var id = n.id.substr(3);
 
         n.onclick = function () {
           return _runAll(__editorsPending, 'tryit' + id);
         };
-      };
-
-      for (var _i7 = 0; _i7 < _a7.length; _i7++) {
-        _f7(_a7[_i7], _i7, _a7);
-      }
-
-      undefined;
-
-      var _a8 = document.querySelectorAll(".save_data");
-
-      var _f8 = function (n) {
+      });
+      document.querySelectorAll(".save_data").forEach(function (n) {
         var id = n.id.substr(5);
 
         n.onclick = function () {
@@ -925,13 +707,7 @@ var $tryit = function () {
         };
 
         n.title = "Save this script";
-      };
-
-      for (var _i8 = 0; _i8 < _a8.length; _i8++) {
-        _f8(_a8[_i8], _i8, _a8);
-      }
-
-      undefined;
+      });
       _addRemoveCSSclass('ra_1', "green", "grey").style = "display: none";
     },
     $$: {
@@ -943,10 +719,7 @@ var $tryit = function () {
 
           try {
             val = (1, eval)(string);
-
-            if (!(val instanceof Promise)) {
-              pushDisplay(__2ToDisplay(title, val));
-            } else val.then(function (val) {
+            if (!(val instanceof Promise)) pushDisplay(__2ToDisplay(title, val));else val.then(function (val) {
               pushDisplay(__2ToDisplay(title, val));
             });
           } catch (err) {
@@ -988,19 +761,12 @@ var $tryit = function () {
           v[_key2] = arguments[_key2];
         }
 
-        var _a19 = v;
-        var _r19 = [];
-
-        for (var _i20 = 0; _i20 < _a19.length; _i20++) {
-          _r19.push(_json(_a19[_i20], _i20, _a19));
-        }
-
-        return _show.apply(void 0, _toConsumableArray(_r19));
+        return _show.apply(void 0, _toConsumableArray(v.map(_json)));
       }
     },
     // display interface
     getEditors$: function () {
-      return [].jumpback();
+      return __editors.jumpback();
     },
     jumpTag: function (aTag) {
       jumpTag(aTag);
@@ -1036,68 +802,33 @@ var $$ = $tryit.$$,
     _display = $tryit._display;
 var objInfo = $$.objInfo;
 document.addEventListener('DOMContentLoaded', function () {
-  var $q = function () {
-    var _document;
-
-    return $tryit.asArray((_document = document).querySelectorAll.apply(_document, arguments));
+  var $q = function (arg1, arg2) {
+    return $tryit.asArray(document.querySelectorAll(arg1, arg2));
   };
 
   if (hljs) {
-    var _a20 = document.querySelectorAll('pre code');
-
-    var _f20 = function (block) {
+    document.querySelectorAll('pre code').forEach(function (block) {
       return hljs.highlightBlock(block);
-    };
-
-    for (var _i21 = 0; _i21 < _a20.length; _i21++) {
-      _f20(_a20[_i21], _i21, _a20);
-    }
-
-    undefined; // (block) => {
+    }); // (block) => {
     //     hljs.highlightBlock(block);
     // });
   }
 
   $tryit.makeEditor();
   var allPages = $q('div[data-pagevisible]');
-  var _a21 = allPages;
-
-  var _f21 = function (elem, i) {
+  allPages.forEach(function (elem, i) {
     return i !== 0 ? setDisplay(elem, "false") : '';
-  };
-
-  for (var _i22 = 0; _i22 < _a21.length; _i22++) {
-    _f21(_a21[_i22], _i22, _a21);
-  }
-
-  undefined; // for(let i=1; i<allPages.length; i++) {
+  }); // for(let i=1; i<allPages.length; i++) {
   //   let elem = allPages[i];
   //   elem.dataset.pagevisible = "false";
   // }
 
-  var _a22 = $q('.page_prev');
-
-  var _f22 = function (e) {
+  $q('.page_prev').forEach(function (e) {
     return e.onclick = $tryit.pagePrev;
-  };
-
-  for (var _i23 = 0; _i23 < _a22.length; _i23++) {
-    _f22(_a22[_i23], _i23, _a22);
-  }
-
-  undefined;
-
-  var _a23 = $q('.page_next');
-
-  var _f23 = function (e) {
+  });
+  $q('.page_next').forEach(function (e) {
     return e.onclick = $tryit.pageNext;
-  };
-
-  for (var _i24 = 0; _i24 < _a23.length; _i24++) {
-    _f23(_a23[_i24], _i24, _a23);
-  }
-
-  undefined;
+  });
 
   if (location.hash) {
     setTimeout(function () {

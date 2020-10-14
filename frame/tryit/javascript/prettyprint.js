@@ -187,8 +187,9 @@ var prettyPrint = function () {
       };
     },
     shorten: function shorten(str) {
+      var max = 40;
       str = str.replace(/^\s\s*|\s\s*$|\n/g, '');
-      return str.length > 40 ? str.substring(0, 39) + '...' : str;
+      return str.length > max ? str.substring(0, max - 1) + '...' : str;
     },
     htmlentities: function htmlentities(str) {
       return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -320,7 +321,7 @@ var prettyPrint = function () {
               maxDepth: 1
             }));
           } catch (e) {
-            this.parentNode.appendChild(util.table(["ERROR OCCURED DURING OBJECT RETRIEVAL"], 'error').addRow([e.message]).node);
+            this.parentNode.appendChild(util.table(['ERROR OCCURED DURING OBJECT RETRIEVAL'], 'error').addRow([e.message]).node);
           }
         });
       }
@@ -345,7 +346,7 @@ var prettyPrint = function () {
           return false;
         },
         style: {
-          cursor: "pointer"
+          cursor: 'pointer'
         }
       });
     },
@@ -421,6 +422,7 @@ var prettyPrint = function () {
     var settings = util.merge({}, prettyPrintThis.config, options),
         container = util.el('div'),
         config = prettyPrintThis.config,
+        stack = {},
         hasRunOnce = false;
     /* Expose per-call settings.
        Note: "config" is overwritten (where necessary) by options/"settings"
@@ -435,7 +437,7 @@ var prettyPrint = function () {
         return util.txt(item);
       },
       regexp: function regexp(item) {
-        var miniTable = util.table(["RegExp", null], 'regexp');
+        var miniTable = util.table(['RegExp', null], 'regexp');
         var flags = util.table();
         var span = util.expander('/' + item.source + '/', 'Click to show more', function () {
           this.parentNode.appendChild(miniTable.node);
@@ -445,10 +447,10 @@ var prettyPrint = function () {
         return settings.expanded ? miniTable.node : span;
       },
       domelement: function domelement(element) {
-        var miniTable = util.table(["DOMElement", null], 'domelement'),
+        var miniTable = util.table(['DOMElement', null], 'domelement'),
             elname = element.nodeName || '';
         miniTable.addRow(['tag', '&lt;' + elname.toLowerCase() + '&gt;']);
-        util.forEach(["id", "className", "innerHTML", "src", "href"], function (prop) {
+        util.forEach(['id', 'className', 'innerHTML', 'src', 'href'], function (prop) {
           if (element[prop]) {
             miniTable.addRow([prop, util.htmlentities(element[prop])]);
           }
@@ -459,7 +461,7 @@ var prettyPrint = function () {
       },
       domnode: function domnode(node) {
         /* Deals with all DOMNodes that aren't elements (nodeType !== 1) */
-        var miniTable = util.table(["DOMNode", null], 'domelement'),
+        var miniTable = util.table(['DOMNode', null], 'domelement'),
             data = util.htmlentities((node.data || 'UNDEFINED').replace(/\n/g, '\\n'));
         miniTable.addRow(['nodeType', node.nodeType + ' (' + node.nodeName + ')']).addRow(['data', data]);
         return settings.expanded ? miniTable.node : util.expander('DOMNode', 'Click to show more', function () {
@@ -473,19 +475,19 @@ var prettyPrint = function () {
         /* Checking depth + circular refs */
 
         /* Note, check for circular refs before depth; just makes more sense */
-        var stackKey = util.within({}).is(obj);
+        var stackKey = util.within(stack).is(obj);
 
         if (stackKey) {
           return util.common.circRef(obj, stackKey, settings);
         }
 
-        ({})[key || 'TOP'] = obj;
+        stack[key || 'TOP'] = obj;
 
         if (depth === settings.maxDepth) {
           return util.common.depthReached(obj, settings);
         }
 
-        var table = util.table(["Object", null], 'object'),
+        var table = util.table(['Object', null], 'object'),
             isEmpty = true;
 
         for (var i in obj) {
@@ -506,9 +508,9 @@ var prettyPrint = function () {
         }
 
         if (isEmpty) {
-          table.addRow(["<small>[empty]</small>"]);
+          table.addRow(['<small>[empty]</small>']);
         } else {
-          table.thead.appendChild(util.hRow(["key", "value"], 'colHeader'));
+          table.thead.appendChild(util.hRow(['key', 'value'], 'colHeader'));
         }
 
         var ret = settings.expanded || hasRunOnce ? table.node : util.expander(util.stringify(obj), 'Click to show more', function () {
@@ -521,13 +523,13 @@ var prettyPrint = function () {
         /* Checking depth + circular refs */
 
         /* Note, check for circular refs before depth; just makes more sense */
-        var stackKey = util.within({}).is(arr);
+        var stackKey = util.within(stack).is(arr);
 
         if (stackKey) {
           return util.common.circRef(arr, stackKey);
         }
 
-        ({})[key || 'TOP'] = arr;
+        stack[key || 'TOP'] = arr;
 
         if (depth === settings.maxDepth) {
           return util.common.depthReached(arr);
@@ -560,19 +562,16 @@ var prettyPrint = function () {
           }
 
           isEmpty = false;
-
-          if (i < LOW || i >= HIGH) {
-            table.addRow([i, typeDealer[util.type(item)](item, depth + 1, i)]);
-          } else if (i === LOW) {
+          if (i < LOW || i >= HIGH) table.addRow([i, typeDealer[util.type(item)](item, depth + 1, i)]);else if (i === LOW) {
             table.addRow([i + '..' + (HIGH - 1), typeDealer[util.type(item)]('...', depth + 1, i)]);
           }
         });
 
         if (!jquery) {
           if (isEmpty) {
-            table.addRow(["<small>[empty]</small>"]);
+            table.addRow(['<small>[empty]</small>']);
           } else {
-            table.thead.appendChild(util.hRow(["index", "value"], 'colHeader'));
+            table.thead.appendChild(util.hRow(['index', 'value'], 'colHeader'));
           }
         }
 
@@ -582,15 +581,15 @@ var prettyPrint = function () {
       },
       'function': function _function(fn, depth, key) {
         /* Checking JUST circular refs */
-        var stackKey = util.within({}).is(fn);
+        var stackKey = util.within(stack).is(fn);
 
         if (stackKey) {
           return util.common.circRef(fn, stackKey);
         }
 
-        ({})[key || 'TOP'] = fn;
-        var miniTable = util.table(["Function", null], 'function'),
-            argsTable = util.table(["Arguments"]),
+        stack[key || 'TOP'] = fn;
+        var miniTable = util.table(['Function', null], 'function'),
+            argsTable = util.table(['Arguments']),
             args = fn.toString().match(/\((.+?)\)/),
             body = fn.toString().match(/\(.*?\)\s+?\{?([\S\s]+)/)[1].replace(/\}?$/, '');
         miniTable.addRow(['arguments', args ? args[1].replace(/[^\w_,\s]/g, '') : '<small>[none/native]</small>']).addRow(['body', body]);
@@ -599,7 +598,7 @@ var prettyPrint = function () {
         });
       },
       'date': function date(_date) {
-        var miniTable = util.table(["Date", null], 'date'),
+        var miniTable = util.table(['Date', null], 'date'),
             sDate = _date.toString().split(/\s/);
         /* TODO: Make this work well in IE! */
 
@@ -642,68 +641,68 @@ var prettyPrint = function () {
     styles: {
       array: {
         th: {
-          backgroundColor: "#6DBD2A",
-          color: "white"
+          backgroundColor: '#6DBD2A',
+          color: 'white'
         }
       },
       'function': {
         th: {
-          backgroundColor: "#D82525"
+          backgroundColor: '#D82525'
         }
       },
       regexp: {
         th: {
-          backgroundColor: "#E2F3FB",
-          color: "#000"
+          backgroundColor: '#E2F3FB',
+          color: '#000'
         }
       },
       object: {
         th: {
-          backgroundColor: "#1F96CF"
+          backgroundColor: '#1F96CF'
         }
       },
       jquery: {
         th: {
-          backgroundColor: "#FBF315"
+          backgroundColor: '#FBF315'
         }
       },
       error: {
         th: {
-          backgroundColor: "red",
-          color: "yellow"
+          backgroundColor: 'red',
+          color: 'yellow'
         }
       },
       domelement: {
         th: {
-          backgroundColor: "#F3801E"
+          backgroundColor: '#F3801E'
         }
       },
       date: {
         th: {
-          backgroundColor: "#A725D8"
+          backgroundColor: '#A725D8'
         }
       },
       colHeader: {
         th: {
-          backgroundColor: "#EEE",
-          color: "#000",
-          textTransform: "uppercase"
+          backgroundColor: '#EEE',
+          color: '#000',
+          textTransform: 'uppercase'
         }
       },
       'default': {
         table: {
-          borderCollapse: "collapse",
-          width: "100%"
+          borderCollapse: 'collapse',
+          width: '100%'
         },
         td: {
-          padding: "5px",
-          fontSize: "12px",
-          backgroundColor: "#FFF",
-          color: "#222",
-          border: "1px solid #000",
-          verticalAlign: "top",
-          fontFamily: "\"Consolas\",\"Lucida Console\",Courier,mono",
-          whiteSpace: "nowrap"
+          padding: '5px',
+          fontSize: '12px',
+          backgroundColor: '#FFF',
+          color: '#222',
+          border: '1px solid #000',
+          verticalAlign: 'top',
+          fontFamily: '"Consolas","Lucida Console",Courier,mono',
+          whiteSpace: 'nowrap'
         },
         td_hover: {
           /* Styles defined here will apply to all tr:hover > td,
