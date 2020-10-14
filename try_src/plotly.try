@@ -44,6 +44,8 @@ var layout = {
   xaxis: {
     autorange: true,
     range: ['2015-02-17', '2017-02-16'],
+/*
+
     rangeselector: {buttons: [
         {
           count: 1,
@@ -59,6 +61,7 @@ var layout = {
         },
         {step: 'all'}
       ]},
+ */
     rangeslider: {range: ['2015-02-17', '2017-02-16']},
     type: 'date'
   },
@@ -71,7 +74,35 @@ var layout = {
 
 Plotly.newPlot('plot', data, layout);
 }
+/*
+var {redim,zipToDict} = require('../lib')
+function groupInfo(aFrame, groupCol, cols) {
+    let fr = aFrame.groupBy([
+        groupCol, 
+        ...cols.flatMap(name => [ gb.value('name', name), gb.min(name, name+'_mn'), gb.max(name, name+'_mx')])
+        ]);
+    return zipToDict(fr.data.map(row => [row[0], 
+                               zipToDict(
+                                   redim(row.slice(1), 3).map(([col,min,max]) => [col, [min,max]])
+                                   )
+                              ]
+                      )
+    )
+}
 
+function linePlot(frame, country, groupCol, cols) {
+    let gi = groupInfo(frame, groupCol, cols);
+    let xAxis = cols[0];
+     let xRange = gi[country][cols[0]];
+     let countryFrame = frame.filter(ro => ro[groupCol] === country);
+     console.log(xRange);
+     data = zipToDict(cols.map(name => [name, countryFrame.rawColumn(name)]));
+    
+    return data;
+}
+linePlot(covidFrame, 'Albania', 'location',  ['date', 'new_cases', 'total_cases'])
+
+ */
 			
 !html
 <div id="plot"></div>

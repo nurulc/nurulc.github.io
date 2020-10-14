@@ -629,7 +629,7 @@
             },
             {
               "type": "CommentBlock",
-              "value": "*\n * is the arr/object an array\n * @param  {any} arr\n * @return {Boolean}\n ",
+              "value": "*\n * is the arr/object an array\n * @param  {any} arr\n * @return {boolean}\n ",
               "start": 782,
               "end": 861,
               "loc": {
@@ -697,7 +697,7 @@
           },
           {
             "type": "CommentBlock",
-            "value": "*\n * is the arr/object an array\n * @param  {any} arr\n * @return {Boolean}\n ",
+            "value": "*\n * is the arr/object an array\n * @param  {any} arr\n * @return {boolean}\n ",
             "start": 782,
             "end": 861,
             "loc": {
@@ -767,7 +767,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * is the arr/object an array\n * @param  {any} arr\n * @return {Boolean}\n ",
+      "value": "*\n * is the arr/object an array\n * @param  {any} arr\n * @return {boolean}\n ",
       "start": 782,
       "end": 861,
       "loc": {
@@ -833,7 +833,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * is the arr/object an array\n * @param  {any} arr\n * @return {Boolean}\n ",
+      "value": "*\n * is the arr/object an array\n * @param  {any} arr\n * @return {boolean}\n ",
       "start": 782,
       "end": 861,
       "loc": {

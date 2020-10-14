@@ -450,6 +450,18 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "nurulc.github.io/src/frame/frame-utils/coreframefrombuffer.js~coreframefrombuffer",
+    "function/index.html#static-function-coreFrameFromBuffer",
+    "<span>coreFrameFromBuffer</span> <span class=\"search-result-import-path\">nurulc.github.io/src/frame/frame-utils/coreFrameFromBuffer.js</span>",
+    "function"
+  ],
+  [
+    "nurulc.github.io/src/frame/frame-utils/index.js~coreframefrombuffer",
+    "variable/index.html#static-variable-coreFrameFromBuffer",
+    "<span>coreFrameFromBuffer</span> <span class=\"search-result-import-path\">nurulc.github.io/src/frame/frame-utils/index.js</span>",
+    "variable"
+  ],
+  [
     "nurulc.github.io/src/string/strutil/countch.js~countch",
     "function/index.html#static-function-countCh",
     "<span>countCh</span> <span class=\"search-result-import-path\">nurulc.github.io/src/string/strutil/countCh.js</span>",
@@ -2400,6 +2412,18 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/frame/baseframe.js~baseframe#_key",
+    "class/src/frame/BaseFrame.js~BaseFrame.html#instance-member-_key",
+    "src/frame/BaseFrame.js~BaseFrame#_key",
+    "member"
+  ],
+  [
+    "src/frame/baseframe.js~baseframe#_keyfunc",
+    "class/src/frame/BaseFrame.js~BaseFrame.html#instance-member-_keyFunc",
+    "src/frame/BaseFrame.js~BaseFrame#_keyFunc",
+    "member"
+  ],
+  [
     "src/frame/baseframe.js~baseframe#_name",
     "class/src/frame/BaseFrame.js~BaseFrame.html#instance-member-_name",
     "src/frame/BaseFrame.js~BaseFrame#_name",
@@ -2426,12 +2450,6 @@ window.esdocSearchIndex = [
   [
     "src/frame/baseframe.js~baseframe#columns",
     "class/src/frame/BaseFrame.js~BaseFrame.html#instance-get-columns",
-    "src/frame/BaseFrame.js~BaseFrame#columns",
-    "member"
-  ],
-  [
-    "src/frame/baseframe.js~baseframe#columns",
-    "class/src/frame/BaseFrame.js~BaseFrame.html#instance-set-columns",
     "src/frame/BaseFrame.js~BaseFrame#columns",
     "member"
   ],
@@ -2484,6 +2502,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/frame/baseframe.js~baseframe#keyname",
+    "class/src/frame/BaseFrame.js~BaseFrame.html#instance-method-keyName",
+    "src/frame/BaseFrame.js~BaseFrame#keyName",
+    "method"
+  ],
+  [
     "src/frame/baseframe.js~baseframe#length",
     "class/src/frame/BaseFrame.js~BaseFrame.html#instance-get-length",
     "src/frame/BaseFrame.js~BaseFrame#length",
@@ -2498,12 +2522,6 @@ window.esdocSearchIndex = [
   [
     "src/frame/baseframe.js~baseframe#name",
     "class/src/frame/BaseFrame.js~BaseFrame.html#instance-get-name",
-    "src/frame/BaseFrame.js~BaseFrame#name",
-    "member"
-  ],
-  [
-    "src/frame/baseframe.js~baseframe#name",
-    "class/src/frame/BaseFrame.js~BaseFrame.html#instance-set-name",
     "src/frame/BaseFrame.js~BaseFrame#name",
     "member"
   ],
@@ -2532,9 +2550,27 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/frame/baseframe.js~baseframe#setcolumns",
+    "class/src/frame/BaseFrame.js~BaseFrame.html#instance-method-setColumns",
+    "src/frame/BaseFrame.js~BaseFrame#setColumns",
+    "method"
+  ],
+  [
     "src/frame/baseframe.js~baseframe#setdata",
     "class/src/frame/BaseFrame.js~BaseFrame.html#instance-method-setData",
     "src/frame/BaseFrame.js~BaseFrame#setData",
+    "method"
+  ],
+  [
+    "src/frame/baseframe.js~baseframe#setkey",
+    "class/src/frame/BaseFrame.js~BaseFrame.html#instance-method-setKey",
+    "src/frame/BaseFrame.js~BaseFrame#setKey",
+    "method"
+  ],
+  [
+    "src/frame/baseframe.js~baseframe#setname",
+    "class/src/frame/BaseFrame.js~BaseFrame.html#instance-method-setName",
+    "src/frame/BaseFrame.js~BaseFrame#setName",
     "method"
   ],
   [
@@ -2547,6 +2583,12 @@ window.esdocSearchIndex = [
     "src/frame/arrtocol.js",
     "file/src/frame/arrToCol.js.html",
     "src/frame/arrToCol.js",
+    "file"
+  ],
+  [
+    "src/frame/frame-utils/coreframefrombuffer.js",
+    "file/src/frame/frame-utils/coreFrameFromBuffer.js.html",
+    "src/frame/frame-utils/coreFrameFromBuffer.js",
     "file"
   ],
   [
@@ -2811,6 +2853,12 @@ window.esdocSearchIndex = [
     "src/frame/frame.js~frame#sort",
     "class/src/frame/frame.js~Frame.html#instance-method-sort",
     "src/frame/frame.js~Frame#sort",
+    "method"
+  ],
+  [
+    "src/frame/frame.js~frame#tostring",
+    "class/src/frame/frame.js~Frame.html#instance-method-toString",
+    "src/frame/frame.js~Frame#toString",
     "method"
   ],
   [

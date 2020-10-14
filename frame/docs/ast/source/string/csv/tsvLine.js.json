@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 996,
+  "end": 1199,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 23,
+      "line": 28,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 996,
+    "end": 1199,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 23,
+        "line": 28,
         "column": 0
       }
     },
@@ -147,52 +147,71 @@
               }
             }
           }
+        ],
+        "trailingComments": [
+          {
+            "type": "CommentBlock",
+            "value": "*\n * converts a line representing tab separated values (TSV) into an array of strings\n * @param  {string} line string representing a line of TSV data\n * @return {[string]}      an array of strings\n ",
+            "start": 834,
+            "end": 1036,
+            "loc": {
+              "start": {
+                "line": 19,
+                "column": 0
+              },
+              "end": {
+                "line": 23,
+                "column": 3
+              }
+            }
+          }
         ]
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 834,
-        "end": 995,
+        "start": 1037,
+        "end": 1198,
         "loc": {
           "start": {
-            "line": 19,
+            "line": 24,
             "column": 0
           },
           "end": {
-            "line": 22,
+            "line": 27,
             "column": 1
           }
         },
         "declaration": {
           "type": "FunctionDeclaration",
-          "start": 849,
-          "end": 995,
+          "start": 1052,
+          "end": 1198,
           "loc": {
             "start": {
-              "line": 19,
+              "line": 24,
               "column": 15
             },
             "end": {
-              "line": 22,
+              "line": 27,
               "column": 1
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 858,
-            "end": 865,
+            "start": 1061,
+            "end": 1068,
             "loc": {
               "start": {
-                "line": 19,
+                "line": 24,
                 "column": 24
               },
               "end": {
-                "line": 19,
+                "line": 24,
                 "column": 31
               },
               "identifierName": "tsvLine"
             },
-            "name": "tsvLine"
+            "name": "tsvLine",
+            "leadingComments": null
           },
           "generator": false,
           "expression": false,
@@ -200,15 +219,15 @@
           "params": [
             {
               "type": "Identifier",
-              "start": 866,
-              "end": 870,
+              "start": 1069,
+              "end": 1073,
               "loc": {
                 "start": {
-                  "line": 19,
+                  "line": 24,
                   "column": 32
                 },
                 "end": {
-                  "line": 19,
+                  "line": 24,
                   "column": 36
                 },
                 "identifierName": "line"
@@ -218,58 +237,58 @@
           ],
           "body": {
             "type": "BlockStatement",
-            "start": 872,
-            "end": 995,
+            "start": 1075,
+            "end": 1198,
             "loc": {
               "start": {
-                "line": 19,
+                "line": 24,
                 "column": 38
               },
               "end": {
-                "line": 22,
+                "line": 27,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "ReturnStatement",
-                "start": 875,
-                "end": 917,
+                "start": 1078,
+                "end": 1120,
                 "loc": {
                   "start": {
-                    "line": 20,
+                    "line": 25,
                     "column": 1
                   },
                   "end": {
-                    "line": 20,
+                    "line": 25,
                     "column": 43
                   }
                 },
                 "argument": {
                   "type": "CallExpression",
-                  "start": 882,
-                  "end": 916,
+                  "start": 1085,
+                  "end": 1119,
                   "loc": {
                     "start": {
-                      "line": 20,
+                      "line": 25,
                       "column": 8
                     },
                     "end": {
-                      "line": 20,
+                      "line": 25,
                       "column": 42
                     }
                   },
                   "callee": {
                     "type": "Identifier",
-                    "start": 882,
-                    "end": 898,
+                    "start": 1085,
+                    "end": 1101,
                     "loc": {
                       "start": {
-                        "line": 20,
+                        "line": 25,
                         "column": 8
                       },
                       "end": {
-                        "line": 20,
+                        "line": 25,
                         "column": 24
                       },
                       "identifierName": "trimListElements"
@@ -279,43 +298,43 @@
                   "arguments": [
                     {
                       "type": "CallExpression",
-                      "start": 899,
-                      "end": 915,
+                      "start": 1102,
+                      "end": 1118,
                       "loc": {
                         "start": {
-                          "line": 20,
+                          "line": 25,
                           "column": 25
                         },
                         "end": {
-                          "line": 20,
+                          "line": 25,
                           "column": 41
                         }
                       },
                       "callee": {
                         "type": "MemberExpression",
-                        "start": 899,
-                        "end": 909,
+                        "start": 1102,
+                        "end": 1112,
                         "loc": {
                           "start": {
-                            "line": 20,
+                            "line": 25,
                             "column": 25
                           },
                           "end": {
-                            "line": 20,
+                            "line": 25,
                             "column": 35
                           }
                         },
                         "object": {
                           "type": "Identifier",
-                          "start": 899,
-                          "end": 903,
+                          "start": 1102,
+                          "end": 1106,
                           "loc": {
                             "start": {
-                              "line": 20,
+                              "line": 25,
                               "column": 25
                             },
                             "end": {
-                              "line": 20,
+                              "line": 25,
                               "column": 29
                             },
                             "identifierName": "line"
@@ -324,15 +343,15 @@
                         },
                         "property": {
                           "type": "Identifier",
-                          "start": 904,
-                          "end": 909,
+                          "start": 1107,
+                          "end": 1112,
                           "loc": {
                             "start": {
-                              "line": 20,
+                              "line": 25,
                               "column": 30
                             },
                             "end": {
-                              "line": 20,
+                              "line": 25,
                               "column": 35
                             },
                             "identifierName": "split"
@@ -344,15 +363,15 @@
                       "arguments": [
                         {
                           "type": "StringLiteral",
-                          "start": 910,
-                          "end": 914,
+                          "start": 1113,
+                          "end": 1117,
                           "loc": {
                             "start": {
-                              "line": 20,
+                              "line": 25,
                               "column": 36
                             },
                             "end": {
-                              "line": 20,
+                              "line": 25,
                               "column": 40
                             }
                           },
@@ -370,15 +389,15 @@
                   {
                     "type": "CommentLine",
                     "value": "return line.split('\\t').map(x=>x.trim()); // nicer code, but much slower",
-                    "start": 919,
-                    "end": 993,
+                    "start": 1122,
+                    "end": 1196,
                     "loc": {
                       "start": {
-                        "line": 21,
+                        "line": 26,
                         "column": 1
                       },
                       "end": {
-                        "line": 21,
+                        "line": 26,
                         "column": 75
                       }
                     }
@@ -388,9 +407,44 @@
             ],
             "directives": []
           },
-          "leadingComments": [],
+          "leadingComments": [
+            {
+              "type": "CommentBlock",
+              "value": "*\n * converts a line representing tab separated values (TSV) into an array of strings\n * @param  {string} line string representing a line of TSV data\n * @return {[string]}      an array of strings\n ",
+              "start": 834,
+              "end": 1036,
+              "loc": {
+                "start": {
+                  "line": 19,
+                  "column": 0
+                },
+                "end": {
+                  "line": 23,
+                  "column": 3
+                }
+              }
+            }
+          ],
           "trailingComments": []
-        }
+        },
+        "leadingComments": [
+          {
+            "type": "CommentBlock",
+            "value": "*\n * converts a line representing tab separated values (TSV) into an array of strings\n * @param  {string} line string representing a line of TSV data\n * @return {[string]}      an array of strings\n ",
+            "start": 834,
+            "end": 1036,
+            "loc": {
+              "start": {
+                "line": 19,
+                "column": 0
+              },
+              "end": {
+                "line": 23,
+                "column": 3
+              }
+            }
+          }
+        ]
       }
     ],
     "directives": []
@@ -445,17 +499,33 @@
       }
     },
     {
-      "type": "CommentLine",
-      "value": "return line.split('\\t').map(x=>x.trim()); // nicer code, but much slower",
-      "start": 919,
-      "end": 993,
+      "type": "CommentBlock",
+      "value": "*\n * converts a line representing tab separated values (TSV) into an array of strings\n * @param  {string} line string representing a line of TSV data\n * @return {[string]}      an array of strings\n ",
+      "start": 834,
+      "end": 1036,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 19,
+          "column": 0
+        },
+        "end": {
+          "line": 23,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "CommentLine",
+      "value": "return line.split('\\t').map(x=>x.trim()); // nicer code, but much slower",
+      "start": 1122,
+      "end": 1196,
+      "loc": {
+        "start": {
+          "line": 26,
           "column": 1
         },
         "end": {
-          "line": 21,
+          "line": 26,
           "column": 75
         }
       }
@@ -644,6 +714,22 @@
       }
     },
     {
+      "type": "CommentBlock",
+      "value": "*\n * converts a line representing tab separated values (TSV) into an array of strings\n * @param  {string} line string representing a line of TSV data\n * @return {[string]}      an array of strings\n ",
+      "start": 834,
+      "end": 1036,
+      "loc": {
+        "start": {
+          "line": 19,
+          "column": 0
+        },
+        "end": {
+          "line": 23,
+          "column": 3
+        }
+      }
+    },
+    {
       "type": {
         "label": "export",
         "keyword": "export",
@@ -658,15 +744,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 834,
-      "end": 840,
+      "start": 1037,
+      "end": 1043,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 24,
           "column": 0
         },
         "end": {
-          "line": 19,
+          "line": 24,
           "column": 6
         }
       }
@@ -686,15 +772,15 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 841,
-      "end": 848,
+      "start": 1044,
+      "end": 1051,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 24,
           "column": 7
         },
         "end": {
-          "line": 19,
+          "line": 24,
           "column": 14
         }
       }
@@ -713,15 +799,15 @@
         "binop": null
       },
       "value": "function",
-      "start": 849,
-      "end": 857,
+      "start": 1052,
+      "end": 1060,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 24,
           "column": 15
         },
         "end": {
-          "line": 19,
+          "line": 24,
           "column": 23
         }
       }
@@ -739,15 +825,15 @@
         "binop": null
       },
       "value": "tsvLine",
-      "start": 858,
-      "end": 865,
+      "start": 1061,
+      "end": 1068,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 24,
           "column": 24
         },
         "end": {
-          "line": 19,
+          "line": 24,
           "column": 31
         }
       }
@@ -764,15 +850,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 865,
-      "end": 866,
+      "start": 1068,
+      "end": 1069,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 24,
           "column": 31
         },
         "end": {
-          "line": 19,
+          "line": 24,
           "column": 32
         }
       }
@@ -790,15 +876,15 @@
         "binop": null
       },
       "value": "line",
-      "start": 866,
-      "end": 870,
+      "start": 1069,
+      "end": 1073,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 24,
           "column": 32
         },
         "end": {
-          "line": 19,
+          "line": 24,
           "column": 36
         }
       }
@@ -815,15 +901,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 870,
-      "end": 871,
+      "start": 1073,
+      "end": 1074,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 24,
           "column": 36
         },
         "end": {
-          "line": 19,
+          "line": 24,
           "column": 37
         }
       }
@@ -840,15 +926,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 872,
-      "end": 873,
+      "start": 1075,
+      "end": 1076,
       "loc": {
         "start": {
-          "line": 19,
+          "line": 24,
           "column": 38
         },
         "end": {
-          "line": 19,
+          "line": 24,
           "column": 39
         }
       }
@@ -868,15 +954,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 875,
-      "end": 881,
+      "start": 1078,
+      "end": 1084,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 1
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 7
         }
       }
@@ -894,15 +980,15 @@
         "binop": null
       },
       "value": "trimListElements",
-      "start": 882,
-      "end": 898,
+      "start": 1085,
+      "end": 1101,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 8
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 24
         }
       }
@@ -919,15 +1005,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 898,
-      "end": 899,
+      "start": 1101,
+      "end": 1102,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 24
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 25
         }
       }
@@ -945,15 +1031,15 @@
         "binop": null
       },
       "value": "line",
-      "start": 899,
-      "end": 903,
+      "start": 1102,
+      "end": 1106,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 25
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 29
         }
       }
@@ -971,15 +1057,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 903,
-      "end": 904,
+      "start": 1106,
+      "end": 1107,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 29
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 30
         }
       }
@@ -997,15 +1083,15 @@
         "binop": null
       },
       "value": "split",
-      "start": 904,
-      "end": 909,
+      "start": 1107,
+      "end": 1112,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 30
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 35
         }
       }
@@ -1022,15 +1108,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 909,
-      "end": 910,
+      "start": 1112,
+      "end": 1113,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 35
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 36
         }
       }
@@ -1049,15 +1135,15 @@
         "updateContext": null
       },
       "value": "\t",
-      "start": 910,
-      "end": 914,
+      "start": 1113,
+      "end": 1117,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 36
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 40
         }
       }
@@ -1074,15 +1160,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 914,
-      "end": 915,
+      "start": 1117,
+      "end": 1118,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 40
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 41
         }
       }
@@ -1099,15 +1185,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 915,
-      "end": 916,
+      "start": 1118,
+      "end": 1119,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 41
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 42
         }
       }
@@ -1125,15 +1211,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 916,
-      "end": 917,
+      "start": 1119,
+      "end": 1120,
       "loc": {
         "start": {
-          "line": 20,
+          "line": 25,
           "column": 42
         },
         "end": {
-          "line": 20,
+          "line": 25,
           "column": 43
         }
       }
@@ -1141,15 +1227,15 @@
     {
       "type": "CommentLine",
       "value": "return line.split('\\t').map(x=>x.trim()); // nicer code, but much slower",
-      "start": 919,
-      "end": 993,
+      "start": 1122,
+      "end": 1196,
       "loc": {
         "start": {
-          "line": 21,
+          "line": 26,
           "column": 1
         },
         "end": {
-          "line": 21,
+          "line": 26,
           "column": 75
         }
       }
@@ -1166,15 +1252,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 994,
-      "end": 995,
+      "start": 1197,
+      "end": 1198,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 27,
           "column": 0
         },
         "end": {
-          "line": 22,
+          "line": 27,
           "column": 1
         }
       }
@@ -1192,15 +1278,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 996,
-      "end": 996,
+      "start": 1199,
+      "end": 1199,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 28,
           "column": 0
         },
         "end": {
-          "line": 23,
+          "line": 28,
           "column": 0
         }
       }

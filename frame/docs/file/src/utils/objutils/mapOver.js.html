@@ -132,13 +132,15 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__FRAME__">__FRAME__</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrToCol">arrToCol</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-haveFrame">haveFrame</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameSum">frameSum</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameToString">frameToString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameWithIndex">frameWithIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transpose">transpose</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameCount">frameCount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameFromBuffer">frameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameSum">frameSum</a></span></span></li>
@@ -308,24 +310,38 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
-
+/**
+ * Apply a map function on array or object, if it is an object map over the vale for each object &apos;attribute/key&apos;
+ * creating a new object that has had the same keys but the values mapped. 
+ *
+ * If the object has 
+ * @param  {Function} fn      [description]
+ * @param  {Object} object    [description]
+ * @return {[type]}           [description]
+ */
 export default  curry2(function (fn, object) {
 	if(!object) return object;
 	if(Array.isArray(object)) {
 		let list = object;
 		return list.map(fn);
-	}
-	else if( typeof object === &apos;object&apos;) {
-		return Object.keys(object).reduce((obj,k,ix) =&gt; (obj[k] = fn(object[k],ix), obj),{});
-	}
+	} 
 	else if(typeof object.map === &apos;function&apos;){
 		// babel - do not transform map into array iteration
 		// O: KEEP
 		return object.map(fn);
 	}
+	else if( typeof object === &apos;object&apos;) {
+		return Object.keys(object).reduce((obj,k,ix) =&gt; (obj[k] = fn(object[k],ix), obj),{});
+	}
 	else return fn(object);
 });
 
+/**
+ * curry2 - curry a function that has two or more parameters. Currying allows us to produce a new function by 
+ * combining a function and one or more arguments.
+ * @param  {Function} fn [description]
+ * @return {[type]}      [description]
+ */
 function curry2(fn) {
 	if(typeof fn !== &apos;function&apos;) throw new Error(&apos;fn:(&apos;+fn+&apos;) function expected&apos;);
 	if( fn.length &lt; 2 ) return fn;

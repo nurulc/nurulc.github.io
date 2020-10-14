@@ -132,13 +132,15 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__FRAME__">__FRAME__</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrToCol">arrToCol</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-haveFrame">haveFrame</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameSum">frameSum</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameToString">frameToString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameWithIndex">frameWithIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transpose">transpose</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameCount">frameCount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameFromBuffer">frameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameSum">frameSum</a></span></span></li>
@@ -1093,13 +1095,13 @@ return an array of 2 strings [oldName, newName]</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-cmpStr">cmpStr</a></span></span><span class="code" data-ice="signature">(a: <span>[type]</span>, b: <span>[type]</span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-cmpStr">cmpStr</a></span></span><span class="code" data-ice="signature">(a: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, b: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>int32</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[cmpStr description]</p>
+        <div data-ice="description"><p>Compare two strings (for sorting) 0 == euqal, -1 a&lt;b, 1 a&gt;b</p>
 </div>
       </div>
     </td>
@@ -1122,13 +1124,13 @@ return an array of 2 strings [oldName, newName]</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-cmpStrNum">cmpStrNum</a></span></span><span class="code" data-ice="signature">(a: <span>[type]</span>, b: <span>[type]</span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-cmpStrNum">cmpStrNum</a></span></span><span class="code" data-ice="signature">(a: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, b: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>int32</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[cmpStrNum compare (number, number), or (number, string-of-number) or (string-of-number, number) (string-of-number, string-of-number) , (string, string) </p>
+        <div data-ice="description"><p>cmpStrNum compare (number, number), or (number, string-of-number) or (string-of-number, number) (string-of-number, string-of-number) , (string, string) </p>
 </div>
       </div>
     </td>
@@ -1186,7 +1188,46 @@ return an array of 2 strings [oldName, newName]</p>
       <div>
         
         
-        <div data-ice="description"><p>combine a set of sorting comparison functions</p>
+        <div data-ice="description"><p>combine a set of sorting comparison functions so tht the sort presidence is maintained</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span><span class="code" data-ice="signature">(buffer: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Create a Frame from a string buffer (string reat from a file)</p>
+<ul>
+<li><p>Lines are seperaed into columns using a &apos;splitter&apos; supports</p>
+<ul>
+<li>TSV : tab seperated columns  - tsvLine</li>
+<li>CSV : comma seperated values - csvLine</li>
+<li>PSV : pipe (|) seperated values popular in healthcare - tsvLine</li>
+</ul>
+<p>Default splitter (tsvLine) is tab seperated values</p>
+</li>
+</ul>
 </div>
       </div>
     </td>
@@ -1267,13 +1308,14 @@ return an array of 2 strings [oldName, newName]</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-csvLine">csvLine</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-csvLine">csvLine</a></span></span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>converts a line representing comma separated values (CSV) into an array of strings</p>
+</div>
       </div>
     </td>
     <td>
@@ -1295,13 +1337,14 @@ return an array of 2 strings [oldName, newName]</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-dataSplit">dataSplit</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-dataSplit">dataSplit</a></span></span><span class="code" data-ice="signature">(data: <span>[string]</span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Takes a array of string lines, representing a list of &apos;row&apos; strings.</p>
+</div>
       </div>
     </td>
     <td>
@@ -1523,7 +1566,7 @@ return an array of 2 strings [oldName, newName]</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span><span class="code" data-ice="signature">(aFrame: <span>Frme</span>, colName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, convName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[name, count]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span><span class="code" data-ice="signature">(aFrame: <span>Frme</span>, colName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, convName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[string, number]</span></span>
         </p>
       </div>
       <div>
@@ -2003,7 +2046,7 @@ return an array of 2 strings [oldName, newName]</p>
       <div>
         
         
-        <div data-ice="description"><p>gbVal merge the values grouped rows onto a single comma seperated value</p>
+        <div data-ice="description"><p>create a column with constant value</p>
 </div>
       </div>
     </td>
@@ -2466,7 +2509,7 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-isArray">isArray</a></span></span><span class="code" data-ice="signature">(arr: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-isArray">isArray</a></span></span><span class="code" data-ice="signature">(arr: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
@@ -2814,13 +2857,13 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-memoize">memoize</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-memoize">memoize</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[memoize description]</p>
+        <div data-ice="description"><p>Memoize a function (see <a href="https://en.wikipedia.org/wiki/Memoization">https://en.wikipedia.org/wiki/Memoization</a>)</p>
 </div>
       </div>
     </td>
@@ -2930,13 +2973,13 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-pickRaw">pickRaw</a></span></span><span class="code" data-ice="signature">(list: <span>[type]</span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-pickRaw">pickRaw</a></span></span><span class="code" data-ice="signature">(list: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[pickRaw description]</p>
+        <div data-ice="description"><p>Same as the <code>pick(...)</code> function withour memoizing</p>
 </div>
       </div>
     </td>
@@ -3135,13 +3178,14 @@ and n is the length of the second vector</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-psvLine">psvLine</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-psvLine">psvLine</a></span></span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>converts a line representing pipe (|) separated values (PSV) into an array of strings.</p>
+</div>
       </div>
     </td>
     <td>
@@ -3282,7 +3326,7 @@ and n is the length of the second vector</p>
       <div>
         
         
-        <div data-ice="description"><p>[description]</p>
+        <div data-ice="description"><p>Reverses a sort compare function so it sorts in descending order</p>
 </div>
       </div>
     </td>
@@ -3448,13 +3492,13 @@ and n is the length of the second vector</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-setKey">setKey</a></span></span><span class="code" data-ice="signature">(obj: <span>[type]</span>, key: <span>[type]</span>, v: <span>[type]</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-setKey">setKey</a></span></span><span class="code" data-ice="signature">(obj: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, key: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, v: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[setKey description]</p>
+        <div data-ice="description"><p>Set the vale of a key on an object and return the object</p>
 </div>
       </div>
     </td>
@@ -3597,13 +3641,14 @@ usage sortFrameBy([&apos;+surname&apos;, &apos;givenName&apos;, &apos;-age&apos;
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-strEq">strEq</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-strEq">strEq</a></span></span><span class="code" data-ice="signature">(str: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, strStart: <span>int32</span>, strEnd: <span>int32</span>, otherStr: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>strEq str.substring(strStart,strEnd) === otherStr</p>
+</div>
       </div>
     </td>
     <td>
@@ -3799,13 +3844,14 @@ Too small to be worth is own module.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-toNumber">toNumber</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-toNumber">toNumber</a></span></span><span class="code" data-ice="signature">(str: <span>[type]</span>): <span>[type]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Convert a string to a Javascript number, thakes into accont number string with commas (,) and numbers</p>
+</div>
       </div>
     </td>
     <td>
@@ -3856,13 +3902,14 @@ Too small to be worth is own module.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-trimListElements">trimListElements</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-trimListElements">trimListElements</a></span></span><span class="code" data-ice="signature">(arr: <span>[string]</span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Takes an array of strings and trims all the strings in the array,  modifies the input array and returns the same array with the trimed strings</p>
+</div>
       </div>
     </td>
     <td>
@@ -3884,13 +3931,14 @@ Too small to be worth is own module.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-tsvLine">tsvLine</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-tsvLine">tsvLine</a></span></span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>converts a line representing tab separated values (TSV) into an array of strings</p>
+</div>
       </div>
     </td>
     <td>
@@ -3912,15 +3960,13 @@ Too small to be worth is own module.</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span><span class="code" data-ice="signature">(frame1: <span>[type]</span>, frame2: <span>[type]</span>, notSorted: <span>[type]</span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span><span class="code" data-ice="signature">(frame1: <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span>, frame2: <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span>, notSorted: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>assumes the frames are sorted, if notSorted is true, then the frames are sorted first;
-requirements:
-1.</p>
+        <div data-ice="description"><p>Creates a new frame from the union of the rows of the two frames, similar to s set union.</p>
 </div>
       </div>
     </td>
@@ -5992,7 +6038,7 @@ return an array of 2 strings [oldName, newName]</p>
     
     
     
-    <span class="code" data-ice="name">cmpStr</span><span class="code" data-ice="signature">(a: <span>[type]</span>, b: <span>[type]</span>): <span>[type]</span></span>
+    <span class="code" data-ice="name">cmpStr</span><span class="code" data-ice="signature">(a: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, b: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>int32</span></span>
     <span class="right-info">
       
       
@@ -6003,7 +6049,7 @@ return an array of 2 strings [oldName, newName]</p>
   <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {cmpStr} from &apos;<span><a href="file/src/utils/sort-helper/cmpStr.js.html#lineNumber23">nurulc.github.io/src/utils/sort-helper/cmpStr.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>[cmpStr description]</p>
+  <div data-ice="description"><p>Compare two strings (for sorting) 0 == euqal, -1 a&lt;b, 1 a&gt;b</p>
 </div>
 
   
@@ -6018,16 +6064,16 @@ return an array of 2 strings [oldName, newName]</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">a</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>left string</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">b</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>right string</p>
 </td>
     </tr>
 </tbody>
@@ -6040,8 +6086,8 @@ return an array of 2 strings [oldName, newName]</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>[type]</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>[description]</p>
+          <td class="return-type code" data-ice="returnType"><span>int32</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>0 == euqal, -1 = a&lt;b, 1 = a&gt;b</p>
 </td>
         </tr>
       </tbody>
@@ -6073,7 +6119,7 @@ return an array of 2 strings [oldName, newName]</p>
     
     
     
-    <span class="code" data-ice="name">cmpStrNum</span><span class="code" data-ice="signature">(a: <span>[type]</span>, b: <span>[type]</span>): <span>[type]</span></span>
+    <span class="code" data-ice="name">cmpStrNum</span><span class="code" data-ice="signature">(a: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, b: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>int32</span></span>
     <span class="right-info">
       
       
@@ -6084,7 +6130,7 @@ return an array of 2 strings [oldName, newName]</p>
   <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {cmpStrNum} from &apos;<span><a href="file/src/utils/sort-helper/cmpStrNum.js.html#lineNumber27">nurulc.github.io/src/utils/sort-helper/cmpStrNum.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>[cmpStrNum compare (number, number), or (number, string-of-number) or (string-of-number, number) (string-of-number, string-of-number) , (string, string) </p>
+  <div data-ice="description"><p>cmpStrNum compare (number, number), or (number, string-of-number) or (string-of-number, number) (string-of-number, string-of-number) , (string, string) </p>
 </div>
 
   
@@ -6099,16 +6145,16 @@ return an array of 2 strings [oldName, newName]</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">a</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>string or number, if is a string that represents a number it is treated as a number</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">b</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>string or number, if is a string that represents a number it is treated as a number</p>
 </td>
     </tr>
 </tbody>
@@ -6121,8 +6167,8 @@ return an array of 2 strings [oldName, newName]</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>[type]</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>[description]</p>
+          <td class="return-type code" data-ice="returnType"><span>int32</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>0 == euqal, -1 = a&lt;b, 1 = a&gt;b</p>
 </td>
         </tr>
       </tbody>
@@ -6258,7 +6304,7 @@ result od the code above
   <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import combineCmp from &apos;<span><a href="file/src/utils/sort-helper/combineCmp.js.html#lineNumber22">nurulc.github.io/src/utils/sort-helper/combineCmp.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>combine a set of sorting comparison functions</p>
+  <div data-ice="description"><p>combine a set of sorting comparison functions so tht the sort presidence is maintained</p>
 </div>
 
   
@@ -6290,6 +6336,103 @@ result od the code above
         <tr>
           <td class="return-type code" data-ice="returnType"><span>[type]</span></td>
           <td class="return-desc" data-ice="returnDescription"><p>[description]</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-function-coreFrameFromBuffer">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">coreFrameFromBuffer</span><span class="code" data-ice="signature">(buffer: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/frame/frame-utils/coreFrameFromBuffer.js.html#lineNumber32">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import coreFrameFromBuffer from &apos;<span><a href="file/src/frame/frame-utils/coreFrameFromBuffer.js.html#lineNumber32">nurulc.github.io/src/frame/frame-utils/coreFrameFromBuffer.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Create a Frame from a string buffer (string reat from a file)</p>
+<ul>
+<li><p>Lines are seperaed into columns using a &apos;splitter&apos; supports</p>
+<ul>
+<li>TSV : tab seperated columns  - tsvLine</li>
+<li>CSV : comma seperated values - csvLine</li>
+<li>PSV : pipe (|) seperated values popular in healthcare - tsvLine</li>
+</ul>
+<p>Default splitter (tsvLine) is tab seperated values</p>
+</li>
+</ul>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">buffer</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>[description]</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">splitter</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>function to split a string representing a row to an array of strings</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">options</td>
+      <td data-ice="type" class="code">{noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}</td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Frame created from the buffer</p>
 </td>
         </tr>
       </tbody>
@@ -6497,25 +6640,56 @@ result od the code above
     
     
     
-    <span class="code" data-ice="name">csvLine</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">csvLine</span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/string/csv/csvLine.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/string/csv/csvLine.js.html#lineNumber34">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import csvLine from &apos;<span><a href="file/src/string/csv/csvLine.js.html#lineNumber30">nurulc.github.io/src/string/csv/csvLine.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import csvLine from &apos;<span><a href="file/src/string/csv/csvLine.js.html#lineNumber34">nurulc.github.io/src/string/csv/csvLine.js</a></span>&apos;</code></pre></div>
   
   
-  
-
-  
-
-  <div data-ice="properties">
+  <div data-ice="description"><p>converts a line representing comma separated values (CSV) into an array of strings</p>
 </div>
 
   
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">line</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>string representing a line of CSV data</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>[string]</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>an array of strings</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -6540,25 +6714,71 @@ result od the code above
     
     
     
-    <span class="code" data-ice="name">dataSplit</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">dataSplit</span><span class="code" data-ice="signature">(data: <span>[string]</span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[string]</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/string/csv/dataSplit.js.html#lineNumber17">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/string/csv/dataSplit.js.html#lineNumber25">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import dataSplit from &apos;<span><a href="file/src/string/csv/dataSplit.js.html#lineNumber17">nurulc.github.io/src/string/csv/dataSplit.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import dataSplit from &apos;<span><a href="file/src/string/csv/dataSplit.js.html#lineNumber25">nurulc.github.io/src/string/csv/dataSplit.js</a></span>&apos;</code></pre></div>
   
   
-  
-
-  
-
-  <div data-ice="properties">
+  <div data-ice="description"><p>Takes a array of string lines, representing a list of &apos;row&apos; strings. and for 
+each row is split into column elements (each a string) using a splitter function.</p>
 </div>
 
   
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">data</td>
+      <td data-ice="type" class="code"><span>[string]</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>array of string lines</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">splitter</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>function to split a string representing a row into an array of strings representing column elements</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">fn</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>optional function to apply to string line fn(line,line_number) before applying the splitter</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>[string]</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>this is the same as buffer.map(fn|Idnetity).map(splitter)</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -7062,7 +7282,7 @@ result od the code above
     
     
     
-    <span class="code" data-ice="name">frameCount</span><span class="code" data-ice="signature">(aFrame: <span>Frme</span>, colName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, convName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[name, count]</span></span>
+    <span class="code" data-ice="name">frameCount</span><span class="code" data-ice="signature">(aFrame: <span>Frme</span>, colName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, convName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[string, number]</span></span>
     <span class="right-info">
       
       
@@ -7117,8 +7337,8 @@ result od the code above
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>[name, count]</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>a two element array with the name and count</p>
+          <td class="return-type code" data-ice="returnType"><span>[string, number]</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>a two element array with the name and count [name, count]</p>
 </td>
         </tr>
       </tbody>
@@ -8019,11 +8239,11 @@ result od the code above
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/frame/groupby-utils/gbMerge.js.html#lineNumber28">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/frame/groupby-utils/gbMerge.js.html#lineNumber27">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import gbMerge from &apos;<span><a href="file/src/frame/groupby-utils/gbMerge.js.html#lineNumber28">nurulc.github.io/src/frame/groupby-utils/gbMerge.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import gbMerge from &apos;<span><a href="file/src/frame/groupby-utils/gbMerge.js.html#lineNumber27">nurulc.github.io/src/frame/groupby-utils/gbMerge.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>gbMerge merge the values grouped rows onto a single comma seperated value</p>
@@ -8449,14 +8669,14 @@ result od the code above
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/frame/groupby-utils/gbVal.js.html#lineNumber27">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/frame/groupby-utils/gbVal.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import gbVal from &apos;<span><a href="file/src/frame/groupby-utils/gbVal.js.html#lineNumber27">nurulc.github.io/src/frame/groupby-utils/gbVal.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import gbVal from &apos;<span><a href="file/src/frame/groupby-utils/gbVal.js.html#lineNumber23">nurulc.github.io/src/frame/groupby-utils/gbVal.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>gbVal merge the values grouped rows onto a single comma seperated value</p>
+  <div data-ice="description"><p>create a column with constant value</p>
 </div>
 
   
@@ -9670,7 +9890,7 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
     
     
     
-    <span class="code" data-ice="name">isArray</span><span class="code" data-ice="signature">(arr: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
+    <span class="code" data-ice="name">isArray</span><span class="code" data-ice="signature">(arr: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
@@ -9710,7 +9930,7 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
           
         </tr>
       </tbody>
@@ -10577,7 +10797,7 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
     
     
     
-    <span class="code" data-ice="name">memoize</span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span>[type]</span></span>
+    <span class="code" data-ice="name">memoize</span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></span>
     <span class="right-info">
       
       
@@ -10588,7 +10808,7 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
   <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import memoize from &apos;<span><a href="file/src/utils/objutils/memoize.js.html#lineNumber22">nurulc.github.io/src/utils/objutils/memoize.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>[memoize description]</p>
+  <div data-ice="description"><p>Memoize a function (see <a href="https://en.wikipedia.org/wiki/Memoization">https://en.wikipedia.org/wiki/Memoization</a>)</p>
 </div>
 
   
@@ -10605,7 +10825,7 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
       <td data-ice="name" class="code" data-depth="0">fn</td>
       <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>function to memoize</p>
 </td>
     </tr>
 </tbody>
@@ -10618,8 +10838,8 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>[type]</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>[description]</p>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>memoizing version of the function</p>
 </td>
         </tr>
       </tbody>
@@ -10921,7 +11141,7 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
     
     
     
-    <span class="code" data-ice="name">pickRaw</span><span class="code" data-ice="signature">(list: <span>[type]</span>): <span>[type]</span></span>
+    <span class="code" data-ice="name">pickRaw</span><span class="code" data-ice="signature">(list: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></span>
     <span class="right-info">
       
       
@@ -10932,7 +11152,7 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
   <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import pickRaw from &apos;<span><a href="file/src/utils/objutils/pickRaw.js.html#lineNumber23">nurulc.github.io/src/utils/objutils/pickRaw.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>[pickRaw description]</p>
+  <div data-ice="description"><p>Same as the <code>pick(...)</code> function withour memoizing</p>
 </div>
 
   
@@ -10947,9 +11167,9 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">list</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>String or array of strings</p>
 </td>
     </tr>
 </tbody>
@@ -10962,8 +11182,8 @@ Intersects list sorted array sets (array that issorted and has no duplicates)</p
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>[type]</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>[description]</p>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>function that takes an object and returns the key or an array of keys</p>
 </td>
         </tr>
       </tbody>
@@ -11413,25 +11633,57 @@ string concatination. Note if either array is a scalar string it is converted in
     
     
     
-    <span class="code" data-ice="name">psvLine</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">psvLine</span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/string/csv/psvLine.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/string/csv/psvLine.js.html#lineNumber25">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import psvLine from &apos;<span><a href="file/src/string/csv/psvLine.js.html#lineNumber19">nurulc.github.io/src/string/csv/psvLine.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import psvLine from &apos;<span><a href="file/src/string/csv/psvLine.js.html#lineNumber25">nurulc.github.io/src/string/csv/psvLine.js</a></span>&apos;</code></pre></div>
   
   
-  
-
-  
-
-  <div data-ice="properties">
+  <div data-ice="description"><p>converts a line representing pipe (|) separated values (PSV) into an array of strings. 
+This is a commely data representation in USA healthcare</p>
 </div>
 
   
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">line</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>string representing a line of PSV data</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>[string]</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>an array of strings</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -11745,7 +11997,7 @@ string concatination. Note if either array is a scalar string it is converted in
   <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import revCmp from &apos;<span><a href="file/src/utils/sort-helper/revCmp.js.html#lineNumber22">nurulc.github.io/src/utils/sort-helper/revCmp.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>[description]</p>
+  <div data-ice="description"><p>Reverses a sort compare function so it sorts in descending order</p>
 </div>
 
   
@@ -12116,18 +12368,20 @@ string concatination. Note if either array is a scalar string it is converted in
     
     
     
-    <span class="code" data-ice="name">setKey</span><span class="code" data-ice="signature">(obj: <span>[type]</span>, key: <span>[type]</span>, v: <span>[type]</span>)</span>
+    <span class="code" data-ice="name">setKey</span><span class="code" data-ice="signature">(obj: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, key: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, v: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/objutils/setKey.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/objutils/setKey.js.html#lineNumber28">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import setKey from &apos;<span><a href="file/src/utils/objutils/setKey.js.html#lineNumber23">nurulc.github.io/src/utils/objutils/setKey.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import setKey from &apos;<span><a href="file/src/utils/objutils/setKey.js.html#lineNumber28">nurulc.github.io/src/utils/objutils/setKey.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>[setKey description]</p>
+  <div data-ice="description"><p>Set the vale of a key on an object and return the object</p>
+<p><code>obj[key] = v</code> in Javascript the expression returns the javle of v rather than <code>obj</code>
+<code>setKey(Obj, &apos;someKey&apos;, aVal)</code>  returns obj</p>
 </div>
 
   
@@ -12142,23 +12396,23 @@ string concatination. Note if either array is a scalar string it is converted in
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">obj</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>a Javascript object</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">key</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>key to add to <code>obj</code></p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">v</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span>any</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>[description]</p>
+      <td data-ice="description"><p>value to set to the key</p>
 </td>
     </tr>
 </tbody>
@@ -12166,7 +12420,20 @@ string concatination. Note if either array is a scalar string it is converted in
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>the objct in the first parameter</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -12483,25 +12750,77 @@ usage sortFrameBy([&apos;+surname&apos;, &apos;givenName&apos;, &apos;-age&apos;
     
     
     
-    <span class="code" data-ice="name">strEq</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">strEq</span><span class="code" data-ice="signature">(str: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, strStart: <span>int32</span>, strEnd: <span>int32</span>, otherStr: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/string/strdict/strEq.js.html#lineNumber17">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/string/strdict/strEq.js.html#lineNumber25">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import strEq from &apos;<span><a href="file/src/string/strdict/strEq.js.html#lineNumber17">nurulc.github.io/src/string/strdict/strEq.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import strEq from &apos;<span><a href="file/src/string/strdict/strEq.js.html#lineNumber25">nurulc.github.io/src/string/strdict/strEq.js</a></span>&apos;</code></pre></div>
   
   
-  
-
-  
-
-  <div data-ice="properties">
+  <div data-ice="description"><p>strEq str.substring(strStart,strEnd) === otherStr</p>
 </div>
 
   
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">str</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>str take str.substring(strStart,strEnd)</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">strStart</td>
+      <td data-ice="type" class="code"><span>int32</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>start index for <code>str</code></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">strEnd</td>
+      <td data-ice="type" class="code"><span>int32</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>end index for <code>str</code></p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">otherStr</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>other string in the compare</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>true =equal, false = not equal</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -12968,25 +13287,56 @@ Too small to be worth is own module.</p>
     
     
     
-    <span class="code" data-ice="name">toNumber</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">toNumber</span><span class="code" data-ice="signature">(str: <span>[type]</span>): <span>[type]</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/utils/sort-helper/toNumber.js.html#lineNumber18">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/utils/sort-helper/toNumber.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {toNumber} from &apos;<span><a href="file/src/utils/sort-helper/toNumber.js.html#lineNumber18">nurulc.github.io/src/utils/sort-helper/toNumber.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {toNumber} from &apos;<span><a href="file/src/utils/sort-helper/toNumber.js.html#lineNumber23">nurulc.github.io/src/utils/sort-helper/toNumber.js</a></span>&apos;</code></pre></div>
   
   
-  
-
-  
-
-  <div data-ice="properties">
+  <div data-ice="description"><p>Convert a string to a Javascript number, thakes into accont number string with commas (,) and numbers</p>
 </div>
 
   
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">str</td>
+      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>[description]</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>[type]</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>[description]</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -13015,11 +13365,11 @@ Too small to be worth is own module.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/frame/frame-utils/transpose.js.html#lineNumber25">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/frame/frame-utils/transpose.js.html#lineNumber26">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import transpose from &apos;<span><a href="file/src/frame/frame-utils/transpose.js.html#lineNumber25">nurulc.github.io/src/frame/frame-utils/transpose.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import transpose from &apos;<span><a href="file/src/frame/frame-utils/transpose.js.html#lineNumber26">nurulc.github.io/src/frame/frame-utils/transpose.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>[transpose description]</p>
@@ -13092,25 +13442,56 @@ Too small to be worth is own module.</p>
     
     
     
-    <span class="code" data-ice="name">trimListElements</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">trimListElements</span><span class="code" data-ice="signature">(arr: <span>[string]</span>): <span>[string]</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/string/csv/trimListElements.js.html#lineNumber18">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/string/csv/trimListElements.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import trimListElements from &apos;<span><a href="file/src/string/csv/trimListElements.js.html#lineNumber18">nurulc.github.io/src/string/csv/trimListElements.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import trimListElements from &apos;<span><a href="file/src/string/csv/trimListElements.js.html#lineNumber23">nurulc.github.io/src/string/csv/trimListElements.js</a></span>&apos;</code></pre></div>
   
   
-  
-
-  
-
-  <div data-ice="properties">
+  <div data-ice="description"><p>Takes an array of strings and trims all the strings in the array,  modifies the input array and returns the same array with the trimed strings</p>
 </div>
 
   
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">arr</td>
+      <td data-ice="type" class="code"><span>[string]</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>array of strings</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>[string]</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>returns the same array with the stings trimmed</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -13135,25 +13516,56 @@ Too small to be worth is own module.</p>
     
     
     
-    <span class="code" data-ice="name">tsvLine</span><span class="code" data-ice="signature">()</span>
+    <span class="code" data-ice="name">tsvLine</span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/string/csv/tsvLine.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/string/csv/tsvLine.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import tsvLine from &apos;<span><a href="file/src/string/csv/tsvLine.js.html#lineNumber19">nurulc.github.io/src/string/csv/tsvLine.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import tsvLine from &apos;<span><a href="file/src/string/csv/tsvLine.js.html#lineNumber24">nurulc.github.io/src/string/csv/tsvLine.js</a></span>&apos;</code></pre></div>
   
   
-  
-
-  
-
-  <div data-ice="properties">
+  <div data-ice="description"><p>converts a line representing tab separated values (TSV) into an array of strings</p>
 </div>
 
   
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">line</td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>string representing a line of TSV data</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>[string]</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>an array of strings</p>
+</td>
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -13178,23 +13590,24 @@ Too small to be worth is own module.</p>
     
     
     
-    <span class="code" data-ice="name">unionFrame</span><span class="code" data-ice="signature">(frame1: <span>[type]</span>, frame2: <span>[type]</span>, notSorted: <span>[type]</span>): <span>[type]</span></span>
+    <span class="code" data-ice="name">unionFrame</span><span class="code" data-ice="signature">(frame1: <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span>, frame2: <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span>, notSorted: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/frame/frame-utils/unionFrame.js.html#lineNumber103">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/frame/frame-utils/unionFrame.js.html#lineNumber106">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import unionFrame from &apos;<span><a href="file/src/frame/frame-utils/unionFrame.js.html#lineNumber103">nurulc.github.io/src/frame/frame-utils/unionFrame.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import unionFrame from &apos;<span><a href="file/src/frame/frame-utils/unionFrame.js.html#lineNumber106">nurulc.github.io/src/frame/frame-utils/unionFrame.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>assumes the frames are sorted, if notSorted is true, then the frames are sorted first;
-requirements:</p>
+  <div data-ice="description"><p>Creates a new frame from the union of the rows of the two frames, similar to s set union. There are no
+duplicate rows in the result. This is anologous to the SQL union operation
+assumes the frames are sorted, if notSorted is true, then the frames are sorted first;</p>
 <ol>
 <li>the frames must have the same columns names</li>
 <li>the sorting is done in columns order</li>
-<li>The original fames are not modified  * @param  {[type]} frame1    [description]</li>
+<li>The original frames are not modified</li>
 </ol>
 </div>
 
@@ -13210,21 +13623,21 @@ requirements:</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">frame1</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>[description]</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">frame2</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>[description]</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">notSorted</td>
-      <td data-ice="type" class="code"><span>[type]</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>[description]</p>
 </td>
@@ -13239,7 +13652,7 @@ requirements:</p>
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>[type]</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>[description]</p>
 </td>
         </tr>

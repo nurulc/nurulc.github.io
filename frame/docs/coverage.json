@@ -1,7 +1,7 @@
 {
-  "coverage": "39.77%",
-  "expectCount": 445,
-  "actualCount": 177,
+  "coverage": "41.62%",
+  "expectCount": 454,
+  "actualCount": 189,
   "files": {
     "src/array/arrayutils/arrConcat.js": {
       "expectCount": 1,
@@ -362,20 +362,35 @@
       "undocumentLines": []
     },
     "src/frame/BaseFrame.js": {
-      "expectCount": 27,
+      "expectCount": 32,
       "actualCount": 16,
       "undocumentLines": [
-        35,
-        36,
-        37,
+        20,
         38,
-        50,
-        68,
-        71,
-        72,
-        73,
-        76,
-        81
+        39,
+        40,
+        41,
+        43,
+        46,
+        66,
+        70,
+        84,
+        93,
+        96,
+        97,
+        98,
+        101,
+        106
+      ]
+    },
+    "src/frame/frame-utils/coreFrameFromBuffer.js": {
+      "expectCount": 5,
+      "actualCount": 1,
+      "undocumentLines": [
+        44,
+        51,
+        62,
+        68
       ]
     },
     "src/frame/frame-utils/frameCount.js": {
@@ -384,14 +399,9 @@
       "undocumentLines": []
     },
     "src/frame/frame-utils/frameFromBuffer.js": {
-      "expectCount": 5,
+      "expectCount": 1,
       "actualCount": 1,
-      "undocumentLines": [
-        45,
-        52,
-        63,
-        69
-      ]
+      "undocumentLines": []
     },
     "src/frame/frame-utils/frameSum.js": {
       "expectCount": 1,
@@ -409,7 +419,7 @@
       "undocumentLines": []
     },
     "src/frame/frame-utils/index.js": {
-      "expectCount": 7,
+      "expectCount": 8,
       "actualCount": 0,
       "undocumentLines": [
         17,
@@ -418,7 +428,8 @@
         26,
         29,
         32,
-        35
+        35,
+        38
       ]
     },
     "src/frame/frame-utils/transpose.js": {
@@ -435,26 +446,27 @@
       ]
     },
     "src/frame/frame.js": {
-      "expectCount": 47,
-      "actualCount": 30,
+      "expectCount": 49,
+      "actualCount": 31,
       "undocumentLines": [
-        40,
-        41,
-        42,
         43,
         44,
-        53,
-        84,
-        85,
-        86,
+        45,
+        46,
+        47,
+        56,
         87,
         88,
         89,
-        108,
-        743,
-        750,
-        824,
-        840
+        90,
+        91,
+        92,
+        111,
+        749,
+        756,
+        830,
+        843,
+        850
       ]
     },
     "src/frame/frame_element.js": {
@@ -699,25 +711,22 @@
         17,
         24,
         50,
-        81
+        84
       ]
     },
     "src/string/csv/csvLine.js": {
       "expectCount": 4,
-      "actualCount": 0,
+      "actualCount": 1,
       "undocumentLines": [
         18,
         19,
-        20,
-        30
+        20
       ]
     },
     "src/string/csv/dataSplit.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        17
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/string/csv/index.js": {
       "expectCount": 5,
@@ -732,24 +741,18 @@
     },
     "src/string/csv/psvLine.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        19
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/string/csv/trimListElements.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        18
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/string/csv/tsvLine.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        19
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/string/index.js": {
       "expectCount": 1,
@@ -770,18 +773,16 @@
       "expectCount": 10,
       "actualCount": 6,
       "undocumentLines": [
+        34,
         35,
         36,
-        37,
-        95
+        94
       ]
     },
     "src/string/strdict/strEq.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        17
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/string/strdict/strHash.js": {
       "expectCount": 1,
@@ -863,8 +864,8 @@
       "expectCount": 2,
       "actualCount": 0,
       "undocumentLines": [
-        24,
-        26
+        21,
+        23
       ]
     },
     "src/utils/objutils/filterDict.js": {
@@ -916,19 +917,17 @@
     },
     "src/utils/objutils/isA.js": {
       "expectCount": 11,
-      "actualCount": 0,
+      "actualCount": 2,
       "undocumentLines": [
         17,
-        30,
-        36,
-        37,
-        38,
-        39,
-        40,
         41,
         42,
         43,
-        44
+        44,
+        45,
+        46,
+        47,
+        48
       ]
     },
     "src/utils/objutils/keys.js": {
@@ -940,10 +939,8 @@
     },
     "src/utils/objutils/mapOver.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        35
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/utils/objutils/memoize.js": {
       "expectCount": 1,
@@ -1039,10 +1036,8 @@
     },
     "src/utils/sort-helper/toNumber.js": {
       "expectCount": 1,
-      "actualCount": 0,
-      "undocumentLines": [
-        18
-      ]
+      "actualCount": 1,
+      "undocumentLines": []
     },
     "src/utils/types/index.js": {
       "expectCount": 4,

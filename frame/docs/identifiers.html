@@ -132,13 +132,15 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__FRAME__">__FRAME__</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrToCol">arrToCol</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-haveFrame">haveFrame</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameSum">frameSum</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameToString">frameToString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameWithIndex">frameWithIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transpose">transpose</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameCount">frameCount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameFromBuffer">frameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameSum">frameSum</a></span></span></li>
@@ -3324,7 +3326,46 @@ usage sortFrameBy([&apos;+surname&apos;, &apos;givenName&apos;, &apos;-age&apos;
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span><span class="code" data-ice="signature">(aFrame: <span>Frme</span>, colName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, convName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[name, count]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span><span class="code" data-ice="signature">(buffer: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, options: {noConvert: <span>boolen</span>, name: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, Fr: <span>SomeFrameClass</span>}): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Create a Frame from a string buffer (string reat from a file)</p>
+<ul>
+<li><p>Lines are seperaed into columns using a &apos;splitter&apos; supports</p>
+<ul>
+<li>TSV : tab seperated columns  - tsvLine</li>
+<li>CSV : comma seperated values - csvLine</li>
+<li>PSV : pipe (|) seperated values popular in healthcare - tsvLine</li>
+</ul>
+<p>Default splitter (tsvLine) is tab seperated values</p>
+</li>
+</ul>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          <span data-ice="kind-icon" class="kind-function">F</span>
+          
+          
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span><span class="code" data-ice="signature">(aFrame: <span>Frme</span>, colName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, convName: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[string, number]</span></span>
         </p>
       </div>
       <div>
@@ -3508,16 +3549,42 @@ usage sortFrameBy([&apos;+surname&apos;, &apos;givenName&apos;, &apos;-age&apos;
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span><span class="code" data-ice="signature">(frame1: <span>[type]</span>, frame2: <span>[type]</span>, notSorted: <span>[type]</span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span><span class="code" data-ice="signature">(frame1: <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span>, frame2: <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span>, notSorted: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span><a href="class/src/frame/frame.js~Frame.html">Frame</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>assumes the frames are sorted, if notSorted is true, then the frames are sorted first;
-requirements:
-1.</p>
+        <div data-ice="description"><p>Creates a new frame from the union of the rows of the two frames, similar to s set union.</p>
 </div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          <span data-ice="kind-icon" class="kind-variable">V</span>
+          
+          
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
       </div>
     </td>
     <td>
@@ -4011,7 +4078,7 @@ requirements:
       <div>
         
         
-        <div data-ice="description"><p>gbVal merge the values grouped rows onto a single comma seperated value</p>
+        <div data-ice="description"><p>create a column with constant value</p>
 </div>
       </div>
     </td>
@@ -5145,13 +5212,14 @@ That will create a new row taking columns from each of the lists </p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-csvLine">csvLine</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-csvLine">csvLine</a></span></span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>converts a line representing comma separated values (CSV) into an array of strings</p>
+</div>
       </div>
     </td>
     <td>
@@ -5173,13 +5241,14 @@ That will create a new row taking columns from each of the lists </p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-dataSplit">dataSplit</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-dataSplit">dataSplit</a></span></span><span class="code" data-ice="signature">(data: <span>[string]</span>, splitter: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Takes a array of string lines, representing a list of &apos;row&apos; strings.</p>
+</div>
       </div>
     </td>
     <td>
@@ -5201,13 +5270,14 @@ That will create a new row taking columns from each of the lists </p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-psvLine">psvLine</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-psvLine">psvLine</a></span></span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>converts a line representing pipe (|) separated values (PSV) into an array of strings.</p>
+</div>
       </div>
     </td>
     <td>
@@ -5229,13 +5299,14 @@ That will create a new row taking columns from each of the lists </p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-trimListElements">trimListElements</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-trimListElements">trimListElements</a></span></span><span class="code" data-ice="signature">(arr: <span>[string]</span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Takes an array of strings and trims all the strings in the array,  modifies the input array and returns the same array with the trimed strings</p>
+</div>
       </div>
     </td>
     <td>
@@ -5257,13 +5328,14 @@ That will create a new row taking columns from each of the lists </p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-tsvLine">tsvLine</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-tsvLine">tsvLine</a></span></span><span class="code" data-ice="signature">(line: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>[string]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>converts a line representing tab separated values (TSV) into an array of strings</p>
+</div>
       </div>
     </td>
     <td>
@@ -5464,13 +5536,14 @@ That will create a new row taking columns from each of the lists </p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-strEq">strEq</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-strEq">strEq</a></span></span><span class="code" data-ice="signature">(str: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, strStart: <span>int32</span>, strEnd: <span>int32</span>, otherStr: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>strEq str.substring(strStart,strEnd) === otherStr</p>
+</div>
       </div>
     </td>
     <td>
@@ -6663,13 +6736,13 @@ this is useful to convert an array of object to the data of a frame</p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-memoize">memoize</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-memoize">memoize</a></span></span><span class="code" data-ice="signature">(fn: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[memoize description]</p>
+        <div data-ice="description"><p>Memoize a function (see <a href="https://en.wikipedia.org/wiki/Memoization">https://en.wikipedia.org/wiki/Memoization</a>)</p>
 </div>
       </div>
     </td>
@@ -6692,13 +6765,13 @@ this is useful to convert an array of object to the data of a frame</p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-pickRaw">pickRaw</a></span></span><span class="code" data-ice="signature">(list: <span>[type]</span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-pickRaw">pickRaw</a></span></span><span class="code" data-ice="signature">(list: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[pickRaw description]</p>
+        <div data-ice="description"><p>Same as the <code>pick(...)</code> function withour memoizing</p>
 </div>
       </div>
     </td>
@@ -6721,13 +6794,13 @@ this is useful to convert an array of object to the data of a frame</p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-setKey">setKey</a></span></span><span class="code" data-ice="signature">(obj: <span>[type]</span>, key: <span>[type]</span>, v: <span>[type]</span>)</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-setKey">setKey</a></span></span><span class="code" data-ice="signature">(obj: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, key: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, v: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[setKey description]</p>
+        <div data-ice="description"><p>Set the vale of a key on an object and return the object</p>
 </div>
       </div>
     </td>
@@ -7380,13 +7453,13 @@ this is useful to convert an array of object to the data of a frame</p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-cmpStr">cmpStr</a></span></span><span class="code" data-ice="signature">(a: <span>[type]</span>, b: <span>[type]</span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-cmpStr">cmpStr</a></span></span><span class="code" data-ice="signature">(a: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, b: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>): <span>int32</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[cmpStr description]</p>
+        <div data-ice="description"><p>Compare two strings (for sorting) 0 == euqal, -1 a&lt;b, 1 a&gt;b</p>
 </div>
       </div>
     </td>
@@ -7409,13 +7482,13 @@ this is useful to convert an array of object to the data of a frame</p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-cmpStrNum">cmpStrNum</a></span></span><span class="code" data-ice="signature">(a: <span>[type]</span>, b: <span>[type]</span>): <span>[type]</span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-cmpStrNum">cmpStrNum</a></span></span><span class="code" data-ice="signature">(a: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, b: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>): <span>int32</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>[cmpStrNum compare (number, number), or (number, string-of-number) or (string-of-number, number) (string-of-number, string-of-number) , (string, string) </p>
+        <div data-ice="description"><p>cmpStrNum compare (number, number), or (number, string-of-number) or (string-of-number, number) (string-of-number, string-of-number) , (string, string) </p>
 </div>
       </div>
     </td>
@@ -7444,7 +7517,7 @@ this is useful to convert an array of object to the data of a frame</p>
       <div>
         
         
-        <div data-ice="description"><p>combine a set of sorting comparison functions</p>
+        <div data-ice="description"><p>combine a set of sorting comparison functions so tht the sort presidence is maintained</p>
 </div>
       </div>
     </td>
@@ -7473,7 +7546,7 @@ this is useful to convert an array of object to the data of a frame</p>
       <div>
         
         
-        <div data-ice="description"><p>[description]</p>
+        <div data-ice="description"><p>Reverses a sort compare function so it sorts in descending order</p>
 </div>
       </div>
     </td>
@@ -7496,13 +7569,14 @@ this is useful to convert an array of object to the data of a frame</p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-toNumber">toNumber</a></span></span><span class="code" data-ice="signature">()</span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-toNumber">toNumber</a></span></span><span class="code" data-ice="signature">(str: <span>[type]</span>): <span>[type]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Convert a string to a Javascript number, thakes into accont number string with commas (,) and numbers</p>
+</div>
       </div>
     </td>
     <td>
@@ -7618,7 +7692,7 @@ this is useful to convert an array of object to the data of a frame</p>
           <span data-ice="kind-icon" class="kind-function">F</span>
           
           
-          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-isArray">isArray</a></span></span><span class="code" data-ice="signature">(arr: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
+          <span class="code" data-ice="name"><span><a href="function/index.html#static-function-isArray">isArray</a></span></span><span class="code" data-ice="signature">(arr: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>

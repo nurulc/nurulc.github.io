@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 1285,
+  "end": 1611,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 29,
+      "line": 36,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 1285,
+    "end": 1611,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 29,
+        "line": 36,
         "column": 0
       }
     },
@@ -222,16 +222,16 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
+            "value": "*\n * Returns a function that extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n *  The pick function is memoized to make it memory efficient\n *\n *  example:\n *    `let nameAddress = pick('name', 'street');`\n *    `let obj = { name: 'Andrew', street: '1 Pine Street', city: 'New York', state: 'NY', zip: '10004' }`\n *    `nameAddress(obj)`  returns `['Andrew', '1 Pine Street']`\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
             "start": 847,
-            "end": 1249,
+            "end": 1575,
             "loc": {
               "start": {
                 "line": 19,
                 "column": 0
               },
               "end": {
-                "line": 26,
+                "line": 33,
                 "column": 3
               }
             }
@@ -240,43 +240,43 @@
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 1250,
-        "end": 1283,
+        "start": 1576,
+        "end": 1609,
         "loc": {
           "start": {
-            "line": 27,
+            "line": 34,
             "column": 0
           },
           "end": {
-            "line": 27,
+            "line": 34,
             "column": 33
           }
         },
         "declaration": {
           "type": "CallExpression",
-          "start": 1266,
-          "end": 1282,
+          "start": 1592,
+          "end": 1608,
           "loc": {
             "start": {
-              "line": 27,
+              "line": 34,
               "column": 16
             },
             "end": {
-              "line": 27,
+              "line": 34,
               "column": 32
             }
           },
           "callee": {
             "type": "Identifier",
-            "start": 1266,
-            "end": 1273,
+            "start": 1592,
+            "end": 1599,
             "loc": {
               "start": {
-                "line": 27,
+                "line": 34,
                 "column": 16
               },
               "end": {
-                "line": 27,
+                "line": 34,
                 "column": 23
               },
               "identifierName": "memoize"
@@ -287,15 +287,15 @@
           "arguments": [
             {
               "type": "Identifier",
-              "start": 1274,
-              "end": 1281,
+              "start": 1600,
+              "end": 1607,
               "loc": {
                 "start": {
-                  "line": 27,
+                  "line": 34,
                   "column": 24
                 },
                 "end": {
-                  "line": 27,
+                  "line": 34,
                   "column": 31
                 },
                 "identifierName": "pickRaw"
@@ -306,16 +306,16 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
+              "value": "*\n * Returns a function that extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n *  The pick function is memoized to make it memory efficient\n *\n *  example:\n *    `let nameAddress = pick('name', 'street');`\n *    `let obj = { name: 'Andrew', street: '1 Pine Street', city: 'New York', state: 'NY', zip: '10004' }`\n *    `nameAddress(obj)`  returns `['Andrew', '1 Pine Street']`\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
               "start": 847,
-              "end": 1249,
+              "end": 1575,
               "loc": {
                 "start": {
                   "line": 19,
                   "column": 0
                 },
                 "end": {
-                  "line": 26,
+                  "line": 33,
                   "column": 3
                 }
               }
@@ -326,16 +326,16 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
+            "value": "*\n * Returns a function that extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n *  The pick function is memoized to make it memory efficient\n *\n *  example:\n *    `let nameAddress = pick('name', 'street');`\n *    `let obj = { name: 'Andrew', street: '1 Pine Street', city: 'New York', state: 'NY', zip: '10004' }`\n *    `nameAddress(obj)`  returns `['Andrew', '1 Pine Street']`\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
             "start": 847,
-            "end": 1249,
+            "end": 1575,
             "loc": {
               "start": {
                 "line": 19,
                 "column": 0
               },
               "end": {
-                "line": 26,
+                "line": 33,
                 "column": 3
               }
             }
@@ -396,16 +396,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
+      "value": "*\n * Returns a function that extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n *  The pick function is memoized to make it memory efficient\n *\n *  example:\n *    `let nameAddress = pick('name', 'street');`\n *    `let obj = { name: 'Andrew', street: '1 Pine Street', city: 'New York', state: 'NY', zip: '10004' }`\n *    `nameAddress(obj)`  returns `['Andrew', '1 Pine Street']`\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
       "start": 847,
-      "end": 1249,
+      "end": 1575,
       "loc": {
         "start": {
           "line": 19,
           "column": 0
         },
         "end": {
-          "line": 26,
+          "line": 33,
           "column": 3
         }
       }
@@ -702,16 +702,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
+      "value": "*\n * Returns a function that extract elements of an object, or from a list of elements\n * \tpick(key) => returns a function that takes an object and returns an elemnt \n *  pick(keyList) => returns a function that takes an object and returns an array of element values\n *\n *  The pick function is memoized to make it memory efficient\n *\n *  example:\n *    `let nameAddress = pick('name', 'street');`\n *    `let obj = { name: 'Andrew', street: '1 Pine Street', city: 'New York', state: 'NY', zip: '10004' }`\n *    `nameAddress(obj)`  returns `['Andrew', '1 Pine Street']`\n *\n * @param  {String} list   String or array of strings\n * @return {function}      function that takes an object and returns the key or an array of keys\n ",
       "start": 847,
-      "end": 1249,
+      "end": 1575,
       "loc": {
         "start": {
           "line": 19,
           "column": 0
         },
         "end": {
-          "line": 26,
+          "line": 33,
           "column": 3
         }
       }
@@ -731,15 +731,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 1250,
-      "end": 1256,
+      "start": 1576,
+      "end": 1582,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 34,
           "column": 0
         },
         "end": {
-          "line": 27,
+          "line": 34,
           "column": 6
         }
       }
@@ -759,15 +759,15 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 1257,
-      "end": 1264,
+      "start": 1583,
+      "end": 1590,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 34,
           "column": 7
         },
         "end": {
-          "line": 27,
+          "line": 34,
           "column": 14
         }
       }
@@ -785,15 +785,15 @@
         "binop": null
       },
       "value": "memoize",
-      "start": 1266,
-      "end": 1273,
+      "start": 1592,
+      "end": 1599,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 34,
           "column": 16
         },
         "end": {
-          "line": 27,
+          "line": 34,
           "column": 23
         }
       }
@@ -810,15 +810,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1273,
-      "end": 1274,
+      "start": 1599,
+      "end": 1600,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 34,
           "column": 23
         },
         "end": {
-          "line": 27,
+          "line": 34,
           "column": 24
         }
       }
@@ -836,15 +836,15 @@
         "binop": null
       },
       "value": "pickRaw",
-      "start": 1274,
-      "end": 1281,
+      "start": 1600,
+      "end": 1607,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 34,
           "column": 24
         },
         "end": {
-          "line": 27,
+          "line": 34,
           "column": 31
         }
       }
@@ -861,15 +861,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1281,
-      "end": 1282,
+      "start": 1607,
+      "end": 1608,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 34,
           "column": 31
         },
         "end": {
-          "line": 27,
+          "line": 34,
           "column": 32
         }
       }
@@ -887,15 +887,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1282,
-      "end": 1283,
+      "start": 1608,
+      "end": 1609,
       "loc": {
         "start": {
-          "line": 27,
+          "line": 34,
           "column": 32
         },
         "end": {
-          "line": 27,
+          "line": 34,
           "column": 33
         }
       }
@@ -913,15 +913,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1285,
-      "end": 1285,
+      "start": 1611,
+      "end": 1611,
       "loc": {
         "start": {
-          "line": 29,
+          "line": 36,
           "column": 0
         },
         "end": {
-          "line": 29,
+          "line": 36,
           "column": 0
         }
       }

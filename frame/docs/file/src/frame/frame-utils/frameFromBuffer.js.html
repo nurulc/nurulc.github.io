@@ -132,13 +132,15 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-__FRAME__">__FRAME__</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-arrToCol">arrToCol</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-haveFrame">haveFrame</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#frame-frame-utils">frame/frame-utils</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameCount">frameCount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameFromBuffer">frameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameSum">frameSum</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameToString">frameToString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-frameWithIndex">frameWithIndex</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transpose">transpose</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-unionFrame">unionFrame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-coreFrameFromBuffer">coreFrameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameCount">frameCount</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameFromBuffer">frameFromBuffer</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-frameSum">frameSum</a></span></span></li>
@@ -308,8 +310,8 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+import coreFrameFromBuffer from &apos;./coreFrameFromBuffer&apos;;
 import {Frame} from &apos;../frame&apos;;
-import {dataSplit} from &apos;../../string/csv&apos;;
 /**
  * Create a Frame from a string buffer (string reat from a file)
  * * Lines are seperaed into columns using a &apos;splitter&apos; supports
@@ -324,58 +326,9 @@ import {dataSplit} from &apos;../../string/csv&apos;;
  * @param  {{ noConvert: boolen,name: string, Fr: SomeFrameClass}} options
  * @return {Frame}           Frame created from the buffer
  */
-export default function frameFromBuffer(buffer,splitter,options={}) {
-    let {Fr, name, noConvert} = options;
-	Fr = Fr || Frame;
-	let arr = buffer.replace(/\r/g, &apos;&apos;).split(&apos;\n&apos;).filter(s =&gt; s);
-	let columns = splitter(arr[0]);
-	let array = dataSplit(arr.splice(1),splitter);
-	[columns, array] = cleanData(columns, array);
-	var newFrame = new Fr(array,columns,name);
-	if(!noConvert) newFrame = newFrame.convertData();
-	return newFrame; 
+export default function frameFromBuffer(buffer,splitter,options={})  {
+     return coreFrameFromBuffer(buffer,splitter, Object.assign({Fr:Frame}, options));
 }
-
-function cleanData(columns, array) {
-	if( !hasNoEmptyElem(columns) ) throw new Error(&apos;Invalid frame column&apos;);
-	let n = columns.length;
-	return [columns, array.map(_cleanData(n)).filter(s =&gt; s)];
-}
-
-
-function hasNoEmptyElem(arr, v) {
-	if( arguments.length === 1 ){
-		for(let i=0; i&lt; arr.length; i++) 
-			if(!arr[i]) return undefined;
-	} else {
-		for(let i=0; i&lt; arr.length; i++) 
-			if(arr[i] === v ) return undefined;
-	}
-	return arr;
-}
-
-function arrRemUndef(arr) {
-	for(let i=0; i&lt; arr.length; i++) 
-		if(arr[i] === undefined) return arr.filter(v =&gt; v !== undefined);
-	return arr;
-}
-
-function _cleanData(n) {
-	return arr =&gt; {
-		arr = arrRemUndef(arr);
-		if(n !== arr.length) {
-			if(n &gt; arr.length) {
-				arr = arr.slice(0);
-				while(arr.length &lt; n) arr.push(&apos;&apos;);
-			} else {
-	            if(n === arr.length) return arr;
-				if(n &lt; arr.length) return arr.slice(0,n);
-			}
-		}
-		return hasNoEmptyElem(arr, undefined);
-	}
-}
-
 
 </code></pre>
 
