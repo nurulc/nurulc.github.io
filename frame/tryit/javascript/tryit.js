@@ -150,42 +150,46 @@ var $tryit = function () {
   }
 
   function _makeEditor(id) {
-    var _CodeMirror$fromTextA;
+    try {
+      var _CodeMirror$fromTextA;
 
-    var textarea = document.querySelector("#".concat(id));
-    var content = textarea.value;
+      var textarea = document.querySelector("#".concat(id));
+      var content = textarea.value;
 
-    if (editorData[id]) {
-      content = editorData[id];
-      textarea.value = content;
-    } else {
-      editorData[id] = content;
-    }
+      if (editorData[id]) {
+        content = editorData[id];
+        textarea.value = content;
+      } else {
+        editorData[id] = content;
+      }
 
-    var lines = content.split('\n').length;
-    var editor = CodeMirror.fromTextArea(textarea, (_CodeMirror$fromTextA = {
-      lineNumbers: true,
-      //        mode: "javascript",
-      theme: "cobalt",
-      matchBrackets: true,
-      continueComments: "Enter",
-      extraKeys: {
-        "Ctrl-Enter": execCode,
-        "Cmd-Enter": execCode,
-        "Ctrl-/": "toggleComment"
-      },
-      tabSize: 2
-    }, _defineProperty(_CodeMirror$fromTextA, "matchBrackets", true), _defineProperty(_CodeMirror$fromTextA, "continueComments", "Enter"), _defineProperty(_CodeMirror$fromTextA, "keyMap", "sublime"), _CodeMirror$fromTextA));
+      var lines = content.split('\n').length;
+      var editor = CodeMirror.fromTextArea(textarea, (_CodeMirror$fromTextA = {
+        lineNumbers: true,
+        //        mode: "javascript",
+        theme: "cobalt",
+        matchBrackets: true,
+        continueComments: "Enter",
+        extraKeys: {
+          "Ctrl-Enter": execCode,
+          "Cmd-Enter": execCode,
+          "Ctrl-/": "toggleComment"
+        },
+        tabSize: 2
+      }, _defineProperty(_CodeMirror$fromTextA, "matchBrackets", true), _defineProperty(_CodeMirror$fromTextA, "continueComments", "Enter"), _defineProperty(_CodeMirror$fromTextA, "keyMap", "sublime"), _CodeMirror$fromTextA));
 
-    __editorsPending.push(id);
+      __editorsPending.push(id);
 
-    [].push(id);
-    setEditorHeight(editor, lines);
-    ({})[id] = editor;
-    document.querySelector("#".concat(id, "-run")).onclick = execCode;
+      [].push(id);
+      setEditorHeight(editor, lines);
+      ({})[id] = editor;
+      document.querySelector("#".concat(id, "-run")).onclick = execCode;
 
-    function execCode() {
-      return tryIt(id, editor);
+      function execCode() {
+        return tryIt(id, editor);
+      }
+    } catch (err) {
+      alert("Error creating eritor " + id + ' ' + err.toString());
     }
   }
 
@@ -524,8 +528,8 @@ var $tryit = function () {
   } // =======================================================================
 
 
-  function showPopup(timeout, action) {
-    alertify.notify('Please execute preceeding code snippet', 'error', timeout, action); //alertify.notify('sample', 'success', 5, function(){  console.log('dismissed'); });
+  function showPopup(timeout, action, msg, type) {
+    alertify.notify(msg || 'Please execute preceeding code snippet', type || 'error', timeout, action); //alertify.notify('sample', 'success', 5, function(){  console.log('dismissed'); });
   }
 
   function easeIn(start, pos, end) {
