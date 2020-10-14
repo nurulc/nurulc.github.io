@@ -849,7 +849,7 @@ var $tryit = function () {
       }
 
       var _a3 = _r8;
-
+      alert('make editor');
       for (var _i3 = 0; _i3 < _a3.length; _i3++) {
         _makeEditor(_a3[_i3], _i3, _a3);
       }
