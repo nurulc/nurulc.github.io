@@ -291,13 +291,18 @@ div.D2:nth-child(odd)  {
    position: fixed;
    padding-top: 50rem;
    margin-left: -35rem;
-   margin-top:  20rem;
+   /*margin-top:  20rem;*/
    font-size: 4rem;
    transform: rotate(-90deg);
    opacity: 0.1;
 }
 
-
+@media only screen and (max-width: 800px) {
+  .click_me {
+    font-size: 3rem;
+    margin-left: -34.5rem;
+  }
+}
 
 
 
@@ -421,4 +426,11 @@ div.try-page[data-pagevisible="true"] {
 
 div.try-page[data-pagevisible="false"] {
   display: none;
+}
+
+/* helper for include locations */
+.icon-right {
+    position: relative;
+    float: right;
+    top: -3rem;
 }

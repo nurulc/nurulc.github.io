@@ -1,0 +1,241 @@
+!head
+@@include ../head.try
+@@include ../tools.try
+@@include ../getting-started.try
+
+!md
+# Contents of DataFrame package 
+
+* Get all the entries in the DataFrame (package object).
+
+!tryit
+var data = Object
+  .entries(DataFrame)
+  .map(([key,value]) => [key , getType(value), D(value)]);
+
+// Display the data [ [ [key, type-of-value, value ] ...]
+data
+
+!md
+## Convert the data into a Frame
+
+!tryit
+var {Frame} = DataFrame;
+
+// Note data is and array of rows, div genElement
+// and each row is an array of strings, number or boolean
+
+var df = new Frame(data, ['Name', 'Type', 'Value']);
+
+// Display the frame created
+df
+!md
+## Frame structure
+
+![](../../image/data-frame-structure.PNG)
+
+###Frame attributes
+
+* length -- number of rows
+* columns -- the columns names
+* data    --
+* Row Object
+
+#### length property
+
+This property gives us the number of rows in a frame and is just a shorthand for df.data.length
+
+!tryit
+df.length
+!md
+#### columns property
+
+This give us the names of the columns
+!tryit
+df.columns
+!md
+#### data property
+This is the data actual in the Frame __df__
+!tryit
+df.data
+
+!md
+This data is just the array used to create the frame in the first place
+
+# Row Object df.asObj(i)
+The row data is rather anoying to to access the data so a proxy object is created refered to as a RowObject what allows you to access the columns by name. The implementation is very efficient and there is little penalty using it. We will discuss this a little later. 
+
+!tryit
+// access the first row
+
+const ROW = 0;
+let r = df.asObj(ROW);
+let d = df.data[ROW];
+//=============== DISPLAY ============================= 
+
+$$.HTML("<p><b>Different methods of accessing row data</b></p>");
+$$.D("JSON",JSON.stringify(r));
+$$.D([
+  ['Name',r.Name , d[0]], 
+  ['Type', r.Type, d[1]], 
+  ['Value', r.Value, d[2]] 
+]);
+
+$$.HTML( "<p><b>Display the row</b></p>"); 
+$$.D(r);
+r.__data     
+
+
+!md
+### find method to search for a row
+
+The _df.find_ method takes a test function as its only argument, the test fuction recieves a row object for each row of the frame until matching row is found - when the function returns true. The find method returns _undefined_ if ther is no matching row is found, otherwise __find__ returns the matching row object. 
+
+This is a low level method and usually ther are better ways to do this.
+
+!tryit
+// look for a row with the name 'select'
+var r = df.find(ro => ro.Name === 'trimListElements');
+
+// display r
+r
+
+
+!md
+
+# Group BY operations
+
+We borrow a concept from SQL the group by - this creates groups of rows that have the same value in a set of selected __column(s)__ and perform some operation on each of those row
+groups. Some of the operations include (they are all in the namesapce _**gb**_ )
+
+     * gb.count // count the number of non-empty values is a group
+     * gb.max - // maximun value of a column in a group
+ 
+As you can see every row in Frame __df__ has a __Type__ and a __value__  columns. We can use the __.groupBy()__ to do many grouping operations. The following snippets will give a flavor of the things that can be done.
+
+### Find all unique values is a column
+
+The simplest use is to show the unique values of a coulmn or a set of columns, we will see more of that later. 
+
+> aFrame.groupBy(['col1', 'col2' , 'col3'])
+
+The code above will all unique combinations of **col1**, **col2**, **col3**
+
+__Note: This is the simplest use of groupBy, later we will see more things you can do with this rather versitile method.
+
+!tryit
+
+// How many different values do we have in the 'Type' column
+df.groupBy(['Type'])
+
+!md
+
+So we have 5 different values in the Type column, but we do not the se how many occurences of each of the value do we have in the Frame.
+
+Next we will see how to use the aggrigation functons to extract more information from each group.
+
+### Counting groups
+
+We can count the number using __gb.count__ this function takes two arguments:
+
+1. The column value to count, __Note:__ count only counts non-empty values in that column for the group
+1. Whatcolumn name should be given to this count
+    1. gb.count(**column-name-to-count**, **name-of-the-resulting-column**)
+
+
+
+!tryit
+var {gb} = DataFrame; // group by operations
+
+
+var types = df.groupBy(['Type', gb.count('Type', 'Count#')])
+
+//display types
+types
+
+!md
+
+
+
+# Reoragizing Frame
+
+In this section we will show you how to reorganize rows and columns. To do this in a useful way, it is ideal to have a column that is the _primary key_. 
+
+
+## Transpose
+To convert rows to columns of a two dimentional matrix we can use the transpose method.
+
+<img style="width: 15%" src="../../image/MATRIX-TRANSPOSE.jpg">
+
+Frame has a similar method, with one small addition: the column names are treated as the first row. We can see the affect of the transpose method below by transposing the frame **types**
+
+!tryit
+var {transpose} = DataFrame; // group by operations
+transpose(types)
+
+!md
+You will notice the headings are just the row index. 
+
+What if we wnt to use one of the columns as the heading? Transpose supports us telling the column that should be used 
+as the column names. 
+
+The important property of the column is that all the values must be unique. In a database we call this the unique key for each row. Although for the sake of robustness this version of transpose can deal with a few duplicate as lonk as that is rare. 
+
+In our case the 'Type' column is the unique key, and thus it has the attributes we are looking for.
+
+## Common use of transpose on column
+
+### What is a primary key
+
+This is a column uniquely identifies each row in a frame.
+
+* Transpose on a primary key - making values of the primary key the column headers
+
+!tryit
+ $$.HTML("<p><b>Display the frame <i>types</i></b></p>");
+// Show original frame
+$$.D(types);
+//====================
+//
+// perform the transpose with 'Type' as the primary key
+let tr = transpose(types, 'Type');
+
+$$.HTML("<p><b>Transpose the frame <i>types</i></b></p>")
+$$.D(tr); // display the transpose
+
+//===============================
+// now transpose it back
+$$.HTML("<br/><p><b>Get back the original frame - transpose again</b></p>")
+transpose(tr,'Type'); // notice a transpose of a transpose on the primary key gets ts 
+      
+!md
+As you can see, columns are converted to rows, and the primary key column becomes the column headers of the new frame.
+
+
+!md
+# Frame objInfo
+
+Th
+
+!tryit
+
+objInfo(Frame)
+
+
+
+!md
+## Turn objInfo to a array
+
+First we will turn the object to rows and columns suitable for turning it to a frame
+
+!tryit
+var {arrProd} = DataFrame;
+var frameDesc = Object.entries( objInfo(Frame) ).flatMap( ([key, list]) => arrProd( key, list) ); 
+$$.json(frameDesc)
+!md
+## Turn the array to a Frame
+
+!tryit
+var aFrame = new Frame(frameDesc, ['Type', 'Method_Name'])
+// display it
+aFrame

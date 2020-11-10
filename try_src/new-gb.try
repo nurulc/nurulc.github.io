@@ -1,0 +1,51 @@
+!md
+## Creating custom groupby operstion
+
+
+
+!tryit
+
+
+function UNDEFINED() { return undefined; }
+function gbFn(fn, initVal=undefined, initFn=UNDEFINED) {
+	return (name,newName) => {
+	newName = newName || name;
+	// function count(action,accum,count, val) {
+	// 	if( accum === undefined ) accum = 0;
+	// 	if( action !==1 ) return [count,count];
+	// 	return isEmpty(val)?[accum,count]:[accum+1,count+1];
+	// }
+	return [fn,name,[initFn, initVal ] ,newName];
+	}
+}
+
+function dataChanges(action,accum,count, val) {
+	if( accum === undefined ) accum = [undefined, undefined];
+	if( action !==1 ) return [(accum[0] !== accum[1])?1\'T':'F',count];
+	if(isEmpty(val)) return [accum,count];
+	if(accum[0] === undefined) {accun[0] = accum[1] = val;}
+	else {
+		if(val < accum[0]) accum[0] = val;
+		else if( val > accum[1] ) accum[1] = val;
+	}
+	return [accum,count+1]
+} 
+
+
+
+gb.notConst = gbFn(dataChanges);
+
+!md
+
+Now we gave setup a new groupby operator net 
+
+!tryit 
+var trace = (x,y,name) =>{
+  type: "scatter",
+  mode: "lines",
+  name: 'AAPL High',
+  x: column(rows, 'Date'),
+  y: column(rows, 'AAPL.High'),
+  line: {color: '#17BECF'}
+}
+

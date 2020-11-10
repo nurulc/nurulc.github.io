@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<link rel="stylesheet" href="https://unpkg.com/tryitjs@0.4.6/ref/stylesheets/tryit.css" />
+<link rel="stylesheet" href="https://unpkg.com/tryitjs@0.4.7/ref/stylesheets/tryit.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" />
@@ -16,8 +16,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/continuecomment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/comment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/sublime.min.js"></script>
-<script src="https://unpkg.com/tryitjs@0.4.6/ref/javascript/prettyprint.js"></script>
-<script src="https://unpkg.com/tryitjs@0.4.6/ref/javascript/tryit.js"></script>
+<script src="https://unpkg.com/js-sha1/src/sha1.js"></script>
+<script src="https://unpkg.com/tryitjs@0.4.7/ref/javascript/prettyprint.js"></script>
+<script src="https://unpkg.com/tryitjs@0.4.7/ref/javascript/tryit.js"></script>
 <title>Data Frame Examples</title>
 <meta name="viewport" content="width=device-width, initial-scale=0.7">
 <!-- Load plotly.js into the DOM -->
@@ -70,22 +71,66 @@ function isClass(d) { return false;
   //  }
 }
 
-  // const isCtorClass = obj.constructor
-  //     && obj.constructor.toString().substring(0, 5) === 'class'
-  // if(obj.prototype === undefined) {
-  //   return isCtorClass
-  // }
-  // const isPrototypeCtorClass = obj.prototype.constructor 
-  //   && obj.prototype.constructor.toString
-  //   && obj.prototype.constructor.toString().substring(0, 5) === 'class'
-  // return isCtorClass || isPrototypeCtorClass
+function isEmpty(arrOrObj) {
+  if(arrOrObj === '' || arrOrObj === undefined || arrOrObj === null) return true;
+  if(Array.isArray(arrOrObj) && arrOrObj.length === 0) return true;
+  if(typeof arrOrObj === 'object' && 
+      Object.keys(arrOrObj).length === 0 ) return true;
+  return false;
+}
+
+function timeOf(fn) {
+  const name = 'func';
+  const t0 = new Date().getTime();
+
+  const res = fn();
+
+  const t1 = new Date().getTime();
+  $$.D(`Call to ${name} took ${t1 - t0} milliseconds.`);
+  return res; 
+}
+
+function getTryitAttr(d) {
+  //var d = document.querySelector('#_tryit21 ~ div')
+
+  var ta = d.querySelector('textarea');
+  var myId = ta.id;
+  var a_after_ta = ta.closest('div ~ div').querySelector('div ~ a');
+}
+
+function customElement(element_name,process, ...args) {
+  customElements.define(element_name,
+  class extends HTMLElement {
+    constructor() {
+      super();
+      process = process || (x => x)
+      const template = process(
+        document
+        .getElementById(elemant_name+'-template')
+        .content, ...args);
+      const shadowRoot = this.attachShadow({mode: 'open'})
+        .appendChild(template.cloneNode(true));
+    }
+  }
+);
+}
 
 </script>
 </head>
 <body>
 <div class="ui sidebar inverted vertical menu">
-<div class="item"> <a href="https://github.com/nurulc/tryitjs" target="_blank"><img src="https://unpkg.com/tryitjs@0.4.6/tryit-small.png"></a></div> 
-<div class="save_all item toc_title ">Save All</div>
+<div class="item"> <a href="https://github.com/nurulc/tryitjs" target="_blank"><img src="https://unpkg.com/tryitjs@0.4.7/tryit-small.png"></a></div> 
+<div class="item">
+<div class="ui right dropdown item">
+    Options
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <div class="item save_all">Save All Changes</div>
+      <div class="item revert_changes">Revert changes</div>
+      <div class="item clear_storage">Delete All Changes</div>
+    </div> 
+  </div>
+</div>
 <div class="item toc_title">Contents</div>
 <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('dataframe')">Data Frame</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('summary')">Summary</a></div>
@@ -93,34 +138,33 @@ function isClass(d) { return false;
 <div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('overview')">Overview</a></div>
 <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('gettingstarted')">Getting started</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('dataframepackage')">DataFrame package</a></div>
-<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('quickstart')">Quick Start</a></div>
-<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('contentsofdataframepackage')">Contents of DataFrame package</a></div>
-<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('convertthedataintoaframe')">Convert the data into a Frame</a></div>
-<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('framestructure')">Frame structure</a></div>
-<div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('frameattributes')">Frame attributes</a></div>
-<div class="toc3"> 3.1.1&nbsp;&nbsp;<a onclick="jumpTag('lengthproperty')">length property</a></div>
-<div class="toc3"> 3.1.2&nbsp;&nbsp;<a onclick="jumpTag('columnsproperty')">columns property</a></div>
-<div class="toc3"> 3.1.3&nbsp;&nbsp;<a onclick="jumpTag('dataproperty')">data property</a></div>
-<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('rowobjectdfasobji')">Row Object df.asObj(i)</a></div>
-<div class="toc2"> 0.1&nbsp;&nbsp;<a onclick="jumpTag('findmethodtosearchforarow')">find method to search for a row</a></div>
-<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('groupbyoperations')">Group BY operations</a></div>
-<div class="toc2"> 0.1&nbsp;&nbsp;<a onclick="jumpTag('findalluniquevaluesisacolumn')">Find all unique values is a column</a></div>
-<div class="toc2"> 0.2&nbsp;&nbsp;<a onclick="jumpTag('countinggroups')">Counting groups</a></div>
-<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('reoragizingframe')">Reoragizing Frame</a></div>
-<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('transpose')">Transpose</a></div>
-<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('commonuseoftransposeoncolumn')">Common use of transpose on column</a></div>
-<div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('whatisaprimarykey')">What is a primary key</a></div>
-<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('frameobjinfo')">Frame objInfo</a></div>
-<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('turnobjinfotoaarray')">Turn objInfo to a array</a></div>
-<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('turnthearraytoaframe')">Turn the array to a Frame</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('quickstart')">Quick Start</a></div>
 <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('getdataworldcovidreport')">Get Data - World Covid Report</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('usefetchtogetrawdata')">Use fetch to get raw data</a></div>
-<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('createaframefromthedata')">Create a frame from the data</a></div>
-<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('showthesizeoftheframeandthecolumnnames')">Show the size of the frame and the column names</a></div>
-<div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('showthedatasummaryasaframe')">Show the data summary as a Frame</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('splitintolines')">Split into lines</a></div>
+<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('createaframefromthedata')">Create a frame from the data</a></div>
+<div class="toc2"> 3.1&nbsp;&nbsp;<a onclick="jumpTag('whathappened')">What happened</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('letsplotsomedata')">Lets plot some data</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('organizethecoviddata')">Organize the covid data</a></div>
+<div class="toc2"> 0.1&nbsp;&nbsp;<a onclick="jumpTag('selectcriticalcolumns')">Select Critical Columns</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('rollingupdata')">Rolling Up Data</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('rollupdataintocontinents')">Roll up data into continents</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('covidsituationineverycontinent')">Covid situation in every continent</a></div>
+<div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('letsgetapiechaart')">Let's get a pie-chaart</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('morerollup')">More Rollup</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('countriesandcontinent')">Countries and continent</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('plotusacoviddata')">Plot USA Covid data</a></div>
+<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('plotcountrycoviddata')">Plot Country Covid data</a></div>
+<div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('morecovidframe')">More Covid Frame</a></div>
+<div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('showthesizeoftheframeandthecolumnnames')">Show the size of the frame and the column names</a></div>
+<div class="toc2"> 1.1&nbsp;&nbsp;<a onclick="jumpTag('showthedatasummaryasaframe')">Show the data summary as a Frame</a></div>
 <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('getridofunnecessarycolumns')">Get rid of unnecessary columns</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('removingdataredundency')">Removing data redundency</a></div>
-<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('getdataforbrazil')">Get data for Brazil</a></div>
+<div class="toc1"> 2&nbsp;&nbsp;<a onclick="jumpTag('butfirstletsfillsomemissingdata')">But first lets fill some missing data</a></div>
+<div class="toc2"> 2.1&nbsp;&nbsp;<a onclick="jumpTag('letsfixthosevalues')">Lets fix those values</a></div>
+<div class="toc1"> 3&nbsp;&nbsp;<a onclick="jumpTag('')"></a></div>
+<div class="toc1"> 4&nbsp;&nbsp;<a onclick="jumpTag('countryuniquevalues')">Country Unique Values</a></div>
+<div class="toc1"> 5&nbsp;&nbsp;<a onclick="jumpTag('getdataforbrazil')">Get data for Brazil</a></div>
 <div class="toc0"> &nbsp;&nbsp;<a onclick="jumpTag('splitcovidframe')">Split COVID frame</a></div>
 <div class="toc1"> 1&nbsp;&nbsp;<a onclick="jumpTag('countryframe')">Country frame</a></div>
 <div class="toc2"> 1.1&nbsp;&nbsp;<a onclick="jumpTag('summaryofcasesbycountry')">Summary of cases by country</a></div>
@@ -140,131 +184,23 @@ function isClass(d) { return false;
     </div>
     <div class="thirteen wide column" id="tryit_body">
 
-
-<a id="_tryit1">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit1">
-let p = new Promise((accept,reject) =&gt; {
-  		Plotly.d3.csv("https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv",(err,rows) =&gt; {
-        if( err ) reject(err);
-        else accept(rows); 
-  		});
-});
-$$.D(p) ;
-p.then( rows =&gt; {
-	 doPlot(rows);
-});
-  
-function doPlot(rows) {
-  
-  function unpack(rows, key) {
-     return rows.map(function(row) { return row[key]; });
-  }
-
-var trace1 = {
-  type: "scatter",
-  mode: "lines",
-  name: 'AAPL High',
-  x: unpack(rows, 'Date'),
-  y: unpack(rows, 'AAPL.High'),
-  line: {color: '#17BECF'}
-}
-
-var trace2 = {
-  type: "scatter",
-  mode: "lines",
-  name: 'AAPL Low',
-  x: unpack(rows, 'Date'),
-  y: unpack(rows, 'AAPL.Low'),
-  line: {color: '#7F7F7F'}
-}
-
-var data = [trace1,trace2];
-
-var layout = {
-  title: 'Time Series with Rangeslider',
-  xaxis: {
-    autorange: true,
-    range: ['2015-02-17', '2017-02-16'],
-/*
-
-    rangeselector: {buttons: [
-        {
-          count: 1,
-          label: '1m',
-          step: 'month',
-          stepmode: 'backward'
-        },
-        {
-          count: 6,
-          label: '6m',
-          step: 'month',
-          stepmode: 'backward'
-        },
-        {step: 'all'}
-      ]},
- */
-    rangeslider: {range: ['2015-02-17', '2017-02-16']},
-    type: 'date'
-  },
-  yaxis: {
-    autorange: true,
-    range: [86.8700008333, 138.870004167],
-    type: 'linear'
-  }
-};
-
-Plotly.newPlot('plot', data, layout);
-}
-/*
-var {redim,zipToDict} = require('../lib')
-function groupInfo(aFrame, groupCol, cols) {
-    let fr = aFrame.groupBy([
-        groupCol, 
-        ...cols.flatMap(name =&gt; [ gb.value('name', name), gb.min(name, name+'_mn'), gb.max(name, name+'_mx')])
-        ]);
-    return zipToDict(fr.data.map(row =&gt; [row[0], 
-                               zipToDict(
-                                   redim(row.slice(1), 3).map(([col,min,max]) =&gt; [col, [min,max]])
-                                   )
-                              ]
-                      )
-    )
-}
-
-function linePlot(frame, country, groupCol, cols) {
-    let gi = groupInfo(frame, groupCol, cols);
-    let xAxis = cols[0];
-     let xRange = gi[country][cols[0]];
-     let countryFrame = frame.filter(ro =&gt; ro[groupCol] === country);
-     console.log(xRange);
-     data = zipToDict(cols.map(name =&gt; [name, countryFrame.rawColumn(name)]));
-    
-    return data;
-}
-linePlot(covidFrame, 'Albania', 'location',  ['date', 'new_cases', 'total_cases'])
-
- */
-			
-			</textarea>
-		</div>
-		<a id="_end_tryit1">
-&nbsp;</a>
-		<div id="tryit1-error" class="tryit-error"></div>
-		<div id="tryit1-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit1-run" data-tooltip="Execute script" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_1" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_1" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<div id="plot"></div>
 <div id="page-1" class="try-page" data-pagevisible="true">
 <h1 id="dataframe">Data Frame</h1>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: "></i></p>
+<h2><a href="package/page-data-frame.html" target="_blank">Package Deep Dive</a></h2>
+<p>You can explore the package and explore the some of the core caplbilities by clicking 
+<a href="package/data-frame.html">Package Deep Dive</a></p>
+<style>
+.icon-right {
+    position: relative;
+    float: right;
+    top: -3rem;
+}
+</style>
+
 <h2 id="summary">Summary</h2>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: summary.try < try&#95;src/data-frame-example/index.try"></i></p>
+<!--<i class="icon question circle green icon-right" title="&#95;this&#95;is&#95;a&#95;Question"></i>-->
 <p><a href="/frame/docs/class/src/frame/frame.js~Frame.html" target="_blank">Frame Docs</a></p>
 <p>This is a database like data manipulation library. It lets you do simple database SQL like operations on in-memory tabular data. The main component of the library is a Frame. This is a data structure that contains tabular data made up of of rows and columns. Each column has a name, and just like the columns of a database table the names must be unique. The tool has been tested with 1 million rows with good performance. The total amount of data is limited by the memory of your browser or node instance. All elements (cells/column) are stored as strings or numbers. </p>
 <p>A Frame 
@@ -289,11 +225,13 @@ That conversion is done by the <em><strong>frameFromBuffer</strong></em> functio
 <li>gb.mean - <em>the average value of a column in a group (ignoring empty values)</em></li>
 <li>gb.stdDev - <em>the standard deviation value of a column in a group (ignoring empty values)</em></li>
 <li>some others </li></ul>
-<h2 id="introduction">Introduction</h2></li>
+<h2 id="introduction">Introduction</h2>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: introduction.try < try&#95;src/data-frame-example/index.try"></i></p></li>
 </ul>
 <p>The inspiration for data frame came from two sources, SQL and the powerful python pandas utility. Frame does not attempt to provide all the functionality of pandas or that of SQL. The examples provided here will
 give a taste of some of the things it can do.</p>
 <h3 id="overview">Overview</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: introduction.try < try&#95;src/data-frame-example/index.try"></i></p>
 <ul>
 <li>Data Frames strongly support a functional style of programming</li>
 <li>One a Frame is created it is never modified </li>
@@ -308,11 +246,13 @@ give a taste of some of the things it can do.</p>
 <li>Accessing the column data using a index is very inconvinent and rarely do you have to do this<ul>
 <li>For your convinence a <em>row object</em> is created for ease access  </li></ul></li></ul></li>
 </ul>
-<button class="ui button page_next" data-page="1">Next</button><br/><br/></div> <!--- Data Frame  @@END_PAGE@@ --> <div id="page0" class="try-page" data-pagevisible="true">
+<button class="ui button page_next" data-page="1">Next</button><br/><br/></div> <!---  Data Frame  @@END_PAGE@@ --> <div id="page0" class="try-page" data-pagevisible="true">
 <h1 id="gettingstarted">Getting started</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/getting-started.try < try&#95;src/data-frame-example/index.try"></i></p>
 <p>we have to bring in the str-data-frame npm module. We have several choices, using javascript es6+ module symtax,
 using webpack or similar bundler, or just as a script. For rhe purposed of this tutorial I am using the good old script method. I creates in the global namesapce <em>DataFrame</em> variable.</p>
 <h2 id="dataframepackage">DataFrame package</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/getting-started.try < try&#95;src/data-frame-example/index.try"></i></p>
 <p>Lets do a quick look a what is defined in the package.
 In this html page we use the following <em><strong>unpkg.com</strong></em> to load the str-data-frame package. The exported name from the Package is <em><strong>DataFrame</strong></em>.</p>
 <pre><code class="html language-html">&lt;script src="https://unpkg.com/str-data-frame@0.2.18/dist/bundle.js"&gt;&lt;/script&gt;
@@ -341,459 +281,46 @@ function getType(d) {
 
 }
 </code></pre>
-<button class="ui button page_prev" data-page="0">Prev</button><button class="ui button page_next" data-page="2">Next</button><br/><br/></div> <!---  Getting started  @@END_PAGE@@ --> <div id="page1" class="try-page" data-pagevisible="true">
-<h1 id="quickstart">Quick Start</h1>
+<h2 id="quickstart">Quick Start</h2>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: simple-example.try < try&#95;src/data-frame-example/index.try"></i></p>
 <p>So you are in a hurry and would like to see if Frames are yor you. If you have table like data, Data Frames are for you. Think of them as fast in-memory database tables.</p>
-<h2 id="contentsofdataframepackage">Contents of DataFrame package</h2>
-<ul>
-<li>Get all the entries in the DataFrame (package object).</li>
-</ul>
+<script>
 
-<a id="_tryit2">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit2">
-var data = Object
-  .entries(DataFrame)
-  .map(([key,value]) =&gt; [key , getType(value), D(value)]);
+function addDiv(id, ext) {
+	let targetDivName = `#${id}_${ext}`;
+    let targetDiv = document.querySelector(targetDivName);
+    if(!targetDiv) {
+    	targetDiv = document.createElement('div');
+    	targetDiv.id = targetDivName.substr(1);
+    	let sibling = document.querySelector('#'+id);
+    	sibling.after(targetDiv);
+    }
+    else targetDiv.innerHTML = '';
+    return targetDiv;
+}
 
-// Display the data [ [ [key, type-of-value, value ] ...]
-data
+function plotDiv() {
+    let dn = $$.executeDiv;
+    return addDiv(dn+'-display','plot'); // add a div for plotting after the display div
+}
 
-			</textarea>
-		</div>
-		<a id="_end_tryit2">
-&nbsp;</a>
-		<div id="tryit2-error" class="tryit-error"></div>
-		<div id="tryit2-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit2-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit3" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_2" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_2" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<h2 id="convertthedataintoaframe">Convert the data into a Frame</h2>
+</script>
 
-<a id="_tryit3">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit3">
-var {Frame} = DataFrame;
+<p> Added DIV creation tool</p>
 
-// Note data is and array of rows, div genElement
-// and each row is an array of strings, number or boolean
-
-var df = new Frame(data, ['Name', 'Type', 'Value']);
-
-// Display the frame created
-df
-			</textarea>
-		</div>
-		<a id="_end_tryit3">
-&nbsp;</a>
-		<div id="tryit3-error" class="tryit-error"></div>
-		<div id="tryit3-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit3-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit4" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_3" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_3" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<h2 id="framestructure">Frame structure</h2>
-<p><img src="../../image/data-frame-structure.PNG" alt="" /></p>
-<h3 id="frameattributes">Frame attributes</h3>
-<ul>
-<li>length -- number of rows</li>
-<li>columns -- the columns names</li>
-<li>data    --</li>
-<li>Row Object</li>
-</ul>
-<h4 id="lengthproperty">length property</h4>
-<p>This property gives us the number of rows in a frame and is just a shorthand for df.data.length</p>
-
-<a id="_tryit4">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit4">
-df.length
-			</textarea>
-		</div>
-		<a id="_end_tryit4">
-&nbsp;</a>
-		<div id="tryit4-error" class="tryit-error"></div>
-		<div id="tryit4-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit4-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit5" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_4" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_4" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<h4 id="columnsproperty">columns property</h4>
-<p>This give us the names of the columns</p>
-
-<a id="_tryit5">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit5">
-df.columns
-			</textarea>
-		</div>
-		<a id="_end_tryit5">
-&nbsp;</a>
-		<div id="tryit5-error" class="tryit-error"></div>
-		<div id="tryit5-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit5-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit6" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_5" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_5" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<h4 id="dataproperty">data property</h4>
-<p>This is the data actual in the Frame <strong>df</strong></p>
-
-<a id="_tryit6">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit6">
-df.data
-
-			</textarea>
-		</div>
-		<a id="_end_tryit6">
-&nbsp;</a>
-		<div id="tryit6-error" class="tryit-error"></div>
-		<div id="tryit6-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit6-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit7" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_6" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_6" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<p>This data is just the array used to create the frame in the first place</p>
-<button class="ui button page_prev" data-page="1">Prev</button><button class="ui button page_next" data-page="3">Next</button><br/><br/></div> <!---  Quick Start  @@END_PAGE@@ --> <div id="page2" class="try-page" data-pagevisible="true">
-<h1 id="rowobjectdfasobji">Row Object df.asObj(i)</h1>
-<p>The row data is rather anoying to to access the data so a proxy object is created refered to as a RowObject what allows you to access the columns by name. The implementation is very efficient and there is little penalty using it. We will discuss this a little later. </p>
-
-<a id="_tryit7">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit7">
-// access the first row
-
-const ROW = 0;
-let r = df.asObj(ROW);
-let d = df.data[ROW];
-//=============== DISPLAY ============================= 
-
-$$.HTML("&lt;p&gt;&lt;b&gt;Different methods of accessing row data&lt;/b&gt;&lt;/p&gt;");
-$$.D("JSON",JSON.stringify(r));
-$$.D([
-  ['Name',r.Name , d[0]], 
-  ['Type', r.Type, d[1]], 
-  ['Value', r.Value, d[2]] 
-]);
-
-$$.HTML( "&lt;p&gt;&lt;b&gt;Display the row&lt;/b&gt;&lt;/p&gt;"); 
-$$.D(r);
-r.__data     
-
-			</textarea>
-		</div>
-		<a id="_end_tryit7">
-&nbsp;</a>
-		<div id="tryit7-error" class="tryit-error"></div>
-		<div id="tryit7-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit7-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit8" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_7" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_7" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<h3 id="findmethodtosearchforarow">find method to search for a row</h3>
-<p>The <em>df.find</em> method takes a test function as its only argument, the test fuction recieves a row object for each row of the frame until matching row is found - when the function returns true. The find method returns <em>undefined</em> if ther is no matching row is found, otherwise <strong>find</strong> returns the matching row object. </p>
-<p>This is a low level method and usually ther are better ways to do this.</p>
-
-<a id="_tryit8">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit8">
-// look for a row with the name 'select'
-var r = df.find(ro =&gt; ro.Name === 'trimListElements');
-
-// display r
-r
-
-			</textarea>
-		</div>
-		<a id="_end_tryit8">
-&nbsp;</a>
-		<div id="tryit8-error" class="tryit-error"></div>
-		<div id="tryit8-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit8-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit9" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_8" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_8" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<button class="ui button page_prev" data-page="2">Prev</button><button class="ui button page_next" data-page="4">Next</button><br/><br/></div> <!---  Row Object df.asObj(i)  @@END_PAGE@@ --> <div id="page3" class="try-page" data-pagevisible="true">
-<h1 id="groupbyoperations">Group BY operations</h1>
-<p>We borrow a concept from SQL the group by - this creates groups of rows that have the same value in a set of selected <strong>column(s)</strong> and perform some operation on each of those row
-groups. Some of the operations include (they are all in the namesapce <em><strong>gb</strong></em> )</p>
-<pre><code> * gb.count // count the number of non-empty values is a group
- * gb.max - // maximun value of a column in a group
-</code></pre>
-<p>As you can see every row in Frame <strong>df</strong> has a <strong>Type</strong> and a <strong>value</strong>  columns. We can use the <strong>.groupBy()</strong> to do many grouping operations. The following snippets will give a flavor of the things that can be done.</p>
-<h3 id="findalluniquevaluesisacolumn">Find all unique values is a column</h3>
-<p>The simplest use is to show the unique values of a coulmn or a set of columns, we will see more of that later. </p>
-<blockquote>
-  <p>aFrame.groupBy(['col1', 'col2' , 'col3'])</p>
-</blockquote>
-<p>The code above will all unique combinations of <strong>col1</strong>, <strong>col2</strong>, <strong>col3</strong></p>
-<p>__Note: This is the simplest use of groupBy, later we will see more things you can do with this rather versitile method.</p>
-
-<a id="_tryit9">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit9">
-// How many different values do we have in the 'Type' column
-df.groupBy(['Type'])
-
-			</textarea>
-		</div>
-		<a id="_end_tryit9">
-&nbsp;</a>
-		<div id="tryit9-error" class="tryit-error"></div>
-		<div id="tryit9-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit9-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit10" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_9" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_9" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<p>So we have 5 different values in the Type column, but we do not the se how many occurences of each of the value do we have in the Frame.</p>
-<p>Next we will see how to use the aggrigation functons to extract more information from each group.</p>
-<h3 id="countinggroups">Counting groups</h3>
-<p>We can count the number using <strong>gb.count</strong> this function takes two arguments:</p>
-<ol>
-<li>The column value to count, <strong>Note:</strong> count only counts non-empty values in that column for the group</li>
-<li>Whatcolumn name should be given to this count<ol>
-<li>gb.count(<strong>column-name-to-count</strong>, <strong>name-of-the-resulting-column</strong>)</li></ol></li>
-</ol>
-
-<a id="_tryit10">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit10">
-var {gb} = DataFrame; // group by operations
-
-var types = df.groupBy(['Type', gb.count('Type', 'Count#')])
-
-//display types
-types
-
-			</textarea>
-		</div>
-		<a id="_end_tryit10">
-&nbsp;</a>
-		<div id="tryit10-error" class="tryit-error"></div>
-		<div id="tryit10-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit10-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit11" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_10" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_10" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<button class="ui button page_prev" data-page="3">Prev</button><button class="ui button page_next" data-page="5">Next</button><br/><br/></div> <!---  Group BY operations  @@END_PAGE@@ --> <div id="page4" class="try-page" data-pagevisible="true">
-<h1 id="reoragizingframe">Reoragizing Frame</h1>
-<p>In this section we will show you how to reorganize rows and columns. To do this in a useful way, it is ideal to have a column that is the <em>primary key</em>. </p>
-<h2 id="transpose">Transpose</h2>
-<p>To convert rows to columns of a two dimentional matrix we can use the transpose method.</p>
-<p><img style="width: 15%" src="../../image/MATRIX-TRANSPOSE.jpg"></p>
-<p>Frame has a similar method, with one small addition: the column names are treated as the first row. We can see the affect of the transpose method below by transposing the frame <strong>types</strong></p>
-
-<a id="_tryit11">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit11">
-var {transpose} = DataFrame; // group by operations
-transpose(types)
-
-			</textarea>
-		</div>
-		<a id="_end_tryit11">
-&nbsp;</a>
-		<div id="tryit11-error" class="tryit-error"></div>
-		<div id="tryit11-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit11-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit12" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_11" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_11" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<p>You will notice the headings are just the row index. </p>
-<p>What if we wnt to use one of the columns as the heading? Transpose supports us telling the column that should be used 
-as the column names. </p>
-<p>The important property of the column is that all the values must be unique. In a database we call this the unique key for each row. Although for the sake of robustness this version of transpose can deal with a few duplicate as lonk as that is rare. </p>
-<p>In our case the 'Type' column is the unique key, and thus it has the attributes we are looking for.</p>
-<h2 id="commonuseoftransposeoncolumn">Common use of transpose on column</h2>
-<h3 id="whatisaprimarykey">What is a primary key</h3>
-<p>This is a column uniquely identifies each row in a frame.</p>
-<ul>
-<li>Transpose on a primary key - making values of the primary key the column headers</li>
-</ul>
-
-<a id="_tryit12">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit12">
- $$.HTML("&lt;p&gt;&lt;b&gt;Display the frame &lt;i&gt;types&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;");
-// Show original frame
-$$.D(types);
-//====================
-//
-// perform the transpose with 'Type' as the primary key
-let tr = transpose(types, 'Type');
-
-$$.HTML("&lt;p&gt;&lt;b&gt;Transpose the frame &lt;i&gt;types&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;")
-$$.D(tr); // display the transpose
-
-//===============================
-// now transpose it back
-$$.HTML("&lt;br/&gt;&lt;p&gt;&lt;b&gt;Get back the original frame - transpose again&lt;/b&gt;&lt;/p&gt;")
-transpose(tr,'Type'); // notice a transpose of a transpose on the primary key gets ts 
-      
-			</textarea>
-		</div>
-		<a id="_end_tryit12">
-&nbsp;</a>
-		<div id="tryit12-error" class="tryit-error"></div>
-		<div id="tryit12-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit12-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit13" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_12" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_12" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<p>As you can see, columns are converted to rows, and the primary key column becomes the column headers of the new frame.</p>
-<button class="ui button page_prev" data-page="4">Prev</button><button class="ui button page_next" data-page="6">Next</button><br/><br/></div> <!---  Reoragizing Frame  @@END_PAGE@@ --> <div id="page5" class="try-page" data-pagevisible="true">
-<h1 id="frameobjinfo">Frame objInfo</h1>
-<p>Th</p>
-
-<a id="_tryit13">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit13">
-objInfo(Frame)
-
-			</textarea>
-		</div>
-		<a id="_end_tryit13">
-&nbsp;</a>
-		<div id="tryit13-error" class="tryit-error"></div>
-		<div id="tryit13-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit13-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit14" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_13" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_13" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<h2 id="turnobjinfotoaarray">Turn objInfo to a array</h2>
-<p>First we will turn the object to rows and columns suitable for turning it to a frame</p>
-
-<a id="_tryit14">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit14">
-var {arrProd} = DataFrame;
-var frameDesc = Object.entries( objInfo(Frame) ).flatMap( ([key, list]) =&gt; arrProd( key, list) ); 
-$$.json(frameDesc)
-			</textarea>
-		</div>
-		<a id="_end_tryit14">
-&nbsp;</a>
-		<div id="tryit14-error" class="tryit-error"></div>
-		<div id="tryit14-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit14-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit15" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_14" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_14" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<h2 id="turnthearraytoaframe">Turn the array to a Frame</h2>
-
-<a id="_tryit15">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit15">
-var aFrame = new Frame(frameDesc, ['Type', 'Method_Name'])
-// display it
-aFrame
-
-			</textarea>
-		</div>
-		<a id="_end_tryit15">
-&nbsp;</a>
-		<div id="tryit15-error" class="tryit-error"></div>
-		<div id="tryit15-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit15-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit16" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_15" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_15" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<button class="ui button page_prev" data-page="5">Prev</button><button class="ui button page_next" data-page="7">Next</button><br/><br/></div> <!---  Frame objInfo  @@END_PAGE@@ --> <div id="page6" class="try-page" data-pagevisible="true">
+<button class="ui button page_prev" data-page="0">Prev</button><button class="ui button page_next" data-page="2">Next</button><br/><br/></div> <!---  Getting started  @@END_PAGE@@ --> <div id="page1" class="try-page" data-pagevisible="true">
 <h1 id="getdataworldcovidreport">Get Data - World Covid Report</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: covid-world.try < try&#95;src/data-frame-example/index.try"></i></p>
 <h2 id="usefetchtogetrawdata">Use fetch to get raw data</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: covid-world.try < try&#95;src/data-frame-example/index.try"></i></p>
 <p>We will use world covid-19 daily statistics, this is a csv file that we will split into an array of lines. We can use the fetch
 function to pull data from the public repository on Github. Once the promise resolves, the data eill</p>
 
-<a id="_tryit16">&nbsp</a>
+<a id="_tryit1">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit16">
+			<textarea class="tryit ui " id="tryit1">
 	
 	var csvData;
 	
@@ -810,67 +337,648 @@ function to pull data from the public repository on Github. Once the promise res
 
 p  // note p is a promise, the display will wait for the promise to resolve
 
-/*p.then(str =&gt; 
-    str.split('\n').slice(0,10).join('\n') // split the large csv string into lines and display the first 10 lines.
-)*/
-
 			</textarea>
 		</div>
-		<a id="_end_tryit16">
+		<a id="_end_tryit1">
 &nbsp;</a>
-		<div id="tryit16-error" class="tryit-error"></div>
-		<div id="tryit16-display" class="tryit-display rendered_html"></div>
+		<div id="tryit1-error" class="tryit-error"></div>
+		<div id="tryit1-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit16-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit17" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit1-run" data-tooltip="Execute script" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_16" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_16" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+ &nbsp; <button id="ra_1" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_1" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h2 id="createaframefromthedata">Create a frame from the data</h2>
+<h2 id="splitintolines">Split into lines</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: covid-world.try < try&#95;src/data-frame-example/index.try"></i></p>
 
-<a id="_tryit17">&nbsp</a>
+<a id="_tryit2">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit17">
-  var {frameFromBuffer, csvLine, arrProd} = DataFrame;
+			<textarea class="tryit ui " id="tryit2">
+csvData.split('\n');
+
+			</textarea>
+		</div>
+		<a id="_end_tryit2">
+&nbsp;</a>
+		<div id="tryit2-error" class="tryit-error"></div>
+		<div id="tryit2-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit2-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit3" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_2" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_2" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h2 id="createaframefromthedata">Create a frame from the data</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: covid-world.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>Create a frame from string data representing the contents of a CSV file.</p>
+
+<a id="_tryit3">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit3">
+  var { csvLine, arrProd, Frame} = DataFrame;
 
 // frameFromBuffer is at its core the following code
 //    var lines = csvData.split('\n').map(csvLine);
 //    var covidFrame = new Frame(lines.slice(1), lines[0]);
 
-  var covidFrame = frameFromBuffer(csvData, csvLine);
+  var covidFrame = Frame.frameFromString(csvData, csvLine);
   // Display the first 11 results
   covidFrame.slice(0,11);
-  
+
 			</textarea>
 		</div>
-		<a id="_end_tryit17">
+		<a id="_end_tryit3">
 &nbsp;</a>
-		<div id="tryit17-error" class="tryit-error"></div>
-		<div id="tryit17-display" class="tryit-display rendered_html"></div>
+		<div id="tryit3-error" class="tryit-error"></div>
+		<div id="tryit3-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit17-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit18" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit3-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit4" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_17" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_17" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+ &nbsp; <button id="ra_3" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_3" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
+<h3 id="whathappened">What happened</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: covid-world.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>We converted a string to a frames. </p>
+<ul>
+<li><strong>csvData</strong> <em>The string beinng the contents of a CSV (comma seperated values) representation of a table.</em></li>
+<li><strong>csvLine</strong> _function to convert one row (in string form) into an array of strings</li>
+</ul>
+<button class="ui button page_prev" data-page="1">Prev</button><button class="ui button page_next" data-page="3">Next</button><br/><br/></div> <!---  Get Data - World Covid Report  @@END_PAGE@@ --> <div id="page2" class="try-page" data-pagevisible="true">
+<h1 id="letsplotsomedata">Lets plot some data</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: plot-covid-frame.try < covid-world.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>We will plot some data from the covid Frame for USA</p>
+<ol>
+<li>First select data for USA</li>
+<li>Use plotly.js to plot come data</li>
+</ol>
+
+<a id="_tryit4">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit4">
+let usa = covidFrame.filter(ro =&gt; ro.iso_code === 'USA'); // get usa data
+
+let x = usa.rawColumn('date');         // X -axis values
+
+let y1 = usa.rawColumn('total_cases');  // Y - axis values
+let y2 = usa.rawColumn('total_deaths');  // Y - another axis values
+
+Plotly.newPlot(
+		plotDiv(),                         // create a location to plot the data
+		[
+			{name: 'Total Cases - USA',  x, y: y1}, // data to plot
+			{name: 'Total Deaths - USA', x, y: y2} // another data to plot
+    ],     
+		{   
+			title: 'My first Covid plot - USA',
+			yaxis: {type: 'log' }
+		}
+)
+
+			</textarea>
+		</div>
+		<a id="_end_tryit4">
+&nbsp;</a>
+		<div id="tryit4-error" class="tryit-error"></div>
+		<div id="tryit4-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit4-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit5" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_4" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_4" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<button class="ui button page_prev" data-page="2">Prev</button><button class="ui button page_next" data-page="4">Next</button><br/><br/></div> <!---  Lets plot some data  @@END_PAGE@@ --> <div id="page3" class="try-page" data-pagevisible="true">
+<h1 id="organizethecoviddata">Organize the covid data</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<h3 id="selectcriticalcolumns">Select Critical Columns</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>In this section we will show how to:</p>
+<ol>
+<li>Select the following columns from covidFrame:<ul>
+<li><strong>iso_code</strong> - </li>
+<li><strong>location</strong> -</li>
+<li><strong>date</strong></li>
+<li><strong>total_cases</strong></li>
+<li><strong>total_deaths</strong> </li>
+<li><strong>mortality</strong> _Computed column  <code>100*total_deaths/total_cases</code> percent of people who die after contracting COVID-19</li></ul></li>
+</ol>
+
+<a id="_tryit5">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit5">
+var countries = covidFrame.filter(ro =&gt; ro.total_cases &gt; 0)
+        .select([
+           'iso_code',
+           'location',
+           'continent',
+           'date',
+           'total_cases', 
+           'total_deaths',
+           'total_deaths_per_million',
+           'total_cases_per_million',
+           'population',
+           ['mortality',(v,ro) =&gt; 100.0*(ro.total_deaths/ro.total_cases)]
+  ]);
+
+// Display the result for USA
+countries.filter(ro =&gt; ro.iso_code === 'USA')   
+      
+      
+			</textarea>
+		</div>
+		<a id="_end_tryit5">
+&nbsp;</a>
+		<div id="tryit5-error" class="tryit-error"></div>
+		<div id="tryit5-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit5-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit6" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_5" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_5" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<button class="ui button page_prev" data-page="3">Prev</button><button class="ui button page_next" data-page="5">Next</button><br/><br/></div> <!---  Organize the covid data  @@END_PAGE@@ --> <div id="page4" class="try-page" data-pagevisible="true">
+<h1 id="rollingupdata">Rolling Up Data</h1>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>This section will demonstrate the groupBy capability of DataFrame to create summary of data.</p>
+<h2 id="rollupdataintocontinents">Roll up data into continents</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>Next we want to rollup the data into continents, for this we will use the group
+the data by <code>continent</code> </p>
+
+<a id="_tryit6">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit6">
+countries.groupBy(['continent'])
+
+			</textarea>
+		</div>
+		<a id="_end_tryit6">
+&nbsp;</a>
+		<div id="tryit6-error" class="tryit-error"></div>
+		<div id="tryit6-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit6-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit7" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_6" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_6" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>This is not quite what we need, since this is just giving us the continent names, we also need
+to keep the <code>date</code> column</p>
+
+<a id="_tryit7">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit7">
+var sample = percent =&gt; () =&gt; Math.random() &lt; (percent/100.0); // sampling filter
+
+countries = countries.filter(ro =&gt; ro.continent); // remove where no continent data
+
+countries.groupBy(['continent', 'date'])
+  .filter( sample(2.0) ) // sample 2% of the data
+
+      
+			</textarea>
+		</div>
+		<a id="_end_tryit7">
+&nbsp;</a>
+		<div id="tryit7-error" class="tryit-error"></div>
+		<div id="tryit7-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit7-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit8" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_7" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_7" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Next we want to aggrigate the <code>total_cases</code> and <code>total_deaths</code>, so we need to sum (add up) the 
+thos value for every country in a continent and also on that date. We have a operation for that
+in the groupBy, </p>
+<ul>
+<li>gb.sum('column_name')</li>
+</ul>
+
+<a id="_tryit8">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit8">
+var { gb } = DataFrame;
+
+var continents = countries
+  .filter(ro =&gt; ro.continent)
+  .groupBy([    
+    'continent', 
+    'date', 
+    gb.sum('total_cases'), 
+    gb.sum('total_deaths'),  
+    gb.value('total_deaths_per_million',0),
+    gb.value('total_cases_per_million',0),
+    gb.sum('population')
+  ]).update({
+    total_deaths_per_million: (v,ro) =&gt; ro.total_deaths/ro.population*1000000,
+    total_cases_per_million: (v,ro) =&gt; ro.total_cases/ro.population*1000000
+  });
+
+// Display a sample
+continents.filter(sample(2.0))
+       
+      
+			</textarea>
+		</div>
+		<a id="_end_tryit8">
+&nbsp;</a>
+		<div id="tryit8-error" class="tryit-error"></div>
+		<div id="tryit8-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit8-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit9" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_8" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_8" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/>
+You will notice countries have a 'iso_code' and a 'location' namely the country </p>
+<h2 id="covidsituationineverycontinent">Covid situation in every continent</h2>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: continent-pie.try < plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>This is another roll up process where the dates are not important, only the largest calues of 
+<code>total_cases</code> and <code>total_deaths</code></p>
+
+<a id="_tryit9">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit9">
+  var continentSummary = continents
+    .groupBy([
+      'continent',  
+      gb.max('total_cases'), 
+      gb.max('total_deaths'),
+      gb.max('total_deaths_per_million'),
+      gb.max('total_cases_per_million')
+    ]
+);
+
+continentSummary
+      
+			</textarea>
+		</div>
+		<a id="_end_tryit9">
+&nbsp;</a>
+		<div id="tryit9-error" class="tryit-error"></div>
+		<div id="tryit9-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit9-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit10" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_9" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_9" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h3 id="letsgetapiechaart">Let's get a pie-chaart</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: continent-pie.try < plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+
+<a id="_tryit10">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit10">
+let cs = continentSummary;
+const COL_NAME = 'total_cases';
+const TITLE = COL_NAME.split('_').join(' ');
+
+var data = [{
+  values: cs.rawColumn(COL_NAME),
+  labels: cs.rawColumn('continent'),
+  hoverinfo: 'label+percent+name',
+  hole: 0.4,
+  type: 'pie'
+}];
+
+var layout = {
+  title: `&lt;b&gt;${TITLE}&lt;/b&gt;`,
+  height: 600,
+  width: 800
+};
+
+Plotly.newPlot(plotDiv(), data, layout);
+
+			</textarea>
+		</div>
+		<a id="_end_tryit10">
+&nbsp;</a>
+		<div id="tryit10-error" class="tryit-error"></div>
+		<div id="tryit10-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit10-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit11" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_10" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_10" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<button class="ui button page_prev" data-page="4">Prev</button><button class="ui button page_next" data-page="6">Next</button><br/><br/></div> <!---  Rolling Up Data  @@END_PAGE@@ --> <div id="page5" class="try-page" data-pagevisible="true">
+<h1 id="morerollup">More Rollup</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>This time we will rollup data into countries and continents</p>
+<ol>
+<li>We have a frame for <code>continents</code></li>
+<li>We will make continents frame have the same shape as the country data</li>
+</ol>
+<ul>
+<li>We need to add 2 columns <code>iso_code</code> and <code>location</code></li>
+<li>Since these columns do not exist for continents frame, we will have to compute that<ul>
+<li>The simplest way is to use the same value as the <code>continent</code> column</li>
+<li>We will also create a new coulmn <code>mortality</code> this value is computed by dividing <code>total_deaths</code> by <code>total_cases</code> </li></ul></li>
+</ul>
+<p>In the following section we will show you how to do that using the <code>select</code> method of a frame.</p>
+<h2 id="countriesandcontinent">Countries and continent</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i>
+The countries and continents are similar but not identical, so we cannot combine them into a single table. </p>
+<ol>
+<li>Continests frame do not have  <code>iso_code</code> and <code>location</code> columns. </li>
+<li>We can fix that using frame.select</li>
+</ol>
+
+<a id="_tryit11">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit11">
+continents = continents.select([
+ ["iso_code", (v,ro) =&gt; ro.continent],
+ ["location", (v,ro) =&gt; ro.continent],
+ "continent",
+ "date",
+ "total_cases",
+ "total_deaths",
+ "total_deaths_per_million",
+ "total_cases_per_million",
+ "population",
+ ["mortality", (v,ro) =&gt; 100.0*(ro.total_deaths/ro.total_cases)],
+]
+);
+
+continents
+
+			</textarea>
+		</div>
+		<a id="_end_tryit11">
+&nbsp;</a>
+		<div id="tryit11-error" class="tryit-error"></div>
+		<div id="tryit11-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit11-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit12" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_11" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_11" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<ol start="2">
+<li>and augment the data for mortality (%) <code>total_deaths/total_cases</code> - a computed value</li>
+</ol>
+
+<a id="_tryit12">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit12">
+$$.HTML('&lt;p class="huge"&gt;CONTINENT - North America from Match 2020&lt;/p&gt;');
+$$.D(continents.filter(ro =&gt; ro.continent === 'North America' &amp;&amp; ro.date &gt; '2020-03').slice(0,10));
+			</textarea>
+		</div>
+		<a id="_end_tryit12">
+&nbsp;</a>
+		<div id="tryit12-error" class="tryit-error"></div>
+		<div id="tryit12-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit12-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit13" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_12" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_12" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Now that we have the <strong>countries</strong> frame and the <strong>continents</strong> frame in the same shape
+we can combile the into one table using the concat method</p>
+
+<a id="_tryit13">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit13">
+var countryContinent = countries.concat(continents); // add the continents to the frame (we hade sure that the both have the same shape - columns)
+
+//Get Data for USA
+$$.HTML('&lt;p class="huge"&gt;country - USA from March 20202/b&gt;')
+countryContinent.filter(ro =&gt; ro.iso_code === 'USA' &amp;&amp; ro.date &gt; '2020-03') // display data for USA   
+        
+      
+			</textarea>
+		</div>
+		<a id="_end_tryit13">
+&nbsp;</a>
+		<div id="tryit13-error" class="tryit-error"></div>
+		<div id="tryit13-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit13-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit14" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_13" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_13" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h2 id="plotusacoviddata">Plot USA Covid data</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>Plot the data using the beautiful plotly library. So first thing we need is a plottting function based on the plotly.js library. This library has to do the following:</p>
+<p>1-- Utils for doing line plots</p>
+
+<a id="_tryit14">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit14">
+function makeLines(aFrame) {
+   return function (iso) {
+      let frame = aFrame.filter(ro =&gt; ro.iso_code === iso &amp;&amp; ro.total_cases &gt; 0); // get get the data for a country 
+      var countryName = frame.asObj(0).location; // get the name of the country - from the first row
+
+      const column = (key) =&gt; frame.rawColumn(key); // get a columns from the frame 
+
+      let x = column('date'); 
+
+      let total_cases =  {name: 'Total Cases/'+countryName,  x, y: column('total_cases') };
+      let total_deaths = {name: 'Total Deaths/'+countryName, x, y: column('total_deaths') };
+      let mortality =    {name: '% Mortality/'+countryName,  x, y: column('mortality') };
+
+      return [total_cases, total_deaths, mortality];
+   }
+}
+  
+function doPlot(frame, isoList, aDiv) {
+  const getLines = makeLines(frame);
+  let lines;
+  if(Array.isArray(isoList)) lines = isoList.flatMap(getLines).sort((a,b) =&gt; a.name&lt;b.name?1:-1);
+  else lines = getLines(isoList);
+
+  var layout = {
+    title: ' Covid Results (with Rangeslider)',
+    xaxis: {rangeslider: {}, },
+    yaxis: {type: 'log'      } // this can be 'linear' or 'log'
+  };
+
+  Plotly.newPlot(aDiv, lines, layout);
+}
+
+			</textarea>
+		</div>
+		<a id="_end_tryit14">
+&nbsp;</a>
+		<div id="tryit14-error" class="tryit-error"></div>
+		<div id="tryit14-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit14-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit15" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_14" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_14" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h2 id="plotcountrycoviddata">Plot Country Covid data</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>From the we have already created the country and continent data frame. THe frame consists of the following fields:<ul>
+<li><strong>iso_code</strong> </li>
+<li><strong>location</strong> </li>
+<li><strong>date</strong></li>
+<li><strong>total_cases</strong></li>
+<li><strong>total_deaths</strong> </li>
+<li><strong>mortality</strong></li></ul></li>
+<li>Creating continent wide data</li>
+</ul>
+<p>Data Frames have a powerful aggrigation capability in <code>frame.groupBy</code>, this capability is built on an similar capability in SQL, namely <code>groupby</code>. The key idea here is to collect
+into groups all rows that have the sane value in a column, or a set of columns. On each group we can the apply come aggrication operation on some of thr remaining columns. </p>
+
+<a id="_tryit15">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit15">
+//====================================
+// Find out the location fo the current tryit script
+let dn = $$.executeDiv;
+
+let aDiv = addDiv(dn+'-display','plot'); // add a div for plotting after the display div
+
+doPlot(countryContinent, ['USA', 'North America'], aDiv)
+
+// ======================= Plotting utiltty ========================
+
+// ================================== UI TO Select a country ============================
+
+var OPTS = ({ C: 'USA', R: 'North America'})
+function selCountry(obj,type) {
+  let iso = obj.value;
+  OPTS[type] = iso;
+  doPlot(countryContinent,[OPTS.C, OPTS.R], aDiv);
+}
+
+function options(country) {
+  return country.groupBy(['iso_code', 'location']).sort(['location']).map(ro=&gt; `&lt;option value="${ro.iso_code}"&gt;${ro.location}&lt;/option&gt;`).join('\n');
+}
+
+// Selector for country
+
+let nStr = `
+&lt;p class="ui header huge"&gt;Select a country&lt;/p&gt;
+&lt;div class="ui search country"&gt;
+  &lt;div class="ui icon input"&gt;
+    &lt;input class="prompt" type="text" placeholder="Search countries..."&gt;
+    &lt;i class="search icon"&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div class="results dropdown"&gt;&lt;/div&gt;
+&lt;/div&gt;
+`;
+
+$$.HTML(nStr);
+
+// Selector for continents
+let str1 = `
+&lt;p class="ui header huge"&gt;Select a Continent&lt;/p&gt;
+&lt;select class="ui selection dropdown" name="countries" id="countries" onchange="selCountry(this,'R')"&gt;
+  ${options(countryContinent.filter(ro =&gt; ro.iso_code === ro.location))}
+&lt;/select&gt;&lt;div style="height: 30rem" /&gt;`;
+
+$$.HTML(str1);
+
+var cc = countryContinent.groupBy(['iso_code', 'location', 'continent'])
+            .map(ro =&gt; ({ category: ro.continent, title: ro.location, ID: ro.iso_code }));
+
+$$.lastly(() =&gt; {
+$('.ui.search')
+  .search({
+    type: 'category',
+    source: cc,
+    onSelect: (result, response) =&gt; (selCountry({value: result.ID},'C'), true)
+  });
+
+});
+
+			</textarea>
+		</div>
+		<a id="_end_tryit15">
+&nbsp;</a>
+		<div id="tryit15-error" class="tryit-error"></div>
+		<div id="tryit15-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit15-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit16" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_15" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_15" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<button class="ui button page_prev" data-page="5">Prev</button><button class="ui button page_next" data-page="7">Next</button><br/><br/></div> <!---  More Rollup  @@END_PAGE@@ --> <div id="page6" class="try-page" data-pagevisible="true">
+<h1 id="morecovidframe">More Covid Frame</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
 <h2 id="showthesizeoftheframeandthecolumnnames">Show the size of the frame and the column names</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
 <ul>
 <li>Length of the frame  <em>(covidFrame.length)</em></li>
 <li>All column Names <em>(covidFrame.columns)</em></li>
 <li>List the columns that are mostly numeric <em>(covidFrame.numericColumns)</em></li>
 </ul>
 
-<a id="_tryit18">&nbsp</a>
+<a id="_tryit16">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit18">
+			<textarea class="tryit ui " id="tryit16">
 var {arrRemove} = DataFrame;
 
 var cf = covidFrame;
@@ -887,30 +995,34 @@ $$.json(summary)
 
 			</textarea>
 		</div>
-		<a id="_end_tryit18">
+		<a id="_end_tryit16">
 &nbsp;</a>
-		<div id="tryit18-error" class="tryit-error"></div>
-		<div id="tryit18-display" class="tryit-display rendered_html"></div>
+		<div id="tryit16-error" class="tryit-error"></div>
+		<div id="tryit16-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit18-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit19" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit16-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit17" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_18" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_18" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+ &nbsp; <button id="ra_16" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_16" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h3 id="showthedatasummaryasaframe">Show the data summary as a Frame</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
 <p>In order to create the frame we need to do the following</p>
 <ol>
 <li>Function to count the number of non-empty values in a column <code>countNonEmptyCells(columnName)</code></li>
 <li>Function to get the <strong>type</strong> of the column <strong>Numeric</strong> or <strong>Alpha</strong> <code>columnType(colName)</code></li>
 </ol>
 
-<a id="_tryit19">&nbsp</a>
+<a id="_tryit17">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit19">
+			<textarea class="tryit ui " id="tryit17">
+var {Frame} = DataFrame;
+
+var cf = covidFrame;
 // Helper function to count number of non-empty values  in a column in the frame _cf_
 function countNonEmptyCells(colName){ 
     return cf.groupBy( [gb.count(colName,'count')] ).asObj(0).count ;
@@ -943,20 +1055,21 @@ new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
 
 			</textarea>
 		</div>
-		<a id="_end_tryit19">
+		<a id="_end_tryit17">
 &nbsp;</a>
-		<div id="tryit19-error" class="tryit-error"></div>
-		<div id="tryit19-display" class="tryit-display rendered_html"></div>
+		<div id="tryit17-error" class="tryit-error"></div>
+		<div id="tryit17-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit19-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit20" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit17-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit18" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_19" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_19" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+ &nbsp; <button id="ra_17" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_17" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<button class="ui button page_prev" data-page="6">Prev</button><button class="ui button page_next" data-page="8">Next</button><br/><br/></div> <!---  Get Data - World Covid Report  @@END_PAGE@@ --> <div id="page7" class="try-page" data-pagevisible="true">
+<button class="ui button page_prev" data-page="6">Prev</button><button class="ui button page_next" data-page="8">Next</button><br/><br/></div> <!---  More Covid Frame  @@END_PAGE@@ --> <div id="page7" class="try-page" data-pagevisible="true">
 <h1 id="getridofunnecessarycolumns">Get rid of unnecessary columns</h1>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
 <p>In sql we can do this using <em>select</em> columns <em>from</em> table, further the select operation can rename the columns, add new columns, and transform data is columns</p>
 <p>We use a similar operation for a data frames using the project</p>
 <pre><code class="js language-js">     frame.project([ list of columns])
@@ -970,6 +1083,7 @@ new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
 how to create a new frem from a subset of the original columns and renaming a column</p>
 <p><strong>Note</strong> We can also add new columns by adding a new column name</p>
 <h2 id="removingdataredundency">Removing data redundency</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
 <p>In the covid table there is a great deal of data redendency and unnecessary data  for example for each row has a <code>iso_code</code> for each country, country name, and continent. 
 In database terminology we say that the data is <strong>not normalized</strong>. In this section we will show how we can normalize the data. </p>
 <p>This section we will look at how to create the following:</p>
@@ -978,6 +1092,67 @@ In database terminology we say that the data is <strong>not normalized</strong>.
 <li>Create frames to remove redundent data.</li>
 <li>How to combine data from two frames</li>
 </ol>
+<h2 id="butfirstletsfillsomemissingdata">But first lets fill some missing data</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>iso_code is the unique country code</li>
+<li>Some locations are not countries so they do not have a <code>iso_code</code> or a <code>continent</code></li>
+<li>for thos missing value let us set the <code>iso_code</code> and continent to the value of <code>location</code></li>
+</ul>
+
+<a id="_tryit18">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit18">
+// Find out the columns with missing col values for `iso_code` or `continent`
+$$.D(covidFrame.filter(ro =&gt; !ro.iso_code || !ro.continent).groupBy(['iso_code','continent', 'location']));
+
+			</textarea>
+		</div>
+		<a id="_end_tryit18">
+&nbsp;</a>
+		<div id="tryit18-error" class="tryit-error"></div>
+		<div id="tryit18-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit18-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit19" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_18" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_18" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h3 id="letsfixthosevalues">Lets fix those values</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+
+<a id="_tryit19">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit19">
+covidFrame = covidFrame.update({
+	iso_code: ((v,ro) =&gt; ro.iso_code || ro.location),
+	continent: ((v,ro) =&gt; ro.continent || ro.location)
+});
+
+covidFrame.filter(ro =&gt; ro.continent === ro.location)
+          .groupBy(['iso_code', 'continent', 'location'])
+			</textarea>
+		</div>
+		<a id="_end_tryit19">
+&nbsp;</a>
+		<div id="tryit19-error" class="tryit-error"></div>
+		<div id="tryit19-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit19-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit20" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_19" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_19" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h2 id=""> </h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
 
 <a id="_tryit20">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
@@ -985,9 +1160,9 @@ In database terminology we say that the data is <strong>not normalized</strong>.
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit20">
 var SELECTED_COLUMNS = [
-  ['iso_code', (iso, ro) =&gt; iso || ro.location], // note you have to use the ro.location (original name) and not ro.country
+  'iso_code', 
   'location=country', // rename location to country
-  ['continent', (c,ro) =&gt; c || ro.location], // if no continent data use the ro.location (country) name as the continent
+  'continent',
   'date',
   'total_cases',
   'new_cases',
@@ -1000,15 +1175,15 @@ var SELECTED_COLUMNS = [
   ['INDEX', (value, row) =&gt; row.__index$]  // create a new column (INDEX) use the row number as the index
 ];
 
-var frame = covidFrame.select(
+var cFrame = covidFrame.select(
       SELECTED_COLUMNS
       ,ro =&gt; ro.total_cases &gt; 0 // only keep the rows for a country start from the date of the first case 
 );
 
-$$.D( "Show first 20 rows" );
-frame.slice(0,20)
-  
-  
+$$.D( "Show some sample data" );
+cFrame.filter(sample(0.1))
+
+			
 			</textarea>
 		</div>
 		<a id="_end_tryit20">
@@ -1023,18 +1198,74 @@ frame.slice(0,20)
  &nbsp; <button id="save_20" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h2 id="getdataforbrazil">Get data for Brazil</h2>
-<p>Here we will use a simpler version of select that keeps all the columns as is and filters out some of the rows. This is the same as the following sql</p>
-<pre><code> select * from covidFrame where country = 'Brazil' 
-</code></pre>
+<div style="display:none">
 
 <a id="_tryit21">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit21">
-covidFrame.filter(r =&gt; r.location === 'Brazil')
+if(!customElements.get('element-details')) {
+    customElements.define('element-details',
+      class extends HTMLElement {
+        constructor() {
+          super();
+          const template = document
+            .getElementById('element-details-template')
+            .content;
+          const shadowRoot = this.attachShadow({mode: 'open'})
+            .appendChild(template.cloneNode(true));
+        }
+      }
+    );
+}
+$$.HTML(`
+&lt;template id="element-details-template"&gt;
+  &lt;style&gt;
+  details {font-family: "Open Sans Light",Helvetica,Arial}
+  .name {font-weight: bold; color: #217ac0; font-size: 120%}
+  h4 { margin: 10px 0 -8px 0; }
+  h4 span { background: #217ac0; padding: 2px 6px 2px 6px }
+  h4 span { border: 1px solid #cee9f9; border-radius: 4px }
+  h4 span { color: white }
+  .attributes { margin-left: 22px; font-size: 90% }
+  .attributes p { margin-left: 16px; font-style: italic }
+  &lt;/style&gt;
+  &lt;details&gt;
+    &lt;summary&gt;
+      &lt;span&gt;
+        &lt;code class="name"&gt;&amp;lt;&lt;slot name="element-name"&gt;NEED NAME&lt;/slot&gt;&amp;gt;&lt;/code&gt;
+        &lt;i class="desc"&gt;&lt;slot name="description"&gt;NEED DESCRIPTION&lt;/slot&gt;&lt;/i&gt;
+      &lt;/span&gt;
+    &lt;/summary&gt;
+    &lt;div class="attributes"&gt;
+      &lt;h4&gt;&lt;span&gt;Attributes&lt;/span&gt;&lt;/h4&gt;
+      &lt;slot name="attributes"&gt;&lt;p&gt;None&lt;/p&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+  &lt;/details&gt;
+  &lt;hr&gt;
+&lt;/template&gt;
 
+&lt;element-details&gt;
+  &lt;span slot="element-name"&gt;slot&lt;/span&gt;
+  &lt;span slot="description"&gt;A placeholder inside a web
+    component that users can fill with their own markup,
+    with the effect of composing different DOM trees
+    together.&lt;/span&gt;
+  &lt;dl slot="attributes"&gt;
+    &lt;dt&gt;name&lt;/dt&gt;
+    &lt;dd&gt;The name of the slot.&lt;/dd&gt;
+  &lt;/dl&gt;
+&lt;/element-details&gt;
+
+&lt;element-details&gt;
+  &lt;span slot="element-name"&gt;template&lt;/span&gt;
+  &lt;span slot="description"&gt;A mechanism for holding client-
+    side content that is not to be rendered when a page is
+    loaded but may subsequently be instantiated during
+    runtime using JavaScript.&lt;/span&gt;
+&lt;/element-details&gt; 
+`);
 			</textarea>
 		</div>
 		<a id="_end_tryit21">
@@ -1049,29 +1280,103 @@ covidFrame.filter(r =&gt; r.location === 'Brazil')
  &nbsp; <button id="save_21" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<button class="ui button page_prev" data-page="7">Prev</button><button class="ui button page_next" data-page="9">Next</button><br/><br/></div> <!---  Get rid of unnecessary columns  @@END_PAGE@@ --> <div id="page8" class="try-page" data-pagevisible="true">
-<h1 id="splitcovidframe">Split COVID frame</h1>
-<h2 id="countryframe">Country frame</h2>
-<p>Create a frame with general country information country information into another frame</p>
-<p>When we look at the original <strong>covidFrame</strong> there is a lot of duplication of data. For example, each row of d</p>
+<a id="_tryit21">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit2">
+var {Frame} = DataFrame;
+
+// Note data is and array of rows, div genElement
+// and each row is an array of strings, number or boolean
+
+var df = new Frame(data, ['Name', 'Type', 'Value']);
+
+// Display the frame created
+df
+			</textarea>
+		</div>
+		<a id="_end_tryit2">&nbsp;</a>
+		<div id="tryit21-error" class="tryit-error"></div>
+		<div id="tryit21-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit21-run" data-tooltip="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     
+    	<i class="caret square right icon"></i>
+			Run
+    </button> &nbsp; 
+    <button id="jump_tryit31" class="circular ui icon yellow button jump_next">
+			<i class="icon angle double down"></i>
+    </button>&nbsp;
+		<button class="circular ui icon button green jump_back">
+					<i class="icon angle double up"></i>
+		</button>&nbsp; 
+	  <button id="ra_2" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> 
+					<i class="fast backward icon"></i> 
+		</button>&nbsp; 
+    <button id="save_21" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> 
+				<i class="save icon"></i>
+		</button>
+	</div>
+</div>
+
+<a id="_tryit21">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit2">
+var {Frame} = DataFrame;
+
+// Note data is and array of rows, div genElement
+// and each row is an array of strings, number or boolean
+
+var df = new Frame(data, ['Name', 'Type', 'Value']);
+
+// Display the frame created
+df
+			</textarea>
+		</div>
+		<a id="_end_tryit2">
+&nbsp;</a>
+		<div id="tryit21-error" class="tryit-error"></div>
+		<div id="tryit21-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit21-run" data-tooltip="Script not ready - Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     
+    	<i class="caret square right icon"></i>
+			Run
+    </button> &nbsp; 
+    <button id="jump_tryit31" class="circular ui icon yellow button jump_next">
+			<i class="icon angle double down"></i>
+    </button>&nbsp;
+		<button class="circular ui icon button green jump_back">
+					<i class="icon angle double up"></i>
+		</button>&nbsp; 
+	  <button id="ra_2" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> 
+					<i class="fast backward icon"></i> 
+		</button>&nbsp; 
+    <button id="save_21" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> 
+				<i class="save icon"></i>
+		</button>
+	</div>
+</div>
+
+</div>
+
+<h2 id="countryuniquevalues">Country Unique Values</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
 
 <a id="_tryit22">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit22">
-var GENERAL_COLUMNS = [
-    'iso_code', 'location=country', 'continent', 
-    'population', 'diabetes_prevalence',
-    "median_age", "aged_65_older", "aged_70_older",
-    "gdp_per_capita", "extreme_poverty", "cardiovasc_death_rate",
-    "female_smokers", "male_smokers", "handwashing_facilities",
-    "hospital_beds_per_thousand", "life_expectancy", "human_development_index"
-];
-
-var europe  = covidFrame.select(,ro =&gt; ro.continent === 'Europe').distinct();
-europe
-
+var cf = covidFrame;
+var countryUnique = cf.groupBy([	
+  "iso_code","continent", "location",	"population", "population_density", "median_age", "aged_65_older",
+  "aged_70_older", "gdp_per_capita", "extreme_poverty", "cardiovasc_death_rate", "diabetes_prevalence", "female_smokers",
+  "male_smokers", "handwashing_facilities", "hospital_beds_per_thousand", "life_expectancy", "human_development_index"]);
+// Display Unique Values
+countryUnique 
+  
 			</textarea>
 		</div>
 		<a id="_end_tryit22">
@@ -1086,26 +1391,18 @@ europe
  &nbsp; <button id="save_22" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h3 id="summaryofcasesbycountry">Summary of cases by country</h3>
+<h2 id="getdataforbrazil">Get data for Brazil</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<p>Here we will use a simpler version of select that keeps all the columns as is and filters out some of the rows. This is the same as the following sql</p>
+<pre><code> select * from covidFrame where country = 'Brazil' 
+</code></pre>
 
 <a id="_tryit23">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit23">
-var {sum, count, max, mean} = gb; // aggrigator functions for groupBy
-
-var summary = frame.groupBy(
-  ['country','continent', 
-    max('total_deaths','deaths'), // show the maximum value of 'total_deaths' and call it deaths 
-    count('INDEX', 'count'),      // count the number of entries (daily info) for each country
-    max('total_cases','cases'),   // show the maximum value of 'total_cases' and call it 'cases' 
-    'population'
-  ])
-  .sort(['continent', '-cases']);  // sort continent and cases, the cases in descending order
-
-//display
-summary
+covidFrame.filter(r =&gt; r.location === 'Brazil')
 
 			</textarea>
 		</div>
@@ -1121,37 +1418,32 @@ summary
  &nbsp; <button id="save_23" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h2 id="letstrytoimprovethedisplayofnumbers">Lets try to improve the display of numbers</h2>
+<button class="ui button page_prev" data-page="7">Prev</button><button class="ui button page_next" data-page="9">Next</button><br/><br/></div> <!---  Get rid of unnecessary columns  @@END_PAGE@@ --> <div id="page8" class="try-page" data-pagevisible="true">
+<h1 id="splitcovidframe">Split COVID frame</h1>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<h2 id="countryframe">Country frame</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<p>Create a frame with general country information country information into another frame</p>
+<p>When we look at the original <strong>covidFrame</strong> there is a lot of duplication of data. For example, each row of d</p>
 
 <a id="_tryit24">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit24">
-function addCommas(nStr) {
-    nStr += '';
-    var x = nStr.split('.');
-    var x1 = x[0];
-    var x2 = x.length &gt; 1 ? '.' + x[1] : '';
-    var rgx = /(\d+)(\d{3})/;
-    while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-    }
-    return x1 + x2;
-}
+var GENERAL_COLUMNS = [
+    'iso_code', 'location=country', 'continent', 
+    'population', 'diabetes_prevalence',
+    "median_age", "aged_65_older", "aged_70_older",
+    "gdp_per_capita", "extreme_poverty", "cardiovasc_death_rate",
+    "female_smokers", "male_smokers", "handwashing_facilities",
+    "hospital_beds_per_thousand", "life_expectancy", "human_development_index"
+];
 
-function toStr(str) {
-  const {abs,round} = Math;
-  let num = (+str);
-  if(abs(round(num)-num) &lt; 1e-6) num = Math.round(num);
-  else if(abs(num)&gt;1000) num = round(num);
-  else if(abs(num)&gt;1) num = round(num*100)/100;
-  return addCommas(num.toString());
-}
-Frame.HTMLFormat.number = toStr;
-
-// Display
-summary
+var europe  = covidFrame
+      .groupBy(GENERAL_COLUMNS)
+      .filter(ro =&gt; ro.continent === 'Europe');
+europe
 
 			</textarea>
 		</div>
@@ -1167,21 +1459,35 @@ summary
  &nbsp; <button id="save_24" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<button class="ui button page_prev" data-page="8">Prev</button><button class="ui button page_next" data-page="10">Next</button><br/><br/></div> <!---  Split COVID frame  @@END_PAGE@@ --> <div id="page9" class="try-page" data-pagevisible="true">
-<h1 id="summarizetheinformationbycontinent">Summarize the information by continent</h1>
-<p>This section will reformat the data by trans to create summary by continent</p>
+<h3 id="summaryofcasesbycountry">Summary of cases by country</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>Use the <strong>Frame.groupBy</strong> to group all data by <strong>country</strong> and <strong>continent</strong></li>
+<li>For each group (<strong>country</strong>) do the following<ul>
+<li>Get maximum of <strong>total_deaths</strong> and give the column the name <strong>deaths</strong></li>
+<li>Get count of number of rows (using the 'INDEX' colums) and call the column <strong>count</strong>, <strong>Note: count the number of non empty values</strong></li>
+<li>Get maximum of <strong>total_cases</strong> and call the column <strong>cases</strong></li>
+<li>Get maximum of <strong>population</strong> column, since this value does not change we can just use it as a part of the grouping operation</li></ul></li>
+</ul>
 
 <a id="_tryit25">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit25">
-//summary.groupBy(['continent', 'country'])
-var continent_summary = 
-    summary.groupBy(['continent', sum('deaths'),  count('country', 'countries'), mean('deaths', 'avg_by_country'), sum('cases'), sum('population')]);
+var {sum, count, max, mean} = gb; // aggrigator functions for groupBy
 
-// Display it
-continent_summary
+var summary = cFrame.groupBy(
+  ['country','continent', 
+    max('total_deaths','deaths'), // show the maximum value of 'total_deaths' and call it deaths 
+    count('INDEX', 'count'),      // count the number of entries (daily info) for each country
+    max('total_cases','cases'),   // show the maximum value of 'total_cases' and call it 'cases' 
+    'population'                  // we could also `max('population')` if we ar not sure the polulation changes
+  ])
+  .sort(['continent', '-cases']);  // sort continent and cases, the cases in descending order
+
+//display
+summary
 
 			</textarea>
 		</div>
@@ -1197,17 +1503,47 @@ continent_summary
  &nbsp; <button id="save_25" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h3 id="transpose">Transpose</h3>
-<p>Transpose will rotate the table, the column name comes from the row in the country column. Pay special attention
-the 'country' column is call the transpose pivot and it is important all the values in this column are unique. If the values are not unique the result of the transpose will look very weird and may violate the requirement that all the column names rae unique.</p>
+<h2 id="letstrytoimprovethedisplayofnumbers">Lets try to improve the display of numbers</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<p>Frame supports number formattion function.</p>
+<ul>
+<li>Set a global formatting function for numeric data 
+<strong>Frame.HTMLFormat.number = toStr</strong> </li>
+<li><strong>toStr(s: string)</strong> 
+takes a string (or number) and returns a fromatted numeric string with commas add to make is easier to read</li>
+<li>This does not alter the data in the frame</li>
+</ul>
 
 <a id="_tryit26">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit26">
-transpose(continent_summary, 'country')
+function addCommas(nStr) {
+    nStr += ''; // conver string or number to a string
+    var [whole, fraction] = nStr.split('.'); // split on decimal point
+    
+    fraction = fraction ? '.' + fraction : ''; // add a '.' before the fractional part
+    var rgx = /(\d+)(\d{3})/;  // find more then 3 digits without a comma seperator at the end of the string
+    while (rgx.test(whole)) {
+            whole = whole.replace(rgx, '$1' + ',' + '$2'); // add a comma seperator
+    }
+    return whole + fraction;
+}
 
+function toStr(str) {
+  const {abs,round} = Math;
+  let num = (+str);
+  if(abs(round(num)-num) &lt; 1e-6) num = Math.round(num);
+  else if(abs(num)&gt;1000) num = round(num);
+  else if(abs(num)&gt;1) num = round(num*100)/100;
+  return addCommas(num.toString());
+}
+Frame.HTMLFormat.number = toStr; // set the function to display numbers
+
+// Display
+$$.D(summary);
+$$.D(summary.asObj(0)); // show the original data
 			</textarea>
 		</div>
 		<a id="_end_tryit26">
@@ -1222,17 +1558,30 @@ transpose(continent_summary, 'country')
  &nbsp; <button id="save_26" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h2 id="sample1001ofthedataandshowthefirst20">Sample 1% (0.01) of the data and show the first 20</h2>
+<ul>
+<li><p>As you can see the numbers are nicely formatted, <strong>Note:</strong> this is for display only, the data in the frame is not changed.</p></li>
+<li><p>Please feel free the edit the code and </p></li>
+</ul>
+<button class="ui button page_prev" data-page="8">Prev</button><button class="ui button page_next" data-page="10">Next</button><br/><br/></div> <!---  Split COVID frame  @@END_PAGE@@ --> <div id="page9" class="try-page" data-pagevisible="true">
+<h1 id="summarizetheinformationbycontinent">Summarize the information by continent</h1>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<p>This section will reformat the data by <strong>continent</strong> to create summary by continent</p>
+<ul>
+<li>Group By <strong>continent</strong></li>
+</ul>
 
 <a id="_tryit27">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit27">
-var sample = frame.filter(()=&gt; Math.random() &lt; 0.01 ) // take random 1% of data
-    .slice(0,20)                          // take the first 20 
-    .sort(['continent', 'country'])      // sort by continent and country
-sample
+//
+var continent_summary = 
+    summary.groupBy(['continent', sum('deaths'),  count('country', 'countries'), mean('deaths', 'avg_by_country'), sum('cases'), sum('population')]);
+
+// Display it
+continent_summary
+
 			</textarea>
 		</div>
 		<a id="_end_tryit27">
@@ -1247,17 +1596,79 @@ sample
  &nbsp; <button id="save_27" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h2 id="createsomeutilityfunctiontoroundanumericstring">Create some utility function to round a numeric string</h2>
-<ul>
-<li>Since all data is stored as strings or number, empty values are represented ny the empty string</li>
-<li>The round function will conver it to a numeric round the value convert back to a string</li>
-</ul>
+<h3 id="transpose">Transpose</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<p>Transpose will rotate the table, the column name comes from the row in the country column. Pay special attention
+the 'country' column is call the transpose pivot and it is important all the values in this column are unique. If the values are not unique the result of the transpose will look very weird and may violate the requirement that all the column names rae unique.</p>
 
 <a id="_tryit28">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit28">
+var {transpose} = DataFrame;
+
+transpose(continent_summary, 'continent')
+
+			</textarea>
+		</div>
+		<a id="_end_tryit28">
+&nbsp;</a>
+		<div id="tryit28-error" class="tryit-error"></div>
+		<div id="tryit28-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit28-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit29" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_28" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_28" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h2 id="sample1001ofthedataandshowthefirst20">Sample 1% (0.01) of the data and show the first 20</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>Previously we created <strong>cFrame</strong> from <strong>covidFrame</strong> just keeping the most important data</li>
+</ul>
+
+<a id="_tryit29">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit29">
+var sample = cFrame.filter(()=&gt; Math.random() &lt; 0.01 ) // take random 1% of data
+    .slice(0,20)                          // take the first 20 
+    .sort(['continent', 'country'])      // sort by continent and country
+sample
+			</textarea>
+		</div>
+		<a id="_end_tryit29">
+&nbsp;</a>
+		<div id="tryit29-error" class="tryit-error"></div>
+		<div id="tryit29-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit29-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit30" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_29" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_29" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<ul>
+<li>The code / display above demonstrates how to display a sample of the data</li>
+</ul>
+<h2 id="createsomeutilityfunctiontoroundanumericstring">Create some utility function to round a numeric string</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<p>This section will show you how to display large numbers in a human friendly format</p>
+<ul>
+<li>Since all data is stored as strings or number, empty values are represented ny the empty string</li>
+<li>The <strong>Math.round</strong> function will convert it to a numeric round the value convert back to a string</li>
+</ul>
+
+<a id="_tryit30">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit30">
 // Since all data is stored as strings
 // The round function will convert empty strings to '0', will round the value
 
@@ -1281,64 +1692,6 @@ testS
 
 			</textarea>
 		</div>
-		<a id="_end_tryit28">
-&nbsp;</a>
-		<div id="tryit28-error" class="tryit-error"></div>
-		<div id="tryit28-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit28-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit29" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_28" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_28" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-<h2 id="makesurenonumericcolumnhasemptyvalues">Make sure no numeric column has empty values</h2>
-<p>To do this we use the frame.update method, this method take an <strong><em>update object</em></strong> as a parameter</p>
-<ul>
-<li>We need to find columns that are mostly numeric '90%' or empty, <em>frame.numericColumns</em> will get
-us the list of those column names</li>
-</ul>
-
-<a id="_tryit29">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit29">
-var {arrProd} = DataFrame;
-var p1 = arrProd(['a','b','c'], 'x'); // [ ['a', 'x'], ['b', 'x'], ['c', 'x'], ]
-var p2 = arrProd('x', ['a','b','c']); // [ ['x', 'a'], ['x', 'b'], ['x', c'], ]
-var p3 = arrProd(['a','b'], ['X', 'Y'])// [ ['a', 'X'],['a', 'Y'], ['b', 'X'], ['b', 'Y'], ]
-JSON.stringify([p1, p2, p3])
-
-			</textarea>
-		</div>
-		<a id="_end_tryit29">
-&nbsp;</a>
-		<div id="tryit29-error" class="tryit-error"></div>
-		<div id="tryit29-display" class="tryit-display rendered_html"></div>
-	</div>	<div class="ui top attached label">
-		<button id="tryit29-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit30" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="ra_29" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
- &nbsp; <button id="save_29" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
-
-<a id="_tryit30">&nbsp</a>
-<div class="html ui top attached segment tryit-container " >
-	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
-		<div class="ui sizer vertical segment bottom">
-			<textarea class="tryit ui " id="tryit30">
-function forceZero(v) { return round(v || '0')}
-
-var NUMERIC_COLS = frame.numericColumns;
-var col_update_list = arrProd(NUMERIC_COLS,forceZero);
-var TO_ZERO = Object.fromEntries(col_update_list);
-
-			</textarea>
-		</div>
 		<a id="_end_tryit30">
 &nbsp;</a>
 		<div id="tryit30-error" class="tryit-error"></div>
@@ -1351,15 +1704,47 @@ var TO_ZERO = Object.fromEntries(col_update_list);
  &nbsp; <button id="save_30" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
+<h2 id="makesurenonumericcolumnhasemptyvalues">Make sure no numeric column has empty values</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<p>To do this we use the frame.update method, this method take an <strong><em>update object</em></strong> as a parameter</p>
+<ul>
+<li><p>We need to find columns that are mostly numeric '90%' or empty, <em>frame.numericColumns</em> will get
+us the list of those column names</p></li>
+<li><p>To apply a update function on a column we use the <strong>Frame.update</strong> method.</p></li>
+<li><p>This method takes a mapping objec as a paremeter</p></li>
+<li><p>The mapping object has as the key the coulmn name and value is the function to apply to the coulmn</p></li>
+<li><p>The function takes two values <strong>mappingFunc1(columnValue, rowObject)</strong></p>
+<ul>
+<li>The result of the function is set to the column</li></ul></li>
+<li><p>The mapping obj should look like  </p></li>
+</ul>
+<pre><code>{
+  col1: forceZero,
+  col2: forceZero,
+  ...
+}
+</code></pre>
+<ul>
+<li>The columns are the numeric columns of the frame, and we can get that <strong>cFrame.numericColumns</strong></li>
+</ul>
 
 <a id="_tryit31">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit31">
-// Update the frame so that all empty value in numeric columns is set to zero 
-frame = frame.update(TO_ZERO)
-frame
+function forceZero(v) { return round(v || '0')}
+
+var NUMERIC_COLS = cFrame.numericColumns;
+var col_update_list = NUMERIC_COLS.map(col =&gt; [col,forceZero]);
+var TO_ZERO = Object.fromEntries(col_update_list);
+$$.D('Numeric Columnd');
+$$.D(NUMERIC_COLS);
+
+$$.D("TO_ZERO MAPPER");
+TO_ZERO
+
+      
 			</textarea>
 		</div>
 		<a id="_end_tryit31">
@@ -1374,28 +1759,20 @@ frame
  &nbsp; <button id="save_31" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h3 id="createasummaryofcoviddata">Create a summary of covid data</h3>
+<p><strong>What happened</strong></p>
+<p>This create and update mapping object. Let us apply this to update the frame (as always this will create a new frame)</p>
 
 <a id="_tryit32">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit32">
-var round_some_columns =  { 
-    total_cases: round, 
-    max_new_cases_in_a_day: round,
-    avg_new_cases_in_a_day: round
-};
+// Update the frame so that all empty value in numeric columns is set to zero 
+var xFrame = cFrame.update(TO_ZERO);
 
-frame.groupBy(['continent','country', // columns to group on
-               gb.count('date', 'rows'), // count the number of values in the date column after grouping
-               gb.max('total_cases'), // get the max value in the total_cases column for the group 
-               gb.max('new_cases', 'max_new_cases_in_a_day'), // get the max value in the total_cases 
-                                                             // column for the group and give it the name 'max_new_cases_in_a_day 
-               gb.mean('new_cases', 'avg_new_cases_in_a_day') // get the average value for new cases
-              ])
-    .update( {...round_some_columns, avg_new_cases_in_a_day: (v,ro) =&gt; round(ro.total_cases/ro.rows)} )
-    .sort(['-rows', '-continent','-total_cases']) // rows, continent and total_cases is sorted in descending order: 
+//Display the frame
+$$.D(xFrame)
+
 			</textarea>
 		</div>
 		<a id="_end_tryit32">
@@ -1410,16 +1787,22 @@ frame.groupBy(['continent','country', // columns to group on
  &nbsp; <button id="save_32" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<h2 id="normalizingdata">Normalizing data</h2>
-<p>As you will notice in the covidFrame there is a lot of redundent data, for example most of the country data is repeated
-on ever row for thar country and there is some missing data for example iso_code is not present for every locaton. Since we would like to use the <code>iso_code</code> as the unique key for every country, let us find the locations with missing <code>iso_code</code></p>
+<p>Now I will show you a rather useful function in the <strong>DataFrame</strong> library </p>
+<p><strong>Before</strong> we do this let us introduce some useful utility function in the DataFrame package <strong>arrProd</strong>. So let look at what we need to do: </p>
 
 <a id="_tryit33">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit33">
-covidFrame.groupBy(['iso_code', 'location']).filter(ro =&gt; !.iso_code) 
+var {arrProd} = DataFrame;
+var p1 = arrProd(['a','b','c'], 'x'); // [ ['a', 'x'], ['b', 'x'], ['c', 'x'], ]
+var p2 = arrProd('x', ['a','b','c']); // [ ['x', 'a'], ['x', 'b'], ['x', c'], ]
+var p3 = arrProd(['a','b'], ['X', 'Y'])// [ ['a', 'X'],['a', 'Y'], ['b', 'X'], ['b', 'Y'], ]
+
+$$.D("var p1 = arrProd(['a','b','c'], 'x')",  p1);
+$$.D("p2 = arrProd('x', ['a','b','c'])",      p2);
+$$.D("p3 = arrProd(['a','b'], ['X', 'Y'])",   p3);
 
 			</textarea>
 		</div>
@@ -1433,6 +1816,97 @@ covidFrame.groupBy(['iso_code', 'location']).filter(ro =&gt; !.iso_code)
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_33" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_33" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>So using the arrProd becomes</p>
+
+<a id="_tryit34">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit34">
+var TO_ZERO = Object.fromEntries(arrProd(NUMERIC_COLS, forceZero));
+cFrame = cFrame.update(TO_ZERO);
+//
+//Display
+cFrame
+
+			</textarea>
+		</div>
+		<a id="_end_tryit34">
+&nbsp;</a>
+		<div id="tryit34-error" class="tryit-error"></div>
+		<div id="tryit34-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit34-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit35" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_34" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_34" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h3 id="createasummaryofcoviddata">Create a summary of covid data</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+
+<a id="_tryit35">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit35">
+let round_some_columns =  { 
+    total_cases: round, 
+    max_new_cases_in_a_day: round,
+    avg_new_cases_in_a_day: round
+};
+
+cFrame.groupBy(['continent','country', // columns to group on
+               gb.count('date', 'rows'), // count the number of values in the date column after grouping
+               gb.max('total_cases'), // get the max value in the total_cases column for the group 
+               gb.max('new_cases', 'max_new_cases_in_a_day'), // get the max value in the total_cases 
+                                                             // column for the group and give it the name 'max_new_cases_in_a_day 
+               gb.mean('new_cases', 'avg_new_cases_in_a_day') // get the average value for new cases
+              ])
+    .update( {...round_some_columns, avg_new_cases_in_a_day: (v,ro) =&gt; round(ro.total_cases/ro.rows)} )
+    .sort(['-total_cases', 'continent']) // rows, continent and total_cases is sorted in descending order: 
+      
+			</textarea>
+		</div>
+		<a id="_end_tryit35">
+&nbsp;</a>
+		<div id="tryit35-error" class="tryit-error"></div>
+		<div id="tryit35-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit35-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit36" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_35" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_35" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<h2 id="normalizingdata">Normalizing data</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/data-frame-example/index.try"></i></p>
+<p>As you will notice in the covidFrame there is a lot of redundent data, for example most of the country data is repeated
+on ever row for thar country and there is some missing data for example iso_code is not present for every locaton. Since we would like to use the <code>iso_code</code> as the unique key for every country, let us find the locations with missing <code>iso_code</code></p>
+
+<a id="_tryit36">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="ui sizer vertical segment" style="font-size: 1rem; padding-top: 2rem;">
+		<div class="ui sizer vertical segment bottom">
+			<textarea class="tryit ui " id="tryit36">
+covidFrame.groupBy(['iso_code', 'location']).filter(ro =&gt; !ro.iso_code) 
+
+			</textarea>
+		</div>
+		<a id="_end_tryit36">
+&nbsp;</a>
+		<div id="tryit36-error" class="tryit-error"></div>
+		<div id="tryit36-display" class="tryit-display rendered_html"></div>
+	</div>	<div class="ui top attached label">
+		<button id="tryit36-run" data-tooltip="Script not ready - 
+	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit37" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="ra_36" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
+ &nbsp; <button id="save_36" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <div id="msgbox-area" class="msgbox-area"></div>
@@ -1453,10 +1927,9 @@ covidFrame.groupBy(['iso_code', 'location']).filter(ro =&gt; !.iso_code)
         <script>
           $('.activating.element').popup({inline: true, });
           $('.ui.accordion').accordion();
+          $('.ui.dropdown.item').dropdown({on: 'hover'});
           function toggle() {
-            console.log('toggle');
             $('.ui.sidebar').sidebar('toggle');
-
           }
         </script>
    

@@ -27,9 +27,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var $tryit = function () {
+  var CHANGED = false;
+
   function Identity(x) {
     return x;
   }
+
+  var WINDOW_LOCATION = window.location.pathname;
 
   function asArray(arrayLike) {
     if (arrayLike === undefined || arrayLike === null) return [];
@@ -87,11 +91,23 @@ var $tryit = function () {
   var editorFor = {};
 
   var editorData = function () {
-    var data = window.localStorage[window.location];
+    var data = window.localStorage[WINDOW_LOCATION];
 
     if (data) {
       try {
         var obj = JSON.parse(data);
+        var keys = Object.keys(obj);
+        keys.forEach(function (k) {
+          var v = obj[k];
+
+          if (typeof v === 'string') {
+            obj[k] = {
+              key: k,
+              hash: sha1(v),
+              content: v
+            };
+          }
+        });
         return obj;
       } catch (e) {
         return {};
@@ -107,11 +123,56 @@ var $tryit = function () {
 
 
   function saveAll() {
-    Object.keys(editorFor).forEach(function (k) {
-      editorData[k] = editorFor[k].getValue("\n");
+    editorData = {}; // clear out 
+
+    Object.keys(editorFor).forEach(function (id) {
+      setEditorValue(id);
     });
-    window.localStorage[window.location] = JSON.stringify(editorData);
+    window.localStorage[WINDOW_LOCATION] = JSON.stringify(editorData);
     alert('Save All');
+  }
+
+  function setEditorValue(id) {
+    var v = editorFor[id].getValue("\n");
+    var originalContents = $e(id).value;
+    if (v !== originalContents) editorData[id] = {
+      key: id,
+      hash: sha1(originalContents),
+      content: v
+    };
+    return editorData;
+  }
+
+  function clearStorage() {
+    if (confirm('Are you sure you want to clear saved edits')) {
+      delete window.localStorage[WINDOW_LOCATION];
+      revertChanges();
+      console.log('All saved edits removed');
+    }
+  }
+
+  function getSavedContent(id) {
+    var saved = editorData[id];
+    var originalContents = $e(id).value;
+    var hash = sha1(originalContents);
+
+    if (saved && saved.key === id && saved.hash === hash) {
+      return saved.content;
+    } else {
+      var res = Object.keys(editorData).map(function (k) {
+        return editorData[k];
+      }).find(function (saved) {
+        return saved.hash === hash;
+      });
+      return res ? res.content : originalContents;
+    }
+  }
+
+  function revertChanges() {
+    Object.keys(editorFor).forEach(function (id) {
+      var originalText = $e(id).value;
+      editorFor[id].setValue(originalText);
+    });
   }
   /**
    * Save content of editor named
@@ -121,8 +182,7 @@ var $tryit = function () {
 
 
   function save(id) {
-    editorData[id] = editorFor[id].getValue("\n");
-    window.localStorage[window.location] = JSON.stringify(editorData);
+    window.localStorage[WINDOW_LOCATION] = JSON.stringify(setEditorValue(id));
   }
 
   function getPendingEditors() {
@@ -133,17 +193,16 @@ var $tryit = function () {
     try {
       var _CodeMirror$fromTextA;
 
+      // let originalContents = textarea.value;
+      // let contents = originalContents;
+      // if(editorData[id]) {
+      //   contents = editorData[id].content;
+      // } else {
+      //   editorData[id] = contents;
+      // }
       var textarea = document.querySelector("#".concat(id));
-      var content = textarea.value;
-
-      if (editorData[id]) {
-        content = editorData[id];
-        textarea.value = content;
-      } else {
-        editorData[id] = content;
-      }
-
-      var lines = content.split('\n').length;
+      var contents = getSavedContent(id);
+      var lines = contents.split('\n').length;
       var editor = CodeMirror.fromTextArea(textarea, (_CodeMirror$fromTextA = {
         lineNumbers: true,
         //        mode: "javascript",
@@ -157,6 +216,7 @@ var $tryit = function () {
         },
         tabSize: 2
       }, _defineProperty(_CodeMirror$fromTextA, "matchBrackets", true), _defineProperty(_CodeMirror$fromTextA, "continueComments", "Enter"), _defineProperty(_CodeMirror$fromTextA, "keyMap", "sublime"), _CodeMirror$fromTextA));
+      if (textarea.value !== contents) editor.setValue(contents);
 
       __editorsPending.push(id);
 
@@ -198,9 +258,10 @@ var $tryit = function () {
     var ix = __editorsPending.indexOf(tag);
 
     if (ix <= 0) return true;
-    showPopup(1, function () {
-      return jump(__editorsPending[0]);
-    }); //jump(__editorsPending[0]);
+    showPopup(3, function () {
+      return false;
+    }); //showPopup(3,() => jump(__editorsPending[0]));
+    //jump(__editorsPending[0]);
 
     return false;
   } // function asArray(val) {
@@ -316,10 +377,13 @@ var $tryit = function () {
     return elem;
   }
 
-  function jumpTag(h, OFFSET, callback) {
+  var LAST_TARGET;
+
+  function jumpTag(h, OFFSET, callback, noPush) {
     OFFSET = +(OFFSET || 30);
     callback = callback || Identity;
     var elem = typeof h === 'string' ? $e(h) : h;
+    if (LAST_TARGET === elem.id) return;
 
     var _makeSegmentVisible = makeSegmentVisible(elem),
         _makeSegmentVisible2 = _slicedToArray(_makeSegmentVisible, 2),
@@ -334,8 +398,14 @@ var $tryit = function () {
       };
 
       scrollToSmoothly(elem.offsetTop - OFFSET, 10, function () {
-        callback();
-        lastsScoll();
+        try {
+          callback();
+          lastsScoll();
+          LAST_TARGET = elem.id;
+          if (!noPush) history.pushState(null, null, '#' + elem.id); // location.hash = elem.id;
+        } catch (e) {
+          alert("error jumping to: " + h + "location");
+        }
       });
     }, 10);
   }
@@ -358,6 +428,8 @@ var $tryit = function () {
 
   function execute(divName, editor, toUpdateUI, toJump, callback) {
     try {
+      CHANGED = true;
+      beforeExecute(divName);
       var val = (1, eval)(editor.getValue("\n"));
 
       var show = function (val) {
@@ -386,8 +458,9 @@ var $tryit = function () {
     var toDelay = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 200;
 
     if (!canExecute(divName)) {
-      _runAll(__editorsPending, divName);
-
+      setTimeout(function () {
+        return _runAll(__editorsPending, divName);
+      }, 300);
       return;
     }
 
@@ -429,6 +502,7 @@ var $tryit = function () {
         return;
       }
 
+      beforeExecute(divName);
       _code = _editor.getValue("\n");
       var val = (1, eval)(_code);
       render(val).then(function () {
@@ -453,7 +527,7 @@ var $tryit = function () {
 
 
   function showPopup(timeout, action, msg, type) {
-    alertify.notify(msg || 'Please execute preceeding code snippet', type || 'error', timeout, action); //alertify.notify('sample', 'success', 5, function(){  console.log('dismissed'); });
+    alertify.notify(msg || 'Executing all preceeding code snippet, this may take some time', type || 'error', timeout, action); //alertify.notify('sample', 'success', 5, function(){  console.log('dismissed'); });
   }
 
   function easeIn(start, pos, end) {
@@ -670,6 +744,93 @@ var $tryit = function () {
     _lastlyStack = [];
   }
 
+  window.addEventListener('popstate', function (e) {
+    var _hash = e.target.location.hash.substr(1);
+
+    console.log(e);
+
+    if (_hash && LAST_TARGET !== _hash) {
+      jumpTag(_hash, 20, undefined, true);
+    }
+  });
+
+  window.onbeforeunload = function () {
+    if (CHANGED) return "You have made changes on this page that you have not yet confirmed. If you navigate away from this page you will lose your unsaved changes";
+  };
+
+  var $$ = {
+    D: _show,
+    D2: function (string) {
+      if (typeof string === 'string') {
+        var title = asHTML(string);
+        var val;
+
+        try {
+          val = (1, eval)(string);
+          if (!(val instanceof Promise)) pushDisplay(__2ToDisplay(title, val));else val.then(function (val) {
+            pushDisplay(__2ToDisplay(title, val));
+          });
+        } catch (err) {
+          pushDisplay("<span class=\"red\">Expression error</span>");
+        } // end try
+
+      } else _show(string);
+    },
+    HTML: pushDisplay,
+    show: _show,
+    clear: clearDisplay,
+    render: render,
+    objInfo: function (c) {
+      var instanceMethods = Object.getOwnPropertyNames(c.prototype).filter(function (prop) {
+        return prop != "constructor";
+      }); //console.log(instanceOnly);
+
+      var staticMethods = Object.getOwnPropertyNames(c).filter(function (prop) {
+        return typeof c[prop] === "function";
+      }); //console.log(staticOnly);
+
+      return {
+        instanceMethods: instanceMethods,
+        staticMethods: staticMethods
+      };
+    },
+    executeDiv: '',
+    // the tryit div being executed
+    beforeExccute: function beforeExccute() {
+      return false;
+    },
+    // placeholder 
+    H: function (s) {
+      return {
+        _toHtml: function _toHtml() {
+          return '<br/><p><b>' + asHTML(s) + '</b></p>';
+        }
+      };
+    },
+    lastly: _lastly,
+    // pass a function after all items have been displayed, this call be called several
+    // times, the actions are performed in the order they are posted
+    json: function json() {
+      for (var _len2 = arguments.length, v = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        v[_key2] = arguments[_key2];
+      }
+
+      return _show.apply(void 0, _toConsumableArray(v.map(_json)));
+    }
+  };
+
+  function beforeExecute(divName) {
+    $$.executeDiv = divName;
+
+    if (typeof $$.beforeExecute === 'function') {
+      try {
+        $$.beforeExecute(divName);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
   return {
     makeEditor: function () {
       var elts = document.querySelectorAll(".tryit");
@@ -682,6 +843,8 @@ var $tryit = function () {
       });
       setDisplay(document.querySelector('div[data-pagevisible]'), 'true');
       (document.querySelector('.save_all') || {}).onclick = saveAll;
+      (document.querySelector('.clear_storage') || {}).onclick = clearStorage;
+      (document.querySelector('.revert_changes') || {}).onclick = revertChanges;
       document.querySelectorAll(".jump_next").forEach(function (n) {
         var id = n.id.substr(5);
 
@@ -710,60 +873,7 @@ var $tryit = function () {
       });
       _addRemoveCSSclass('ra_1', "green", "grey").style = "display: none";
     },
-    $$: {
-      D: _show,
-      D2: function (string) {
-        if (typeof string === 'string') {
-          var title = asHTML(string);
-          var val;
-
-          try {
-            val = (1, eval)(string);
-            if (!(val instanceof Promise)) pushDisplay(__2ToDisplay(title, val));else val.then(function (val) {
-              pushDisplay(__2ToDisplay(title, val));
-            });
-          } catch (err) {
-            pushDisplay("<span class=\"red\">Expression error</span>");
-          } // end try
-
-        } else _show(string);
-      },
-      HTML: pushDisplay,
-      show: _show,
-      clear: clearDisplay,
-      render: render,
-      objInfo: function (c) {
-        var instanceMethods = Object.getOwnPropertyNames(c.prototype).filter(function (prop) {
-          return prop != "constructor";
-        }); //console.log(instanceOnly);
-
-        var staticMethods = Object.getOwnPropertyNames(c).filter(function (prop) {
-          return typeof c[prop] === "function";
-        }); //console.log(staticOnly);
-
-        return {
-          instanceMethods: instanceMethods,
-          staticMethods: staticMethods
-        };
-      },
-      H: function (s) {
-        return {
-          _toHtml: function _toHtml() {
-            return '<br/><p><b>' + asHTML(s) + '</b></p>';
-          }
-        };
-      },
-      lastly: _lastly,
-      // pass a function after all items have been displayed, this call be called several
-      // times, the actions are performed in the order they are posted
-      json: function json() {
-        for (var _len2 = arguments.length, v = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          v[_key2] = arguments[_key2];
-        }
-
-        return _show.apply(void 0, _toConsumableArray(v.map(_json)));
-      }
-    },
+    $$: $$,
     // display interface
     getEditors$: function () {
       return __editors.jumpback();

@@ -1,0 +1,35 @@
+!-- Utilities for doing line plots
+
+
+!tryit
+function makeLines(aFrame) {
+   return function (iso) {
+      let frame = aFrame.filter(ro => ro.iso_code === iso && ro.total_cases > 0); // get get the data for a country 
+      var countryName = frame.asObj(0).location; // get the name of the country - from the first row
+
+      const column = (key) => frame.rawColumn(key); // get a columns from the frame 
+
+      let x = column('date'); 
+
+      let total_cases =  {name: 'Total Cases/'+countryName,  x, y: column('total_cases') };
+      let total_deaths = {name: 'Total Deaths/'+countryName, x, y: column('total_deaths') };
+      let mortality =    {name: '% Mortality/'+countryName,  x, y: column('mortality') };
+
+      return [total_cases, total_deaths, mortality];
+   }
+}
+  
+function doPlot(frame, isoList, aDiv) {
+  const getLines = makeLines(frame);
+  let lines;
+  if(Array.isArray(isoList)) lines = isoList.flatMap(getLines).sort((a,b) => a.name<b.name?1:-1);
+  else lines = getLines(isoList);
+
+  var layout = {
+    title: ' Covid Results (with Rangeslider)',
+    xaxis: {rangeslider: {}, },
+    yaxis: {type: 'log'      } // this can be 'linear' or 'log'
+  };
+
+  Plotly.newPlot(aDiv, lines, layout);
+}

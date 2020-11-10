@@ -1,0 +1,9 @@
+<title>Data Frame Examples</title>
+<meta name="viewport" content="width=device-width, initial-scale=0.7">
+<!-- Load plotly.js into the DOM -->
+  <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script src="https://unpkg.com/str-data-frame@^0.2/dist/bundle.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;800&display=swap" rel="stylesheet">
+<!-- font-family: font-family: 'Dosis', sans-serif; -->
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<!-- font-family: 'Titillium Web', sans-serif; -->

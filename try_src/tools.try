@@ -40,15 +40,49 @@ function isClass(d) { return false;
   //  }
 }
 
+function isEmpty(arrOrObj) {
+  if(arrOrObj === '' || arrOrObj === undefined || arrOrObj === null) return true;
+  if(Array.isArray(arrOrObj) && arrOrObj.length === 0) return true;
+  if(typeof arrOrObj === 'object' && 
+      Object.keys(arrOrObj).length === 0 ) return true;
+  return false;
+}
 
-  // const isCtorClass = obj.constructor
-  //     && obj.constructor.toString().substring(0, 5) === 'class'
-  // if(obj.prototype === undefined) {
-  //   return isCtorClass
-  // }
-  // const isPrototypeCtorClass = obj.prototype.constructor 
-  //   && obj.prototype.constructor.toString
-  //   && obj.prototype.constructor.toString().substring(0, 5) === 'class'
-  // return isCtorClass || isPrototypeCtorClass
+function timeOf(fn) {
+  const name = 'func';
+  const t0 = new Date().getTime();
+
+  const res = fn();
+
+  const t1 = new Date().getTime();
+  $$.D(`Call to ${name} took ${t1 - t0} milliseconds.`);
+  return res; 
+}
+
+function getTryitAttr(d) {
+  //var d = document.querySelector('#_tryit21 ~ div')
+
+  var ta = d.querySelector('textarea');
+  var myId = ta.id;
+  var a_after_ta = ta.closest('div ~ div').querySelector('div ~ a');
+}
+
+
+function customElement(element_name,process, ...args) {
+  customElements.define(element_name,
+  class extends HTMLElement {
+    constructor() {
+      super();
+      process = process || (x => x)
+      const template = process(
+        document
+        .getElementById(elemant_name+'-template')
+        .content, ...args);
+      const shadowRoot = this.attachShadow({mode: 'open'})
+        .appendChild(template.cloneNode(true));
+    }
+  }
+);
+}
 
 </script>

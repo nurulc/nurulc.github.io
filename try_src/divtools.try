@@ -1,0 +1,24 @@
+!html
+<script>
+
+function addDiv(id, ext) {
+	let targetDivName = `#${id}_${ext}`;
+    let targetDiv = document.querySelector(targetDivName);
+    if(!targetDiv) {
+    	targetDiv = document.createElement('div');
+    	targetDiv.id = targetDivName.substr(1);
+    	let sibling = document.querySelector('#'+id);
+    	sibling.after(targetDiv);
+    }
+    else targetDiv.innerHTML = '';
+    return targetDiv;
+}
+
+function plotDiv() {
+    let dn = $$.executeDiv;
+    return addDiv(dn+'-display','plot'); // add a div for plotting after the display div
+}
+
+</script>
+
+<p> Added DIV creation tool</p>

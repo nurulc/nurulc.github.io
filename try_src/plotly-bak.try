@@ -1,3 +1,7 @@
+@@include  divtools.try
+
+
+
 !tryit
 
 
@@ -8,14 +12,17 @@ let p = new Promise((accept,reject) => {
         else accept(rows); 
   		});
 });
-$$.D(p) ;
+//$$.D(p) ;
+let dn = $$.executeDiv;
+let aDiv = addDiv(dn+'-display','plot');
+
 p.then( rows => {
 	 doPlot(rows);
 });
   
 function doPlot(rows) {
   
-  function unpack(rows, key) {
+  function column(rows, key) {
      return rows.map(function(row) { return row[key]; });
   }
 
@@ -23,8 +30,8 @@ var trace1 = {
   type: "scatter",
   mode: "lines",
   name: 'AAPL High',
-  x: unpack(rows, 'Date'),
-  y: unpack(rows, 'AAPL.High'),
+  x: column(rows, 'Date'),
+  y: column(rows, 'AAPL.High'),
   line: {color: '#17BECF'}
 }
 
@@ -32,8 +39,8 @@ var trace2 = {
   type: "scatter",
   mode: "lines",
   name: 'AAPL Low',
-  x: unpack(rows, 'Date'),
-  y: unpack(rows, 'AAPL.Low'),
+  x: column(rows, 'Date'),
+  y: column(rows, 'AAPL.Low'),
   line: {color: '#7F7F7F'}
 }
 
@@ -72,7 +79,7 @@ var layout = {
   }
 };
 
-Plotly.newPlot('plot', data, layout);
+Plotly.newPlot(aDiv, data, layout);
 }
 /*
 var {redim,zipToDict} = require('../lib')

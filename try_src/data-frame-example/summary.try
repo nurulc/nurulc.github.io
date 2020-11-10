@@ -1,7 +1,15 @@
+!html
+<style>
+.icon-right {
+    position: relative;
+    float: right;
+    top: -3rem;
+}
+</style>
 
 !md
-#Data Frame
 ## Summary
+<!--<i class="icon question circle green icon-right" title="&#95;this&#95;is&#95;a&#95;Question"></i>-->
 
 <a href="/frame/docs/class/src/frame/frame.js~Frame.html" target="_blank">Frame Docs</a>
 
