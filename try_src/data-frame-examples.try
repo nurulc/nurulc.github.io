@@ -7,7 +7,7 @@
 <h2><a href="package/page-data-frame.html" target="_blank">Package Deep Dive</a></h2>
 
 You can explore the package and explore the some of the core caplbilities by clicking 
-<a href="package/data-frame.html">Package Deep Dive</a>
+<a href="package/page-data-frame.html">Package Deep Dive</a>
 
 
 @@include data-frame-example/index.try
