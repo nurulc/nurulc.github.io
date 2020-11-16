@@ -553,7 +553,7 @@ function forceZero(v) { return round(v || '0')}
 var NUMERIC_COLS = cFrame.numericColumns;
 var col_update_list = NUMERIC_COLS.map(col => [col,forceZero]);
 var TO_ZERO = Object.fromEntries(col_update_list);
-$$.D('Numeric Columnd');
+$$.D('Numeric Columns');
 $$.D(NUMERIC_COLS);
 
 $$.D("TO_ZERO MAPPER");

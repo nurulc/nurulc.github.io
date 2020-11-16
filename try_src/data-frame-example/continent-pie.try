@@ -1,48 +1,49 @@
 !-- Create a piechart to continents
 
 !md
-## Covid situation in every continent
+    ## Covid situation in every continent
 
-This is another roll up process where the dates are not important, only the largest calues of 
-`total_cases` and `total_deaths`
+    This is another roll up process where the dates are not important, only the largest calues of 
+    total_cases` and `total_deaths`
 
 !tryit
-  var continentSummary = continents
-    .groupBy([
-      'continent',  
-      gb.max('total_cases'), 
-      gb.max('total_deaths'),
-      gb.max('total_deaths_per_million'),
-      gb.max('total_cases_per_million')
-    ]
-);
+    var continentSummary = continents
+            .groupBy([
+              'continent',  
+              gb.max('total_cases'), 
+              gb.max('total_deaths'),
+              gb.max('total_deaths_per_million'),
+              gb.max('total_cases_per_million')
+            ]
+          );
+
+    // Display
+    continentSummary
 
 
-continentSummary
-      
 !md
-### Let's get a pie-chaart
+    ### Let's get a pie-chaart
 
 !tryit
-let cs = continentSummary;
-const COL_NAME = 'total_cases';
-const TITLE = COL_NAME.split('_').join(' ');
+    let cs = continentSummary;
+    const COL_NAME = 'total_cases';
+    const TITLE = COL_NAME.split('_').join(' ');
 
-var data = [{
-  values: cs.rawColumn(COL_NAME),
-  labels: cs.rawColumn('continent'),
-  hoverinfo: 'label+percent+name',
-  hole: 0.4,
-  type: 'pie'
-}];
+    var data = [{
+      values: cs.rawColumn(COL_NAME),
+      labels: cs.rawColumn('continent'),
+      hoverinfo: 'label+percent+name',
+      hole: 0.4,
+      type: 'pie'
+    }];
 
-var layout = {
-  title: `<b>${TITLE}</b>`,
-  height: 600,
-  width: 800
-};
+    var layout = {
+      title: `<b>${TITLE}</b>`,
+      height: 600,
+      width: 800
+    };
 
-Plotly.newPlot(plotDiv(), data, layout);
+    Plotly.newPlot(plotDiv(), data, layout);
 
 
 

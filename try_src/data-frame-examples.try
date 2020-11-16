@@ -1,23 +1,23 @@
 !head
-@@include head.try
-@@include tools.try
+	@@include head.try
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/se/dt-1.10.22/b-1.6.5/kt-2.5.3/sc-2.0.3/datatables.min.css"/>
+
+	@@include tools.try
+
 
 !md
-# Data Frame
-<h2><a href="package/page-data-frame.html" target="_blank">Package Deep Dive</a></h2>
+	# Data Frame
+	<h2><a href="package/page-data-frame.html" target="_blank">Package Deep Dive</a></h2>
 
-You can explore the package and explore the some of the core caplbilities by clicking 
-<a href="package/page-data-frame.html">Package Deep Dive</a>
+	You can explore the package and explore the some of the core caplbilities by clicking 
+	<a href="package/page-data-frame.html">Package Deep Dive</a>
 
 
-@@include data-frame-example/index.try
+
+	@@include data-frame-example/index.try
 
 !html
-<div id="msgbox-area" class="msgbox-area"></div>
-<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+	<div id="msgbox-area" class="msgbox-area"></div>
 
 !end
+	<script type="text/javascript" src="https://cdn.datatables.net/v/se/dt-1.10.22/b-1.6.5/kt-2.5.3/sc-2.0.3/datatables.min.js"></script>

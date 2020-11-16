@@ -230,7 +230,7 @@ var $tryit = function () {
         return tryIt(id, editor);
       }
     } catch (err) {
-      alert("Error creating eritor " + id + ' ' + err.toString());
+      alert("Error creating editor " + id + ' ' + err.toString());
     }
   }
 
@@ -472,7 +472,7 @@ var $tryit = function () {
     _err.innerHTML = ""; //_disp.style.display = "none";
 
     _disp.innerHTML = "";
-    _disp.style['max-height'] = "30rem";
+    _disp.style['max-height'] = "100rem";
     setTimeout(function () {
       return execute(divName, editor, true, true, runLastly);
     }, toDelay);
@@ -833,7 +833,7 @@ var $tryit = function () {
 
   return {
     makeEditor: function () {
-      var elts = document.querySelectorAll(".tryit");
+      var elts = document.querySelectorAll("textarea.tryit");
       var list = Array.prototype.slice.call(elts);
       list.map(function (e) {
         return e.id;

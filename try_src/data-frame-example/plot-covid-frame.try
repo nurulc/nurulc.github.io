@@ -1,30 +1,43 @@
 !-- Simplest plot for covidFrame
 
 !md
-# Lets plot some data
+	# Lets plot some data
 
-We will plot some data from the covid Frame for USA
+	We will plot some data from the covid Frame for USA
 
-1. First select data for USA
-2. Use plotly.js to plot come data
+	1. First select data for USA
+	2. Use plotly.js to plot come data
 
 !tryit
-let usa = covidFrame.filter(ro => ro.iso_code === 'USA'); // get usa data
+	let usa = covidFrame.filter(ro => ro.iso_code === 'USA'); // get usa data
 
-let x = usa.rawColumn('date');         // X -axis values
+	let x = usa.rawColumn('date');         // X -axis values
 
-let y1 = usa.rawColumn('total_cases');  // Y - axis values
-let y2 = usa.rawColumn('total_deaths');  // Y - another axis values
+	let y1 = usa.rawColumn('total_cases');  // Y - axis values
+	let y2 = usa.rawColumn('total_deaths');  // Y - another axis values
 
-Plotly.newPlot(
+	Plotly.newPlot(
 		plotDiv(),                         // create a location to plot the data
 		[
 			{name: 'Total Cases - USA',  x, y: y1}, // data to plot
 			{name: 'Total Deaths - USA', x, y: y2} // another data to plot
-    ],     
+    	],     
 		{   
 			title: 'My first Covid plot - USA',
 			yaxis: {type: 'log' }
 		}
-)
+	)
 
+!md
+
+	## Notes on plotting
+
+	Tryitjs does not have plotting out of the box, but capability was added with the following code. 
+	Click <i class="caret right icon"></i> to show the code
+
+!render-start Source Code for Plotting Helpers
+
+	@@include ../divtools.try
+
+!render-end
+!md

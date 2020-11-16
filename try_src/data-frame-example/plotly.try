@@ -1,247 +1,277 @@
 
 !md
-# Organize the covid data
+    # Organize the covid data
 
-### Select Critical Columns
+    ### Select Critical Columns
 
-In this section we will show how to:
+    In this section we will show how to:
 
-1. Select the following columns from covidFrame:
-     * **iso_code** - 
-     * **location** -
-     * **date**
-     * **total_cases**
-     * **total_deaths** 
-     * **mortality** _Computed column  `100*total_deaths/total_cases` percent of people who die after contracting COVID-19
+    1. Select the following columns from covidFrame:
+         * **iso_code** - 
+         * **location** -
+         * **date**
+         * **total_cases**
+         * **total_deaths** 
+         * **mortality** _Computed column  `100*total_deaths/total_cases` percent of people who die after contracting COVID-19
 
 !tryit
-var countries = covidFrame.filter(ro => ro.total_cases > 0)
-        .select([
-           'iso_code',
-           'location',
-           'continent',
-           'date',
-           'total_cases', 
-           'total_deaths',
-           'total_deaths_per_million',
-           'total_cases_per_million',
-           'population',
-           ['mortality',(v,ro) => 100.0*(ro.total_deaths/ro.total_cases)]
-  ]);
+    var countries = covidFrame.filter(ro => ro.total_cases > 0)
+            .select([
+               'iso_code',
+               'location',
+               'continent',
+               'date',
+               'new_cases', 
+               'new_deaths',
+               'total_cases', 
+               'total_deaths',
+               'total_deaths_per_million',
+               'total_cases_per_million',
+               'population',
+               ['mortality',(v,ro) => 100.0*(ro.total_deaths/ro.total_cases)]
+      ]);
 
-// Display the result for USA
-countries.filter(ro => ro.iso_code === 'USA')   
+    // Display the result for USA
+    countries.filter(ro => ro.iso_code === 'USA')   
       
       
 !md
-# Rolling Up Data
+    # Rolling Up Data
 
-This section will demonstrate the groupBy capability of DataFrame to create summary of data.
+    This section will demonstrate the groupBy capability of DataFrame to create summary of data.
 
+    ## Roll up data into continents
 
-
-!md
-## Roll up data into continents
-
-Next we want to rollup the data into continents, for this we will use the group
-the data by `continent` 
+    Next we want to rollup the data into continents, for this we will use the group
+    the data by `continent` 
 
 !tryit
-countries.groupBy(['continent'])
+    countries.groupBy(['continent'])
 
 !md
-
-This is not quite what we need, since this is just giving us the continent names, we also need
-to keep the `date` column
+    This is not quite what we need, since this is just giving us the continent names, we also need
+    to keep the `date` column
 
 !tryit
-var sample = percent => () => Math.random() < (percent/100.0); // sampling filter
+    var sample = percent => () => Math.random() < (percent/100.0); // sampling filter
 
-countries = countries.filter(ro => ro.continent); // remove where no continent data
+    countries = countries.filter(ro => ro.continent); // remove where no continent data
 
-countries.groupBy(['continent', 'date'])
-  .filter( sample(2.0) ) // sample 2% of the data
+    countries.groupBy(['continent', 'date'])
+      .filter( sample(2.0) ) // sample 2% of the data
 
       
 !md
+    Next we want to aggrigate the `total_cases` and `total_deaths`, so we need to sum (add up) the 
+    thos value for every country in a continent and also on that date. We have a operation for that
+    in the groupBy, 
 
-Next we want to aggrigate the `total_cases` and `total_deaths`, so we need to sum (add up) the 
-thos value for every country in a continent and also on that date. We have a operation for that
-in the groupBy, 
-
-* gb.sum('column_name')
+    * gb.sum('column_name')
 
 !tryit
-var { gb } = DataFrame;
+    var { gb } = DataFrame;
 
-var continents = countries
-  .filter(ro => ro.continent)
-  .groupBy([    
-    'continent', 
-    'date', 
-    gb.sum('total_cases'), 
-    gb.sum('total_deaths'),  
-    gb.value('total_deaths_per_million',0),
-    gb.value('total_cases_per_million',0),
-    gb.sum('population')
-  ]).update({
-    total_deaths_per_million: (v,ro) => ro.total_deaths/ro.population*1000000,
-    total_cases_per_million: (v,ro) => ro.total_cases/ro.population*1000000
-  });
+    var continents = countries
+      .filter(ro => ro.continent)
+      .groupBy([    
+        'continent', 
+        'date', 
+        gb.sum('total_cases'), 
+        gb.sum('total_deaths'), 
+        gb.sum('new_cases'), 
+        gb.sum('new_deaths'),
+        gb.value('total_deaths_per_million',0),
+        gb.value('total_cases_per_million',0),
+        gb.sum('population')
+      ]).update({
+        total_deaths_per_million: (v,ro) => ro.total_deaths/ro.population*1000000,
+        total_cases_per_million: (v,ro) => ro.total_cases/ro.population*1000000
+      });
 
-// Display a sample
-continents.filter(sample(2.0))
-       
+    // Display a sample
+    continents//.filter(sample(2.0))
+           
+          
+          
+!md
+    <br/>
+    You will notice countries have a 'iso_code' and a 'location' namely the country 
+
+    @@include continent-pie.try
+
+!md
+    # More Rollup
+
+    This time we will rollup data into countries and continents
+
+    1. We have a frame for `continents`
+    2. We will make continents frame have the same shape as the country data
+       * We need to add 2 columns `iso_code` and `location`
+       * Since these columns do not exist for continents frame, we will have to compute that
+           * The simplest way is to use the same value as the `continent` column
+           * We will also create a new coulmn `mortality` this value is computed by dividing `total_deaths` by `total_cases` 
+
+    In the following section we will show you how to do that using the `select` method of a frame.
+
+    ## Countries and continent 
+    The countries and continents are similar but not identical, so we cannot combine them into a single table. 
+
+    1. Continests frame do not have  `iso_code` and `location` columns. 
+    1. We can fix that using frame.select
+
+!tryit
+    continents = continents.select([
+     ["iso_code", (v,ro) => ro.continent],
+     ["location", (v,ro) => ro.continent],
+     "continent",
+     "date",
+     "new_cases",
+     "new_deaths",
+     "total_cases",
+     "total_deaths",
+     "total_deaths_per_million",
+     "total_cases_per_million",
+     "population",
+     ["mortality", (v,ro) => 100.0*(ro.total_deaths/ro.total_cases)],
+    ]
+    );
+
+    continents
+
+
+!md
+    2. and augment the data for mortality (%) `total_deaths/total_cases` - a computed value
+
+!tryit
+    
+    $$.HTML('<p class="huge">CONTINENT - North America from Match 2020</p>');
+    $$.D(continents.filter(ro => ro.continent === 'North America' && ro.date > '2020-03').slice(0,10));
+!md
+    Now that we have the **countries** frame and the **continents** frame in the same shape
+    we can combile the into one table using the concat method
+
+!tryit
+    var countryContinent = countries.concat(continents); // add the continents to the frame (we hade sure that the both have the same shape - columns)
+
+    //Get Data for USA
+    $$.HTML('<p class="huge">country - USA from March 20202/b>')
+    countryContinent.filter(ro => ro.iso_code === 'USA' && ro.date > '2020-03') // display data for USA   
+            
       
 !md
+    ## Plot USA Covid data
 
-<br/>
-You will notice countries have a 'iso_code' and a 'location' namely the country 
+    Plot the data using the beautiful plotly library. So first thing we need is a plottting function based on the plotly.js library. This library has to do the following:
 
-@@include continent-pie.try
-
-!md
-# More Rollup
-
-This time we will rollup data into countries and continents
-
-1. We have a frame for `continents`
-2. We will make continents frame have the same shape as the country data
-   * We need to add 2 columns `iso_code` and `location`
-   * Since these columns do not exist for continents frame, we will have to compute that
-       * The simplest way is to use the same value as the `continent` column
-       * We will also create a new coulmn `mortality` this value is computed by dividing `total_deaths` by `total_cases` 
-
-In the following section we will show you how to do that using the `select` method of a frame.
-
-## Countries and continent 
-The countries and continents are similar but not identical, so we cannot combine them into a single table. 
-
-1. Continests frame do not have  `iso_code` and `location` columns. 
-1. We can fix that using frame.select
-
-!tryit
-continents = continents.select([
- ["iso_code", (v,ro) => ro.continent],
- ["location", (v,ro) => ro.continent],
- "continent",
- "date",
- "total_cases",
- "total_deaths",
- "total_deaths_per_million",
- "total_cases_per_million",
- "population",
- ["mortality", (v,ro) => 100.0*(ro.total_deaths/ro.total_cases)],
-]
-);
-
-continents
-
-
-!md
-2. and augment the data for mortality (%) `total_deaths/total_cases` - a computed value
-
-!tryit
-
-
-$$.HTML('<p class="huge">CONTINENT - North America from Match 2020</p>');
-$$.D(continents.filter(ro => ro.continent === 'North America' && ro.date > '2020-03').slice(0,10));
-!md
-
-Now that we have the **countries** frame and the **continents** frame in the same shape
-we can combile the into one table using the concat method
-
-!tryit
-var countryContinent = countries.concat(continents); // add the continents to the frame (we hade sure that the both have the same shape - columns)
-
-//Get Data for USA
-$$.HTML('<p class="huge">country - USA from March 20202/b>')
-countryContinent.filter(ro => ro.iso_code === 'USA' && ro.date > '2020-03') // display data for USA   
-        
-      
-!md
-
-## Plot USA Covid data
-
-Plot the data using the beautiful plotly library. So first thing we need is a plottting function based on the plotly.js library. This library has to do the following:
-
-1-- Utils for doing line plots
-@@include plotting-utils.try
+    ### Utils for doing line plots
+    @@include plotting-utils.try
 
 !md 
-## Plot Country Covid data
-*  From the we have already created the country and continent data frame. THe frame consists of the following fields:
-     * **iso_code** 
-     * **location** 
-     * **date**
-     * **total_cases**
-     * **total_deaths** 
-     * **mortality**
-* Creating continent wide data
+    ## Plot Country Covid data
+    *  From the we have already created the country and continent data frame. THe frame consists of the following fields:
+         * **iso_code** 
+         * **location** 
+         * **date**
+         * **total_cases**
+         * **total_deaths** 
+         * **mortality**
+    * Creating continent wide data
 
-Data Frames have a powerful aggrigation capability in `frame.groupBy`, this capability is built on an similar capability in SQL, namely `groupby`. The key idea here is to collect
-into groups all rows that have the sane value in a column, or a set of columns. On each group we can the apply come aggrication operation on some of thr remaining columns. 
+    Data Frames have a powerful aggrigation capability in `frame.groupBy`, this capability is built on an similar capability in SQL, namely `groupby`. The key idea here is to collect
+    into groups all rows that have the sane value in a column, or a set of columns. On each group we can the apply come aggrication operation on some of thr remaining columns. 
 
 
 !tryit      
-//====================================
-// Find out the location fo the current tryit script
-let dn = $$.executeDiv;
+    //====================================
+    // Find out the location fo the current tryit script
+    let dn = $$.executeDiv;
 
-let aDiv = addDiv(dn+'-display','plot'); // add a div for plotting after the display div
+    let aDiv = addDiv(dn+'-display','plot'); // add a div for plotting after the display div
 
-doPlot(countryContinent, ['USA', 'North America'], aDiv)
+    doPlot(countryContinent, ['USA', 'North America'], aDiv)
 
-// ======================= Plotting utiltty ========================
+    // ======================= Plotting utiltty ========================
 
-// ================================== UI TO Select a country ============================
+    // ================================== UI TO Select a country ============================
 
-var OPTS = ({ C: 'USA', R: 'North America'})
-function selCountry(obj,type) {
-  let iso = obj.value;
-  OPTS[type] = iso;
-  doPlot(countryContinent,[OPTS.C, OPTS.R], aDiv);
-}
+    var OPTS = ({ C: 'USA', R: 'North America'})
+    function selCountry(opts) {
+      console.log(opts);
+      if(opts) {
+        OPTS = Object.assign(OPTS, opts);
+        console.log(OPTS);
+      }
+      doPlot(countryContinent,[OPTS.C, OPTS.R], aDiv);
+    }
 
-function options(country) {
-  return country.groupBy(['iso_code', 'location']).sort(['location']).map(ro=> `<option value="${ro.iso_code}">${ro.location}</option>`).join('\n');
-}
+    function options(country) {
+      return country.groupBy(['iso_code', 'location'])
+                    .sort(['location'])
+                    .map(ro=> `<option value="${ro.iso_code}">${ro.location}</option>`)
+                    .join('\n');
+    }
 
-// Selector for country
+    // Selector for country
 
+    let nStr = `
+    <p class="ui header huge">Select a country</p>
+    <div class="ui search country">
+      <div class="ui icon input">
+        <input class="prompt" type="text" placeholder="Search countries...">
+        <i class="search icon"></i>
+      </div>
+      <div class="results dropdown"></div>
+    </div>
+    `;
 
-let nStr = `
-<p class="ui header huge">Select a country</p>
-<div class="ui search country">
-  <div class="ui icon input">
-    <input class="prompt" type="text" placeholder="Search countries...">
-    <i class="search icon"></i>
-  </div>
-  <div class="results dropdown"></div>
-</div>
-`;
+    $$.HTML(nStr);
 
-$$.HTML(nStr);
+    // Selector for continents
 
-// Selector for continents
-let str1 = `
-<p class="ui header huge">Select a Continent</p>
-<select class="ui selection dropdown" name="countries" id="countries" onchange="selCountry(this,'R')">
-  ${options(countryContinent.filter(ro => ro.iso_code === ro.location))}
-</select><div style="height: 30rem" />`;
+    let str1 = `
+    <p class="ui header huge">Select a Continent</p>
+    <select class="ui selection dropdown" name="countries" id="countries" onchange="selCountry({R: this.value})">
+      ${options(countryContinent.filter(ro => ro.iso_code === ro.location))}
+    </select><div style="height: 30rem" />`;
 
-$$.HTML(str1);
+    $$.HTML(str1);
 
+    let searchCountry = countryContinent
+            .groupBy(['iso_code', 'location', 'continent'])
+            .map(ro => 
+              ({ 
+                category: ro.continent, 
+                title: ro.location, 
+                ID: ro.iso_code 
+              })
+            );
 
-var cc = countryContinent.groupBy(['iso_code', 'location', 'continent'])
-            .map(ro => ({ category: ro.continent, title: ro.location, ID: ro.iso_code }));
+    $$.lastly(() => {
+    $('.ui.search.country')
+      .search({
+        type: 'category',
+        source: searchCountry,
+        onSelect: (result, response) => selCountry({C: result.ID})
+      });
+      $('#thickness').dropdown();
+      $('#thickness').change( (e) => console.log($(e.currentTarget).dropdown("get values")) )
+    });
+      
+    $$.HTML(`
+    <div id="thickness" class="ui multiple selection dropdown">
+              <input name="thick" type="hidden">
+              <i class="dropdown icon"></i>
+              <div class="default text">100</div>
+              <div class="menu">
+                <div class="item" data-value="100">100 mm</div>
+                <div class="item" data-value="150">150 mm</div>
+                <div class="item" data-value="200">200 mm</div>
+                <div class="item" data-value="250">250 mm</div>
+                <div class="item" data-value="300">300 mm</div>
+                <div class="item" data-value="375">375 mm</div>
+                <div class="item" data-value="400">400 mm</div>
+              </div>
+            </div
+    `)
 
-$$.lastly(() => {
-$('.ui.search')
-  .search({
-    type: 'category',
-    source: cc,
-    onSelect: (result, response) => (selCountry({value: result.ID},'C'), true)
-  });
-
-});
+      

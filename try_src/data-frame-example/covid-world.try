@@ -35,26 +35,72 @@ csvData.split('\n');
 !md
 ##Create a frame from the data
 
+Since the CSV data is just a big string, to converts it to a frame we have to do the following
+
+* Split the string into an array of lines, and javascript string already supports the __.split('\n')__ method
+* Now each line is a string, we have to split each line into an array of columns
+    * We cold use split again on ',' but CSV files allow us to escape a comma by surrounding it with ",". Since split will split on every comma we cannot use that.
+    * __csvLine(aLine)__ will split a 'CSV' line into an array of column values. This is also known as a line splitter, the following line splitter exist
+        * csvLine - for CSV files
+        * tsvLine - for tab seperated values
+        * psvLine - '|' pipe seperated value. THis si a common format in healthcare 
+* The columns of the first line is used as the column names, the remaining lines are the data
+* We have a convinience function to perfrom this task __Frame.frameFronString(string, )
+
+The following code is a simplified version of what __.frameFromString__ does
+```
+//frameFromString is at its core the following code
+   var lines = csvData.split('\n').map(csvLine);
+   var covidFrame = new Frame(lines.slice(1), lines[0]);
+
+``` 
+
 Create a frame from string data representing the contents of a CSV file.
 !tryit
-  var { csvLine, arrProd, Frame} = DataFrame;
-
-// frameFromBuffer is at its core the following code
-//    var lines = csvData.split('\n').map(csvLine);
-//    var covidFrame = new Frame(lines.slice(1), lines[0]);
-
+  var { csvLine, Frame} = DataFrame;
+  
+ 
   var covidFrame = Frame.frameFromString(csvData, csvLine);
-  // Display the first 11 results
-  covidFrame.slice(0,11);
+ 
+  // Display the first 20 results
+  covidFrame.slice(0,20);
 
 !md
 
-### What happened
+    ### What happened
 
-We converted a string to a frames. 
-* **csvData** _The string beinng the contents of a CSV (comma seperated values) representation of a table._
-* **csvLine** _function to convert one row (in string form) into an array of strings
+    We converted a string to a frames. 
+    * **csvData** _The string beinng the contents of a CSV (comma seperated values) representation of a table._
+    * **csvLine** _function to convert one row (in string form) into an array of strings
 
+    ## Improving rendering of frame
 
+    A Frame has a method __.&#95;toHml()__ to render a frame as HTML. This is a nice Table rendering module __DataTable__. Details for useing this 
+    capability can be found here: <a href="We can customize the rendering as follows
+
+!tryit
+
+    Frame.prototype._toHtml = function() {
+      let id = 'T'+Math.round(Math.random()*100000); // create a unique id fo the table
+      // $$.lastly(funcToExecute) after all HTML rendering (from this script) has completed
+      // Note $$.methods is just part of the 'TryitJS' capability and is not part of DataFrame
+      $$.lastly(() => {
+          $('#'+id).DataTable( {
+              data: this.data,
+              columns: this.columns.map(c => ({title: c.replace(/_/g, ' ')})),
+              //scrollY:        200,
+              //scroller:       true,
+              deferRender:    true
+              
+          });
+
+      })
+      return `<table id="${id}" class="display" width="100%"></table>`;
+    }
+
+    // Display a frame using the DataTable module 
+      
+    covidFrame.slice(0,200);    
+      
 
 @@include plot-covid-frame.try

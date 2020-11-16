@@ -2,7 +2,13 @@
 
 
 !tryit
-function makeLines(aFrame) {
+
+const capitalStr = phrase => phrase.replace(/\b\w/g, c => c.toUpperCase());
+function nameDesc([col,desc]) {
+  return [col, desc || capitalStr(col)];
+}
+
+function makeLines(aFrame,colList) {
    return function (iso) {
       let frame = aFrame.filter(ro => ro.iso_code === iso && ro.total_cases > 0); // get get the data for a country 
       var countryName = frame.asObj(0).location; // get the name of the country - from the first row
@@ -10,22 +16,36 @@ function makeLines(aFrame) {
       const column = (key) => frame.rawColumn(key); // get a columns from the frame 
 
       let x = column('date'); 
+      return colList
+        .map(c => nameDesc(c.split('=')))
+        .map(([col,desc]) => (
+        {
+          name: desc+'/'+countryName,
+          x,
+          y: column(col)
+        }
+        ));
 
-      let total_cases =  {name: 'Total Cases/'+countryName,  x, y: column('total_cases') };
-      let total_deaths = {name: 'Total Deaths/'+countryName, x, y: column('total_deaths') };
-      let mortality =    {name: '% Mortality/'+countryName,  x, y: column('mortality') };
 
-      return [total_cases, total_deaths, mortality];
+      // let total_cases =  {name: 'Total Cases/'+countryName,  x, y: column('total_cases') };
+      // let total_deaths = {name: 'Total Deaths/'+countryName, x, y: column('total_deaths') };
+      // let mortality =    {name: '% Mortality/'+countryName,  x, y: column('mortality') };
+
+      // return [total_cases, total_deaths, mortality];
    }
 }
-  
+
+var colList = ['total_cases', 'total_deaths', 'mortality=% Mortality' ]
+
+
 function doPlot(frame, isoList, aDiv) {
-  const getLines = makeLines(frame);
+  const getLines = makeLines(frame,colList);
   let lines;
   if(Array.isArray(isoList)) lines = isoList.flatMap(getLines).sort((a,b) => a.name<b.name?1:-1);
   else lines = getLines(isoList);
 
   var layout = {
+    height: 800,
     title: ' Covid Results (with Rangeslider)',
     xaxis: {rangeslider: {}, },
     yaxis: {type: 'log'      } // this can be 'linear' or 'log'

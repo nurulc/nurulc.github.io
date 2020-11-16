@@ -1,21 +1,22 @@
- ## Introduction
+!md
+    ## Introduction
 
-The inspiration for data frame came from two sources, SQL and the powerful python pandas utility. Frame does not attempt to provide all the functionality of pandas or that of SQL. The examples provided here will
-give a taste of some of the things it can do.
+    The inspiration for data frame came from two sources, SQL and the powerful python pandas utility. Frame does not attempt to provide all the functionality of pandas or that of SQL. The examples provided here will
+    give a taste of some of the things it can do.
 
-###Overview
+    ###Overview
 
-* Data Frames strongly support a functional style of programming
-   * One a Frame is created it is never modified 
-   * All Frame operations create a new Frame
-   * Frames use data sharing to minimize the memory footprint
-   * Internally the data is stored as an array of arrays
-       * **_aFrame.data_** is an array of rows
-       * Each row is an array of column values
-   * aFrame.columns is an array of strings representing the columns names
-   * Rarely will you have to access the data directly, 
-       * You must never modify the column or data array
-       * Accessing the column data using a index is very inconvinent and rarely do you have to do this
-           * For your convinence a _row object_ is created for ease access  
+    * Data Frames strongly support a functional style of programming
+       * One a Frame is created it is never modified 
+       * All Frame operations create a new Frame
+       * Frames use data sharing to minimize the memory footprint
+       * Internally the data is stored as an array of arrays
+           * **_aFrame.data_** is an array of rows
+           * Each row is an array of column values
+       * aFrame.columns is an array of strings representing the columns names
+       * Rarely will you have to access the data directly, 
+           * You must never modify the column or data array
+           * Accessing the column data using a index is very inconvinent and rarely do you have to do this
+               * For your convinence a _row object_ is created for ease access  
 
 
