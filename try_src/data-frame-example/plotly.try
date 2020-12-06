@@ -2,7 +2,7 @@
 !md
     # Organize the covid data
 
-    ### Select Critical Columns
+    ## Select Critical Columns
 
     In this section we will show how to:
 
@@ -71,13 +71,26 @@
 !tryit
     var { gb } = DataFrame;
 
+    // Find countries that have the highest value in 'column', e.g. topN(3,countries, 'total_cases') 
+    //  Top 3 countries with highest cases
+    function topN(n,countries,column) {
+      return countries.groupBy(['location', gb.sum(column)]).sort(['-'+column]).slice(0,n).map(ro => ro.location);
+    }
+
+    var topCountries = topN(3,countries, 'total_cases'); // get top 'total_cases' countries
+
     var continents = countries
-      .filter(ro => ro.continent)
+      .filter(ro => ro.continent) // remove locations not in a continent
+
+       // Treat top countries (highest total_cases) as if the were a continent is themselves
+       // for those countries change ther 'continent' to the country name (location)
+      .update({ continent: (v,ro) => topCountries.indexOf(ro.location) !== -1?ro.location:v })
+      
       .groupBy([    
         'continent', 
         'date', 
-        gb.sum('total_cases'), 
-        gb.sum('total_deaths'), 
+        gb.sum('total_cases'),  // sum (total_cases) on each day, for every country, in a continent
+        gb.sum('total_deaths'), // ditto for total_deaths
         gb.sum('new_cases'), 
         gb.sum('new_deaths'),
         gb.value('total_deaths_per_million',0),
@@ -89,10 +102,14 @@
       });
 
     // Display a sample
-    continents//.filter(sample(2.0))
-           
-          
-          
+    //$$.D(topN(7,countries, 'total_cases'));
+    //$$.D(countries);
+    continents.filter(sample(2.0))
+       
+      
+      
+      
+
 !md
     <br/>
     You will notice countries have a 'iso_code' and a 'location' namely the country 
@@ -120,20 +137,21 @@
     1. We can fix that using frame.select
 
 !tryit
+//
     continents = continents.select([
-     ["iso_code", (v,ro) => ro.continent],
-     ["location", (v,ro) => ro.continent],
-     "continent",
-     "date",
-     "new_cases",
-     "new_deaths",
-     "total_cases",
-     "total_deaths",
-     "total_deaths_per_million",
-     "total_cases_per_million",
-     "population",
-     ["mortality", (v,ro) => 100.0*(ro.total_deaths/ro.total_cases)],
-    ]
+       ["iso_code", (v,ro) => ro.continent],
+       ["location", (v,ro) => ro.continent],
+       "continent",
+       "date",
+       "new_cases",
+       "new_deaths",
+       "total_cases",
+       "total_deaths",
+       "total_deaths_per_million",
+       "total_cases_per_million",
+       "population",
+       ["mortality", (v,ro) => 100.0*(ro.total_deaths/ro.total_cases)],
+      ]
     );
 
     continents
@@ -180,98 +198,126 @@
     Data Frames have a powerful aggrigation capability in `frame.groupBy`, this capability is built on an similar capability in SQL, namely `groupby`. The key idea here is to collect
     into groups all rows that have the sane value in a column, or a set of columns. On each group we can the apply come aggrication operation on some of thr remaining columns. 
 
+      
+!tryit
+    // ================================== UI TO Select a country  and continent ============================
 
-!tryit      
-    //====================================
+
+    // ======================  Selector for country ==================
+
+    let countryDropdown = UIcategoryList(
+        countryContinent.groupBy(['iso_code=ID', 'location=title', 'continent=category']).asObjList(), // list of items to select from
+        { caption: 'Select Country', 
+         onSelect: result => selCountry({C: result.ID})
+         }
+      );
+
+    // ================ Selector for continents ==================
+
+    function options(countryContinent, selected) {
+      return countryContinent.groupBy(['iso_code', 'location'])
+                    .sort(['location'])
+                    .map(ro=> `<option value="${ro.iso_code}" ${ro.location === selected?'selected':''}>${ro.location} 
+                                    
+                               </option>`)
+                    .join('\n');
+    }
+
+    let continentDropdown = `
+    <p class="ui header huge">Select a Continent</p>
+    <select class="ui selection dropdown" 
+            name="continents" id="continents" 
+            onchange="selCountry({R: this.value})">
+      ${options(countryContinent.filter(ro => ro.iso_code === ro.location), 'North America')}
+    </select>`;
+
+    // ================================================================================================================ 
+    // Render dropdowns
+
+
+    $$.D(HTML(countryDropdown),HTML(continentDropdown));
+
+    // =================================================PLOTTING UTILS===================================================
     // Find out the location fo the current tryit script
-    let dn = $$.executeDiv;
+    let dn = $$.executeDiv +'-plot';
 
-    let aDiv = addDiv(dn+'-display','plot'); // add a div for plotting after the display div
 
-    doPlot(countryContinent, ['USA', 'North America'], aDiv)
-
-    // ======================= Plotting utiltty ========================
-
-    // ================================== UI TO Select a country ============================
-
-    var OPTS = ({ C: 'USA', R: 'North America'})
+    var OPTS = ({ C: 'USA', R: 'North America'});
+    var isLinear = true;
     function selCountry(opts) {
       console.log(opts);
       if(opts) {
         OPTS = Object.assign(OPTS, opts);
         console.log(OPTS);
       }
-      doPlot(countryContinent,[OPTS.C, OPTS.R], aDiv);
+      doPlot(countryContinent,[OPTS.C, OPTS.R], dn,isLinear, {scrollZoom: true});
     }
 
-    function options(country) {
-      return country.groupBy(['iso_code', 'location'])
-                    .sort(['location'])
-                    .map(ro=> `<option value="${ro.iso_code}">${ro.location}</option>`)
-                    .join('\n');
+
+    // ===================== Plot initial data ============================
+
+    $$.HTML(`<div id="${dn}" class="plot" />`);
+    $$.lastly(
+      () => doPlot(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
+    );
+    isLinear = true;
+!md 
+
+## Some UI Test 
+
+!tryit
+
+    let list =[];
+    function add(category, ...values) {
+      let base = list.length;
+      let newList = values.map((title,ix) =>({id: base+ix, category, title }))
+      list = [...list, ...newList];
     }
+    add('alpha', 'ab','bc','ca');
+    add('num', '1','2','3');
+    add('punc', '!@a','@#2','#!3');
 
-    // Selector for country
+var xxx = UIcategoryList( list, 
+      {placeholder: 'abc 123 !@#', 
+       caption: 'My Caption', onSelect: r => console.log(r)});
+$$.D(xxx, HTML('<div style="height: 20rem" />'));
+var EventItem = class {
+  constructor(context, name, value, type, range) {
+    this.context = context;
+    this.name = name; 
+    this._value = value; 
+    this.type = type || getType(value, range); 
+    this.range = range;
+  }
+  get value() {
+  }
+}
+var EventContext = class {
+  add(name,value,type, range) {
+    let self = this;
+    this[name] = { _value: value=== undefined?type.default(), type, range, set: function(v) {this.value = v; } };
+    return this;
+  }
+}
 
-    let nStr = `
-    <p class="ui header huge">Select a country</p>
-    <div class="ui search country">
-      <div class="ui icon input">
-        <input class="prompt" type="text" placeholder="Search countries...">
-        <i class="search icon"></i>
-      </div>
-      <div class="results dropdown"></div>
-    </div>
-    `;
+/*
 
-    $$.HTML(nStr);
+   cont __ = EventContext.types;
+   let _ = new EventContext();
+   _.add('isLog', true);
+    .add('country', 'USA', __.CATEGOTY_LIST, countryList)
+    .add('continent', 'North America', __.LIST, continentList)
+    .add('columns', ['new_deaths],__.LIST, columnList)
+    .on('country' (_) => {_.continent.set(_.country.value.category)})
+    .trigger((_) => {
+        doPlot(_.country.value.id, _.continent.value.id, _.isLog.value, _.columns.values() );
+        _.continent.value.category);
+    })
 
-    // Selector for continents
 
-    let str1 = `
-    <p class="ui header huge">Select a Continent</p>
-    <select class="ui selection dropdown" name="countries" id="countries" onchange="selCountry({R: this.value})">
-      ${options(countryContinent.filter(ro => ro.iso_code === ro.location))}
-    </select><div style="height: 30rem" />`;
+ */
 
-    $$.HTML(str1);
-
-    let searchCountry = countryContinent
-            .groupBy(['iso_code', 'location', 'continent'])
-            .map(ro => 
-              ({ 
-                category: ro.continent, 
-                title: ro.location, 
-                ID: ro.iso_code 
-              })
-            );
-
-    $$.lastly(() => {
-    $('.ui.search.country')
-      .search({
-        type: 'category',
-        source: searchCountry,
-        onSelect: (result, response) => selCountry({C: result.ID})
-      });
-      $('#thickness').dropdown();
-      $('#thickness').change( (e) => console.log($(e.currentTarget).dropdown("get values")) )
-    });
-      
-    $$.HTML(`
-    <div id="thickness" class="ui multiple selection dropdown">
-              <input name="thick" type="hidden">
-              <i class="dropdown icon"></i>
-              <div class="default text">100</div>
-              <div class="menu">
-                <div class="item" data-value="100">100 mm</div>
-                <div class="item" data-value="150">150 mm</div>
-                <div class="item" data-value="200">200 mm</div>
-                <div class="item" data-value="250">250 mm</div>
-                <div class="item" data-value="300">300 mm</div>
-                <div class="item" data-value="375">375 mm</div>
-                <div class="item" data-value="400">400 mm</div>
-              </div>
-            </div
-    `)
-
-      
+// EventContext.types = {
+//   "boolean"
+  
+// function checkBox(    

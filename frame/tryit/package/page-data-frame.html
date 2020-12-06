@@ -3,19 +3,39 @@
 <link rel="stylesheet" href="../stylesheets/tryit.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/cobalt.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/cobalt.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldgutter.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/lint.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/dialog/dialog.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/closebrackets.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/continuecomment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/comment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/sublime.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/selection/active-line.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/2/lib/util/formatting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldgutter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/brace-fold.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/comment-fold.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/indent-fold.min.js"></script>
+<script src="https://unpkg.com/jshint@2.12.0/dist/jshint.js"></script>
+<script src="https://unpkg.com/csslint@1.0.5/dist/csslint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/lint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/javascript-lint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/search/search.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/search/searchcursor.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/dialog/dialog.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/javascript-hint.min.js"></script>
 <script src="https://unpkg.com/js-sha1/src/sha1.js"></script>
 <script src="../javascript/prettyprint.js"></script>
 <script src="../javascript/tryit.js"></script>
@@ -24,6 +44,8 @@
 <!-- Load plotly.js into the DOM -->
   <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 <script src="https://unpkg.com/str-data-frame@^0.2/dist/bundle.js"></script>
+<script src="./diagramax.dev.js"></script>
+<link href="./diagramax.dev.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;800&display=swap" rel="stylesheet">
 <!-- <link href="https://cdn.datatables.net/1.10.22/css/dataTables.semanticui.min.css"> -->
 
@@ -100,6 +122,7 @@ function getTryitAttr(d) {
   var a_after_ta = ta.closest('div ~ div').querySelector('div ~ a');
 }
 
+
 function customElement(element_name,process, ...args) {
   customElements.define(element_name,
   class extends HTMLElement {
@@ -120,7 +143,7 @@ function customElement(element_name,process, ...args) {
 </script></head>
 <body>
 <div class="ui sidebar inverted vertical menu">
-<div class="item"> <a href="https://github.com/nurulc/tryitjs" target="_blank"><img src="https://unpkg.com/tryitjs@0.5.0/tryit-small.png"></a></div> 
+<div class="item"> <a href="https://github.com/nurulc/tryitjs" target="_blank"><img src="https://unpkg.com/tryitjs/tryit-small.png"></a></div> 
 <div class="item">
 <div class="ui right dropdown item">
     Options
@@ -162,7 +185,7 @@ function customElement(element_name,process, ...args) {
     </div>
     <div class="thirteen wide column" id="tryit_body">
 
-<div id="page-1" class="try-page" data-pagevisible="true">
+<div   id="page-1" class="try-page" data-pagevisible="true">
 <h1 id="gettingstarted">Getting started</h1>
 <p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/getting-started.try"></i>
   we have to bring in the str-data-frame npm module. We have several choices, using javascript es6+ module symtax,
@@ -212,7 +235,7 @@ function customElement(element_name,process, ...args) {
 
 }</code></pre></div></div>
 </div></div>
-<button class="ui button page_next" data-page="1">Next</button><br/><br/></div> <!---  Getting started  @@END_PAGE@@ --> <div id="page0" class="try-page" data-pagevisible="true">
+<button class="ui button page_next" data-page="1">Next</button><br/><br/></div> <!---  Getting started  @@END_PAGE@@ --> <div   id="page0" class="try-page" data-pagevisible="true">
 <h1 id="contentsofdataframepackage">Contents of DataFrame package</h1>
 <p><i class="icon tiny sitemap circular blue icon-right" title="Include path: "></i></p>
 <ul>
@@ -358,7 +381,7 @@ df.data
 	</div>
 </div>
 <p>This data is just the array used to create the frame in the first place</p>
-<button class="ui button page_prev" data-page="0">Prev</button><button class="ui button page_next" data-page="2">Next</button><br/><br/></div> <!---  Contents of DataFrame package  @@END_PAGE@@ --> <div id="page1" class="try-page" data-pagevisible="true">
+<button class="ui button page_prev" data-page="0">Prev</button><button class="ui button page_next" data-page="2">Next</button><br/><br/></div> <!---  Contents of DataFrame package  @@END_PAGE@@ --> <div   id="page1" class="try-page" data-pagevisible="true">
 <h1 id="rowobjectdfasobji">Row Object df.asObj(i)</h1>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: "></i>
 The row data is rather anoying to to access the data so a proxy object is created refered to as a RowObject what allows you to access the columns by name. The implementation is very efficient and there is little penalty using it. We will discuss this a little later. </p>
@@ -386,6 +409,7 @@ $$.D([
 $$.HTML( "&lt;p&gt;&lt;b&gt;Display the row&lt;/b&gt;&lt;/p&gt;"); 
 $$.D(r);
 r.__data     
+
 
 			</textarea>
 		</div>
@@ -417,6 +441,7 @@ var r = df.find(ro =&gt; ro.Name === 'trimListElements');
 // display r
 r
 
+
 			</textarea>
 		</div>
 		<a id="_end_tryit7">
@@ -431,7 +456,7 @@ r
  &nbsp; <button id="save_7" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<button class="ui button page_prev" data-page="1">Prev</button><button class="ui button page_next" data-page="3">Next</button><br/><br/></div> <!---  Row Object df.asObj(i)  @@END_PAGE@@ --> <div id="page2" class="try-page" data-pagevisible="true">
+<button class="ui button page_prev" data-page="1">Prev</button><button class="ui button page_next" data-page="3">Next</button><br/><br/></div> <!---  Row Object df.asObj(i)  @@END_PAGE@@ --> <div   id="page2" class="try-page" data-pagevisible="true">
 <h1 id="groupbyoperations">Group BY operations</h1>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: "></i></p>
 <p>We borrow a concept from SQL the group by - this creates groups of rows that have the same value in a set of selected <strong>column(s)</strong> and perform some operation on each of those row
@@ -489,6 +514,7 @@ df.groupBy(['Type'])
 			<textarea class="tryit ui " id="tryit9">
 var {gb} = DataFrame; // group by operations
 
+
 var types = df.groupBy(['Type', gb.count('Type', 'Count#')])
 
 //display types
@@ -508,7 +534,7 @@ types
  &nbsp; <button id="save_9" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
-<button class="ui button page_prev" data-page="2">Prev</button><button class="ui button page_next" data-page="4">Next</button><br/><br/></div> <!---  Group BY operations  @@END_PAGE@@ --> <div id="page3" class="try-page" data-pagevisible="true">
+<button class="ui button page_prev" data-page="2">Prev</button><button class="ui button page_next" data-page="4">Next</button><br/><br/></div> <!---  Group BY operations  @@END_PAGE@@ --> <div   id="page3" class="try-page" data-pagevisible="true">
 <h1 id="reoragizingframe">Reoragizing Frame</h1>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: "></i></p>
 <p>In this section we will show you how to reorganize rows and columns. To do this in a useful way, it is ideal to have a column that is the <em>primary key</em>. </p>
@@ -590,7 +616,7 @@ transpose(tr,'Type'); // notice a transpose of a transpose on the primary key ge
 	</div>
 </div>
 <p>As you can see, columns are converted to rows, and the primary key column becomes the column headers of the new frame.</p>
-<button class="ui button page_prev" data-page="3">Prev</button><button class="ui button page_next" data-page="5">Next</button><br/><br/></div> <!---  Reoragizing Frame  @@END_PAGE@@ --> <div id="page4" class="try-page" data-pagevisible="true">
+<button class="ui button page_prev" data-page="3">Prev</button><button class="ui button page_next" data-page="5">Next</button><br/><br/></div> <!---  Reoragizing Frame  @@END_PAGE@@ --> <div   id="page4" class="try-page" data-pagevisible="true">
 <h1 id="frameobjinfo">Frame objInfo</h1>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: "></i></p>
 <p>Th</p>
@@ -601,6 +627,8 @@ transpose(tr,'Type'); // notice a transpose of a transpose on the primary key ge
 		<div class="ui sizer vertical segment bottom">
 			<textarea class="tryit ui " id="tryit12">
 objInfo(Frame)
+
+
 
 			</textarea>
 		</div>

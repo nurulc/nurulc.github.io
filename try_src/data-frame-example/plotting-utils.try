@@ -2,7 +2,6 @@
 
 
 !tryit
-
 const capitalStr = phrase => phrase.replace(/\b\w/g, c => c.toUpperCase());
 function nameDesc([col,desc]) {
   return [col, desc || capitalStr(col)];
@@ -25,20 +24,13 @@ function makeLines(aFrame,colList) {
           y: column(col)
         }
         ));
-
-
-      // let total_cases =  {name: 'Total Cases/'+countryName,  x, y: column('total_cases') };
-      // let total_deaths = {name: 'Total Deaths/'+countryName, x, y: column('total_deaths') };
-      // let mortality =    {name: '% Mortality/'+countryName,  x, y: column('mortality') };
-
-      // return [total_cases, total_deaths, mortality];
    }
 }
 
-var colList = ['total_cases', 'total_deaths', 'mortality=% Mortality' ]
+var colList = ['new_cases', 'new_deaths', 'mortality=% Mortality' ]
 
 
-function doPlot(frame, isoList, aDiv) {
+function doPlot(frame, isoList, aDiv, isLinear, otherOpts) {
   const getLines = makeLines(frame,colList);
   let lines;
   if(Array.isArray(isoList)) lines = isoList.flatMap(getLines).sort((a,b) => a.name<b.name?1:-1);
@@ -47,9 +39,11 @@ function doPlot(frame, isoList, aDiv) {
   var layout = {
     height: 800,
     title: ' Covid Results (with Rangeslider)',
-    xaxis: {rangeslider: {}, },
-    yaxis: {type: 'log'      } // this can be 'linear' or 'log'
+//    xaxis: {rangeslider: {}, },
+    yaxis: {type: isLinear?'linear':'log'      } // this can be 'linear' or 'log'
   };
 
-  Plotly.newPlot(aDiv, lines, layout);
+  Plotly.newPlot(aDiv, lines, layout,otherOpts);
 }
+
+      

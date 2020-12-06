@@ -1,0 +1,272 @@
+!head
+<link rel="stylesheet" href="./diagramax.dev.css"/>
+<script src="./diagramax.dev.js"></script> 
+<style>
+  /* Custom styles */
+  .diagramax.canvas tspan {
+	fill: #7a7a7a;
+  }
+
+  .diagramax.shape .main-element {
+	fill: #F5FDFF;
+	stroke: #ABD0D8;
+	stroke-width: 3;
+  }
+
+  .diagramax.connection .path {
+	stroke: #888888;
+  }
+
+  .diagramax.connection .arrow {
+	fill: #888888;
+  }
+</style>
+
+!md
+   # Diagram Generator
+
+   SVG Diagraming tool
+
+!tryit
+  
+			var circleA = new Diagramax.Circle({
+				id: "circleA",
+				text: "Circle A",
+				x: 49,
+				y: 180,
+				width: 60,
+				height: 60,
+			});
+
+!md
+	   ## Setup Canvas 
+	   
+	   * Creates SVG elememt 
+	   * Add a circle
+	   * Add a rectangle
+	   * Connect circle to the rectngle
+
+
+
+!tryit
+			var canvas = new Diagramax.Canvas({
+			  width: 1440,
+			  height: 900,
+			  // We can add shapes at Canvas' instantiating time in two manners: 
+			  // providing a Shape instance or by providing a Shape object descriptor.
+			  shapes: [
+				circleA,
+				{
+				  id: "rectB",
+				  type: "rectangle",
+				  text: "Rect B",
+				  data: {},
+				  x: 201.5,
+				  y: 180,
+				  width: 111,
+				  height: 80,
+				}
+			  ],
+			  // We can create connection between Shapes by providing a Shape 
+			  // instance or a Shape id. Both of them should exist in Canvas.
+			  connections: [
+				{
+				  orig: circleA,
+				  dest: 'rectB',
+				}
+			  ],
+			  onChange: (...args) => {
+				undoButton.disabled = false;
+				redoButton.disabled = true;
+			  }
+			});
+
+!tryit
+			var rectC = new Diagramax.Rectangle({
+			  id: "rectC",
+			  type: "rectangle",
+			  text: "Rect C",
+			  data: {},
+			  x: 386,
+			  y: 180,
+			  width: 114,
+			  height: 80
+			});
+
+			// Also we can Add shapes after instantiating the Canvas.
+			canvas.addShape(rectC);
+			canvas.addShape({
+			  id: "circleD",
+			  type: "circle",
+			  text: "Circle D",
+			  data: {},
+			  x: 545,
+			  y: 180,
+			  width: 60,
+			  height: 60
+			});
+
+!tryit
+			// Connecting shapes is also possible after Canvas instantiation.
+			canvas.connect(rectC, 'circleD');
+			canvas.connect('rectB', rectC);
+
+			var undoButton;
+			var redoButton;
+			var undo = () => {
+			  undoButton.disabled = canvas.undo() === 0;
+			  redoButton.disabled = false;
+			};
+
+			var redo = () => {
+			  redoButton.disabled = canvas.redo() === 0;
+			  undoButton.disabled = false;
+			}
+
+!html
+		<script>
+			function render() {
+			  undoButton = document.querySelector('#undo');
+			  redoButton = document.querySelector('#redo');
+			  var connection;
+			  var counter = 1;
+
+			  document.querySelector('#diagram').appendChild(canvas.getElement());
+			  undoButton.addEventListener('click', undo, false);
+			  redoButton.addEventListener('click', redo, false);
+
+			  document.querySelector('#add').addEventListener('click', () => {
+				var selection = document.querySelector('#shape-selector').value;
+				var position = { x: 50, y: 50 };
+				var shape;
+
+				switch (selection) {
+				  case 'Circle':
+					shape = new Diagramax.Circle({
+					  text: `Circle #${counter}`,
+					  position,
+					});
+					break;
+				  case 'Rectangle':
+					shape = new Diagramax.Rectangle({
+					  text: `Rectangle #${counter}`,
+					  position,
+					});
+					break;
+				  case 'Triangle':
+					shape = new Diagramax.Triangle({
+					  text: `Triangle #${counter}`,
+					  position,
+					});
+					break;
+				  case 'Ellipse':
+					shape = new Diagramax.Ellipse({
+					  text: `Ellipse #${counter}`,
+					  position,
+					});
+					break;
+				  default:
+				}
+
+				if (shape) {
+				  canvas.executeCommand(Diagramax.COMMANDS.SHAPE_ADD, canvas, shape);
+				  counter += 1;
+				}
+			  }, false);
+
+			  document.querySelector('#data').addEventListener('click', () => {
+				console.log(canvas.toJSON());
+			  }, false);
+
+			  // Here we add the undo/redo key binding.
+			  window.addEventListener('keydown', (event) => {
+				switch (event.code) {
+				  case 'KeyZ':
+					if (event.ctrlKey) {
+					  if (event.shiftKey) {
+						redo();
+					  } else {
+						undo();
+					  }
+					}
+					break;
+				}
+			  }, false);
+			}
+		</script>
+
+!tryit
+render();
+
+
+!tryit
+		//
+		//
+		$$.HTML(`
+		<div class="ui three doubling stackable cards">
+		  <div class="ui card">
+		    <div class="image">
+		      <div class="ui placeholder">
+		        <div class="square image"></div>
+		      </div>
+		    </div>
+		    <div class="content">
+		      <div class="ui placeholder">
+		        <div class="header">
+		          <div class="very short line"></div>
+		          <div class="medium line"></div>
+		        </div>
+		        <div class="paragraph">
+		          <div class="short line"></div>
+		        </div>
+		      </div>
+		    </div>
+		    <div class="extra content">
+		      <div class="ui disabled primary button">Add</div>
+		      <div class="ui disabled button">Delete</div>
+		    </div>
+		  </div>
+		</div>
+
+		`)
+		//
+					
+		//
+!html
+	  <div id="controls">
+		  <div class="ui form">
+				<div class="five fields">
+					<div class="field">
+					  <label> Select Shape:</label>
+					<select id="shape-selector">
+						<option value="Circle">Circle</option>
+						<option value="Rectangle">Rectangle</option>
+						<option value="Triangle">Triangle</option>
+						<option value="Ellipse">Ellipse</option>
+					</select>
+					</div>
+
+					<div class="field">
+						<label> Add Shape</label>
+						<button class="ui button" id="add">Add</button>
+					</div>
+
+					<div class="field">
+						<label> Undo last</label>
+						<button class="ui button" id="undo" disabled>Undo</button>
+					</div>
+
+					<div class="field"> 
+						<label> Redo Last</label>
+						<button class="ui button" id="redo" disabled>Redo</button>
+					</div>
+
+					<div class="field"> 
+						<label>Save JSON data</label>
+						<button class="ui button" id="data">Show JSON</button>
+					</div>
+				</div>
+			<div>For start a connection start a drag from any shape while <div class="field">ALT key is pressed.</div>
+	</div>
+	<div id="diagram"></div>
+!end

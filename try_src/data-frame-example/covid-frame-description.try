@@ -1,0 +1,26 @@
+!-- covid-frame-description.try
+
+!md
+        # More Covid Frame
+        ## Show the size of the frame and the column names
+
+        * Length of the frame  _(covidFrame.length)_
+        * All column Names _(covidFrame.columns)_
+        * List the columns that are mostly numeric _(covidFrame.numericColumns)_
+
+!tryit
+        var {arrRemove} = DataFrame;
+
+
+        var cf = covidFrame;
+        var {columns, numericColumns} = cf;
+        var nonNumericColumns = arrRemove(columns,numericColumns)
+
+        var summary = ({ 
+           rows: covidFrame.length, 
+           "Non Numeric Columns":nonNumericColumns, 
+           "Numeric Columns": covidFrame.numericColumns
+        });
+
+        // display
+        $$.json(summary)

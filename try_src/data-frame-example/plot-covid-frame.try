@@ -29,15 +29,15 @@
 	)
 
 !md
-
+    .
 	## Notes on plotting
 
-	Tryitjs does not have plotting out of the box, but capability was added with the following code. 
+	Tryitjs does not have plotting out of the box, but capability was added with the following code. <br>
 	Click <i class="caret right icon"></i> to show the code
 
 !render-start Source Code for Plotting Helpers
-
-	@@include ../divtools.try
+	\ 
+	@@include  https://raw.githubusercontent.com/nurulc/tryitjs/master/asset/divtools.try
 
 !render-end
 !md
