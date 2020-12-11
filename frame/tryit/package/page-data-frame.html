@@ -52,7 +52,11 @@
 <!-- font-family: font-family: 'Dosis', sans-serif; -->
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet">
 <!-- font-family: 'Titillium Web', sans-serif; -->
-
+<style>
+.capitalize {
+    text-transform: capitalize;
+}
+</style>
 <script>
 
 function D(d) {
@@ -261,7 +265,7 @@ data
 		<div id="tryit1-error" class="tryit-error"></div>
 		<div id="tryit1-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit1-run" data-tooltip="Execute script" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit1-run" data-tooltip="Execute script (Ctrl+Enter)" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_1" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_1" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -291,8 +295,7 @@ df
 		<div id="tryit2-error" class="tryit-error"></div>
 		<div id="tryit2-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit2-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit3" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit2-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit3" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_2" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_2" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -324,8 +327,7 @@ df.length
 		<div id="tryit3-error" class="tryit-error"></div>
 		<div id="tryit3-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit3-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit4" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit3-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit4" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_3" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_3" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -348,8 +350,7 @@ df.columns
 		<div id="tryit4-error" class="tryit-error"></div>
 		<div id="tryit4-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit4-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit5" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit4-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit5" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_4" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_4" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -373,8 +374,7 @@ df.data
 		<div id="tryit5-error" class="tryit-error"></div>
 		<div id="tryit5-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit5-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit6" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit5-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit6" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_5" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_5" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -418,8 +418,7 @@ r.__data
 		<div id="tryit6-error" class="tryit-error"></div>
 		<div id="tryit6-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit6-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit7" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit6-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit7" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_6" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_6" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -449,8 +448,7 @@ r
 		<div id="tryit7-error" class="tryit-error"></div>
 		<div id="tryit7-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit7-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit8" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit7-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit8" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_7" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_7" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -489,8 +487,7 @@ df.groupBy(['Type'])
 		<div id="tryit8-error" class="tryit-error"></div>
 		<div id="tryit8-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit8-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit9" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit8-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit9" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_8" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_8" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -527,8 +524,7 @@ types
 		<div id="tryit9-error" class="tryit-error"></div>
 		<div id="tryit9-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit9-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit10" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit9-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit10" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_9" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_9" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -559,8 +555,7 @@ transpose(types)
 		<div id="tryit10-error" class="tryit-error"></div>
 		<div id="tryit10-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit10-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit11" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit10-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit11" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_10" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_10" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -608,8 +603,7 @@ transpose(tr,'Type'); // notice a transpose of a transpose on the primary key ge
 		<div id="tryit11-error" class="tryit-error"></div>
 		<div id="tryit11-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit11-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit12" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit11-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit12" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_11" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_11" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -637,8 +631,7 @@ objInfo(Frame)
 		<div id="tryit12-error" class="tryit-error"></div>
 		<div id="tryit12-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit12-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit13" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit12-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit13" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_12" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_12" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -663,8 +656,7 @@ $$.json(frameDesc)
 		<div id="tryit13-error" class="tryit-error"></div>
 		<div id="tryit13-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit13-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit14" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit13-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit14" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_13" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_13" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -688,8 +680,7 @@ aFrame
 		<div id="tryit14-error" class="tryit-error"></div>
 		<div id="tryit14-display" class="tryit-display rendered_html"></div>
 	</div>	<div class="ui top attached label">
-		<button id="tryit14-run" data-tooltip="Script not ready - 
-	Execute 'tryit' scripts above first" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit15" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+		<button id="tryit14-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit15" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
  &nbsp; <button id="ra_14" data-tooltip="Execute all scripts above" class="ui right floated button circular icon green run_all"> <i class="fast backward icon"></i> </button>
  &nbsp; <button id="save_14" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
@@ -697,7 +688,6 @@ aFrame
 </div>
 
 <button class="ui button page_prev" data-page="4">Prev</button><br/><br/></div> <!---  Frame objInfo  @@END_PAGE@@ -->
-
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
   <script>
@@ -707,8 +697,7 @@ aFrame
     function toggle() {
       $('.ui.sidebar').sidebar('toggle');
     }
-  </script>
-   
+  </script> 
        </div>
      </div>
   </div>

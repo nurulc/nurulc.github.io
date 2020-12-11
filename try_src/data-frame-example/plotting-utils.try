@@ -30,7 +30,7 @@ function makeLines(aFrame,colList) {
 var colList = ['new_cases', 'new_deaths', 'mortality=% Mortality' ]
 
 
-function doPlot(frame, isoList, aDiv, isLinear, otherOpts) {
+function doPlotLines(frame, isoList, aDiv, isLinear, otherOpts) {
   const getLines = makeLines(frame,colList);
   let lines;
   if(Array.isArray(isoList)) lines = isoList.flatMap(getLines).sort((a,b) => a.name<b.name?1:-1);
@@ -46,4 +46,4 @@ function doPlot(frame, isoList, aDiv, isLinear, otherOpts) {
   Plotly.newPlot(aDiv, lines, layout,otherOpts);
 }
 
-      
+$$.D("Plotting utils added")      

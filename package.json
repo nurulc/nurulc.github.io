@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "reload -d . -e try,html,css,js -w try_src -v",
     "build": "tryitjs --src try_src --dest frame/tryit",
+    "debug": "tryitjs --inspect --src try_src --dest frame/tryit",
     "local": "nodemon  --ext \"try\" --exec \"tryitjs --src try_src --dest frame/tryit --local\" ",
     "gen:doc": "esdoc",
     "buildx": "nodemon  --ext \"try\" --exec \"tryitjs --src try_src --dest frame/tryit\" ",

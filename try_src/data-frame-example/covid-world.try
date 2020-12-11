@@ -1,5 +1,4 @@
-@@include  https://raw.githubusercontent.com/nurulc/tryitjs/master/asset/divtools.try
-@@include  https://raw.githubusercontent.com/nurulc/tryitjs/master/asset/ui-tools.try
+@@include  https://raw.githubusercontent.com/nurulc/tryitjs/master/asset/all-tools.try
 
 
 !md

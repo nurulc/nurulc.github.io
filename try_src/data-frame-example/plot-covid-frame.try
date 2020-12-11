@@ -9,27 +9,28 @@
 	2. Use plotly.js to plot come data
 
 !tryit
-	let usa = covidFrame.filter(ro => ro.iso_code === 'USA'); // get usa data
+	let country = covidFrame.filter(ro => ro.iso_code === 'USA'); // get usa data
+	let countryName = country.asObj(0).location;
+	let colsToPlot = ['date','new_deaths_smoothed', 'new_deaths'];
 
-	let x = usa.rawColumn('date');         // X -axis values
+	let [x, y1, y2] = colsToPlot.map( c => country.rawColumn(c));
+	
+	newPlot(                        // create a location to plot the data
+	    [
+	        {name: 'Daily Deaths(smooth) - '+countryName,  x, y: y1}, // data to plot
+	        {name: 'Daily Deaths - '+countryName, x, y: y2} // another data to plot
+	    ],     
+	    {   
+	        title: 'My first Covid plot - '+countryName,
+	        yaxis: {type: 'linear' }
+	    }
+	);
 
-	let y1 = usa.rawColumn('total_cases');  // Y - axis values
-	let y2 = usa.rawColumn('total_deaths');  // Y - another axis values
+	// display the frame
+	covidFrame.groupBy(['iso_code','location'])
 
-	Plotly.newPlot(
-		plotDiv(),                         // create a location to plot the data
-		[
-			{name: 'Total Cases - USA',  x, y: y1}, // data to plot
-			{name: 'Total Deaths - USA', x, y: y2} // another data to plot
-    	],     
-		{   
-			title: 'My first Covid plot - USA',
-			yaxis: {type: 'log' }
-		}
-	)
 
 !md
-    .
 	## Notes on plotting
 
 	Tryitjs does not have plotting out of the box, but capability was added with the following code. <br>
@@ -37,7 +38,7 @@
 
 !render-start Source Code for Plotting Helpers
 	\ 
-	@@include  https://raw.githubusercontent.com/nurulc/tryitjs/master/asset/divtools.try
+	@@include  https://raw.githubusercontent.com/nurulc/tryitjs/master/asset/div-tools.try
 
 !render-end
 !md

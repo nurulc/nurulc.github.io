@@ -25,33 +25,31 @@
     ### Let's get a pie-chaart
 
 !tryit
-    let cs = continentSummary;
-const COL_NAME = 'total_cases';
-const TITLE = COL_NAME.split('_').join(' ');
+  let cs = continentSummary;
+  const COL_NAME = 'total_cases';
+  const TITLE = COL_NAME.split('_').join(' ');
 
-var data = [{
-  values: cs.rawColumn(COL_NAME),
-  labels: cs.rawColumn('continent'),
-  hoverinfo: 'label+percent+name',
-  textinfo: "label+value",
-  textposition: "outside",
-  hole: 0.6,
-  type: 'pie'
-}];
+  var data = [{
+      values: cs.rawColumn(COL_NAME),
+      labels: cs.rawColumn('continent'),
+      hoverinfo: 'label+percent+name',
+      textinfo: "label+value",
+      textposition: "outside",
+      hole: 0.6,
+      type: 'pie'
+  }];
 
-var layout = {
-  title: `<b>${TITLE}</b>`,
-  height: 600,
-  width: 800
-};
+  var layout = {
+      title: `<b>${TITLE}</b>`,
+      height: 600,
+      width: 800
+  };
+
+  newPlot(data,layout)
 
 
-function plotIt(data, layout) {
-  let dn = $$.executeDiv +'-plot';
-  $$.lastly(() => Plotly.newPlot(dn, data, layout));
-  $$.HTML(`<div id="${dn}" />`);
-}
 
-plotIt(data,layout)
+
+      
 
 

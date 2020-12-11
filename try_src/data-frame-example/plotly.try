@@ -139,8 +139,8 @@
 !tryit
 //
     continents = continents.select([
-       ["iso_code", (v,ro) => ro.continent],
-       ["location", (v,ro) => ro.continent],
+       ["iso_code", (v,ro) => ro.continent], // 1. set iso_code to the value of 'continent'
+       ["location", (v,ro) => ro.continent], // 2. set location to the value of 'continent'
        "continent",
        "date",
        "new_cases",
@@ -150,7 +150,7 @@
        "total_deaths_per_million",
        "total_cases_per_million",
        "population",
-       ["mortality", (v,ro) => 100.0*(ro.total_deaths/ro.total_cases)],
+       ["mortality", (v,ro) => 100.0*(ro.total_deaths/ro.total_cases)], // 3. create a new computed column
       ]
     );
 
@@ -158,13 +158,27 @@
 
 
 !md
-    2. and augment the data for mortality (%) `total_deaths/total_cases` - a computed value
+    ## So What Happened
+
+    To select a few columns from a frame (including new ones)
+    1. since there is no 'iso_code' for a continent let set it to 'continent'
+    1. since there is no 'iso_code' for a continent let set it to 'continent'
+    1. Add a new column mortality (%) `total_deaths/total_cases` - a computed value
 
 !tryit
     
     $$.HTML('<p class="huge">CONTINENT - North America from Match 2020</p>');
     $$.D(continents.filter(ro => ro.continent === 'North America' && ro.date > '2020-03').slice(0,10));
 !md
+    ## Concating two frames 
+
+    We can create a new frame by concatinating two frames, as long at they hace the same number and order
+    of the columns. In the previous script we created 
+
+    1. A `countries` frame
+    1. And a `continents`
+    1. We made sure that the `continents` frame has 'iso_code' and 'location' columns
+
     Now that we have the **countries** frame and the **continents** frame in the same shape
     we can combile the into one table using the concat method
 
@@ -250,15 +264,15 @@
         OPTS = Object.assign(OPTS, opts);
         console.log(OPTS);
       }
-      doPlot(countryContinent,[OPTS.C, OPTS.R], dn,isLinear, {scrollZoom: true});
+      doPlotLines(countryContinent,[OPTS.C, OPTS.R], dn,isLinear, {scrollZoom: true});
     }
 
 
     // ===================== Plot initial data ============================
 
     $$.HTML(`<div id="${dn}" class="plot" />`);
-    $$.lastly(
-      () => doPlot(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
+    $$.lastly(true,
+      () => doPlotLines(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
     );
     isLinear = true;
 !md 
@@ -266,7 +280,6 @@
 ## Some UI Test 
 
 !tryit
-
     let list =[];
     function add(category, ...values) {
       let base = list.length;
@@ -280,25 +293,28 @@
 var xxx = UIcategoryList( list, 
       {placeholder: 'abc 123 !@#', 
        caption: 'My Caption', onSelect: r => console.log(r)});
-$$.D(xxx, HTML('<div style="height: 20rem" />'));
-var EventItem = class {
-  constructor(context, name, value, type, range) {
-    this.context = context;
-    this.name = name; 
-    this._value = value; 
-    this.type = type || getType(value, range); 
-    this.range = range;
-  }
-  get value() {
-  }
-}
-var EventContext = class {
-  add(name,value,type, range) {
-    let self = this;
-    this[name] = { _value: value=== undefined?type.default(), type, range, set: function(v) {this.value = v; } };
-    return this;
-  }
-}
+    $$.D(xxx, HTML('<div style="height: 20rem" />'));
+    
+
+
+    var EventItem = class {
+      constructor(context, name, value, type, range) {
+        this.context = context;
+        this.name = name; 
+        this._value = value; 
+        this.type = type || getType(value, range); 
+        this.range = range;
+      }
+      get value() {
+      }
+    }
+    var EventContext = class {
+      add(name,value,type, range) {
+        let self = this;
+        this[name] = { _value: value=== undefined?type.default():type, type, range, set: function(v) {this.value = v; } };
+        return this;
+      }
+    }
 
 /*
 
@@ -321,3 +337,5 @@ var EventContext = class {
 //   "boolean"
   
 // function checkBox(    
+
+      
