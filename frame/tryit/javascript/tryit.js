@@ -477,7 +477,7 @@ var $tryit = function () {
           $progress.progress('reset');
           $progress.data('value', 1);
           $progress.data('total', maxV);
-          $progress.data('tryitdelay', maxV > 5 ? 1500 : 100);
+          $progress.data('tryitdelay', maxV > 5 ? 1500 : 500);
           $('.execution.progress').css("display", "block");
           break;
         }

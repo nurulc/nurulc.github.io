@@ -7,48 +7,54 @@
     total_cases` and `total_deaths`
 
 !tryit
-    var continentSummary = continents
-            .groupBy([
-              'continent',  
-              gb.max('total_cases'), 
-              gb.max('total_deaths'),
-              gb.max('total_deaths_per_million'),
-              gb.max('total_cases_per_million')
-            ]
-          );
+ var summary = (continents) => continents
+        .groupBy([
+          'continent',  
+          gb.max('total_cases'), 
+          gb.max('total_deaths'),
+          gb.max('total_deaths_per_million'),
+          gb.max('total_cases_per_million')
+        ]
+      );
 
-    // Display
-    continentSummary
+var continentSummary = summary(continents); 
 
+// Display
+continentSummary
 
 !md
     ### Let's get a pie-chaart
 
 !tryit
-  let cs = continentSummary;
-  const COL_NAME = 'total_cases';
-  const TITLE = COL_NAME.split('_').join(' ');
+  \
+    function showPie(cs, valueCol='total_cases', keyCol='continent', ) { 
+      const TITLE = valueCol.replace(/_/g, ' ');
 
-  var data = [{
-      values: cs.rawColumn(COL_NAME),
-      labels: cs.rawColumn('continent'),
-      hoverinfo: 'label+percent+name',
-      textinfo: "label+value",
-      textposition: "outside",
-      hole: 0.6,
-      type: 'pie'
-  }];
+      var data = [{
+          values: cs.rawColumn(valueCol),
+          labels: cs.rawColumn(keyCol),  // 'continent'
+          hoverinfo: 'label+percent+name',
+          textinfo: "label+value",
+          textposition: "outside",
+          hole: 0.6,
+          type: 'pie'
+      }];
 
-  var layout = {
-      title: `<b>${TITLE}</b>`,
-      height: 600,
-      width: 800
-  };
+      var layout = {
+          title: `<b>${captalize(TITLE)}</b>`,
+          height: 600,
+          width: 800
+      };
+      newPlot(data,layout);
+    }
 
-  newPlot(data,layout)
 
+      
 
-
+!tryit
+let sc = summary(continents)
+showPie( sc );
+showPie( sc, 'total_deaths' )
 
       
 

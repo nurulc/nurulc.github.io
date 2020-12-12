@@ -4,10 +4,12 @@
 !md
 # Get Data - World Covid Report
 
-## Use fetch to get raw data
+## Use 'fetch' to get some raw data
 
-We will use world covid-19 daily statistics, this is a csv file that we will split into an array of lines. We can use the fetch
-function to pull data from the public repository on Github. Once the promise resolves, the data eill
+We will use world covid-19 daily statistics, this is a csv file that we will split into an array of lines. We can use the built in fetch
+function to pull data from the public repository on Github. Fetch returna a __promise__. To learn more about <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises" target="_blank">___Promise___</a> on the link. Once the promise resolves, the data will
+be available for use. As always last expression in the script will be displayed. If the value is a promise, TryITjs will wait for the promise to resolve and then display the result.
+
 
 !tryit
 	
@@ -42,7 +44,7 @@ Since the CSV data is just a big string, to converts it to a frame we have to do
 
 * Split the string into an array of lines, and javascript string already supports the __.split('\n')__ method
 * Now each line is a string, we have to split each line into an array of columns
-    * We cold use split again on ',' but CSV files allow us to escape a comma by surrounding it with ",". Since split will split on every comma we cannot use that.
+    * We cold use split again on " , " but CSV files allow us to escape a comma by surrounding it with " , " (comma). Since split will split on every comma we cannot use that.
     * __csvLine(aLine)__ will split a 'CSV' line into an array of column values. This is also known as a line splitter, the following line splitter exist
         * csvLine - for CSV files
         * tsvLine - for tab seperated values
@@ -58,7 +60,8 @@ The following code is a simplified version of what __.frameFromString__ does
 
 ``` 
 
-Create a frame from string data representing the contents of a CSV file.
+Create a frame from string in the CSV file using the script below. Once we have the Frame we can show the first 20 rows using `.slice` similar to slice on a Javascript Array, and as always the last expression is displayed in the results area.
+
 !tryit
   var { csvLine, Frame } = DataFrame;
   var covidFrame = Frame.frameFromString(csvData, csvLine);
@@ -71,14 +74,17 @@ Create a frame from string data representing the contents of a CSV file.
 
     We converted a string to a frames. 
     * **csvData** _The string beinng the contents of a CSV (comma seperated values) representation of a table._
-    * **csvLine** _function to convert one row (in string form) into an array of strings
+    * **csvLine** _function to convert one row (in string form) into an array of strings.
+    * Note: The frame data is nicely rendered in the output area. TryITjs when displaying data checks to see if the object implements `obj._toHtml()` and uses that to render the display. 
+
+    In the next section we will see how we can further improve Frame rendering by overriding the `_toHtml` method. Although in the tutorial for Frame we will not be using this capability, but it is a useful thing to know for those creating their own TryITjs tutorials.
 
     # Improving rendering of frame
 
     A Frame has a method __.&#95;toHml()__ to render a frame as HTML. This is a nice Table rendering module __DataTable__. Details for useing this 
-    capability can be found here: <a href="https://datatables.net/" target="_blank">DataTable</a> 
+    capability can be found here: <a href="https://datatables.net/" target="_blank">DataTable</a> - a plug-in for the jQuery Javascript library. 
 
-    More details about rendering a DataFrame (or any other object) to HTML: <a href="#">Docs: displaying results</a>
+    More details about rendering a DataFrame (or any other object) to HTML: <a href="#">Docs: displaying results (TODO)</a>
     
     We can customize the rendering as follows:
 
