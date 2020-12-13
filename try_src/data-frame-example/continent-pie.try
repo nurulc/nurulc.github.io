@@ -36,6 +36,9 @@ continentSummary
           hoverinfo: 'label+percent+name',
           textinfo: "label+value",
           textposition: "outside",
+          marker: {
+            color: COLORS.t10
+          },
           hole: 0.6,
           type: 'pie'
       }];
