@@ -1,0 +1,49 @@
+
+!tryit
+    \
+	let aDiv = 'plotly-plot1';
+
+
+	$$.HTML(`<div id="${aDiv}"></div><button id="plotly1" class="ui button green">Move</button>`);
+	$$.lastly(true, () => {
+	    document.querySelector('#plotly1').onclick = randomize;
+	    Plotly.newPlot(aDiv, [{
+	      x: range(20),
+	      y: randList(20),
+	      line: {simplify: false},
+	    }],  {height: 400});
+	});
+
+
+	function randomize() {
+	  let rand = Math.random;
+	  let N = 10;
+	  let [x,y] = [range(N), randList(N)];
+	  
+	  Plotly.animate(aDiv, {
+	    data: [{y}],
+	    traces: [0],
+	    layout: {}
+	  }, {
+	    transition: {
+	      duration: 500,
+	      easing: 'cubic-in-out'
+	    },
+	    frame: {
+	      duration: 500
+	    }
+	  })
+	}
+
+	function randList(N) {
+	  let rand = Math.random;
+	  let y = [];
+	  for(let i=0; i<N; i++ ) y.push(rand());
+	  return y;
+	} 
+
+	function range(N) {
+	  let y = [];
+	  for(let i=0; i<N; i++ ) y.push(i);
+	  return y;
+	} 

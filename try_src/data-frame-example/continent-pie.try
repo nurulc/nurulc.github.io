@@ -10,6 +10,7 @@
  var summary = (continents) => continents
         .groupBy([
           'continent',  
+          gb.max('date'),
           gb.max('total_cases'), 
           gb.max('total_deaths'),
           gb.max('total_deaths_per_million'),
@@ -24,40 +25,62 @@ continentSummary
 
 !md
     ### Let's get a pie-chaart
+    We will use the _continentSummary_ frame to build pie charts from the data. Again we will be using
+    the powerful but simple to use __Plotly__ libray. 
 
+    #### Create a function
+
+    Lets create a helper function to create a pie charts. This function will use the _.rawColumn(colName)_ method to
+    get a column from a frame as simple javascript array. 
+
+    Just a note: _ __rawColumn__ will get the values in the column in their
+    format in the frame, if a column has numeric values but is string form, the will remain a string. Plotly will kindly
+    convert strings to numbers, where numbers are required.  
+
+    * A _frame_ with the data
+    * some plotting options _{ opts }_ object
+        *  value - column name for the value
+        * 
 !tryit
   \
-    function showPie(cs, valueCol='total_cases', keyCol='continent', ) { 
-      const TITLE = valueCol.replace(/_/g, ' ');
+    function showPie(aFrame, opts) {
+      // set default values fot he options
+      const {value: valueCol, label: labelCol, type, hole, title, colors} = 
+          { value: 'total_cases', label:'continent', type: 'pie', hole: 0.6, colors: COLORS.t10, 
+            ...opts
+          };
+      const TITLE = title || capitalize(valueCol.replace(/_/g, ' '));
 
       var data = [{
-          values: cs.rawColumn(valueCol),
-          labels: cs.rawColumn(keyCol),  // 'continent'
-          hoverinfo: 'label+percent+name',
-          textinfo: "label+value",
-          textposition: "outside",
+          values: aFrame.rawColumn(valueCol),     // default: 'total_cases'
+          labels: aFrame.rawColumn(labelCol),     // default: 'continent'
+          hoverinfo: 'label+percent+name', // text to show when hovering over pie segments
+          textinfo: "label+value",         // labels for pie segments
+          textposition: "outside",         // where to place the pie segment labels
           marker: {
-            color: COLORS.t10
+            colors                        // Optional* colors for the segments
           },
-          hole: 0.6,
-          type: 'pie'
+          hole,                            // Mkae it a donut chars (hole in the middle)
+          type                              // It's a pie chart, 
       }];
 
       var layout = {
-          title: `<b>${captalize(TITLE)}</b>`,
+          title: `<b>${TITLE}</b>`,
           height: 600,
           width: 800
       };
       newPlot(data,layout);
     }
 
+!md
+#### Plot Pie chart      
 
-      
+Now    
 
 !tryit
-let sc = summary(continents)
+let sc = summary(continents);  // create a summary frame
 showPie( sc );
-showPie( sc, 'total_deaths' )
+showPie( sc, { value: 'total_deaths' } )
 
       
 
