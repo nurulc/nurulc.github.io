@@ -15,7 +15,7 @@
 
 	let [x, y1, y2] = colsToPlot.map( c => country.rawColumn(c));
 	
-	newPlot(                        // create a location to plot the data
+	let plt =newPlot(                        // create a location to plot the data
 	    [
 	        {name: 'Daily Deaths(smooth) - '+countryName,  x, y: y1}, // data to plot
 	        {name: 'Daily Deaths - '+countryName, x, y: y2} // another data to plot
@@ -25,7 +25,7 @@
 	        yaxis: {type: 'linear' }
 	    }
 	);
-
+    $$.D(plt); // display plot
 	// display the frame
 	covidFrame.groupBy(['iso_code','location'])
 

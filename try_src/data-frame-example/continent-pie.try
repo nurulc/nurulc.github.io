@@ -4,7 +4,7 @@
     ## Covid situation in every continent
 
     This is another roll up process where the dates are not important, only the largest calues of 
-    total_cases` and `total_deaths`
+    `total_cases` and `total_deaths`
 
 !tryit
  var summary = (continents) => continents
@@ -69,7 +69,7 @@ continentSummary
           height: 600,
           width: 800
       };
-      newPlot(data,layout);
+      return newPlot(data,layout);
     }
 
 !md
@@ -78,10 +78,38 @@ continentSummary
 Now    
 
 !tryit
-let sc = summary(continents);  // create a summary frame
-showPie( sc );
-showPie( sc, { value: 'total_deaths' } )
+    let sc = summary(continents);  // create a summary frame
+    $$.D(showPie( sc ), showPie( sc, { value: 'total_deaths' } ));
+
+ !md
+    ### Testing TOC
+
+!tryit
+    function asArray(arr) {
+      return Array.prototype.slice.call(arr); 
+    }
+    function pages() { return asArray(document.querySelectorAll('.try-page')); }
+    function hFlatten(e) {
+      if(e.children && e.children.length === 0) return type(e);
+      else return [e.id, ...asArray(e.children).map(hFlatten)];
+    }
+
+    function type(e) {
+      if(!e) return undefined;
+      console.log(e.tagName);
+      if(!e.id) return '';
+      let ty = e.tagName;
+      if(ty.match(/^h\d/i)) return '*'+e.id;
+      if(ty === 'A' ) return ty+":"+e.id;
+      return '';
+    }
+    function mapper() { return pages().map(e => ({page:e.id , children: flatten(asArray(e.children).flatMap(hFlatten)).filter(Identity)})); }
+    function flatten(arr) {
+      if(!Array.isArray(arr)) return arr;
+      if(!arr.some(Array.isArray)) return arr;
+      return [].concat(...arr.map(flatten));
+    }
+      $$.json(mapper())
 
       
-
 

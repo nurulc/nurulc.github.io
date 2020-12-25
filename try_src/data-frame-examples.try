@@ -11,7 +11,9 @@
 
 	You can explore the package and explore the some of the core caplbilities by clicking 
 	<a href="package/page-data-frame.html">Package Deep Dive</a>
-
+!tryit
+   "Hello World"
+   
 
 
 	@@include data-frame-example/index.try
