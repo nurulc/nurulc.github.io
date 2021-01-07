@@ -15,4 +15,6 @@
 .capitalize {
     text-transform: capitalize;
 }
+
+
 </style>

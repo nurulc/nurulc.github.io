@@ -9,6 +9,7 @@
 	2. Use plotly.js to plot come data
 
 !tryit
+     
 	let country = covidFrame.filter(ro => ro.iso_code === 'USA'); // get usa data
 	let countryName = country.asObj(0).location;
 	let colsToPlot = ['date','new_deaths_smoothed', 'new_deaths'];

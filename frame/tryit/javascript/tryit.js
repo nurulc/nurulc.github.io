@@ -96,10 +96,7 @@ var $tryit = function () {
     return (base || document).querySelectorAll(arg);
   }
 
-  function getIDNumber(aDiv) {
-    var num = aDiv.replace(/[^0-9]*/, '');
-    return num;
-  } // class Text {
+  // class Text {
   //     constructor(s) {
   //       s = s || '';
   //       if(s.length > 20000) s = s.substr(0,20000)+ '...more('+(s.length-20000)+')';
@@ -112,12 +109,20 @@ var $tryit = function () {
   // ----------------------------------------
   // Render
   // ----------------------------------------
-
-
   var __editors = [];
   var __editorsPending = [];
   var editorFor = {};
-  var pageInfo;
+  var pageInfo, allEditors;
+
+  function unsavedChanges() {
+    try {
+      return allEditors.some(function (e) {
+        return !e.isClean();
+      });
+    } catch (e) {
+      return true;
+    }
+  }
 
   var editorData = function () {
     var data = window.localStorage[WINDOW_LOCATION];
@@ -253,6 +258,7 @@ var $tryit = function () {
       var theme = tryit$colors.saved;
       editor.setOption('theme', theme);
       editor.tryitState = theme;
+      CHANGED === 0 || CHANGED--;
     }
 
     return editorData;
@@ -355,15 +361,11 @@ var $tryit = function () {
 
       if (original !== contents) {
         editor.setValue(contents);
+        editor.markClean();
       }
 
       editor.tryitState = theme;
-      editor.on('change', function (editor) {
-        var theme = editor.getOption('theme');
-        if (editor.isClean()) editor.setOption('theme', editor.tryitState);else if (theme !== tryit$colors.edited) editor.setOption('theme', tryit$colors.edited);
-      } // qs(`#${id}-run`).onclick = execCode;
-      // function execCode() { return tryIt(id,editor);}
-      ); // __editorsPending.push(id);
+      editor.on('change', editorChanged); // __editorsPending.push(id);
       // __editors.push(id);
       // editorFor[id] = editor;
 
@@ -373,6 +375,16 @@ var $tryit = function () {
       function execCode() {
         return tryIt(id, editor);
       }
+
+      function editorChanged(editor) {
+        var theme = editor.getOption('theme');
+        if (editor.isClean()) editor.setOption('theme', editor.tryitState);else if (theme !== tryit$colors.edited) {
+          editor.setOption('theme', tryit$colors.edited);
+          CHANGED++;
+        }
+      } // qs(`#${id}-run`).onclick = execCode;
+      // function execCode() { return tryIt(id,editor);}
+
     } catch (err) {
       alert("Error creating editor " + id + ' ' + err.toString());
     }
@@ -422,6 +434,11 @@ var $tryit = function () {
       key: "setValue",
       value: function setValue(content) {
         if (this._editor) this._editor.setValue(content);else this.requiredContent = content;
+      }
+    }, {
+      key: "isClean",
+      value: function isClean(val) {
+        return this._editor === undefined || this._editor.isClean(val);
       }
     }, {
       key: "toString",
@@ -507,21 +524,23 @@ var $tryit = function () {
       pageInfo.set(p.id, content);
       var editors = qsA('.tryit', p);
       editors.forEach(function (e) {
-        var id = e.id; //console.log('   ', e.id);
+        var id = e.id;
 
-        var anEditorProxy = new EditorProxy(id);
-        content.push(anEditorProxy);
-        allEditors.push(anEditorProxy);
+        if (id) {
+          var anEditorProxy = new EditorProxy(id);
+          content.push(anEditorProxy);
+          allEditors.push(anEditorProxy);
 
-        __editorsPending.push(id);
+          __editorsPending.push(id);
 
-        __editors.push(id);
+          __editors.push(id);
 
-        editorFor[id] = anEditorProxy;
+          editorFor[id] = anEditorProxy;
 
-        qs("#".concat(id, "-run")).onclick = function () {
-          return tryIt(id, anEditorProxy);
-        };
+          qs("#".concat(id, "-run")).onclick = function () {
+            return tryIt(id, anEditorProxy);
+          };
+        }
       });
     });
     return {
@@ -581,8 +600,8 @@ var $tryit = function () {
     if (ix !== 0) return false;
     __editorsPending = __editorsPending.slice(1);
     var divName = __editorsPending[0];
-    addRemoveCSSclass(divName, "yellow", "green").dataset.tooltip = "Execute Script (Ctrl+Enter)";
-    _addRemoveCSSclass('ra_' + getIDNumber(divName), "green", "grey").dataset.tooltip = "All previous scripts executed";
+    addRemoveCSSclass(divName, "yellow", "green").dataset.tooltip = "Execute Script (Ctrl+Enter)"; //_addRemoveCSSclass('ra_'+getIDNumber(divName),"green", "grey").dataset.tooltip = "All previous scripts executed";
+
     return true;
   }
 
@@ -632,6 +651,8 @@ var $tryit = function () {
         if (pageInfo.compare(segment.id, curSeg.id) < 0) {
           var height = segment.offsetHeight;
           window.scrollTo(0, pos + height);
+        } else if (segment.offsetHeight < window.innerHeight - 5) {
+          segment.style.height = Math.round(window.innerHeight + 5) + 'px';
         }
       }
 
@@ -714,8 +735,8 @@ var $tryit = function () {
     //(divName);
     //addRemoveCSSclass(divName, "blue", "green");
     //console.log('UpdateUI', divName);
-    replaceCSSClass(divName);
-    _addRemoveCSSclass('ra_' + getIDNumber(divName), "green", "grey").dataset.tooltip = "All previous scripts executed";
+    replaceCSSClass(divName); //_addRemoveCSSclass('ra_'+getIDNumber(divName),"green", "grey").dataset.tooltip = "All previous scripts executed";
+
     _addRemoveCSSclass(divName + "-run", ["green", "yellow"], "blue").dataset.tooltip = "Re-Execute Script (Ctrl+Enter)";
     if (toJump) setTimeout(function () {
       return jump(divName);
@@ -764,16 +785,23 @@ var $tryit = function () {
 
   function execute(divName, editor, toUpdateUI, toJump, callback) {
     try {
-      CHANGED = true;
+      //CHANGED = true;
       var t0 = performance.now();
       beforeExecute(divName);
-      var val = (1, eval)(editor.getValue("\n"));
+      var displaySeg = $e(divName + "-display");
+      var output = $e(divName + "-output");
+      var boundingSeg = output.closest('.tryit-inner');
+      boundingSeg.closest('.tryit-inner').style.setProperty('margin-bottom', '-1.9rem');
+      output.style.display = "block";
+      var val = (1, eval)(editor.getValue("\n")); // execute script in global context
+
       lastExecTime = performance.now() - t0;
 
       var show = function (val) {
-        $e(divName + "-display").innerHTML = val;
+        return displaySeg.innerHTML = val;
       };
 
+      displaySeg.style.display = "block";
       render(val).then(function (res) {
         if (res !== undefined) show(res);
         if (toUpdateUI) updateUI(divName);
@@ -1153,7 +1181,7 @@ var $tryit = function () {
   });
 
   window.onbeforeunload = function () {
-    if (CHANGED) return "You have made changes on this page that you have not yet confirmed. If you navigate away from this page you will lose your unsaved changes";
+    if (unsavedChanges()) return "You have made changes on this page that you have not yet confirmed. If you navigate away from this page you will lose your unsaved changes";
   };
 
   var $$ = {
@@ -1272,7 +1300,7 @@ var $tryit = function () {
       // list.map( e => e.id).forEach(makeAnEditor);
       var pi = getPageInfo();
       pageInfo = pi.pageInfo;
-      pi.allEditors;
+      allEditors = pi.allEditors;
       qsA('div[data-pagevisible="true"]').forEach(function (e) {
         return setDisplay(e, 'false');
       }); //			setDisplay(qs('div[data-pagevisible]'),'true');
@@ -1286,9 +1314,12 @@ var $tryit = function () {
         n.onclick = function () {
           return jump(id);
         };
+
+        n.dataset.tooltip = "Jump to next script";
       });
       qsA(".jump_back").forEach(function (n) {
         n.onclick = jumpback;
+        n.dataset.tooltip = "Jump to ready to execute script";
       });
       qsA(".run_all").forEach(function (n) {
         var id = n.id.substr(3);
@@ -1304,9 +1335,8 @@ var $tryit = function () {
           return save('tryit' + id);
         };
 
-        n.title = "Save this script";
-      });
-      _addRemoveCSSclass('ra_1', "green", "grey").style = "display: none";
+        n.dataset.tooltip = "Save this script";
+      }); //_addRemoveCSSclass('ra_1',"green", "grey").style ="display: none";
     },
     $$: $$,
     //display interface
@@ -1332,6 +1362,8 @@ var $tryit = function () {
     qs: qs,
     qsA: qsA,
     pageVisibleBefore: pageVisibleBefore,
+    showPopup: showPopup,
+    unsavedChanges: unsavedChanges,
     H: H
   };
 }(); //====================================================
@@ -1343,6 +1375,8 @@ function setDisplay(elem, type, otherElem) {
   if (!elem || !elem.dataset) return;
 
   if (otherElem && type == "false") {
+    delete otherElem.style.height;
+
     if (otherElem.offsetTop > elem.offsetTop) {
       var pos = window.scrollY || window.screenTop;
       window.scrollTo(0, pos - elem.offsetHeight);
@@ -1360,24 +1394,31 @@ var $$ = $tryit.$$,
     saveAll = $tryit.saveAll,
     pageVisibleBefore = $tryit.pageVisibleBefore,
     qs = $tryit.qs,
-    qsA = $tryit.qsA;
+    qsA = $tryit.qsA,
+    showPopup = $tryit.showPopup,
+    unsavedChanges = $tryit.unsavedChanges;
 var objInfo = $$.objInfo;
 document.addEventListener('DOMContentLoaded', function () {
-  //const $q = (arg1,arg2) => $tryit.asArray(qsA(arg1,arg2));
+  // check if we have highlightings then highlight TryitJS code snippets	
   if (hljs) {
-    qsA('pre code').forEach(highlightCodeBlock);
+    qsA('pre code.language-tryit').forEach(highlightCodeBlock);
+    qsA('pre code.language-js').forEach(highlightCodeBlock);
+    qsA('pre code.language-javascript').forEach(highlightCodeBlock);
   }
 
   $tryit.makeEditor();
-  var allPages = qsA('div[data-pagevisible]');
+  var allPages = qsA('div[data-pagevisible]'); // show only the first page
+
   allPages.forEach(function (elem, i) {
     return i !== 0 ? setDisplay(elem, "false") : '';
   });
   qsA('.page_prev').forEach(function (e) {
-    return e.onclick = $tryit.pagePrev;
+    e.onclick = $tryit.pagePrev;
+    e.dataset.tooltip = "Go to previous page (Key: 🡄)";
   });
   qsA('.page_next').forEach(function (e) {
-    return e.onclick = $tryit.pageNext;
+    e.onclick = $tryit.pageNext;
+    e.dataset.tooltip = "Go to next page (Key: 🡆)";
   });
   $('pre:has(code.language-tryit)').addClass('language-tryit');
 
@@ -1391,21 +1432,40 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 0);
   }
 });
-document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown", keydown);
+qsA('button').forEach(function (el) {
+  return el.addEventListener("keydown", keydown);
+});
+
+function keydown(event) {
+  var LeftArrow = 37,
+      RightArrow = 39;
+  var activeElement = document.activeElement;
+
   if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey && event.key === "s") {
     event.preventDefault();
     saveAll(); // ... your code here ...
-  } else if (document.activeElement === document.body && (event.keyCode === 37
+  } else if ((activeElement === document.body || isTag(activeElement, 'button')) && (event.keyCode === LeftArrow
   /*KeyLeft */
-  || event.keyCode === 39
+  || event.keyCode === RightArrow
   /*key right */
   )) {
     var keyCode = event.keyCode;
     var p = qs('div.try-page[data-pagevisible=true]');
-    var elem = p && p.querySelector(keyCode == 37 ? '.page_prev' : '.page_next');
+    var elem = p && p.querySelector(keyCode == LeftArrow ? '.page_prev' : '.page_next');
+
+    if (!elem) {
+      showPopup(1, keyCode == RightArrow ? "Last Page" : "First Page", 'success');
+    }
+
     elem && (event.preventDefault(), elem.onclick());
   }
-});
+}
+
+function isTag(elem, tagName) {
+  if (!elem || !elem.tagName) return false;
+  return elem.tagName.toLowerCase() === tagName.toLowerCase();
+}
 /*
 		   switch (e.keyCode) { 
 				case 37: 
@@ -1423,8 +1483,13 @@ document.addEventListener("keydown", function (event) {
 			} 
  */
 
+/*
+   Perform custom highlighting for TryitJS code
+ */
+
+
 function highlightCodeBlock(block) {
-  if (!block || !hljs) return;
+  if (!block | highlightCodeBlock | !hljs) return;
 
   if (block.classList.contains('language-tryit')) {
     var _lines = (block.innerText || '').split('\n');

@@ -24,7 +24,7 @@ var continentSummary = summary(continents);
 continentSummary
 
 !md
-    ### Let's get a pie-chaart
+    ### Let's get a pie-chart
     We will use the _continentSummary_ frame to build pie charts from the data. Again we will be using
     the powerful but simple to use __Plotly__ libray. 
 
@@ -43,73 +43,14 @@ continentSummary
         * 
 !tryit
   \
-    function showPie(aFrame, opts) {
-      // set default values fot he options
-      const {value: valueCol, label: labelCol, type, hole, title, colors} = 
-          { value: 'total_cases', label:'continent', type: 'pie', hole: 0.6, colors: COLORS.t10, 
-            ...opts
-          };
-      const TITLE = title || capitalize(valueCol.replace(/_/g, ' '));
-
-      var data = [{
-          values: aFrame.rawColumn(valueCol),     // default: 'total_cases'
-          labels: aFrame.rawColumn(labelCol),     // default: 'continent'
-          hoverinfo: 'label+percent+name', // text to show when hovering over pie segments
-          textinfo: "label+value",         // labels for pie segments
-          textposition: "outside",         // where to place the pie segment labels
-          marker: {
-            colors                        // Optional* colors for the segments
-          },
-          hole,                            // Mkae it a donut chars (hole in the middle)
-          type                              // It's a pie chart, 
-      }];
-
-      var layout = {
-          title: `<b>${TITLE}</b>`,
-          height: 600,
-          width: 800
-      };
-      return newPlot(data,layout);
-    }
-
+@@include ./pie-utility.try
 !md
 #### Plot Pie chart      
 
-Now    
+Now plot some pie charts. The countries with the most cases are removed from their respective continents and are treated as if they were their own continents. So for example _North America_ excludes the __United States.__    
 
 !tryit
     let sc = summary(continents);  // create a summary frame
     $$.D(showPie( sc ), showPie( sc, { value: 'total_deaths' } ));
 
  !md
-    ### Testing TOC
-
-!tryit
-    function asArray(arr) {
-      return Array.prototype.slice.call(arr); 
-    }
-    function pages() { return asArray(document.querySelectorAll('.try-page')); }
-    function hFlatten(e) {
-      if(e.children && e.children.length === 0) return type(e);
-      else return [e.id, ...asArray(e.children).map(hFlatten)];
-    }
-
-    function type(e) {
-      if(!e) return undefined;
-      console.log(e.tagName);
-      if(!e.id) return '';
-      let ty = e.tagName;
-      if(ty.match(/^h\d/i)) return '*'+e.id;
-      if(ty === 'A' ) return ty+":"+e.id;
-      return '';
-    }
-    function mapper() { return pages().map(e => ({page:e.id , children: flatten(asArray(e.children).flatMap(hFlatten)).filter(Identity)})); }
-    function flatten(arr) {
-      if(!Array.isArray(arr)) return arr;
-      if(!arr.some(Array.isArray)) return arr;
-      return [].concat(...arr.map(flatten));
-    }
-      $$.json(mapper())
-
-      
-

@@ -13,451 +13,594 @@
 @@include covid-frame-description.try
 
 !md
-    \
-    ### Show the data summary as a Frame
+        \
+        ### Show the data summary as a Frame
 
-    In order to create the frame we need to do the following
-    1. Function to count the number of non-empty values in a column `countNonEmptyCells(columnName)`
-    2. Function to get the __type__ of the column __Numeric__ or __Alpha__ `columnType(colName)`
+        In order to create the frame we need to do the following
+        1. Function to count the number of non-empty values in a column `countNonEmptyCells(columnName)`
+        2. Function to get the __type__ of the column __Numeric__ or __Alpha__ `columnType(colName)`
 
 !tryit
-    var {Frame} = DataFrame;
+        var {Frame} = DataFrame;
 
-    var cf = covidFrame;
-    // Helper function to count number of non-empty values  in a column in the frame _cf_
-    function countNonEmptyCells(colName){ 
-        return cf.groupBy( [gb.count(colName,'count')] ).asObj(0).count ;
-    }
+        var cf = covidFrame;
+        // Helper function to count number of non-empty values  in a column in the frame _cf_
+        function countNonEmptyCells(colName){ 
+                return cf.groupBy( [gb.count(colName,'count')] ).asObj(0).count ;
+        }
 
-    // Function to get the column type
-    function columnType(col) { 
-      return (numericColumns.indexOf(col) !== -1) ? 'Numeric' : 'Alpha'; 
-    }
+        // Function to get the column type
+        function columnType(col) { 
+            return (numericColumns.indexOf(col) !== -1) ? 'Numeric' : 'Alpha'; 
+        }
 
-    // compute the rows of the frame
-    let rowsOfTheFrame = 
-      cf.columns.map(
-          colName => [
-            columnType(colName), 
-            colName, 
-            countNonEmptyCells(colName)
-          ]
-      );
+        // compute the rows of the frame
+        let rowsOfTheFrame = 
+            cf.columns.map(
+                    colName => [
+                        columnType(colName), 
+                        colName, 
+                        countNonEmptyCells(colName)
+                    ]
+            );
 
 
-    // construct the data for the frame
-    let data =
-        [  ["rows",    '',  cf.length],
-           ...rowsOfTheFrame
+        // construct the data for the frame
+        let data =
+                [  ["rows",    '',  cf.length],
+                     ...rowsOfTheFrame
+                ];
+
+        // create a frame from the data and display
+        new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
+                 .sort(['-Non_empty_cells','Col_Name']) // sort the frame
+
+
+!md
+        # Get rid of unnecessary columns
+
+        In sql we can do this using _select_ columns _from_ table, further the select operation can rename the columns, add new columns, and transform data is columns
+
+        We use a similar operation for a data frames using the project
+
+        ```js
+                 frame.project([ list of columns])
+        ```
+        * We can change a column name with the following code, change _location_ to **_country_**
+        ```js
+             [..., "location=country",...]
+        ```
+
+        We also can reorder the columns by chosing the order of the columns, the example below shows
+        how to create a new frem from a subset of the original columns and renaming a column
+
+        **Note** We can also add new columns by adding a new column name
+
+        ## Removing data redundency
+
+        In the covid table there is a great deal of data redendency and unnecessary data  for example for each row has a ```iso_code``` for each country, country name, and continent. 
+        In database terminology we say that the data is __not normalized__. In this section we will show how we can normalize the data. 
+
+        This section we will look at how to create the following:
+
+        1. Create frames with only some of the columns
+        2. Create frames to remove redundent data.
+        3. How to combine data from two frames
+
+        ### But first lets fill some missing data
+
+        * iso_code is the unique country code
+        * Some locations are not countries so they do not have a `iso_code` or a `continent`
+        * for thos missing value let us set the `iso_code` and continent to the value of `location`
+
+!tryit
+        // Find out the columns with missing col values for `iso_code` or `continent`
+        $$.D(covidFrame.filter(ro => !ro.iso_code || !ro.continent).groupBy(['iso_code','continent', 'location']));
+
+
+!md
+        ### Lets fix those values
+        Looking at the results notice the following:
+        1. __International__ does not have an __iso_code__ or a __continent__
+        2. __World__ does not have a __continent__
+
+        We can fill those values with the value in _location_. We can do that will the code below:
+
+!tryit
+        covidFrame = covidFrame.update({
+            iso_code: ((v,ro) => ro.iso_code || ro.location),
+            continent: ((v,ro) => ro.continent || ro.location)
+        });
+
+        // Display the results
+        covidFrame.filter(ro => ro.continent === ro.location)
+                        .groupBy(['iso_code', 'continent', 'location'])
+!md
+        ##  Select a subset of columns 
+        Select the most important columns using `Frame.select` method, in this prosess we can:
+
+        1. Rename columns - `'location=country'` _rename __location__ to __country__
+        1. Create new columns - `['INDEX', (value, row) => row.__index$]` -- create and index column
+    
+        So the following will create a ne `Frame` object with only the selected columns, and also the extra 
+        `INDEX` column we have created.
+
+        _Note:_ `sample(precent)` is s random `true,false` genrtator (function) that will return `true` on a percent of the calls. This is very useful for sampling the data from a large frame. `cFrame` 
+!tryit
+        //
+
+        var SELECTED_COLUMNS = [
+            'iso_code', 
+            'location=country', // rename location to country
+            'continent',
+            'date',
+            'total_cases',
+            'new_cases',
+            'total_deaths',
+            'new_deaths',
+            'new_tests',
+            'total_tests',
+            'positive_rate',
+            'population',
+            ['INDEX', (value, row) => row.__index$]  // create a new column (INDEX) use the row number as the index
         ];
 
-    // create a frame from the data and display
-    new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
-         .sort(['-Non_empty_cells','Col_Name']) // sort the frame
+        var cFrame = covidFrame.select(
+                    SELECTED_COLUMNS,
+                    ro => ro.total_cases > 0 // only keep the rows for a country start from the date of the first case 
+        );
 
+        $$.D('Number of rows:', cFrame.length); // show the number of rows 
+
+        $$.HTML("<h1><b>Show some sample data (1%)</b></h1>") ;
+        cFrame.filter(sample(0.1))
+                    
 
 !md
-    # Get rid of unnecessary columns
+        ## Country Unique Values
 
-    In sql we can do this using _select_ columns _from_ table, further the select operation can rename the columns, add new columns, and transform data is columns
+        In this there columns in the original data that remains the same for a country and does not change by date (for this dataset). So we can use the `Frame.groupBy` method to create a frame that
 
-    We use a similar operation for a data frames using the project
+!tryit
+        var cf = covidFrame;
+        var countryUnique = cf.groupBy([    
+            "iso_code","continent", "location", "population", "population_density", "median_age", "aged_65_older",
+            "aged_70_older", "gdp_per_capita", "extreme_poverty", "cardiovasc_death_rate", "diabetes_prevalence", "female_smokers",
+            "male_smokers", "handwashing_facilities", "hospital_beds_per_thousand", "life_expectancy", "human_development_index"]);
+        // Display Unique Values
+        countryUnique 
+!md
+     ## Analyze Columns
+
+     But first we need to find how many unique values in a column, using a _.groupBy_ operation. The _gb.uniqueCount_ accumulator does not exist. So this section will demonstrate how to use the _gb.make_ 
+     method to create our own accumulator. First, the accumulator methods such as _gb.count_ or _gb.max_ are 
+     the same as a _Array.reduce_ operation with a small twist.
+
+     Consider performing _max_ of an array using reduce:
+
+!tryit
+    let array = [1,2,undefined,3,4, 5];
+    function average(accum,val) {
+        if(!isNumber(val)) return accum; // ignore undefined
+        let [sum, count] = accum;
+        return [sum+val, count+1];
+    }
+
+    var res = array.reduce( (maxV, val) => average(maxV,val), [0,0]);
+
+    // a more compact form of the line above is
+    res = array.reduce(average,[0,0]);
+
+    // Display res
+    res
+
+!md
+    As you can see this is not what we wanted, we have the sum and the count, but
+    not the average. We need to perform one final operation to get our desired value.          
+
+!tryit
+    let [sum, count] = res;
+    count>0? sum/count : 0;    
+!md 
+    Typically after a reduce operation we may need to do some finalization operation, and
+    a reducer function will need to do this. We do thsi by providing an _action_ parameter
+    to the reducer:
+
+    | Action    | Description        |
+    |:--------: | ----------------   |
+    | 1         | perform accumulate action  |
+    | 2         | perform finalize action    |
+    
+
+    <br>
+    The format for the reducer (for .groupBy accumulators) is as follows:
 
     ```js
-         frame.project([ list of columns])
+    function average(action,accum, count, value) {
+        if(action === 2) return [accum/count, count]; // finalize the result
+
+        if(!isNumber(value)) return accum;            // ignore non-numeric
+        return [accum+v, count+1]                     // add value to accum, increment count              
+    }
     ```
-    * We can change a column name with the following code, change _location_ to **_country_**
+
+    The reducer on its own is not enough, we need to wrap it in functionality yo make is a groupBy accumulator
+    there is a handy utility to do just that: 
     ```js
-       [..., "location=country",...]
+    gb.make(reducer_func, initial_value_func, optional_initial_count )
     ```
 
-    We also can reorder the columns by chosing the order of the columns, the example below shows
-    how to create a new frem from a subset of the original columns and renaming a column
+    to make a gb. like func we do the following:
 
-    **Note** We can also add new columns by adding a new column name
+    ```js
+       let gbAvg = gb.make(average, () => 0);
 
-    ## Removing data redundency
-
-    In the covid table there is a great deal of data redendency and unnecessary data  for example for each row has a ```iso_code``` for each country, country name, and continent. 
-    In database terminology we say that the data is __not normalized__. In this section we will show how we can normalize the data. 
-
-    This section we will look at how to create the following:
-
-    1. Create frames with only some of the columns
-    2. Create frames to remove redundent data.
-    3. How to combine data from two frames
-
-    ## But first lets fill some missing data
-
-    * iso_code is the unique country code
-    * Some locations are not countries so they do not have a `iso_code` or a `continent`
-    * for thos missing value let us set the `iso_code` and continent to the value of `location`
-
-!tryit
-    // Find out the columns with missing col values for `iso_code` or `continent`
-    $$.D(covidFrame.filter(ro => !ro.iso_code || !ro.continent).groupBy(['iso_code','continent', 'location']));
-
-
-!md
-    ### Lets fix those values
-
-!tryit
-    covidFrame = covidFrame.update({
-    	iso_code: ((v,ro) => ro.iso_code || ro.location),
-    	continent: ((v,ro) => ro.continent || ro.location)
-    });
-
-
-    covidFrame.filter(ro => ro.continent === ro.location)
-            .groupBy(['iso_code', 'continent', 'location'])
-!md
-    ##  Select a sunset of columns 
-    Select the most important columns using `Frame.select` method, in this prosess we can:
-
-    1. Rename columns - `'location=country'` _rename __location__ to __country__
-    1. Create new columns - `['INDEX', (value, row) => row.__index$]` -- create and index column
-  
-
-!tryit
-    //
-
-    var SELECTED_COLUMNS = [
-      'iso_code', 
-      'location=country', // rename location to country
-      'continent',
-      'date',
-      'total_cases',
-      'new_cases',
-      'total_deaths',
-      'new_deaths',
-      'new_tests',
-      'total_tests',
-      'positive_rate',
-      'population',
-      ['INDEX', (value, row) => row.__index$]  // create a new column (INDEX) use the row number as the index
-    ];
-
-    var cFrame = covidFrame.select(
-          SELECTED_COLUMNS
-          ,ro => ro.total_cases > 0 // only keep the rows for a country start from the date of the first case 
-    );
-
-    $$.D( "Show some sample data" );
-    cFrame.filter(sample(0.1))
-    			
-
-!md
-    ## Country Unique Values
-
-!tryit
-    var cf = covidFrame;
-    var countryUnique = cf.groupBy([	
-      "iso_code","continent", "location",	"population", "population_density", "median_age", "aged_65_older",
-      "aged_70_older", "gdp_per_capita", "extreme_poverty", "cardiovasc_death_rate", "diabetes_prevalence", "female_smokers",
-      "male_smokers", "handwashing_facilities", "hospital_beds_per_thousand", "life_expectancy", "human_development_index"]);
-    // Display Unique Values
-    countryUnique 
-      
-!md
-    \
-    ##Get data for Brazil
-
-    Here we will use a simpler version of select that keeps all the columns as is and filters out some of the rows. This is the same as the following sql
-
-    ```
-     select * from covidFrame where country = 'Brazil' 
+       // now we can use it in a frame
     ```
 
+    Having learnt about *_gb_* accumulators
 
 !tryit
-    covidFrame.filter(r => r.location === 'Brazil')
+    const {isEmpty, transpose} = DataFrame; // undefined or enpty string
+    const AFTER_LAST = 2; // request final value
+
+    // function to count unique values (like a reduce operation on each group)
+    function _uniq(action,aSet,count, val) {
+        if(action === AFTER_LAST) return [aSet.size,count];  
+        return isEmpty(val) ?[aSet,count]:[aSet.add(val),count+1];
+    }
+
+    var uniqueCount = gb.make(_uniq, () => new Set());
+     
+    // Lets test the new accumulator
+    $$.D(covidFrame.groupBy(['continent', uniqueCount('iso_code','countries')]));
 
 !md
-    \
-    # Split COVID frame 
+    ## Count unique values for all columns
 
-    ## Country frame
-
-    Create a frame with general country information country information into another frame
-
-
-    When we look at the original __covidFrame__ there is a lot of duplication of data. For example, each row of d
+    We are going to use __uniqueCount__ to count the unique values for all the
 
 !tryit
-    var GENERAL_COLUMNS = [
-        'iso_code', 'location=country', 'continent', 
-        'population', 'diabetes_prevalence',
-        "median_age", "aged_65_older", "aged_70_older",
-        "gdp_per_capita", "extreme_poverty", "cardiovasc_death_rate",
-        "female_smokers", "male_smokers", "handwashing_facilities",
-        "hospital_beds_per_thousand", "life_expectancy", "human_development_index"
-    ];
-
-
-
-
-    var europe  = covidFrame
-          .groupBy(GENERAL_COLUMNS)
-          .filter(ro => ro.continent === 'Europe');
-    europe
+    var res = covidFrame.groupBy([ 'iso_code', ...covidFrame.columns.map(colm => uniqueCount(colm))]);
+    res
 
 !md
-    ### Summary of cases by country
+    ## Using transpose to flip the fame
 
-    * Use the __Frame.groupBy__ to group all data by __country__ and __continent__
-    * For each group (__country__) do the following
-        * Get maximum of __total_deaths__ and give the column the name __deaths__
-        * Get count of number of rows (using the 'INDEX' colums) and call the column __count__, __Note: count the number of non empty values__
-        * Get maximum of __total_cases__ and call the column __cases__
-        * Get maximum of __population__ column, since this value does not change we can just use it as a part of the grouping operation
+    The transpose of a frame is analogous to the transpose of a matrix or a spreadsheet block. We have the columns
+    into row are roes into columns. The only twist to is is to choose the columns to use as the headings.
+
+!tryit
+    var { transpose } = DataFrame; 
+
+    var tmp = transpose(res,'iso_code')
+    $$.D('tmp Frame', tmp);
+
+
+    var colUsage = tmp.filter(ro => ro.USA <= 1).select(['iso_code=colm','USA']); // this is a test
+    colUsage;
+
 
 
 !tryit
-    var {sum, count, max, mean} = gb; // aggrigator functions for groupBy
+    let columns = colUsage.map(ro => ro.colm);     
+    $$.D(columns);
+    $$.json(columns);
+!md 
+    ## Common coutry columns
+    
+    Finall if we put everything together we get the following
 
-    var summary = cFrame.groupBy(
-      ['country','continent', 
-        max('total_deaths','deaths'), // show the maximum value of 'total_deaths' and call it deaths 
-        count('INDEX', 'count'),      // count the number of entries (daily info) for each country
-        max('total_cases','cases'),   // show the maximum value of 'total_cases' and call it 'cases' 
-        'population'                  // we could also `max('population')` if we ar not sure the polulation changes
-      ])
-      .sort(['continent', '-cases']);  // sort continent and cases, the cases in descending order
 
-    //display
-    summary
+!tryit
+    var res = covidFrame.groupBy([ 'iso_code', ...covidFrame.columns.map(colm => uniqueCount(colm))]);
+    let countryCols = transpose(res,'iso_code')
+                .select(['iso_code=colm','USA'])
+                .filter(ro => ro['USA'] <= 1)
+                .sort(['colm'])
+                .map(ro => ro.colm);
+    var isoFrame = covidFrame.groupBy(['iso_code', ...countryCols])
+    isoFrame            
+!md
+        \
+        ##Get data for Brazil
+
+        Here we will use a simpler version of select that keeps all the columns as is and filters out some of the rows. This is the same as the following sql
+
+        ```sql
+         select * from covidFrame where location = 'Brazil' 
+        ```
+
+
+!tryit
+        covidFrame.filter(r => r.location === 'Brazil')
 
 !md
-    ## Lets try to improve the display of numbers
+        \
+        # Split COVID frame 
 
-    Frame supports number formattion function.
+        ## Country frame
 
-    * Set a global formatting function for numeric data 
-    __Frame.HTMLFormat.number = toStr__ 
-    * __toStr(s: string)__ 
-    takes a string (or number) and returns a fromatted numeric string with commas add to make is easier to read
-    * This does not alter the data in the frame
+        Create a frame with general country information country information into another frame
+
+
+        When we look at the original __covidFrame__ there is a lot of duplication of data. For example, each row of d
+
+!tryit
+        var GENERAL_COLUMNS = [
+                'iso_code', 'location=country', 'continent', 
+                'population', 'diabetes_prevalence',
+                "median_age", "aged_65_older", "aged_70_older",
+                "gdp_per_capita", "extreme_poverty", "cardiovasc_death_rate",
+                "female_smokers", "male_smokers", "handwashing_facilities",
+                "hospital_beds_per_thousand", "life_expectancy", "human_development_index"
+        ];
+
+
+
+
+        var europe  = covidFrame
+                    .groupBy(GENERAL_COLUMNS)
+                    .filter(ro => ro.continent === 'Europe');
+        europe
+
+!md
+        ### Summary of cases by country
+
+        * Use the __Frame.groupBy__ to group all data by __country__ and __continent__
+        * For each group (__country__) do the following
+                * Get maximum of __total_deaths__ and give the column the name __deaths__
+                * Get count of number of rows (using the 'INDEX' colums) and call the column __count__, __Note: count the number of non empty values__
+                * Get maximum of __total_cases__ and call the column __cases__
+                * Get maximum of __population__ column, since this value does not change we can just use it as a part of the grouping operation
 
 
 !tryit
-    function addCommas(nStr) {
-        nStr += ''; // conver string or number to a string
-        var [whole, fraction] = nStr.split('.'); // split on decimal point
-        
-        fraction = fraction ? '.' + fraction : ''; // add a '.' before the fractional part
-        var rgx = /(\d+)(\d{3})/;  // find more then 3 digits without a comma seperator at the end of the string
-        while (rgx.test(whole)) {
-                whole = whole.replace(rgx, '$1' + ',' + '$2'); // add a comma seperator
+        var {sum, count, max, mean} = gb; // aggrigator functions for groupBy
+
+        var summary = cFrame.groupBy(
+            ['country','continent', 
+                max('total_deaths','deaths'), // show the maximum value of 'total_deaths' and call it deaths 
+                count('INDEX', 'count'),      // count the number of entries (daily info) for each country
+                max('total_cases','cases'),   // show the maximum value of 'total_cases' and call it 'cases' 
+                'population'                  // we could also `max('population')` if we ar not sure the polulation changes
+            ])
+            .sort(['continent', '-cases']);  // sort continent and cases, the cases in descending order
+
+        //display
+        summary
+
+!md
+        ## Lets try to improve the display of numbers
+
+        Frame supports number formattion function.
+
+        * Set a global formatting function for numeric data 
+        __Frame.HTMLFormat.number = toStr__ 
+        * __toStr(s: string)__ 
+        takes a string (or number) and returns a fromatted numeric string with commas add to make is easier to read
+        * This does not alter the data in the frame
+
+
+!tryit
+        function addCommas(nStr) {
+                nStr += ''; // conver string or number to a string
+                var [whole, fraction] = nStr.split('.'); // split on decimal point
+                
+                fraction = fraction ? '.' + fraction : ''; // add a '.' before the fractional part
+                var rgx = /(\d+)(\d{3})/;  // find more then 3 digits without a comma seperator at the end of the string
+                while (rgx.test(whole)) {
+                                whole = whole.replace(rgx, '$1' + ',' + '$2'); // add a comma seperator
+                }
+                return whole + fraction;
         }
-        return whole + fraction;
-    }
 
-    function toStr(str) {
-      const {abs,round} = Math;
-      let num = (+str);
-      if(abs(round(num)-num) < 1e-6) num = Math.round(num);
-      else if(abs(num)>1000) num = round(num);
-      else if(abs(num)>1) num = round(num*100)/100;
-      return addCommas(num.toString());
-    }
-    Frame.HTMLFormat.number = toStr; // set the function to display numbers
+        function toStr(str) {
+            const {abs,round} = Math;
+            let num = (+str);
+            if(abs(round(num)-num) < 1e-6) num = Math.round(num);
+            else if(abs(num)>1000) num = round(num);
+            else if(abs(num)>1) num = round(num*100)/100;
+            return addCommas(num.toString());
+        }
+        Frame.HTMLFormat.number = toStr; // set the function to display numbers
 
 
-    // Display
-    $$.D(summary);
-    $$.D(summary.asObj(0)); // show the original data
+        // Display
+        $$.D(summary);
+        $$.D(summary.asObj(0)); // show the original data
 !md
-    \
-    * As you can see the numbers are nicely formatted, __Note:__ this is for display only, the data in the frame is not changed.
+        \
+        * As you can see the numbers are nicely formatted, __Note:__ this is for display only, the data in the frame is not changed.
 
-    * Please feel free the edit the code and 
+        * Please feel free the edit the code and 
 
 
 !md
-    \
-    #Summarize the information by continent
+        \
+        #Summarize the information by continent
 
-    This section will reformat the data by __continent__ to create summary by continent
+        This section will reformat the data by __continent__ to create summary by continent
 
-    * Group By __continent__
+        * Group By __continent__
 
 !tryit
-    //
-    var continent_summary = 
-        summary.groupBy(['continent', sum('deaths'),  count('country', 'countries'), mean('deaths', 'avg_by_country'), sum('cases'), sum('population')]);
+        //
+        var continent_summary = 
+                summary.groupBy(['continent', sum('deaths'),  count('country', 'countries'), mean('deaths', 'avg_by_country'), sum('cases'), sum('population')]);
 
-    // Display it
-    continent_summary
+        // Display it
+        continent_summary
 
 
 !md
-    ### Transpose 
+        ### Transpose 
 
-    Transpose will rotate the table, the column name comes from the row in the country column. Pay special attention
-    the 'country' column is call the transpose pivot and it is important all the values in this column are unique. If the values are not unique the result of the transpose will look very weird and may violate the requirement that all the column names rae unique.
+        Transpose will rotate the table, the column name comes from the row in the country column. Pay special attention
+        the 'country' column is call the transpose pivot and it is important all the values in this column are unique. If the values are not unique the result of the transpose will look very weird and may violate the requirement that all the column names rae unique.
 
 !tryit
-    var {transpose} = DataFrame;
+        var {transpose} = DataFrame;
 
-    transpose(continent_summary, 'continent')
+        transpose(continent_summary, 'continent')
 
 
 
 !md
-    ## Sample 1% (0.01) of the data and show the first 20
+        ## Sample 1% (0.01) of the data and show the first 20
 
-    * Previously we created __cFrame__ from __covidFrame__ just keeping the most important data
+        * Previously we created __cFrame__ from __covidFrame__ just keeping the most important data
 
 !tryit
-    var sample = cFrame.filter(()=> Math.random() < 0.01 ) // take random 1% of data
-        .slice(0,20)                          // take the first 20 
-        .sort(['continent', 'country'])      // sort by continent and country
-    sample
+        var sample = cFrame.filter(()=> Math.random() < 0.01 ) // take random 1% of data
+                .slice(0,20)                          // take the first 20 
+                .sort(['continent', 'country'])      // sort by continent and country
+        sample
 !md
-    * The code / display above demonstrates how to display a sample of the data
+        * The code / display above demonstrates how to display a sample of the data
 
-    ## Create some utility function to round a numeric string
+        ## Create some utility function to round a numeric string
 
-    This section will show you how to display large numbers in a human friendly format
+        This section will show you how to display large numbers in a human friendly format
 
-    * Since all data is stored as strings or number, empty values are represented ny the empty string
-    * The __Math.round__ function will convert it to a numeric round the value convert back to a string
+        * Since all data is stored as strings or number, empty values are represented ny the empty string
+        * The __Math.round__ function will convert it to a numeric round the value convert back to a string
 
 
 !tryit
-    // Since all data is stored as strings
-    // The round function will convert empty strings to '0', will round the value
+        // Since all data is stored as strings
+        // The round function will convert empty strings to '0', will round the value
 
 
 
-    function round(v) {
-        var r = +v;
-        if(isNaN(r)) return '0';
-        return Math.round(r);
-    }
+        function round(v) {
+                var r = +v;
+                if(isNaN(r)) return '0';
+                return Math.round(r);
+        }
 
-    // Test the function
-    var testS = ({
-      "Round a non-numeric": round('abc'),
-      "Round an integer": round("124"),
-      "Round a negetive integer": round("-125"),
-      "Round an real": round("124.3"),
-      "Round a negetive real": round("-125.6")
-    });
+        // Test the function
+        var testS = ({
+            "Round a non-numeric": round('abc'),
+            "Round an integer": round("124"),
+            "Round a negetive integer": round("-125"),
+            "Round an real": round("124.3"),
+            "Round a negetive real": round("-125.6")
+        });
 
-    //Display testS
-    testS
-
-!md
-    ##Make sure no numeric column has empty values
-
-    To do this we use the frame.update method, this method take an **_update object_** as a parameter
-
-    *  We need to find columns that are mostly numeric '90%' or empty, _frame.numericColumns_ will get
-    us the list of those column names
-
-
-     *  To apply a update function on a column we use the __Frame.update__ method.
-     *  This method takes a mapping objec as a paremeter
-     *  The mapping object has as the key the coulmn name and value is the function to apply to the coulmn
-     *  The function takes two values __mappingFunc1(columnValue, rowObject)__
-         *  The result of the function is set to the column
-
-    *  The mapping obj should look like  
-
-    ```
-    {
-      col1: forceZero,
-      col2: forceZero,
-      ...
-    }
-    ```
-
-    * The columns are the numeric columns of the frame, and we can get that __cFrame.numericColumns__
-
-!tryit
-    function forceZero(v) { return round(v || '0')}
-
-    var NUMERIC_COLS = cFrame.numericColumns;
-    var col_update_list = NUMERIC_COLS.map(col => [col,forceZero]);
-    var TO_ZERO = Object.fromEntries(col_update_list);
-    $$.D('Numeric Columns');
-    $$.D(NUMERIC_COLS);
-
-    $$.D("TO_ZERO MAPPER");
-    TO_ZERO
-
-          
+        //Display testS
+        testS
 
 !md
-    **What happened**
+        ##Make sure no numeric column has empty values
 
-    This create and update mapping object. Let us apply this to update the frame (as always this will create a new frame)
+        To do this we use the frame.update method, this method take an **_update object_** as a parameter
+
+        *  We need to find columns that are mostly numeric '90%' or empty, _frame.numericColumns_ will get
+        us the list of those column names
+
+
+         *  To apply a update function on a column we use the __Frame.update__ method.
+         *  This method takes a mapping objec as a paremeter
+         *  The mapping object has as the key the coulmn name and value is the function to apply to the coulmn
+         *  The function takes two values __mappingFunc1(columnValue, rowObject)__
+                 *  The result of the function is set to the column
+
+        *  The mapping obj should look like  
+
+        ```javascript
+        {
+            col1: forceZero,
+            col2: forceZero,
+            ...
+        }
+        ```
+
+        * The columns are the numeric columns of the frame, and we can get that __cFrame.numericColumns__
 
 !tryit
-    // Update the frame so that all empty value in numeric columns is set to zero 
-    var xFrame = cFrame.update(TO_ZERO);
+        function forceZero(v) { return round(v || '0')}
 
-    //Display the frame
-    $$.D(xFrame)
+        var NUMERIC_COLS = cFrame.numericColumns;
+        var col_update_list = NUMERIC_COLS.map(col => [col,forceZero]);
+        var TO_ZERO = Object.fromEntries(col_update_list);
+        $$.D('Numeric Columns');
+        $$.D(NUMERIC_COLS);
 
+        $$.D("TO_ZERO MAPPER");
+        TO_ZERO
+
+                    
 
 !md
-    Now I will show you a rather useful function in the __DataFrame__ library 
+        **What happened**
 
-       **Before** we do this let us introduce some useful utility function in the DataFrame package __arrProd__. So let look at what we need to do: 
-
-
-!tryit
-    var {arrProd} = DataFrame;
-    var p1 = arrProd(['a','b','c'], 'x'); // [ ['a', 'x'], ['b', 'x'], ['c', 'x'], ]
-    var p2 = arrProd('x', ['a','b','c']); // [ ['x', 'a'], ['x', 'b'], ['x', c'], ]
-    var p3 = arrProd(['a','b'], ['X', 'Y'])// [ ['a', 'X'],['a', 'Y'], ['b', 'X'], ['b', 'Y'], ]
-
-
-    $$.D("var p1 = arrProd(['a','b','c'], 'x')",  p1);
-    $$.D("p2 = arrProd('x', ['a','b','c'])",      p2);
-    $$.D("p3 = arrProd(['a','b'], ['X', 'Y'])",   p3);
-
-!md
-    So using the arrProd becomes
+        This create and update mapping object. Let us apply this to update the frame (as always this will create a new frame)
 
 !tryit
-    //
-    var TO_ZERO = Object.fromEntries(arrProd(NUMERIC_COLS, forceZero));
-    cFrame = cFrame.update(TO_ZERO);
-    //
-    //Display
-    cFrame
+        // Update the frame so that all empty value in numeric columns is set to zero 
+        var xFrame = cFrame.update(TO_ZERO);
+
+        //Display the frame
+        $$.D(xFrame)
 
 
 !md
-    ###Create a summary of covid data
-!tryit
-    let round_some_columns =  { 
-        total_cases: round, 
-        max_new_cases_in_a_day: round,
-        avg_new_cases_in_a_day: round
-    };
+        Now I will show you a rather useful function in the __DataFrame__ library 
 
-    cFrame.groupBy(['continent','country', // columns to group on
-                   gb.count('date', 'rows'), // count the number of values in the date column after grouping
-                   gb.max('total_cases'), // get the max value in the total_cases column for the group 
-                   gb.max('new_cases', 'max_new_cases_in_a_day'), // get the max value in the total_cases 
-                                                                 // column for the group and give it the name 'max_new_cases_in_a_day 
-                   gb.mean('new_cases', 'avg_new_cases_in_a_day') // get the average value for new cases
-                  ])
-        .update( {...round_some_columns, avg_new_cases_in_a_day: (v,ro) => round(ro.total_cases/ro.rows)} )
-        .sort(['-total_cases', 'continent']) // rows, continent and total_cases is sorted in descending order: 
-          
+             **Before** we do this let us introduce some useful utility function in the DataFrame package __arrProd__. So let look at what we need to do: 
+
+
+!tryit
+        var {arrProd} = DataFrame;
+        var p1 = arrProd(['a','b','c'], 'x'); // [ ['a', 'x'], ['b', 'x'], ['c', 'x'], ]
+        var p2 = arrProd('x', ['a','b','c']); // [ ['x', 'a'], ['x', 'b'], ['x', c'], ]
+        var p3 = arrProd(['a','b'], ['X', 'Y'])// [ ['a', 'X'],['a', 'Y'], ['b', 'X'], ['b', 'Y'], ]
+
+
+        $$.D("var p1 = arrProd(['a','b','c'], 'x')",  p1);
+        $$.D("p2 = arrProd('x', ['a','b','c'])",      p2);
+        $$.D("p3 = arrProd(['a','b'], ['X', 'Y'])",   p3);
 
 !md
-    ## Normalizing data
-
-    As you will notice in the covidFrame there is a lot of redundent data, for example most of the country data is repeated
-    on ever row for thar country and there is some missing data for example iso_code is not present for every locaton. Since we would like to use the `iso_code` as the unique key for every country, let us find the locations with missing `iso_code`
+        So using the arrProd becomes
 
 !tryit
-    //
-    covidFrame.groupBy(['iso_code', 'location']).filter(ro => !ro.iso_code) 
+        //
+        var TO_ZERO = Object.fromEntries(arrProd(NUMERIC_COLS, forceZero));
+        cFrame = cFrame.update(TO_ZERO);
+        //
+        //Display
+        cFrame
+
+
+!md
+        ###Create a summary of covid data
+!tryit
+        let round_some_columns =  { 
+                total_cases: round, 
+                max_new_cases_in_a_day: round,
+                avg_new_cases_in_a_day: round
+        };
+
+        cFrame.groupBy(['continent','country', // columns to group on
+                                     gb.count('date', 'rows'), // count the number of values in the date column after grouping
+                                     gb.max('total_cases'), // get the max value in the total_cases column for the group 
+                                     gb.max('new_cases', 'max_new_cases_in_a_day'), // get the max value in the total_cases 
+                                                                                                                                 // column for the group and give it the name 'max_new_cases_in_a_day 
+                                     gb.mean('new_cases', 'avg_new_cases_in_a_day') // get the average value for new cases
+                                    ])
+                .update( {...round_some_columns, avg_new_cases_in_a_day: (v,ro) => round(ro.total_cases/ro.rows)} )
+                .sort(['-total_cases', 'continent']) // rows, continent and total_cases is sorted in descending order: 
+                    
+
+!md
+        ## Normalizing data
+
+        As you will notice in the covidFrame there is a lot of redundent data, for example most of the country data is repeated
+        on ever row for thar country and there is some missing data for example iso_code is not present for every locaton. Since we would like to use the `iso_code` as the unique key for every country, let us find the locations with missing `iso_code`
+
+!tryit
+        //
+        covidFrame.groupBy(['iso_code', 'location']).filter(ro => !ro.iso_code) 
 

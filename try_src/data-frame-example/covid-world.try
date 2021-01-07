@@ -89,49 +89,98 @@ Create a frame from string in the CSV file using the script below. Once we have 
     We can customize the rendering as follows:
 
 !tryit
-    // mark the indentation
+// mark the indentation
+Frame.prototype.toOrder = function(bFlag=true) {
+  this._toOrder = bFlag;
+  return this;
+}
+Frame.prototype._toHtml = function() {
+  let id = 'T'+Math.round(Math.random()*100000);      // create a unique id fo the table
 
-    Frame.prototype._toHtml = function() {
-      let id = 'T'+Math.round(Math.random()*100000);      // create a unique id fo the table
-      // $$.lastly(funcToExecute) after all HTML rendering (from this script) has completed
-      // Note $$.<methods> is just part of the 'TryitJS' capability and is not part of DataFrame
-      // <method> = D, or HTML, or JSON -- this render to to display 'div' 
-      $$.lastly(() => {
-
-          const HTMLformat = this.constructor.HTMLFormat;  // rendering defaults for values in the frame
-          let cellRender = (data,type) => {
-            if(type !== 'display') return data;
-              if(isNumber(data))  return HTMLformat.number(data,0,this);
-              else return HTMLformat.other(data,0,this);
-
-          }
-          $('#'+id).DataTable( {
-              data: this.data,
-              columns: this.columns.map(c => 
-                ({
-                    title: c.replace(/_/g, ' '), 
-                    render: cellRender
-                  })
-                ),
-              deferRender:    true
-              
-          });
-
-      })
-      return `<table id="${id}" class="display" width="100%"></table>`;
-    }
-    function isNumber(x) {
-      if(x === 0) return true;
-      if( !x ) return false;
-      let v = +x;
-      return !(isNaN(v));
-    }
-    
-
-    // Display a frame using the DataTable module 
+  // $$.lastly(funcToExecute) after all HTML rendering (from this script) has completed
+  // Note $$.<methods> is just part of the 'TryitJS' capability and is not part of DataFrame
+  // <method> = D, or HTML, or JSON -- this render to to display 'div' 
+  
+  $$.lastly(() => {
+      const self = this;
+      const HTMLformat = this.constructor.HTMLFormat;  // rendering defaults for values in the frame
       
-    covidFrame.slice(0,200);    
-      
+      // Render a cell
+      function cellRender(data,type) {
+        if(type !== 'display') return data;
+          if(isNumber(data))  return HTMLformat.number(data,0,self);
+          else return HTMLformat.other(data,0,self);
+      }
+
+      function  createTable(self, toSort) {
+        return $('#'+id).DataTable( {
+          data: self.data,
+          columns: self.columns.map(c => 
+            ({
+                title: c.replace(/_/g, ' '), 
+                render: cellRender
+              })
+            ),
+          deferRender:    true,
+          ordering: toSort
+          
+        });
+      }
+
+      let table = createTable(self, false);
+      let v = document.querySelector(`#${id}sort input`).onchange = (
+        function () { 
+          console.log('this: ', this.checked);
+          table.destroy();
+          table = createTable(self, this.checked)
+        });
+      //console.log('input:', v);
+  })
+  return `
+  <style>
+    .dataTables_length {
+      margin-left: 2rem;
+    }
+   .array-sorting {
+     position: relative;
+     margin-left: 40%;
+     top: 2rem;
+   }
+   .dataTables_filter {
+     margin-right: 2rem;
+   }
+   .sorting_desc::before {
+      content: "\u25BC";
+      color: red;
+   }
+   .sorting_asc::before {
+      content: "\u25B2";
+      color: red;
+   }
+   .sorting_disabled::before {
+       content: "" !important;
+    }
+
+  </style>
+  <div id="${id+'sort'}" class="ui slider checkbox array-sorting">
+    <input type="checkbox" name="toggle">
+    <label>Allow Sorting</label>
+  </div>
+  <table id="${id}" class="display" width="96%"></table>`;
+}
+function isNumber(x) {
+  if(x === 0) return true;
+  if( !x ) return false;
+  let v = +x;
+  return !(isNaN(v));
+}
+
+
+// Display a frame using the DataTable module 
+$$.HTML(`<div style="font-size: 2rem">Click columns to sort</div><br>`);
+covidFrame.filter(ro => ro.iso_code === 'USA');    
+         
+
 !md
 
 @@include plot-covid-frame.try

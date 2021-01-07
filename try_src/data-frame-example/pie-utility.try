@@ -1,0 +1,28 @@
+function showPie(aFrame, opts) {
+  // set default values fot he options
+  const {value: valueCol, label: labelCol, type, hole, title, colors} = 
+      { value: 'total_cases', label:'continent', type: 'pie', hole: 0.6, colors: COLORS.t10, 
+        ...opts
+      };
+  const TITLE = title || capitalize(valueCol.replace(/_/g, ' '));
+
+  var data = [{
+      values: aFrame.rawColumn(valueCol),     // default: 'total_cases'
+      labels: aFrame.rawColumn(labelCol),     // default: 'continent'
+      hoverinfo: 'label+percent+name', // text to show when hovering over pie segments
+      textinfo: "label+value",         // labels for pie segments
+      textposition: "outside",         // where to place the pie segment labels
+      marker: {
+        colors                        // Optional* colors for the segments
+      },
+      hole,                            // Mkae it a donut chars (hole in the middle)
+      type                              // It's a pie chart, 
+  }];
+
+  var layout = {
+      title: `<b>${TITLE}</b>`,
+      height: 600,
+      width: 800
+  };
+  return newPlot(data,layout);
+}

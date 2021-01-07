@@ -68,6 +68,44 @@
 
     * gb.sum('column_name')
 
+    1. Remove locations that don't have an associated continent using (_.filter_)
+    1. Group by _continent_ and _date_
+        1. In each continent there will be many countried so we have to aggrigated the data for the individual countries.
+            * total_cases - sum them (_gb.sum('total_cases')_)
+            * similarly for _total\_deaths, new_cases, new_deaths_
+            * We have to compute _total\_deaths\_per\_million_ and _total\_cases_\per\_million_
+    1. After the groupBy operation we have the data to compute data for the two placeholder columns
+        * We use the _.update_ method to two placeholder columns
+
+!tryit
+    var { gb } = DataFrame;
+
+    var continents = countries
+      .filter(ro => ro.continent) // remove locations not in a continent
+      .groupBy([    
+        'continent', 
+        'date', 
+        gb.sum('total_cases'),  // sum (total_cases) on each day, for every country, in a continent
+        gb.sum('total_deaths'), // ditto for total_deaths
+        gb.sum('new_cases'), 
+        gb.sum('new_deaths'),
+        gb.value('total_deaths_per_million',0), // place holder for these columns
+        gb.value('total_cases_per_million',0),  // ditto
+        gb.sum('population') // sum the population of the countries in the continent
+      ])
+      .update({
+        total_deaths_per_million: (v,ro) => ro.total_deaths/ro.population*1000000,
+        total_cases_per_million: (v,ro) => ro.total_cases/ro.population*1000000
+      });
+
+    // Display a sample
+    $$.D(countries);
+       
+      
+      
+      
+
+
 !tryit
     var { gb } = DataFrame;
 
@@ -112,7 +150,12 @@
 
 !md
     <br/>
-    You will notice countries have a 'iso_code' and a 'location' namely the country 
+    You will notice countries have a 'iso_code' and a  'location' namely the country (loca) 
+
+!html
+<script>
+    @@include pie-utility.try
+</script>
 
     @@include continent-pie.try
 
@@ -121,7 +164,7 @@
 
     This time we will rollup data into countries and continents
 
-    1. We have a frame for `continents`
+    1. We have a frame for __continents__
     2. We will make continents frame have the same shape as the country data
        * We need to add 2 columns `iso_code` and `location`
        * Since these columns do not exist for continents frame, we will have to compute that
