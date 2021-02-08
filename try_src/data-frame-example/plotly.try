@@ -6,31 +6,50 @@
 
     In this section we will show how to:
 
+    1. Filter unnecessary rows
     1. Select the following columns from covidFrame:
          * **iso_code** - 
          * **location** -
+         * **continent** -
          * **date**
-         * **total_cases**
-         * **total_deaths** 
+         * **new_cases**
+         * **new_deaths** 
+         *  more...
          * **mortality** _Computed column  `100*total_deaths/total_cases` percent of people who die after contracting COVID-19
+    1. To create a extra column provide the following [ columnName, functionToComputeValue], 
+        * The name of the column should not conflict with the name of any other column (in the selection)
+        * The alternate to a function is to provide a value
+        * You can use this to modify value of an existing column
+    1. Change the name of a column 'oldName=newName'
+    
+    Note we create a new frame, the riginal frame 'covidFrame' remains unchange. Frames should always be treated as immutable data. Modifying a
+    frame may prevent it working correctly. It is highly recommended that you never manipulate the internal (instance) vatiable of a frame.
 
 !tryit
-    var countries = covidFrame.filter(ro => ro.total_cases > 0)
-            .select([
-               'iso_code',
-               'location',
-               'continent',
-               'date',
-               'new_cases', 
-               'new_deaths',
-               'total_cases', 
-               'total_deaths',
-               'total_deaths_per_million',
-               'total_cases_per_million',
-               'population',
-               ['mortality',(v,ro) => 100.0*(ro.total_deaths/ro.total_cases)]
-      ]);
+    var countries = 
+      covidFrame
+        .filter(ro => ro.total_cases > 0)  // remove empty rows
+        .select([
+           'iso_code',
+           'location',
+           'continent',
+           'date',
+           'new_cases', 
+           'new_deaths',
+           'total_cases', 
+           'total_deaths',
+           'total_deaths_per_million',
+           'total_cases_per_million',
+           'population=pop',
+           ['mortality',(v,ro) => 100.0*(ro.total_deaths/ro.total_cases)]
+        ]);
 
+
+    // countries
+    //    .groupBy(['iso_code', 'location', 'continent', gb.max('pop')])
+    //    .filter(ro => ro.iso_code !== 'USA' && ro.location !== 'Mexico')
+    //    .groupBy(['continent', gb.sum('pop')])   
+  
     // Display the result for USA
     countries.filter(ro => ro.iso_code === 'USA')   
       
@@ -56,6 +75,7 @@
     var sample = percent => () => Math.random() < (percent/100.0); // sampling filter
 
     countries = countries.filter(ro => ro.continent); // remove where no continent data
+    
 
     countries.groupBy(['continent', 'date'])
       .filter( sample(2.0) ) // sample 2% of the data
@@ -80,74 +100,122 @@
 !tryit
     var { gb } = DataFrame;
 
-    var continents = countries
-      .filter(ro => ro.continent) // remove locations not in a continent
-      .groupBy([    
+    var cntry = countries.filter(ro => ro.continent) // remove rows not in a continent (like cruise ships)
+    $$.D(cntry.groupBy(['continent', 'date']).filter(sample(2.0))) // show some sample data
+
+    // 
+    var continents =  cntry.groupBy([    
         'continent', 
         'date', 
-        gb.sum('total_cases'),  // sum (total_cases) on each day, for every country, in a continent
-        gb.sum('total_deaths'), // ditto for total_deaths
+        gb.sum('total_cases'),  // sum (total_cases)  for every country in a continent, on a day(date),  e.g Africa 2020-05-01
+        gb.sum('total_deaths'), // sum (total_deaths) 
         gb.sum('new_cases'), 
         gb.sum('new_deaths'),
         gb.value('total_deaths_per_million',0), // place holder for these columns
         gb.value('total_cases_per_million',0),  // ditto
-        gb.sum('population') // sum the population of the countries in the continent
-      ])
-      .update({
-        total_deaths_per_million: (v,ro) => ro.total_deaths/ro.population*1000000,
-        total_cases_per_million: (v,ro) => ro.total_cases/ro.population*1000000
+        gb.sum('pop') // sum the population of the countries in the continent
+      ]);
+
+    $$.D(continents.filter(sample(2.0)));
+
+    // now we have the data to compute 'total_deaths_per_million', 'total_cases_per_million'
+    continents = continents.update({
+        total_deaths_per_million: (v,ro) => ro.total_deaths/ro.pop*1000000,
+        total_cases_per_million: (v,ro) => ro.total_cases/ro.pop*1000000
       });
 
-    // Display a sample
-    $$.D(countries);
-       
-      
-      
-      
+    // Display a sample random 2%
+    $$.D(continents.filter(sample(2.0))); 
+!md
+    ## What we did
 
+    We saw earlier the original 'covidFrame' contains a large quantity of daily covid information for every country. A row in that frame represented
+    a country and date and information related for that day, as well as some fixed (not date dependent) information about the counter. From the 'covidFrame'
+    we create a new frame ('countries') selecting only the columns we need for the task at hand. 
+
+    The we create a frame for each continent by aggrigation daily data for each country in a continent, (group by 'continent' and 'date'). Further, 
+    we created two computed columns for each continent ('total_death_per_million', 'total_cases_per_million'). Note: it is easier to recompute that for a continent
+    rather than extract from the individual nation's column for the same. 
+
+
+!md
+    # Frame summary - continent 
+
+    In this section we will show how to create summary of the world codiv date to create summary information for countries and continents.
+
+    We saw earlier the original 'covidFrame' contains a large quantity of daily covid information for every country. A row in that frame represented
+    a country and date and information related for that day, as well as some fixed (not date dependent) information about the counter. From the 'covidFrame'
+    we create a new frame ('countries') selecting only the columns we need for the task at hand. 
+
+    Next we  
+
+    ##  Convert Into Utility Function
+
+    We are going to turn the operation above into a utility function that takes a country frame and and create a continent frame, where the entire continemt
+    structurally looks like a single country as we demonstrated above. But the display can be misleading, since there som countries where the cases and deaths 
+    are so high that they skew the result for the other countries in the continent. One way of dealing with the problem is to peel away the country from its continents
+    and to treat the country as a continent in its own right. 
+
+    The easiest way to do that is to set the country
+
+
+      
+      
 
 !tryit
     var { gb } = DataFrame;
 
     // Find countries that have the highest value in 'column', e.g. topN(3,countries, 'total_cases') 
     //  Top 3 countries with highest cases
-    function topN(n,countries,column) {
-      return countries.groupBy(['location', gb.sum(column)]).sort(['-'+column]).slice(0,n).map(ro => ro.location);
+    function topN(n,cntries=countries,column='total_deaths') {
+      return (countries
+                .groupBy(['location', gb.max(column)])
+                .sort(['-'+column]) // sort column descending e.g ' [ "-total_deaths"] '
+                .slice(0,n)         // take the first n values
+                .map(ro => ro.location) // fetch location as array - or we could have done frame.rawColumn('location')
+            );
     }
 
-    var topCountries = topN(3,countries, 'total_cases'); // get top 'total_cases' countries
+    topN(5); // display top 5 countries for deaths
 
-    var continents = countries
-      .filter(ro => ro.continent) // remove locations not in a continent
 
-       // Treat top countries (highest total_cases) as if the were a continent is themselves
-       // for those countries change ther 'continent' to the country name (location)
-      .update({ continent: (v,ro) => topCountries.indexOf(ro.location) !== -1?ro.location:v })
+!md
+
+!tryit
+    function getContinentSummary(countries, top=0, topColName='total_deaths'){
+      var topCountries = topN(top,countries, topColName); // get top 'total_deaths' countries
+
+      var continents = countries
+        .filter(ro => ro.continent) // remove locations not in a continent
+
+         // Treat top countries (highest total_cases) as if the were a continent is themselves
+         // for those countries change ther 'continent' to the country name (location)
+        .update({ continent: (v,ro) => topCountries.indexOf(ro.location) !== -1?ro.location:v }) // make the top 'top' countries into their own continent
+        .groupBy([    
+          'continent', 
+          'date', 
+          gb.sum('total_cases'),  // sum (total_cases) on each day, for every country, in a continent
+          gb.sum('total_deaths'), // ditto for total_deaths
+          gb.sum('new_cases'), 
+          gb.sum('new_deaths'),
+          gb.value('total_deaths_per_million',0),
+          gb.value('total_cases_per_million',0),
+          gb.sum('pop') // we previously renamed 'population' to 'pop'
+        ])
+        .update({
+          total_deaths_per_million: (v,ro) => ro.total_deaths/ro.pop*1000000,
+          total_cases_per_million: (v,ro) => ro.total_cases/ro.pop*1000000
+        });
       
-      .groupBy([    
-        'continent', 
-        'date', 
-        gb.sum('total_cases'),  // sum (total_cases) on each day, for every country, in a continent
-        gb.sum('total_deaths'), // ditto for total_deaths
-        gb.sum('new_cases'), 
-        gb.sum('new_deaths'),
-        gb.value('total_deaths_per_million',0),
-        gb.value('total_cases_per_million',0),
-        gb.sum('population')
-      ]).update({
-        total_deaths_per_million: (v,ro) => ro.total_deaths/ro.population*1000000,
-        total_cases_per_million: (v,ro) => ro.total_cases/ro.population*1000000
-      });
+        return continents;
+    }
+
+    var continents = getContinentSummary(countries, 3);
 
     // Display a sample
-    //$$.D(topN(7,countries, 'total_cases'));
-    //$$.D(countries);
     continents.filter(sample(2.0))
-       
-      
-      
-      
-
+   
+    
 !md
     <br/>
     You will notice countries have a 'iso_code' and a  'location' namely the country (loca) 
@@ -192,7 +260,7 @@
        "total_deaths",
        "total_deaths_per_million",
        "total_cases_per_million",
-       "population",
+       "pop",
        ["mortality", (v,ro) => 100.0*(ro.total_deaths/ro.total_cases)], // 3. create a new computed column
       ]
     );

@@ -7,21 +7,23 @@
     `total_cases` and `total_deaths`
 
 !tryit
- var summary = (continents) => continents
-        .groupBy([
-          'continent',  
-          gb.max('date'),
-          gb.max('total_cases'), 
-          gb.max('total_deaths'),
-          gb.max('total_deaths_per_million'),
-          gb.max('total_cases_per_million')
-        ]
-      );
+  var summary = (countries,top=3,topCol='total_deaths') => 
+        getContinentSummary(countries, top,topCol)
+          .groupBy([
+             'continent',  
+             gb.max('date'),
+             gb.max('total_cases'), 
+             gb.max('total_deaths'),
+             gb.max('total_deaths_per_million'),
+             gb.max('total_cases_per_million')
+           ]
+         );
 
-var continentSummary = summary(continents); 
+  var continentSummary = summary(countries); 
 
-// Display
-continentSummary
+  // Display
+  continentSummary
+
 
 !md
     ### Let's get a pie-chart
@@ -45,12 +47,14 @@ continentSummary
   \
 @@include ./pie-utility.try
 !md
-#### Plot Pie chart      
+    #### Plot Pie chart      
 
-Now plot some pie charts. The countries with the most cases are removed from their respective continents and are treated as if they were their own continents. So for example _North America_ excludes the __United States.__    
+    Now plot some pie charts. The countries with the most cases are removed from their respective continents and are treated as if they were their own continents. So for example _North America_ excludes the __United States.__    
 
 !tryit
-    let sc = summary(continents);  // create a summary frame
+    let sc = summary(countries, 5, 'total_deaths');  // create a summary frame
     $$.D(showPie( sc ), showPie( sc, { value: 'total_deaths' } ));
+
+      
 
  !md

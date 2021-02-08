@@ -1,45 +1,49 @@
 !-- Simplest plot for covidFrame
 
 !md
-	# Lets plot some data
+    # Lets plot some data
 
-	We will plot some data from the covid Frame for USA
+    We will plot some data from the covid Frame for USA
 
-	1. First select data for USA
-	2. Use plotly.js to plot come data
+    1. First select data for USA
+    2. Use plotly.js to plot come data
 
 !tryit
      
-	let country = covidFrame.filter(ro => ro.iso_code === 'USA'); // get usa data
-	let countryName = country.asObj(0).location;
-	let colsToPlot = ['date','new_deaths_smoothed', 'new_deaths'];
+    let country = covidFrame.filter(ro => ro.iso_code === 'USA'); // get usa data
+    let countryName = country.asObj(0).location; // countryName = get 'location' column from first row (0)
 
-	let [x, y1, y2] = colsToPlot.map( c => country.rawColumn(c));
-	
-	let plt =newPlot(                        // create a location to plot the data
-	    [
-	        {name: 'Daily Deaths(smooth) - '+countryName,  x, y: y1}, // data to plot
-	        {name: 'Daily Deaths - '+countryName, x, y: y2} // another data to plot
-	    ],     
-	    {   
-	        title: 'My first Covid plot - '+countryName,
-	        yaxis: {type: 'linear' }
-	    }
-	);
+    function column(c) { return  country.rawColumn(c); } // get raw column from frame 'country'
+
+
+    let plt =newPlot(                        // create a location to plot the data
+       [
+          {name: 'Daily Deaths(smooth) ',  x: column('date'), y: column('new_deaths_smoothed')}, // data to plot
+          {name: 'Daily Deaths',          x: column('date'), y: column('new_deaths')}, // another data to plot
+          {name: 'New Cases',             x: column('date'), y: column('new_cases')} // yet another data to plot
+       ],     
+       {   
+           title: 'My first Covid plot - '+countryName + " (click on legend to turn on/off)",
+           yaxis: {type: 'linear' } // log or linear
+       }
+    );
     $$.D(plt); // display plot
-	// display the frame
-	covidFrame.groupBy(['iso_code','location'])
+    // display the frame
+    covidFrame.columns;
+
+
+            
 
 
 !md
-	## Notes on plotting
+    ## Notes on plotting
 
-	Tryitjs does not have plotting out of the box, but capability was added with the following code. <br>
-	Click <i class="caret right icon"></i> to show the code
+    Tryitjs does not have plotting out of the box, but capability was added with the following code. <br>
+    Click <i class="caret right icon"></i> to show the code
 
 !render-start Source Code for Plotting Helpers
-	\ 
-	@@include  https://raw.githubusercontent.com/nurulc/tryitjs/master/asset/div-tools.try
+    \ 
+    @@include  https://raw.githubusercontent.com/nurulc/tryitjs/master/asset/doPlot.try
 
 !render-end
 !md

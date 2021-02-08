@@ -7,7 +7,7 @@
 ## Use 'fetch' to get some raw data
 
 We will use world covid-19 daily statistics, this is a csv file that we will split into an array of lines. We can use the built in fetch
-function to pull data from the public repository on Github. Fetch returna a __promise__. To learn more about <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises" target="_blank">___Promise___</a> on the link. Once the promise resolves, the data will
+function to pull data from the public repository on Github. Fetch returns a __promise__. To learn more about <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises" target="_blank">___Promise___</a> on the link. Once the promise resolves, the data will
 be available for use. As always last expression in the script will be displayed. If the value is a promise, TryITjs will wait for the promise to resolve and then display the result.
 
 
@@ -40,20 +40,20 @@ Since csvData is just a big ___string___ we can use the `string.split` opertatio
 !md
 ##Create a frame from the data
 
-Since the CSV data is just a big string, to converts it to a frame we have to do the following
+Since the CSV data is just a big `string`, to converts it to a frame we have to do the following
 
 * Split the string into an array of lines, and javascript string already supports the __.split('\n')__ method
 * Now each line is a string, we have to split each line into an array of columns
     * We cold use split again on " , " but CSV files allow us to escape a comma by surrounding it with " , " (comma). Since split will split on every comma we cannot use that.
-    * __csvLine(aLine)__ will split a 'CSV' line into an array of column values. This is also known as a line splitter, the following line splitter exist
-        * csvLine - for CSV files
-        * tsvLine - for tab seperated values
-        * psvLine - '|' pipe seperated value. THis si a common format in healthcare 
+    * `csvLine(aLine)` will split a 'CSV' line string into an array of column values. This is also known as a line splitter, the following line splitter exist
+        * `csvLine` - for CSV files
+        * `tsvLine` - for tab seperated values
+        * `psvLine` - '|' pipe seperated value. THis si a common format in healthcare 
 * The columns of the first line is used as the column names, the remaining lines are the data
-* We have a convinience function to perfrom this task __Frame.frameFronString(string, )
+* We have a convinience function to perfrom this task `Frame.frameFronString(string, )``
 
-The following code is a simplified version of what __.frameFromString__ does
-```
+The following code is a simplified version of what `.frameFromString` does
+```js
 //frameFromString is at its core the following code
    var lines = csvData.split('\n').map(csvLine);
    var covidFrame = new Frame(lines.slice(1), lines[0]);
@@ -84,7 +84,8 @@ Create a frame from string in the CSV file using the script below. Once we have 
     A Frame has a method __.&#95;toHml()__ to render a frame as HTML. This is a nice Table rendering module __DataTable__. Details for useing this 
     capability can be found here: <a href="https://datatables.net/" target="_blank">DataTable</a> - a plug-in for the jQuery Javascript library. 
 
-    More details about rendering a DataFrame (or any other object) to HTML: <a href="#">Docs: displaying results (TODO)</a>
+    More details about rendering a DataFrame (or any other object) to HTML: 
+    <!--//<a href="#">Docs: displaying results (TODO)</a> -->
     
     We can customize the rendering as follows:
 
@@ -137,6 +138,7 @@ Frame.prototype._toHtml = function() {
       //console.log('input:', v);
   })
   return `
+  <div>
   <style>
     .dataTables_length {
       margin-left: 2rem;
@@ -164,9 +166,10 @@ Frame.prototype._toHtml = function() {
   </style>
   <div id="${id+'sort'}" class="ui slider checkbox array-sorting">
     <input type="checkbox" name="toggle">
-    <label>Allow Sorting</label>
+    <label>Click column to sort</label>
   </div>
-  <table id="${id}" class="display" width="96%"></table>`;
+  <table id="${id}" class="display" width="96%"></table>
+  </div>`;
 }
 function isNumber(x) {
   if(x === 0) return true;
@@ -177,8 +180,8 @@ function isNumber(x) {
 
 
 // Display a frame using the DataTable module 
-$$.HTML(`<div style="font-size: 2rem">Click columns to sort</div><br>`);
-covidFrame.filter(ro => ro.iso_code === 'USA');    
+//$$.HTML(`<div style="font-size: 2rem; margin-left: 35rem">Click columns to sort, after enabling sorting</div><br>`);
+covidFrame.filter(ro => ro.iso_code === 'USA');     
          
 
 !md

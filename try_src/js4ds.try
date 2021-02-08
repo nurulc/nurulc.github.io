@@ -1,0 +1,113 @@
+!head
+
+<script>
+	console.log = $$.D;
+	setTimeout($$.clear,2000);
+</script>
+<style>
+p > code {
+	color: #e83e8c;
+}
+</style>
+!md
+	# Basic Features
+	This lesson introduces the core ```features``` of JavaScript, including how to run programs, the language’s basic data types, arrays and objects, loops, conditionals, functions, and modules. All of these concepts should be familiar if you have programmed before.
+
+	## Hello, World
+
+	Edit the code below and execute
+
+!tryit
+	console.log('hello, world')
+
+!md
+	console is a built-in module that provides basic printing services (among other things). As in many languages, we use the dotted notation X.Y 
+	to get part Y of thing X—in this case, to get console’s log function. Character strings like ’hello, world’ can be written with either single 
+	quotes or double quotes, so long as the quotation marks match, and semi-colons at the ends of statements are now (mostly) optional.with
+
+	## Basic Data Types
+	JavaScript has the usual datatypes, though unlike C, Python, and many other languages, there is no separate type for integers: it stores 
+	all numbers as 64-bit floating-point values, which is accurate up to about 15 decimal digits. We can check this using typeof, which returns a 
+	string. (Note: typeof is an operator, not a function: we apply it to something by typing a space followed by the name of the thing we’d 
+	like to check the type of, e.g., typeof dress as opposed to typeof(dress).) We use it alongside const below, which itself is helpful when 
+	we want to give a name to a constant value:
+
+!tryit
+	const aNumber = 123.45
+	console.log('the type of', aNumber, 'is', typeof aNumber)
+
+!tryit
+	const anInteger = 123
+	console.log('the type of', anInteger, 'is', typeof anInteger)
+
+
+!md
+	We have already met strings, which may contain any Unicode character:
+
+!tryit
+	const aString = 'some text'
+	console.log('the type of', aString, 'is', typeof aString)
+
+!md
+	Functions are also a type of data, a fact whose implications we will explore in Chapter 3:
+
+!tryit
+	console.log('the type of', console.log, 'is', typeof console.log)
+
+!md
+Rather than showing the other basic types one by one, we will put three values in a list and loop over it:
+
+!tryit
+const otherValues = [true, undefined, null]
+for (let value of otherValues) {
+  console.log('the type of', value, 'is', typeof value)
+}
+
+!md
+	As the example above shows, we create an array of values to loop through called otherValues. We initiate our loop with the word for. 
+	Within the parentheses, let creates a variable called value to iterate over each element within otherValues, and value is the 
+	changing array value of otherValues. Finally, within the curly braces we perform our desired operation on every value.
+
+	Note that we use let rather than the older var and of rather than in: the latter returns the indexes of the collection 
+	(e.g., 0, 1, 2), which has some traps for the unwary (Appendix 23.2). Note also that indexing starts from 0 rather than 1, 
+	and that indentation is optional and for readability purposes only. This may be different from the language that you’re used to.
+
+!md
+	As the example above shows, we create an array of values to loop through called otherValues. 
+	We initiate our loop with the word for. Within the parentheses, let creates a variable called value 
+	to iterate over each element within otherValues, and value is the changing array value of otherValues. 
+	Finally, within the curly braces we perform our desired operation on every value.
+
+	>> Note _that we use let rather than the older var and of rather than in: the latter returns the indexes of the collection (e.g., 0, 1, 2),
+	>> which has some traps for the unwary (Appendix 23.2). Note also that indexing starts from 0 rather than 1, and 
+	>> that indentation is optional and for readability purposes only. This may be different from the language that you’re used to.
+
+	## Constants versus Variables
+	You should make things constants unless they really need to be variables because it’s easier for both 
+	people and computers to keep track of things that are defined once and never change.
+
+	After all this, the types themselves are somewhat anticlimactic. JavaScript’s boolean type can be 
+	either true or false, though we will see below that other things can be treated as Booleans. 
+	undefined means “hasn’t been given a value”, while null means “has a value, which is nothing”.
+
+	## Control Flow
+	We have already seen for loops and flat arrays, so let’s have a look at nested arrays and conditionals. We start with arrays 
+	that contain other arrays, which are usually processed by nested loops:
+
+!tryit
+	const nested = [['northwest', 'northeast'],
+	                ['southwest', 'southeast']]
+	for (let outer of nested) {
+	  for (let inner of outer) {
+	    console.log(inner)
+	  }
+	}
+
+!md
+	The inner loop runs a complete cycle of iterations for each iteration of the outer loop. 
+	Each value assigned to the variable outer is a pair, so each value assigned to inner is 
+	one of the two strings from that pair (Figure [f:basics-traversal]).
+
+	>> <img src="https://js4ds.org/figures/basics-traversal.svg">
+
+!end

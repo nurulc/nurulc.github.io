@@ -195,18 +195,18 @@ function customElement(element_name,process, ...args) {
 <div   id="page-1" class="try-page" data-pagevisible="false">
 <h1 id="gettingstarted">Getting started</h1>
 <p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/getting-started.try"></i>
-  we have to bring in the str-data-frame npm module. We have several choices, using javascript es6+ module symtax,
+  we have to bring in the <strong>str-data-frame</strong> npm module. We have several choices, using javascript es6+ module symtax,
   using webpack or similar bundler, or just as a script. For rhe purposed of this tutorial I am using the good old script method. I creates in the global namesapce <em>DataFrame</em> variable.</p>
 <h2 id="dataframepackage">DataFrame package</h2>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: try&#95;src/getting-started.try"></i></p>
 <p>Lets do a quick look a what is defined in the package.
   In this html page we use the following <em><strong>unpkg.com</strong></em> to load the str-data-frame package. The exported name from the Package is <em><strong>DataFrame</strong></em>.</p>
-<pre><code class="html language-html">  &lt;script src="https://unpkg.com/str-data-frame@0.2.18/dist/bundle.js"&gt;&lt;/script&gt;
+<pre><code class="htmlx language-htmlx">  &lt;script src="https://unpkg.com/str-data-frame@0.2.18/dist/bundle.js"&gt;&lt;/script&gt;
 </code></pre>
 <ul>
 <li><p>Get the names (keys) in the module using <code>Object.keys(DataFrame)</code> </p></li>
-<li><p>map the list of names to name/value pair <em>[name, value]</em></p></li>
-<li><p>map the [name, value] to [name, <em><strong>type of value</strong></em>, <strong>display string of the value</strong>] note </p></li>
+<li><p>map the list of names to name/value pair <code>[name, value]</code></p></li>
+<li><p>map the <code>[name, value]</code> to [<code>name</code>, <code>Vtype of value</code>, <code>S display string of the value</code>] note </p></li>
 <li><p>result is put into <em><strong>data</strong></em> </p>
 <p>Note: We use he two following helper function </p>
 <p><strong>Display function</strong> <em>D(value)</em></p></li>
