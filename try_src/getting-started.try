@@ -14,7 +14,7 @@
 
   * Get the names (keys) in the module using ```Object.keys(DataFrame)``` 
   * map the list of names to name/value pair ```[name, value]```
-  * map the `[name, value]` to [```name```, ```Vtype of value```, ```S display string of the value```] note 
+  * map the `[name, value]` to [`name`, __type of value__, `display string for the value`]  
   * result is put into _**data**_ 
 
   Note: We use he two following helper function 
