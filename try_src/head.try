@@ -5,6 +5,9 @@
 <script src="https://unpkg.com/str-data-frame@^0.2/dist/bundle.js"></script>
 <script src="./diagramax.dev.js"></script>
 <link href="./diagramax.dev.css" rel="stylesheet">
+<script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js" ></script>
+<script src="https://unpkg.com/semantic-ui-react/dist/umd/semantic-ui-react.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600;800&display=swap" rel="stylesheet">
 <!-- <link href="https://cdn.datatables.net/1.10.22/css/dataTables.semanticui.min.css"> -->
 

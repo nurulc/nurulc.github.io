@@ -1,4 +1,6 @@
 !head
+<script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 @@include ../head.try
 @@include ../tools.try
 @@include ../getting-started.try

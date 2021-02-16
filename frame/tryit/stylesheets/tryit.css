@@ -88,7 +88,7 @@ code.V {
  border: none;
  border-collapse: collapse;
  border-spacing: 0;
- color: #e2e5f2;
+ color: #181c2b; /*#e2e5f2;*/
  table-layout: fixed;
 }
 .rendered_html thead {
@@ -100,7 +100,13 @@ code.V {
  vertical-align: bottom;
 }
 .rendered_html tbody tr:nth-child(odd) {
- background: #3f495a;
+ /*background: #3f495a;*/
+  background: #45f5f5;
+}
+
+.rendered_html tbody tr:nth-child(even) {
+ /*background: #3f495a;*/
+  background: #45f5e5;
 }
 .rendered_html tbody tr {
  background: #394251;
@@ -220,11 +226,19 @@ table.dataTable tr.even, table tr.alt, table tr:nth-of-type(even) {
 }
 
 table.ftable tr:nth-of-type(even) {
-  background: #544949;
+  background: #544949 !important;
+}
+
+table.frame_row_table tbody tr:nth-of-type(even) {
+  background: #633535 !important;
+}
+
+table.frame_row_table tbody tr:nth-of-type(odd) {
+  background: #544949 !important;
 }
 
 table tr.even, table tr.alt, table tr:nth-of-type(even) {
-    background: #f5f5f5;
+    background: #f5f5f5 !important;
 }
 
 
@@ -700,12 +714,12 @@ pre.language-tryit {
   background-color: #f0f0f0;
   margin-left: 2rem;
   height: 15rem;
-  width: 75%;
+  width: 60%;
   transform: scale(0.8); 
   transform-origin: top center;
   overflow: hidden;
-  transition: width 1s ease-in-out;
-  transition: height 1s ease-in-out;
+  transition-delay: 1s;
+  transition: width 1s ease-in-out, height 1s ease-in-out, top 2s, left 2s ;
 }
 
 pre.language-tryit::before {
@@ -778,12 +792,16 @@ pre.language-tryit:hover {
   margin: auto;
 }
 
-.pagenum {
+.pagenum, .page-footer {
   display: inline;
   color: #4287f5;
   font-style: italic;
   text-align: center;
   margin: auto;
+}
+
+div.page-footer a i.black {
+  color: black;
 }
 
 .tag-name {

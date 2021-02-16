@@ -334,7 +334,8 @@ var $tryit = function () {
       var theme = original === contents ? tryit$colors.original : tryit$colors.saved;
       var editor = CodeMirror.fromTextArea(textarea, (_CodeMirror$fromTextA = {
         lineNumbers: true,
-        //        mode: "javascript",
+        // mode: "javascript",
+        //mode: "jsx",
         theme: theme,
         //"cobalt",
         matchBrackets: true,
@@ -781,6 +782,12 @@ var $tryit = function () {
     }
   }
 
+  function jsxCompiler(s) {
+    if (!s) return '';
+    if (s.match(/<\/|\/>/)) return jsxLoader.compiler.compile(s);
+    return s;
+  }
+
   var lastExecTime = 0.0;
 
   function execute(divName, editor, toUpdateUI, toJump, callback) {
@@ -793,7 +800,8 @@ var $tryit = function () {
       var boundingSeg = output.closest('.tryit-inner');
       boundingSeg.closest('.tryit-inner').style.setProperty('margin-bottom', '-1.9rem');
       output.style.display = "block";
-      var val = (1, eval)(editor.getValue("\n")); // execute script in global context
+      jsxLoader.compiler.addUseStrict = false;
+      var val = (1, eval)(jsxCompiler(editor.getValue("\n"))); // execute script in global context
 
       lastExecTime = performance.now() - t0;
 
@@ -879,8 +887,10 @@ var $tryit = function () {
       }
 
       beforeExecute(divName);
+      jsxLoader.compiler.addUseStrict = false;
       _code = _editor.getValue("\n");
-      var val = (1, eval)(_code);
+      var val = (1, eval)(jsxCompiler(_code)); // execute script in global context(_code);
+
       render(val).then(function () {
         //replaceCSSClass(divName, false);
         updateUI(divName, false);
@@ -1001,6 +1011,25 @@ var $tryit = function () {
     return x.replace(/&/g, '~AMP~').replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/~AMP~/g, "&amp;");
   }
 
+  function hljsLang(name) {
+    switch (name) {
+      case '!md':
+        return ['markdown', 'html'];
+
+      case '!head':
+      case '!tail':
+      case '!html':
+        return ['html', 'javascript', 'css'];
+
+      case '!js':
+        return ['javascript', 'xml'];
+
+      default:
+        return undefined;
+    }
+  } //hljs.highlightAuto('<span>Hello World!</span>').value
+
+
   function blueDiv(content) {
     return "<div class=\"tryit-section\">".concat(content, "</div>\n");
   } // var lines = qs('.language-tryit').innerText.split('\n');
@@ -1030,9 +1059,25 @@ var $tryit = function () {
     };
   }
 
+  function isReactNode(d) {
+    if (_typeof(d) !== 'object' || _typeof(window.React) === undefined || _typeof(window.ReactUI) === undefined) return false;
+    return d.$$typeof && d.$$typeof.toString() === "Symbol(react.element)" && !!d.type;
+  }
+
   function display(d) {
     if (d && d._toHtml) {
       return d._toHtml();
+    } else if (isReactNode(d)) {
+      var genID = 'RX' + Math.trunc(Math.random() * 10000);
+
+      _lastly(function () {
+        return window.ReactDOM.render(d, document.getElementById(genID));
+      });
+
+      return "<div id=\"".concat(genID, "\">ReactNode</div>");
+    } else if (d instanceof Set) {
+      var setArrStr = Array.from(d).join(', ');
+      return "<pre>Set{".concat(asHTML(setArrStr), "}</pre>");
     } else if (typeof d === "string") {
       if (d && d.length > 20000) {
         d = d.substr(0, 20000) + "... MORE";
@@ -1185,8 +1230,7 @@ var $tryit = function () {
   };
 
   var $$ = {
-    codeHighlight: //hljs.highlightAuto('<span>Hello World!</span>').value
-    function (_lines) {
+    codeHighlight: function (_lines) {
       var HL = hljs.highlightAuto;
 
       var _lines$reduce = _lines.reduce(function (_ref8, line) {
@@ -1195,9 +1239,11 @@ var $tryit = function () {
             type = _ref9[1],
             content = _ref9[2];
 
-        if (line.match(/^\s*(![a-z_\-]+|!--)/)) {
+        var mat = line.match(/^\s*(![a-z_\-]+|!--)/);
+
+        if (mat) {
           if (content || type.match(/!render-(start|end)/)) list.push([type, content]);
-          return [list, line, ''];
+          return [list, mat[1], ''];
         }
 
         line = (content ? '\n' : '') + line;
@@ -1217,7 +1263,7 @@ var $tryit = function () {
             type = _ref11[0],
             body = _ref11[1];
 
-        return [blueDiv(type), HL(body).value];
+        return [blueDiv(type), HL(body, hljsLang(type)).value];
       }).join('\n');
     },
     D: _show,
@@ -1488,11 +1534,29 @@ function isTag(elem, tagName) {
  */
 
 
+function unescape(s) {
+  return s.replace(/~~lt%%|~~gt%%|~~amp%%|"~~code%%"/g, function (c) {
+    switch (c) {
+      case "~~lt%%":
+        return '<';
+
+      case "~~gt%%":
+        return '>';
+
+      case "~~amp%%":
+        return '&';
+
+      case "~~code%%":
+        return '```';
+    }
+  });
+}
+
 function highlightCodeBlock(block) {
   if (!block | highlightCodeBlock | !hljs) return;
 
   if (block.classList.contains('language-tryit')) {
-    var _lines = (block.innerText || '').split('\n');
+    var _lines = (unescape(block.innerText) || '').split('\n');
 
     block.innerHTML = $$.codeHighlight(_lines);
   } else hljs.highlightBlock(block);
