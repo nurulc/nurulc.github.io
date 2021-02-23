@@ -12,13 +12,13 @@ be available for use. As always last expression in the script will be displayed.
 
 
 !tryit
-	
-	var csvData;
-	
-	var WORLD_DATA_SRC ='https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv';
-	var p = fetch(WORLD_DATA_SRC)
-  		.then(response => response.text())
-  		.then(data => 
+  
+  var csvData;
+  
+  var WORLD_DATA_SRC ='https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv';
+  var p = fetch(WORLD_DATA_SRC)
+      .then(response => response.text())
+      .then(data => 
           Promise.resolve(csvData = data)
       );
 

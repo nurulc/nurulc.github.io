@@ -18,6 +18,16 @@
 .capitalize {
     text-transform: capitalize;
 }
+img.screenshot {
+  width: 20%;
+  height: auto;
+  transition: 1s width, 1s height;
+}
 
+img.screenshot:hover {
+  width: 100%;
+  height: auto;
+ 
+}
 
 </style>
