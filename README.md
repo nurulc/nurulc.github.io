@@ -2,7 +2,7 @@
 
 [Go to the site](https://nurulc.github.io/)
 
-[Algorithm](https://nurulc.github.io/Algorithms/try_it/Data-Structures/Linked-List.html)
+[Algorithm](https://nurulc.github.io/Algorithms/try_it/index.html)
 
 Remember to disable pre and post install scripts in **NPM**
 
