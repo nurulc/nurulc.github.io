@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="UTF-8">
+<link rel="stylesheet" href="https://unpkg.com/tryitjs@0.9.4/ref/stylesheets/tryit.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/lesser-dark.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldgutter.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/lint.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/dialog/dialog.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/jsx/jsx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/continuecomment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/comment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/sublime.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/selection/active-line.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldgutter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/brace-fold.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/comment-fold.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/indent-fold.min.js"></script>
+<script src="https://unpkg.com/jshint@2.12.0/dist/jshint.js"></script>
+<script src="https://unpkg.com/csslint@1.0.5/dist/csslint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/lint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/javascript-lint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/search/search.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/search/searchcursor.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/dialog/dialog.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/javascript-hint.min.js"></script>
+<script src="https://unpkg.com/js-sha1/src/sha1.js"></script>
+<script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dataformsjs/js/react/jsxLoader.min.js"></script>
+<script src="https://unpkg.com/tryitjs@0.9.4/ref/javascript/tryit-min.js"></script>
+<title>String</title>
+<script src="../tryit-helper.js"></script></head>
+<body>
+<div class="ui sidebar inverted vertical menu toc-area">
+<div class="item"> <a href="https://github.com/nurulc/tryitjs" target="_blank"><img src="https://unpkg.com/tryitjs/tryit-small.png" title="Built using TryItJs"></a></div> 
+<div class="item">
+<div class="ui right dropdown item">
+    Options
+    <i class="dropdown icon"></i>
+    <div class="menu tryit_main">
+      <div class="item save_all">Save All Changes</div>
+      <div class="item revert_changes">Revert changes</div>
+      <div class="item clear_storage">Delete All Changes</div>
+    </div> 
+  </div>
+</div>
+<div class="item toc_title">Contents</div>
+<div id="toc_string"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('string')">String</a></div>
+<div id="toc_checkrearrangepalindrome"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('checkrearrangepalindrome')">CheckRearrangePalindrome</a></div>
+<div id="toc_checkvowels"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('checkvowels')">CheckVowels</a></div>
+<div id="toc_createpurmutations"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('createpurmutations')">createPurmutations</a></div>
+<div id="toc_formatphonenumber"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('formatphonenumber')">FormatPhoneNumber</a></div>
+<div id="toc_generateguid"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('generateguid')">GenerateGUID</a></div>
+<div id="toc_kmppatternsearching"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('kmppatternsearching')">KMPPatternSearching</a></div>
+<div id="toc_maxcharacter"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('maxcharacter')">MaxCharacter</a></div>
+<div id="toc_permutatestring"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('permutatestring')">PermutateString</a></div>
+<div id="toc_reversewords"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('reversewords')">ReverseWords</a></div>
+<div id="toc_validateemail"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('validateemail')">ValidateEmail</a></div>
+      </div>
+      <div class="pusher">
+      <div class="ui grid">
+    <div class="two wide column" > <!--onclick="toggle()*/''}" title="Click to show sidebar"> -->
+      <p class="click_me" onclick="toggle()">Click to show TOC</p>
+    </div>
+    <div class="thirteen wide column" id="tryit_body">
+
+<div   id="page-1" class="try-page" data-pagevisible="false">
+<h1 id="string">String</h1>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: "></i></p>
+<p>Some README content from r</p>
+<ul>
+<li>CheckRearrangePalindrome</li>
+<li>CheckVowels</li>
+<li>createPurmutations</li>
+<li>FormatPhoneNumber</li>
+<li>GenerateGUID</li>
+<li>KMPPatternSearching</li>
+<li>MaxCharacter</li>
+<li>PermutateString</li>
+<li>ReverseWords</li>
+<li>ValidateEmail</li>
+</ul>
+<p><br/><hr /><hr /><div   class="verybottom" ><div   class="pagenum">Page - 1</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="1"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  String  @@END_PAGE@@ --> <div   id="page0" class="try-page" data-pagevisible="false">
+<h1 id="checkrearrangepalindrome">CheckRearrangePalindrome</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/CheckRearrangePalindrome.try"></i></p>
+<p>What is a palindrome? https://en.wikipedia.org/wiki/Palindrome</p>
+<p>Receives a string and returns whether it can be rearranged to become a palindrome or not</p>
+<ul>
+<li>The string can only be a palindrome if the count of ALL characters is even or if the ONLY ONE character count is odd</li>
+<li>Input is a string</li>
+</ul>
+
+<a id="_tryit1">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit1">
+const palindromeRearranging = (str) =&gt; {
+  // check that input is a string
+  if (typeof str !== 'string') {
+    return 'Not a string'
+  }
+  // Check if is a empty string
+  if (str.length === 0) {
+    return 'Empty string'
+  }
+
+  // First obtain the character count for each character in the string and store it in an object.
+  // Filter the object's values to only the odd character counts.
+  const charCounts = [...str].reduce((counts, char) =&gt; {
+    counts[char] = counts[char] ? counts[char] + 1 : 1
+    return counts
+  }, {})
+  // If the length of the resulting array is 0 or 1, the string can be a palindrome.
+  return Object.values(charCounts).filter(count =&gt; count % 2 !== 0).length &lt;= 1
+}
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit1">
+&nbsp;</a>
+		<div id="tryit1-output" style="display: none">
+			<div id="tryit1-error" class="tryit-error"></div>
+			<div id="tryit1-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit1-run" data-tooltip="Execute script (Ctrl+Enter)" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_1" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit2">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit2">
+// testing
+console.log(palindromeRearranging('aaeccrr')) // true
+console.log(palindromeRearranging('leve')) // false
+
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit2">
+&nbsp;</a>
+		<div id="tryit2-output" style="display: none">
+			<div id="tryit2-error" class="tryit-error"></div>
+			<div id="tryit2-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit2-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit3" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_2" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="0"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 2</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="2"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  CheckRearrangePalindrome  @@END_PAGE@@ --> <div   id="page1" class="try-page" data-pagevisible="false">
+<h1 id="checkvowels">CheckVowels</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/CheckVowels.try"></i></p>
+<p>Given a string of words or phrases, count the number of vowels.
+Example: input = "hello world" return 3</p>
+
+<a id="_tryit3">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit3">
+const checkVowels = (value) =&gt; {
+  if (typeof value !== 'string') {
+    throw new TypeError('The first param should be a string')
+  }
+  const vowels = ['a', 'e', 'i', 'o', 'u']
+  let countVowels = 0
+  for (let i = 0; i &lt; value.length; i++) {
+    const char = value[i].toLowerCase()
+    if (vowels.includes(char)) {
+      countVowels++
+    }
+  }
+  return countVowels
+}
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit3">
+&nbsp;</a>
+		<div id="tryit3-output" style="display: none">
+			<div id="tryit3-error" class="tryit-error"></div>
+			<div id="tryit3-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit3-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit4" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_3" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit4">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit4">
+let testStr = 'the quick brown fox jumps over the lazy doc';
+console.log('one method',testStr.replace(/[^aeiou]/ig,'').length);
+console.log('this method',checkVowels(testStr));
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit4">
+&nbsp;</a>
+		<div id="tryit4-output" style="display: none">
+			<div id="tryit4-error" class="tryit-error"></div>
+			<div id="tryit4-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit4-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit5" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_4" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="1"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 3</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="3"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  CheckVowels  @@END_PAGE@@ --> <div   id="page2" class="try-page" data-pagevisible="false">
+<h1 id="createpurmutations">createPurmutations</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/createPurmutations.try"></i></p>
+<p>A permutation of a set is, loosely speaking, an arrangement of its members into a sequence or linear order, or if the set is already ordered, a rearrangement of its elements.
+The word "permutation" also refers to the act or process of changing the linear order of an ordered set
+More at : https://en.wikipedia.org/wiki/Permutation</p>
+
+<a id="_tryit5">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit5">
+const createPermutations = (str) =&gt; {
+// convert string to array
+  const arr = str.split('')
+
+  // get array length
+  const strLen = arr.length
+  // this will hold all the permutations
+  const perms = []
+  let rest
+  let picked
+  let restPerms
+  let next
+
+  // if strLen is zero, return the same string
+  if (strLen === 0) { return [str] }
+  // loop to the length to get all permutations
+  for (let i = 0; i &lt; strLen; i++) {
+    rest = Object.create(arr)
+    picked = rest.splice(i, 1)
+
+    restPerms = createPermutations(rest.join(''))
+
+    for (let j = 0, jLen = restPerms.length; j &lt; jLen; j++) {
+      next = picked.concat(restPerms[j])
+      perms.push(next.join(''))
+    }
+  }
+  return perms
+}
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit5">
+&nbsp;</a>
+		<div id="tryit5-output" style="display: none">
+			<div id="tryit5-error" class="tryit-error"></div>
+			<div id="tryit5-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit5-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit6" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_5" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit6">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit6">
+console.log(createPermutations('abc')) // should print ["abc", "acb", "bac", "bca", "cab", "cba"]
+
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit6">
+&nbsp;</a>
+		<div id="tryit6-output" style="display: none">
+			<div id="tryit6-error" class="tryit-error"></div>
+			<div id="tryit6-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit6-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit7" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_6" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="2"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 4</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="4"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  createPurmutations  @@END_PAGE@@ --> <div   id="page3" class="try-page" data-pagevisible="false">
+<h1 id="formatphonenumber">FormatPhoneNumber</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/FormatPhoneNumber.try"></i></p>
+<p>Function that takes 10 digits and returns a string of the formatted phone number</p>
+<p>e.g.: 1234567890 -&gt; (123) 456-7890</p>
+
+<a id="_tryit7">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit7">
+const formatPhoneNumber = (numbers) =&gt; {
+  const numbersString = numbers.toString()
+  if ((numbersString.length !== 10) || isNaN(numbersString)) {
+    // return "Invalid phone number."
+    throw new TypeError('Invalid phone number.')
+  }
+  const arr = '(XXX) XXX-XXXX'.split('')
+  Array.from(numbersString).forEach(n =&gt; {
+    arr[arr.indexOf('X')] = n
+  })
+  return arr.join('')
+}
+
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit7">
+&nbsp;</a>
+		<div id="tryit7-output" style="display: none">
+			<div id="tryit7-error" class="tryit-error"></div>
+			<div id="tryit7-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit7-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit8" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_7" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit8">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit8">
+console.log(formatPhoneNumber(1234567890), 'expect (123) 456-7890');
+console.log(formatPhoneNumber('1234567890'), 'expect (123) 456-7890');
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit8">
+&nbsp;</a>
+		<div id="tryit8-output" style="display: none">
+			<div id="tryit8-error" class="tryit-error"></div>
+			<div id="tryit8-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit8-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit9" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_8" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Alternative method</p>
+
+<a id="_tryit9">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit9">
+console.log(
+  'original: 1234567890', 
+  '1234567890'.replace(/^(\d{3})(\d{3})(\d{4}$)/, "($1) $2-$3")
+);
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit9">
+&nbsp;</a>
+		<div id="tryit9-output" style="display: none">
+			<div id="tryit9-error" class="tryit-error"></div>
+			<div id="tryit9-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit9-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit10" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_9" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="3"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 5</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="5"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  FormatPhoneNumber  @@END_PAGE@@ --> <div   id="page4" class="try-page" data-pagevisible="false">
+<h1 id="generateguid">GenerateGUID</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/GenerateGUID.try"></i></p>
+<p>Generates a UUID/GUID in Node.Js.
+The script uses <code>Math.random</code> in combination with the timestamp for better randomness.
+The function generate an RFC4122 (https://www.ietf.org/rfc/rfc4122.txt) version 4 UUID/GUID</p>
+
+<a id="_tryit10">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit10">
+const Guid = () =&gt; {
+  const pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+  let currentDateMilliseconds = new Date().getTime()
+  return pattern.replace(/[xy]/g, currentChar =&gt; {
+    const randomChar = (currentDateMilliseconds + Math.random() * 16) % 16 | 0
+    currentDateMilliseconds = Math.floor(currentDateMilliseconds / 16)
+    return (currentChar === 'x' ? randomChar : (randomChar &amp; 0x7 | 0x8)).toString(16)
+  })
+}
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit10">
+&nbsp;</a>
+		<div id="tryit10-output" style="display: none">
+			<div id="tryit10-error" class="tryit-error"></div>
+			<div id="tryit10-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit10-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit11" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_10" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit11">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit11">
+console.log(Guid()) // 'edc848db-3478-1760-8b55-7986003d895f'
+
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit11">
+&nbsp;</a>
+		<div id="tryit11-output" style="display: none">
+			<div id="tryit11-error" class="tryit-error"></div>
+			<div id="tryit11-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit11-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit12" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_11" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="4"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 6</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="6"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  GenerateGUID  @@END_PAGE@@ --> <div   id="page5" class="try-page" data-pagevisible="false">
+<h1 id="kmppatternsearching">KMPPatternSearching</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/KMPPatternSearching.try"></i></p>
+<p>Implementing KMP Search Algorithm to search all the instances of pattern in
+given text
+Reference Book: Introduction to Algorithms, CLRS</p>
+<p>Explanation: https://www.topcoder.com/community/competitive-programming/tutorials/introduction-to-string-searching-algorithms/</p>
+
+<a id="_tryit12">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit12">
+const computeLPS = (pattern) =&gt; {
+  const lps = Array(pattern.length)
+  lps[0] = 0
+  for (let i = 1; i &lt; pattern.length; i++) {
+    let matched = lps[i - 1]
+    while (matched &gt; 0 &amp;&amp; pattern[i] !== pattern[matched]) {
+      matched = lps[matched - 1]
+    }
+    if (pattern[i] === pattern[matched]) {
+      matched++
+    }
+    lps[i] = matched
+  }
+  return lps
+}
+
+const KMPSearch = (text, pattern) =&gt; {
+  if (!pattern || !text) {
+    return [] // no results
+  }
+
+  // lps[i] = length of proper prefix of pattern[0]...pattern[i-1]
+  //          which is also proper suffix of it
+  const lps = computeLPS(pattern)
+  const result = []
+
+  let matched = 0
+  for (let i = 0; i &lt; text.length; i++) {
+    while (matched &gt; 0 &amp;&amp; text[i] !== pattern[matched]) {
+      matched = lps[matched - 1]
+    }
+    if (text[i] === pattern[matched]) {
+      matched++
+    }
+    if (matched === pattern.length) {
+      result.push(i - pattern.length + 1)
+      matched = lps[matched - 1]
+    }
+  }
+
+  return result
+}
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit12">
+&nbsp;</a>
+		<div id="tryit12-output" style="display: none">
+			<div id="tryit12-error" class="tryit-error"></div>
+			<div id="tryit12-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit12-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit13" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_12" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit13">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit13">
+/*test
+
+
+
+*/
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit13">
+&nbsp;</a>
+		<div id="tryit13-output" style="display: none">
+			<div id="tryit13-error" class="tryit-error"></div>
+			<div id="tryit13-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit13-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit14" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_13" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="5"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 7</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="7"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  KMPPatternSearching  @@END_PAGE@@ --> <div   id="page6" class="try-page" data-pagevisible="false">
+<h1 id="maxcharacter">MaxCharacter</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/MaxCharacter.try"></i></p>
+<p>Given a string of characters, return the character that appears the most often.</p>
+<p>Example: input = "Hello World!" return "l"</p>
+
+<a id="_tryit14">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit14">
+const maxCharacter = (value) =&gt; {
+  if (typeof value !== 'string') {
+    throw new TypeError('The param should be a string')
+  } else if (!value) {
+    throw new Error('The param should be a valid string')
+  }
+
+  const occurrences = {}
+  for (let i = 0; i &lt; value.length; i++) {
+    const char = value[i]
+    if (/\s/.test(char)) continue
+    occurrences[char] = occurrences[char] + 1 || 1
+  }
+  let maxCharacter = null
+  let maxCount = 0
+  Object.keys(occurrences).forEach(char =&gt; {
+    if (occurrences[char] &gt; maxCount) {
+      maxCount = occurrences[char]
+      maxCharacter = char
+    }
+  })
+  return maxCharacter
+}
+
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit14">
+&nbsp;</a>
+		<div id="tryit14-output" style="display: none">
+			<div id="tryit14-error" class="tryit-error"></div>
+			<div id="tryit14-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit14-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit15" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_14" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit15">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit15">
+console.log(maxCharacter("Hello World!"), 'return l');
+console.log(maxCharacter('The param should be a valid string'));
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit15">
+&nbsp;</a>
+		<div id="tryit15-output" style="display: none">
+			<div id="tryit15-error" class="tryit-error"></div>
+			<div id="tryit15-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit15-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit16" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_15" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="6"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 8</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="8"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  MaxCharacter  @@END_PAGE@@ --> <div   id="page7" class="try-page" data-pagevisible="false">
+<h1 id="permutatestring">PermutateString</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/PermutateString.try"></i></p>
+<p>Return all permutation of a string</p>
+
+<a id="_tryit16">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit16">
+const permutate = (aString) =&gt; {
+  if (typeof aString !== 'string' || !aString) {
+    throw new Error('The arg must be a valid, non empty string')
+  }
+  const characters = aString.split('')
+  let permutations = [[characters.shift()]]
+  while (characters.length) {
+    const currentCharacter = characters.shift()
+    permutations = calculateCurrentCharacterPermutation(permutations, currentCharacter)
+  }
+  return permutations
+    .map(character =&gt; character.join(''))
+    .filter((item, index, self) =&gt; (self.indexOf(item) === index))
+    .sort()
+}
+
+const calculateCurrentCharacterPermutation = (allPermutations, currentCharacter) =&gt; {
+  const currentPermutations = []
+  allPermutations.map(permutation =&gt; {
+    let index = 0
+    while (index &lt;= permutation.length) {
+      const tmp = [...permutation]
+      tmp.splice(index, 0, currentCharacter)
+      currentPermutations.push(tmp)
+      index++
+    }
+  })
+  return currentPermutations
+}
+
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit16">
+&nbsp;</a>
+		<div id="tryit16-output" style="display: none">
+			<div id="tryit16-error" class="tryit-error"></div>
+			<div id="tryit16-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit16-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit17" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_16" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit17">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit17">
+permutate('good'); //['dgoo', 'dogo', 'doog', 'gdoo', 'godo', 'good', 'odgo', 'odog', 'ogdo', 'ogod', 'oodg', 'oogd']
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit17">
+&nbsp;</a>
+		<div id="tryit17-output" style="display: none">
+			<div id="tryit17-error" class="tryit-error"></div>
+			<div id="tryit17-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit17-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit18" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_17" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="7"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 9</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="9"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  PermutateString  @@END_PAGE@@ --> <div   id="page8" class="try-page" data-pagevisible="false">
+<h1 id="reversewords">ReverseWords</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/ReverseWords.try"></i></p>
+<p>Reverse words in a string</p>
+
+<a id="_tryit18">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit18">
+/*
+*  Doctests
+*
+* &gt; reverseWords('I Love JS')
+*  'JS Love I'
+* &gt; reverseWords('Hello World')
+*  'World Hello'
+* &gt; reverseWords('The Algorithms Javascript')
+*  'Javascript Algorithms The'
+* &gt; reverseWords([])
+*  ! TypeError
+* &gt; reverseWords({})
+*  ! TypeError
+* &gt; reverseWords(null)
+*  ! TypeError
+*/
+const reverseWords = (str) =&gt; {
+  if (typeof str !== 'string') {
+    throw new TypeError('The given value is not a string')
+  }
+  // Split string into words
+  // Ex. "I Love JS" =&gt; ["I", "Love", "JS"]
+  const words = str.split(' ')
+  // reverse words
+  // ["I", "Love", "JS"] =&gt; ["JS", "Love", "I"]
+  const reversedWords = words.reverse()
+  // join reversed words with space and return
+  // ["JS", "Love", "I"] =&gt; "JS Love I"
+  return reversedWords.join(' ')
+}
+
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit18">
+&nbsp;</a>
+		<div id="tryit18-output" style="display: none">
+			<div id="tryit18-error" class="tryit-error"></div>
+			<div id="tryit18-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit18-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit19" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_18" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit19">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit19">
+reverseWords('I Love JS')
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit19">
+&nbsp;</a>
+		<div id="tryit19-output" style="display: none">
+			<div id="tryit19-error" class="tryit-error"></div>
+			<div id="tryit19-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit19-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit20" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_19" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="8"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 10</div>
+<span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="10"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
+<br><br><div   class="verybottom" >
+                        <div   class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  ReverseWords  @@END_PAGE@@ --> <div   id="page9" class="try-page" data-pagevisible="false">
+<h1 id="validateemail">ValidateEmail</h1>
+<p><i class="icon tiny sitemap circular blue icon-right" title="Include path: try&#95;src/String/ValidateEmail.try"></i></p>
+<p>Function that takes a string input and return either true or false
+If it is a valid email address</p>
+
+<a id="_tryit20">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit20">
+/*
+*  Doctests
+*
+* &gt; validateEmail('mahfoudh.arous@gmail.com')
+*  true
+* &gt; validateEmail('mahfoudh.arous@helsinki.edu')
+*  true
+* &gt; validateEmail('mahfoudh.arous.com')
+*  false
+* &gt; validateEmail('')
+*  ! TypeError
+* &gt; validateEmail(null)
+*  ! TypeError
+*/
+const validateEmail = (str) =&gt; {
+  if (str === '' || str === null) {
+    throw new TypeError('Email Address String Null or Empty.')
+  }
+
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)
+}
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit20">
+&nbsp;</a>
+		<div id="tryit20-output" style="display: none">
+			<div id="tryit20-error" class="tryit-error"></div>
+			<div id="tryit20-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit20-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit21" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_20" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example</p>
+
+<a id="_tryit21">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit21">
+console.log(validateEmail('mahfoudh.arous@gmail.com'));
+console.log(validateEmail('mahfoudh.arous.gmail.com'));
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit21">
+&nbsp;</a>
+		<div id="tryit21-output" style="display: none">
+			<div id="tryit21-error" class="tryit-error"></div>
+			<div id="tryit21-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit21-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit22" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_21" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+
+<br/><hr /><hr /><div class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="9"><i class="left arrow icon"></i>Prev</button></span><div class="pagenum">Page - 11</div>
+</div>
+<br><br><div class="verybottom" >
+                        <div class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  ValidateEmail  @@END_PAGE@@ -->
+<script>const tryit$colors = {"original":"cobalt-original","saved":"lesser-dark","edited":"cobalt-light"}; </script>  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+  <script>
+    $('.activating.element').popup({inline: true, });
+    $('.ui.accordion').accordion();
+    $('.ui.dropdown.item').dropdown({on: 'hover'});
+    function toggle() {
+      $('.ui.sidebar').sidebar('toggle');
+    }
+  </script> 
+       </div>
+     </div>
+  </div>
+<style>
+  .back-button {
+      position: fixed !important;
+      margin-top: 2rem !important;
+      margin-left: 3rem !important;
+  }
+</style>
+<script>
+    let cc = $$.codeTransform;
+    cc.add(cc.comment);
+    cc.add(cc.class);
+    cc.add(src => src.replace(/^\s*const\s/mg,'var '));
+    cc.add(src => src.replace(/console.log/mg, '$$$$.D'));
+    cc.add(src => (console.log(src),src)); // display transformed data
+    addBackButton("../index.html");
+</script>
+
+<div class="execution progress" 
+     style="display: none;">
+<div class="title">Executing previous dependent scripts</div> 
+<div class="ui indicating progress" id="execution_progress">
+
+  <div class="bar" >
+    <div class="progress"></div>
+  </div>
+  <div class="label">Waiting to execute</div>
+</div>
+</div>
+<div class="page-change" style="display: none">
+<p class="tag-name" id="tag_name"></p>
+</div>
+
+</body></html>
