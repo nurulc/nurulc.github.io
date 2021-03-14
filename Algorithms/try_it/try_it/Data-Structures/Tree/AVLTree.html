@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="UTF-8">
+<link rel="stylesheet" href="../../stylesheets/tryit.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/lesser-dark.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldgutter.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/lint.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/dialog/dialog.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/jsx/jsx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/continuecomment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/comment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/sublime.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/selection/active-line.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldgutter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/brace-fold.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/comment-fold.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/indent-fold.min.js"></script>
+<script src="https://unpkg.com/jshint@2.12.0/dist/jshint.js"></script>
+<script src="https://unpkg.com/csslint@1.0.5/dist/csslint.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/lint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/lint/javascript-lint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/search/search.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/search/searchcursor.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/dialog/dialog.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/hint/javascript-hint.min.js"></script>
+<script src="https://unpkg.com/js-sha1/src/sha1.js"></script>
+<script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dataformsjs/js/react/jsxLoader.min.js"></script>
+<script src="../../javascript/tryit-min.js"></script>
+<title>AVLTree</title>
+<script src="/try_it/tryit-helper.js"></script></head>
+<body>
+<div class="ui sidebar inverted vertical menu toc-area">
+<div class="item"> <a href="https://github.com/nurulc/tryitjs" target="_blank"><img src="https://unpkg.com/tryitjs/tryit-small.png" title="Built using TryItJs"></a></div> 
+<div class="item">
+<div class="ui right dropdown item">
+    Options
+    <i class="dropdown icon"></i>
+    <div class="menu tryit_main">
+      <div class="item save_all">Save All Changes</div>
+      <div class="item revert_changes">Revert changes</div>
+      <div class="item clear_storage">Delete All Changes</div>
+    </div> 
+  </div>
+</div>
+<div class="item toc_title">Contents</div>
+<div id="toc_avltree"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('avltree')">AVLTree</a></div>
+      </div>
+      <div class="pusher">
+      <div class="ui grid">
+    <div class="two wide column" > <!--onclick="toggle()*/''}" title="Click to show sidebar"> -->
+      <p class="click_me" onclick="toggle()">Click to show TOC</p>
+    </div>
+    <div class="thirteen wide column" id="tryit_body">
+
+<div   id="page-1" class="try-page" data-pagevisible="false">
+<h1 id="avltree">AVLTree</h1>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: "></i></p>
+<p>Adelson-Velsky and Landis Tree
+<a href="https://en.wikipedia.org/wiki/AVL_tree">Wikipedia</a>
+<a href="http://www.youtube.com/watch?v=TbvhGcf6UJU">A video lecture</a></p>
+
+<a id="_tryit1">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit1">
+let utils;
+(function (_utils) {
+  function comparator () {
+    return function (v1, v2) {
+      if (v1 &lt; v2) {
+        return -1
+      } else if (v2 &lt; v1) {
+        return 1
+      } else {
+        return 0
+      }
+    }
+  }
+  _utils.comparator = comparator
+})(utils || (utils = {}))
+
+const AVLTree = (function () {
+  function _avl (comp) {
+    /** @public compartor function */
+    this._comp = undefined
+    if (comp !== undefined) {
+      this._comp = comp
+    } else {
+      this._comp = utils.comparator()
+    }
+    /** @public root of the AVL Tree */
+    this.root = null
+    /** @public number of elements in AVL Tree */
+    this.size = 0
+  }
+  // creates new Node Object
+  const Node = function (val) {
+    this._val = val
+    this._left = null
+    this._right = null
+    this._height = 1
+  }
+  // get height of a node
+  const getH = function (node) {
+    if (node == null) { return 0 }
+    return node._height
+  }
+  // height difference or balance factor of a node
+  const getHDiff = function (node) {
+    if (node == null) { return 0 } else { return getH(node._left) - getH(node._right) }
+  }
+  // update height of a node based on children's heights
+  const updateH = function (node) {
+    if (node == null) {
+      return
+    }
+    node._height = Math.max(getH(node._left), getH(node._right)) + 1
+  }
+  // rotations of AVL Tree
+  const leftRotate = function (node) {
+    const temp = node._right
+    node._right = temp._left
+    temp._left = node
+    updateH(node)
+    updateH(temp)
+    return temp
+  }
+  const rightRotate = function (node) {
+    const temp = node._left
+    node._left = temp._right
+    temp._right = node
+    updateH(node)
+    updateH(temp)
+    return temp
+  }
+  // check if tree is balanced else balance it for insertion
+  const insertBalance = function (node, _val, balanceFactor) {
+    if (balanceFactor &gt; 1 &amp;&amp; _val &lt; node._left._val) {
+      return rightRotate(node) // Left Left Case
+    } else if (balanceFactor &lt; 1 &amp;&amp; _val &gt; node._right._val) {
+      return leftRotate(node) // Right Right Case
+    } else if (balanceFactor &gt; 1 &amp;&amp; _val &gt; node._left._val) {
+      node._left = leftRotate(node._left) // Left Right Case
+      return rightRotate(node)
+    }
+    node._right = rightRotate(node._right)
+    return leftRotate(node)
+  }
+  // check if tree is balanced after deletion
+  const delBalance = function (node) {
+    const balanceFactor1 = getHDiff(node)
+    if (balanceFactor1 === 0 || balanceFactor1 === 1 || balanceFactor1 === -1) {
+      return node
+    }
+    if (balanceFactor1 &gt; 1) {
+      if (getHDiff(node._left) &gt;= 0) {
+        return rightRotate(node) // Left Left
+      }
+      node._left = leftRotate(node._left)
+      return rightRotate(node) // Left Right
+    }
+    if (getHDiff(node._right) &gt; 0) {
+      node._right = rightRotate(node._right)
+      return leftRotate(node) // Right Left
+    }
+    return leftRotate(node) // Rigth Right
+  }
+  // implement avl tree insertion
+  const insert = function (root, val, tree) {
+    if (root == null) {
+      tree.size++
+      return new Node(val)
+    } else if (tree._comp(root._val, val) &lt; 0) {
+      root._right = insert(root._right, val, tree)
+    } else if (tree._comp(root._val, val) &gt; 0) {
+      root._left = insert(root._left, val, tree)
+    } else {
+      return root
+    }
+    updateH(root)
+    const balanceFactor = getHDiff(root)
+    if (balanceFactor === 0 || balanceFactor === 1 || balanceFactor === -1) {
+      return root
+    }
+    return insertBalance(root, val, balanceFactor)
+  }
+  // delete a element
+  const del = function (root, _val, tree) {
+    if (root == null) {
+      return root
+    } else if (tree._comp(root._val, _val) === 0) { // key found case
+      if (root._left === null &amp;&amp; root._right === null) {
+        root = null
+        tree.size--
+      } else if (root._left === null) {
+        root = root._right
+        tree.size--
+      } else if (root._right === null) {
+        root = root._left
+        tree.size--
+      } else {
+        let temp = root._right
+        while (temp._left != null) {
+          temp = temp._left
+        }
+        root._val = temp._val
+        root._right = del(root._right, temp._val, tree)
+      }
+    } else {
+      if (tree._comp(root._val, _val) &lt; 0) {
+        root._right = del(root._right, _val, tree)
+      } else {
+        root._left = del(root._left, _val, tree)
+      }
+    }
+    updateH(root)
+    root = delBalance(root)
+    return root
+  }
+  // search tree for a element
+  const search = function (root, val, tree) {
+    if (root == null) {
+      return null
+    } else if (tree._comp(root._val, val) === 0) {
+      return root
+    } else if (tree._comp(root._val, val) &lt; 0) {
+      return search(root._right, val, tree)
+    }
+    return search(root._left, val, tree)
+  }
+
+  /* Public Functions */
+  /**
+   * For Adding Elements to AVL Tree
+   * @param {any} _val
+   * Since in AVL Tree an element can only occur once so
+   * if a element exists it return false
+   * @returns {Boolean} element added or not
+   */
+  _avl.prototype.add = function (_val) {
+    const prevSize = this.size
+    this.root = insert(this.root, _val, this)
+    if (this.size === prevSize) {
+      return false
+    }
+    return true
+  }
+  /**
+   * TO check is a particluar element exists or not
+   * @param {any} _val
+   * @returns {Boolean} exists or not
+   */
+  _avl.prototype.find = function (_val) {
+    const temp = search(this.root, _val, this)
+    if (temp != null) {
+      return true
+    }
+    return false
+  }
+  /**
+   *
+   * @param {any} _val
+   * It is possible that element doesn't exists in tree
+   * in that case it return false
+   * @returns {Boolean} if element was found and deleted
+   */
+  _avl.prototype.remove = function (_val) {
+    const prevSize = this.size
+    this.root = del(this.root, _val, this)
+    if (prevSize === this.size) {
+      return false
+    }
+    return true
+  }
+  return _avl
+}());
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit1">
+&nbsp;</a>
+		<div id="tryit1-output" style="display: none">
+			<div id="tryit1-error" class="tryit-error"></div>
+			<div id="tryit1-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit1-run" data-tooltip="Execute script (Ctrl+Enter)" class="ui  green right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit2" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_1" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<p>Example
+A Code for Testing the AVLTree</p>
+
+<a id="_tryit2">&nbsp</a>
+<div class="html ui top attached segment tryit-container " >
+	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
+		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
+			<textarea class="tryit ui " id="tryit2">
+(function test (display) {
+  const newAVL = new AVLTree()
+  const size = Math.floor(Math.random() * 1000000)
+  let uniques = 0
+  let i, temp, j
+  const array = []
+  for (i = 0; i &lt; size; i++) {
+    temp = Math.floor(Math.random() * Number.MAX_VALUE)
+    if (newAVL.add(temp)) {
+      uniques++
+      array.push(temp)
+    }
+  }
+  display("Number of items addes", uniques, "size of tree", newAVL.size);
+  if (newAVL.size !== uniques) {
+    throw new Error('elements not inserted properly')
+  }
+  let dataSet = new Set(array);
+  // Find test
+
+  const findTestSize = Math.floor(Math.random() * uniques)
+  for (i = 0; i &lt; findTestSize; i++) {
+    j = Math.floor(Math.random() * uniques)
+    if (!newAVL.find(array[j])) {
+      throw new Error('inserted elements not found')
+    }
+  }
+  display("all items #", uniques, "found");
+
+  // Not find tests
+  const findTestSize = Math.floor(Math.random() * uniques)
+  for (i = 0; i &lt; findTestSize; i++) {
+    j = Math.floor(Math.random() * Number.MAX_VALUE)
+    if (!dataSet.has(j) &amp;&amp; newAVL.find(j)) {
+      throw new Error('item should not be found ' + j)
+    }
+  }
+  display("Seraching random values test successful");
+
+  // Delete test
+  const deleteTestSize = Math.floor(uniques * Math.random())
+  for (i = 0; i &lt; deleteTestSize; i++) {
+    j = Math.floor(Math.random() * uniques)
+    temp = array[j]
+    if (newAVL.find(temp)) {
+      if (!newAVL.remove(temp)) {
+        throw new Error('delete not working properly')
+      }
+    }
+    display("delets is working")
+  }
+})((...args) =&gt; console.log(...args))
+
+module.exports = AVLTree
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit2">
+&nbsp;</a>
+		<div id="tryit2-output" style="display: none">
+			<div id="tryit2-error" class="tryit-error"></div>
+			<div id="tryit2-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit2-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit3" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_2" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+
+<br/><hr /><hr /><div class="verybottom" ><div class="pagenum">Page - 1</div>
+</div>
+<br><br><div class="verybottom" >
+                        <div class="page-footer">
+                          <a href="https://github.com/nurulc/tryitjs" target="_blank">
+                            <i class="tiny black">Built with TryITjs (v0.9.4)</i> <i class="small red external alternate icon"></i>
+                          </a>
+                        </div></div><br><br></div> <!---  AVLTree  @@END_PAGE@@ -->
+<script>const tryit$colors = {"original":"cobalt-original","saved":"lesser-dark","edited":"cobalt-light"}; </script>  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+  <script>
+    $('.activating.element').popup({inline: true, });
+    $('.ui.accordion').accordion();
+    $('.ui.dropdown.item').dropdown({on: 'hover'});
+    function toggle() {
+      $('.ui.sidebar').sidebar('toggle');
+    }
+  </script> 
+       </div>
+     </div>
+  </div>
+<script>
+/*
+if(!console.logx) {
+  console.logx = console.log;
+  console.log = function(...args) {
+    let res = args.filter(x=>x).map(x => '<pre>'+escapeHTML(x.toString())+'</pre>').join('&nbsp;');
+    $$.HTML(res+'<br>');
+  }
+}
+*/
+let cc = $$.codeTransform;
+cc.add(cc.comment);
+cc.add(cc.class);
+cc.add(src => src.replace(/^\s*const\s/mg,'var '));
+cc.add(src => src.replace(/console.log/mg, '$$$$.D'));
+cc.add(src => (console.log(src),src)); // display transformed data
+</script>
+<script>
+setNext(["Tree/BinarySearchTree.try","Stack/StackES6.try","../index.html"]);
+</script>
+
+<div class="execution progress" 
+     style="display: none;">
+<div class="title">Executing previous dependent scripts</div> 
+<div class="ui indicating progress" id="execution_progress">
+
+  <div class="bar" >
+    <div class="progress"></div>
+  </div>
+  <div class="label">Waiting to execute</div>
+</div>
+</div>
+<div class="page-change" style="display: none">
+<p class="tag-name" id="tag_name"></p>
+</div>
+
+</body></html>
