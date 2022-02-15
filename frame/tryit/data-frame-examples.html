@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 	<meta charset="UTF-8">
-<link rel="stylesheet" href="https://unpkg.com/tryitjs@0.9.2/ref/stylesheets/tryit.css" />
+<link rel="stylesheet" href="https://unpkg.com/tryitjs@0.9.6/ref/stylesheets/tryit.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
@@ -23,7 +23,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/comment/comment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/keymap/sublime.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/selection/active-line.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/2/lib/util/formatting.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/foldgutter.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/fold/brace-fold.min.js"></script>
@@ -41,7 +40,7 @@
 <script src="https://unpkg.com/js-sha1/src/sha1.js"></script>
 <script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dataformsjs/js/react/jsxLoader.min.js"></script>
-<script src="https://unpkg.com/tryitjs@0.9.2/ref/javascript/tryit-min.js"></script>
+<script src="https://unpkg.com/tryitjs@0.9.6/ref/javascript/tryit-min.js"></script>
 <title>Data Frame Examples</title>
 <meta name="viewport" content="width=device-width, initial-scale=0.7">
 <!-- Load plotly.js into the DOM -->
@@ -445,7 +444,7 @@ give a taste of some of the things it can do.</p>
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Data Frame  @@END_PAGE@@ --> <div   id="page0" class="try-page" data-pagevisible="false">
 <h1 id="gettingstarted">Getting started</h1>
@@ -504,59 +503,59 @@ give a taste of some of the things it can do.</p>
 function capitalize (value) {
   return  value.split(' ')
                   .map(wordCap)
-                .join(' ')
+                .join(' ');
 }
 
 function wordCap(word) {
   if(!word) return '';
-  return word.charAt(0).toUpperCase() + word.substr(1)
+  return word.charAt(0).toUpperCase() + word.substr(1);
 }
 
 var COLORS = {
-t10: ["#8dd3c7","#ffffb3","#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#d9d9d9","#bc80bd","#ccebc5","#ffed6f"],
-blue: ["#f7fbff", "#f6faff", "#f5fafe", "#f5f9fe", "#f4f9fe", "#f3f8fe", 
-"#f2f8fd", "#f2f7fd", "#f1f7fd", "#f0f6fd", "#eff6fc", "#eef5fc", 
-"#eef5fc", "#edf4fc", "#ecf4fb", "#ebf3fb", "#eaf3fb", "#eaf2fb", 
-"#e9f2fa", "#e8f1fa", "#e7f1fa", "#e7f0fa", "#e6f0f9", "#e5eff9",
-"#e4eff9", "#e3eef9", "#e3eef8", "#e2edf8", "#e1edf8", "#e0ecf8",
-"#e0ecf7", "#dfebf7", "#deebf7", "#ddeaf7", "#ddeaf6", "#dce9f6", 
-"#dbe9f6", "#dae8f6", "#d9e8f5", "#d9e7f5", "#d8e7f5", "#d7e6f5", 
-"#d6e6f4", "#d6e5f4", "#d5e5f4", "#d4e4f4", "#d3e4f3", "#d2e3f3", 
-"#d2e3f3", "#d1e2f3", "#d0e2f2", "#cfe1f2", "#cee1f2", "#cde0f1", 
-"#cce0f1", "#ccdff1", "#cbdff1", "#cadef0", "#c9def0", "#c8ddf0", 
-"#c7ddef", "#c6dcef", "#c5dcef", "#c4dbee", "#c3dbee", "#c2daee", 
-"#c1daed", "#c0d9ed", "#bfd9ec", "#bed8ec", "#bdd8ec", "#bcd7eb", 
-"#bbd7eb", "#b9d6eb", "#b8d5ea", "#b7d5ea", "#b6d4e9", "#b5d4e9", 
-"#b4d3e9", "#b2d3e8", "#b1d2e8", "#b0d1e7", "#afd1e7", "#add0e7", 
-"#acd0e6", "#abcfe6", "#a9cfe5", "#a8cee5", "#a7cde5", "#a5cde4", 
-"#a4cce4", "#a3cbe3", "#a1cbe3", "#a0cae3", "#9ec9e2", "#9dc9e2", 
-"#9cc8e1", "#9ac7e1", "#99c6e1", "#97c6e0", "#96c5e0", "#94c4df", 
-"#93c3df", "#91c3df", "#90c2de", "#8ec1de", "#8dc0de", "#8bc0dd", 
-"#8abfdd", "#88bedc", "#87bddc", "#85bcdc", "#84bbdb", "#82bbdb", 
-"#81badb", "#7fb9da", "#7eb8da", "#7cb7d9", "#7bb6d9", "#79b5d9", 
-"#78b5d8", "#76b4d8", "#75b3d7", "#73b2d7", "#72b1d7", "#70b0d6", 
-"#6fafd6", "#6daed5", "#6caed5", "#6badd5", "#69acd4", "#68abd4", 
- "#66aad3", "#65a9d3", "#63a8d2", "#62a7d2", "#61a7d1", "#5fa6d1", 
- "#5ea5d0", "#5da4d0", "#5ba3d0", "#5aa2cf", "#59a1cf", "#57a0ce", 
- "#569fce", "#559ecd", "#549ecd", "#529dcc", "#519ccc", "#509bcb", 
- "#4f9acb", "#4d99ca", "#4c98ca", "#4b97c9", "#4a96c9", "#4895c8", 
- "#4794c8", "#4693c7", "#4592c7", "#4492c6", "#4391c6", "#4190c5", 
- "#408fc4", "#3f8ec4", "#3e8dc3", "#3d8cc3", "#3c8bc2", "#3b8ac2", 
- "#3a89c1", "#3988c1", "#3787c0", "#3686c0", "#3585bf", "#3484bf", 
- "#3383be", "#3282bd", "#3181bd", "#3080bc", "#2f7fbc", "#2e7ebb", 
- "#2d7dbb", "#2c7cba", "#2b7bb9", "#2a7ab9", "#2979b8", "#2878b8", 
- "#2777b7", "#2676b6", "#2574b6", "#2473b5", "#2372b4", "#2371b4", 
- "#2270b3", "#216fb3", "#206eb2", "#1f6db1", "#1e6cb0", "#1d6bb0", 
- "#1c6aaf", "#1c69ae", "#1b68ae", "#1a67ad", "#1966ac", "#1865ab", 
- "#1864aa", "#1763aa", "#1662a9", "#1561a8", "#1560a7", "#145fa6", 
- "#135ea5", "#135da4", "#125ca4", "#115ba3", "#115aa2", "#1059a1", 
- "#1058a0", "#0f579f", "#0e569e", "#0e559d", "#0e549c", "#0d539a", 
- "#0d5299", "#0c5198", "#0c5097", "#0b4f96", "#0b4e95", "#0b4d93", 
- "#0b4c92", "#0a4b91", "#0a4a90", "#0a498e", "#0a488d", "#09478c", 
- "#09468a", "#094589", "#094487", "#094386", "#094285", "#094183", 
- "#084082", "#083e80", "#083d7f", "#083c7d", "#083b7c", "#083a7a", 
- "#083979", "#083877", "#083776", "#083674", "#083573", "#083471", 
- "#083370", "#08326e", "#08316d", "#08306b"],
+t10: ['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5','#ffed6f'],
+blue: ['#f7fbff', '#f6faff', '#f5fafe', '#f5f9fe', '#f4f9fe', '#f3f8fe', 
+'#f2f8fd', '#f2f7fd', '#f1f7fd', '#f0f6fd', '#eff6fc', '#eef5fc', 
+'#eef5fc', '#edf4fc', '#ecf4fb', '#ebf3fb', '#eaf3fb', '#eaf2fb', 
+'#e9f2fa', '#e8f1fa', '#e7f1fa', '#e7f0fa', '#e6f0f9', '#e5eff9',
+'#e4eff9', '#e3eef9', '#e3eef8', '#e2edf8', '#e1edf8', '#e0ecf8',
+'#e0ecf7', '#dfebf7', '#deebf7', '#ddeaf7', '#ddeaf6', '#dce9f6', 
+'#dbe9f6', '#dae8f6', '#d9e8f5', '#d9e7f5', '#d8e7f5', '#d7e6f5', 
+'#d6e6f4', '#d6e5f4', '#d5e5f4', '#d4e4f4', '#d3e4f3', '#d2e3f3', 
+'#d2e3f3', '#d1e2f3', '#d0e2f2', '#cfe1f2', '#cee1f2', '#cde0f1', 
+'#cce0f1', '#ccdff1', '#cbdff1', '#cadef0', '#c9def0', '#c8ddf0', 
+'#c7ddef', '#c6dcef', '#c5dcef', '#c4dbee', '#c3dbee', '#c2daee', 
+'#c1daed', '#c0d9ed', '#bfd9ec', '#bed8ec', '#bdd8ec', '#bcd7eb', 
+'#bbd7eb', '#b9d6eb', '#b8d5ea', '#b7d5ea', '#b6d4e9', '#b5d4e9', 
+'#b4d3e9', '#b2d3e8', '#b1d2e8', '#b0d1e7', '#afd1e7', '#add0e7', 
+'#acd0e6', '#abcfe6', '#a9cfe5', '#a8cee5', '#a7cde5', '#a5cde4', 
+'#a4cce4', '#a3cbe3', '#a1cbe3', '#a0cae3', '#9ec9e2', '#9dc9e2', 
+'#9cc8e1', '#9ac7e1', '#99c6e1', '#97c6e0', '#96c5e0', '#94c4df', 
+'#93c3df', '#91c3df', '#90c2de', '#8ec1de', '#8dc0de', '#8bc0dd', 
+'#8abfdd', '#88bedc', '#87bddc', '#85bcdc', '#84bbdb', '#82bbdb', 
+'#81badb', '#7fb9da', '#7eb8da', '#7cb7d9', '#7bb6d9', '#79b5d9', 
+'#78b5d8', '#76b4d8', '#75b3d7', '#73b2d7', '#72b1d7', '#70b0d6', 
+'#6fafd6', '#6daed5', '#6caed5', '#6badd5', '#69acd4', '#68abd4', 
+ '#66aad3', '#65a9d3', '#63a8d2', '#62a7d2', '#61a7d1', '#5fa6d1', 
+ '#5ea5d0', '#5da4d0', '#5ba3d0', '#5aa2cf', '#59a1cf', '#57a0ce', 
+ '#569fce', '#559ecd', '#549ecd', '#529dcc', '#519ccc', '#509bcb', 
+ '#4f9acb', '#4d99ca', '#4c98ca', '#4b97c9', '#4a96c9', '#4895c8', 
+ '#4794c8', '#4693c7', '#4592c7', '#4492c6', '#4391c6', '#4190c5', 
+ '#408fc4', '#3f8ec4', '#3e8dc3', '#3d8cc3', '#3c8bc2', '#3b8ac2', 
+ '#3a89c1', '#3988c1', '#3787c0', '#3686c0', '#3585bf', '#3484bf', 
+ '#3383be', '#3282bd', '#3181bd', '#3080bc', '#2f7fbc', '#2e7ebb', 
+ '#2d7dbb', '#2c7cba', '#2b7bb9', '#2a7ab9', '#2979b8', '#2878b8', 
+ '#2777b7', '#2676b6', '#2574b6', '#2473b5', '#2372b4', '#2371b4', 
+ '#2270b3', '#216fb3', '#206eb2', '#1f6db1', '#1e6cb0', '#1d6bb0', 
+ '#1c6aaf', '#1c69ae', '#1b68ae', '#1a67ad', '#1966ac', '#1865ab', 
+ '#1864aa', '#1763aa', '#1662a9', '#1561a8', '#1560a7', '#145fa6', 
+ '#135ea5', '#135da4', '#125ca4', '#115ba3', '#115aa2', '#1059a1', 
+ '#1058a0', '#0f579f', '#0e569e', '#0e559d', '#0e549c', '#0d539a', 
+ '#0d5299', '#0c5198', '#0c5097', '#0b4f96', '#0b4e95', '#0b4d93', 
+ '#0b4c92', '#0a4b91', '#0a4a90', '#0a498e', '#0a488d', '#09478c', 
+ '#09468a', '#094589', '#094487', '#094386', '#094285', '#094183', 
+ '#084082', '#083e80', '#083d7f', '#083c7d', '#083b7c', '#083a7a', 
+ '#083979', '#083877', '#083776', '#083674', '#083573', '#083471', 
+ '#083370', '#08326e', '#08316d', '#08306b'],
 };
             
 
@@ -569,7 +568,7 @@ blue: ["#f7fbff", "#f6faff", "#f5fafe", "#f5f9fe", "#f4f9fe", "#f3f8fe",
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Getting started  @@END_PAGE@@ --> <div   id="page1" class="try-page" data-pagevisible="false">
 <h1 id="getdataworldcovidreport">Get Data - World Covid Report</h1>
@@ -697,7 +696,7 @@ covidFrame.slice(0,20);
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Get Data - World Covid Report  @@END_PAGE@@ --> <div   id="page2" class="try-page" data-pagevisible="false">
 <h1 id="improvingrenderingofframe">Improving rendering of frame</h1>
@@ -825,7 +824,7 @@ covidFrame.filter(ro =&gt; ro.iso_code === 'USA');
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Improving rendering of frame  @@END_PAGE@@ --> <div   id="page3" class="try-page" data-pagevisible="false">
 <h1 id="letsplotsomedata">Lets plot some data</h1>
@@ -984,7 +983,7 @@ Click <i class="caret right icon"></i> to show the code</p>
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Lets plot some data  @@END_PAGE@@ --> <div   id="page4" class="try-page" data-pagevisible="false">
 <h1 id="organizethecoviddata">Organize the covid data</h1>
@@ -1063,7 +1062,7 @@ countries.filter(ro =&gt; ro.iso_code === 'USA')
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Organize the covid data  @@END_PAGE@@ --> <div   id="page5" class="try-page" data-pagevisible="false">
 <h1 id="rollingupdata">Rolling Up Data</h1>
@@ -1200,7 +1199,7 @@ rather than extract from the individual nation's column for the same. </p>
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Rolling Up Data  @@END_PAGE@@ --> <div   id="page6" class="try-page" data-pagevisible="false">
 <h1 id="framesummarycontinent">Frame summary - continent</h1>
@@ -1478,7 +1477,7 @@ $$.D(showPie( sc ), showPie( sc, { value: 'total_deaths' } ));
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Frame summary - continent  @@END_PAGE@@ --> <div   id="page7" class="try-page" data-pagevisible="false">
 <h1 id="morerollup">More Rollup</h1>
@@ -1858,7 +1857,7 @@ _.add('isLog', true);
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  More Rollup  @@END_PAGE@@ --> <div   id="page8" class="try-page" data-pagevisible="false">
 <h1 id="morecovidframe">More Covid Frame</h1>
@@ -1972,7 +1971,7 @@ new Frame(data, ['Type',"Col_Name", "Non_empty_cells"])
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  More Covid Frame  @@END_PAGE@@ --> <div   id="page9" class="try-page" data-pagevisible="false">
 <h1 id="getridofunnecessarycolumns">Get rid of unnecessary columns</h1>
@@ -2429,7 +2428,7 @@ covidFrame.filter(r =&gt; r.location === 'Brazil')
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Get rid of unnecessary columns  @@END_PAGE@@ --> <div   id="page10" class="try-page" data-pagevisible="false">
 <h1 id="splitcovidframe">Split COVID frame</h1>
@@ -2581,7 +2580,7 @@ $$.D(summary.asObj(0)); // show the original data
 <br><br><div   class="verybottom" >
                         <div   class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!---  Split COVID frame  @@END_PAGE@@ --> <div   id="page11" class="try-page" data-pagevisible="false">
 <h1 id="summarizetheinformationbycontinent">Summarize the information by continent</h1>
@@ -2942,7 +2941,7 @@ covidFrame.groupBy(['iso_code', 'location']).filter(ro =&gt; !ro.iso_code)
 <br><br><div class="verybottom" >
                         <div class="page-footer">
                           <a href="https://github.com/nurulc/tryitjs" target="_blank">
-                            <i class="tiny black">Built with TryITjs (v0.9.2)</i> <i class="small red external alternate icon"></i>
+                            <i class="tiny black">Built with TryITjs (v0.9.6)</i> <i class="small red external alternate icon"></i>
                           </a>
                         </div></div><br><br></div> <!--- Summarize the information by continent  @@END_PAGE@@ -->
 <script>const tryit$colors = {"original":"cobalt-original","saved":"lesser-dark","edited":"cobalt-light"}; </script>  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
