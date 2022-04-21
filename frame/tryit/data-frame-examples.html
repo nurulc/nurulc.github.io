@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 	<meta charset="UTF-8">
-<link rel="stylesheet" href="https://unpkg.com/tryitjs@0.9.7/ref/stylesheets/tryit.css" />
+<link rel="stylesheet" href="./stylesheets/tryit.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/default.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
@@ -40,7 +40,7 @@
 <script src="https://unpkg.com/js-sha1/src/sha1.js"></script>
 <script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dataformsjs/js/react/jsxLoader.min.js"></script>
-<script src="https://unpkg.com/tryitjs@0.9.7/ref/javascript/tryit-min.js"></script>
+<script src="./javascript/tryit-min.js"></script>
 <title>Data Frame Examples</title>
 <meta name="viewport" content="width=device-width, initial-scale=0.7">
 <!-- Load plotly.js into the DOM -->
@@ -1728,18 +1728,33 @@ let continentDropdown = `
   ${options(countryContinent.filter(ro =&gt; ro.iso_code === ro.location), 'North America')}
 &lt;/select&gt;`;
 
+var setLinearOrLog = `&lt;p class="ui header huge"&gt;Y Scale&lt;/p&gt;
+&lt;div class="ui form"&gt;
+  &lt;div class="inline fields"&gt;
+    &lt;div class="field"&gt;
+    &lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange = "scaleOnChange(this)"/&gt;
+    &lt;label for="IsLinear"&gt; Linear Axis&lt;/label&gt; &lt;br /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;`;
+
+function scaleOnChange(element) {
+ selCountry({ isLinear: element.checked});
+}
+
+
 // ================================================================================================================ 
 // Render dropdowns
 
 
-$$.D(HTML(countryDropdown),HTML(continentDropdown));
+$$.D(HTML(countryDropdown),HTML(continentDropdown), HTML(setLinearOrLog));
 
 // =================================================PLOTTING UTILS===================================================
 // Find out the location fo the current tryit script
 let dn = $$.executeDiv +'-plot';
 
 
-var OPTS = ({ C: 'USA', R: 'North America'});
+var OPTS = ({ C: 'USA', R: 'North America', isLinear: true});
 var isLinear = true;
 function selCountry(opts) {
   console.log(opts);
@@ -1747,7 +1762,7 @@ function selCountry(opts) {
     OPTS = Object.assign(OPTS, opts);
     console.log(OPTS);
   }
-  doPlotLines(countryContinent,[OPTS.C, OPTS.R], dn,isLinear, {scrollZoom: true});
+  doPlotLines(countryContinent,[OPTS.C, OPTS.R], dn,OPTS.isLinear, {scrollZoom: true});
 }
 
 
@@ -1758,6 +1773,9 @@ $$.lastly(true,
   () =&gt; doPlotLines(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
 );
 isLinear = true;
+      
+
+
 			</textarea>
 		</div>
 		<a class="tryit-anchor" id="_end_tryit20">
@@ -1773,29 +1791,90 @@ isLinear = true;
 </div>
 <h2 id="someuitest">Some UI Test</h2>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<p>This example uses React/jsx for inline rendering using components provided by <em>react-semantic-ui</em></p>
+<ul>
+<li>https://react.semantic-ui.com/</li>
+</ul>
+<p>This section will demonstrate how to build some custom UI. The following use cases will be used.</p>
+<ol>
+<li>Create a dropdown, for a categoryized list of items<ol>
+<li>Using UIcategoryList - a function to generate the necessary HTML</li>
+<li>Show how to respond to a selection </li></ol></li>
+<li>Use react JSX to create UI components</li>
+<li>Create a simple Recat component (click counter) that manages its </li>
+</ol>
 
 <a id="_tryit21">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
 	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
 		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
 			<textarea class="tryit ui " id="tryit21">
+// Create a dropdown list of categorized items 
 let list =[];
 function add(category, ...values) {
   let base = list.length;
   let newList = values.map((title,ix) =&gt;({id: base+ix, category, title }))
   list = [...list, ...newList];
 }
-add('alpha', 'ab','bc','ca');
-add('num', '1','2','3');
+add('Cities', 'New York','London','Cairo', 'Beijing', 'Sidney', 'Jakarta');
+add('Math Constants', '3.1416 π','2.71828 e','1.6180 φ golden ratio', '1.6180 sqrt(2)');
 add('punc', '!@a','@#2','#!3');
 
-var xxx = UIcategoryList( list, 
-  {placeholder: 'abc 123 !@#', 
-   caption: 'My Caption', onSelect: r =&gt; console.log(r)});
-$$.D(xxx, HTML('&lt;div style="height: 20rem" /&gt;'));
+var myCatList = UIcategoryList( 
+  list, 
+  {
+   placeholder: 'abc 123 !@#', 
+   caption: 'Select City/Number/Punctuation', onSelect: r =&gt; alert(JSON.stringify(r)) 
+  }
+);
+$$.D(myCatList, HTML('&lt;div style="height: 20rem" /&gt;'));
 
 
+// Add a green download button 
+const {Button, Icon} = semanticUIReact;
+$$.D( // JSX component
+  &lt;Button size='small' color='green' onClick={() =&gt; alert('download')}&gt;
+    &lt;Icon name='download' /&gt;
+    Download
+ &lt;/Button&gt;
+);
 
+// Add a red like button
+$$.D(&lt;Button icon='like' color="red"&gt;Like&amp;nbsp; &lt;Icon name="like" /&gt;&lt;/Button&gt;)     
+
+// React using functional states, button that counts clicks
+const { useState } = React;
+
+function ClickCounter() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+  const incCount = () =&gt; setCount(count + 1);
+  return (
+    &lt;div&gt;
+      &lt;Button size="large"  color="blue" onClick={incCount}&gt;
+        Click me ( count: {count} )
+        &lt;Icon name="bell" /&gt;
+      &lt;/Button&gt;
+    &lt;/div&gt;
+  );
+}
+$$.D(&lt;ClickCounter /&gt;) // render the click counter
+
+
+			</textarea>
+		</div>
+		<a class="tryit-anchor" id="_end_tryit21">
+&nbsp;</a>
+		<div id="tryit21-output" style="display: none">
+			<div id="tryit21-error" class="tryit-error"></div>
+			<div id="tryit21-display" class="tryit-display rendered_html"></div>
+		</div>	</div>	<div class="ui top attached label">
+		<button id="tryit21-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit22" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
+ &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
+ &nbsp; <button id="save_21" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+	</div>
+</div>
+<script>
 var EventItem = class {
   constructor(context, name, value, type, range) {
     this.context = context;
@@ -1823,8 +1902,8 @@ _.add('isLog', true);
 .add('country', 'USA', __.CATEGOTY_LIST, countryList)
 .add('continent', 'North America', __.LIST, continentList)
 .add('columns', ['new_deaths],__.LIST, columnList)
-.on('country' (_) =&gt; {_.continent.set(_.country.value.category)})
-.trigger((_) =&gt; {
+.on('country' (_) => {_.continent.set(_.country.value.category)})
+.trigger((_) => {
     doPlot(_.country.value.id, _.continent.value.id, _.isLog.value, _.columns.values() );
     _.continent.value.category);
 })
@@ -1835,23 +1914,11 @@ _.add('isLog', true);
 // EventContext.types = {
 //   "boolean"
 
-// function checkBox(    
+// function checkBox(  
 
-  
 
-			</textarea>
-		</div>
-		<a class="tryit-anchor" id="_end_tryit21">
-&nbsp;</a>
-		<div id="tryit21-output" style="display: none">
-			<div id="tryit21-error" class="tryit-error"></div>
-			<div id="tryit21-display" class="tryit-display rendered_html"></div>
-		</div>	</div>	<div class="ui top attached label">
-		<button id="tryit21-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit22" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
- &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="save_21" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
-	</div>
-</div>
+/// Work in progress
+</script>
 <p><br/><hr /><hr /><div   class="verybottom" ><span style="float: left"><button class="large ui left floated blue labeled icon button page_prev" data-page="7"><i class="left arrow icon"></i>Prev</button></span><div   class="pagenum">Page - 9</div>
 <span style="float: right"> <button class="ui large right labeled icon  green button page_next" data-page="9"> Next  <i class="right arrow floated icon"></i> </button> </span></div>
 <br><br><div   class="verybottom" >

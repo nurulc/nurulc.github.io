@@ -325,128 +325,199 @@
 
       
 !tryit
-    // ================================== UI TO Select a country  and continent ============================
+  // ================================== UI TO Select a country  and continent ============================
 
 
-    // ======================  Selector for country ==================
+  // ======================  Selector for country ==================
 
-    let countryDropdown = UIcategoryList(
-        countryContinent.groupBy(['iso_code=ID', 'location=title', 'continent=category']).asObjList(), // list of items to select from
-        { caption: 'Select Country', 
-         onSelect: result => selCountry({C: result.ID})
-         }
-      );
-
-    // ================ Selector for continents ==================
-
-    function options(countryContinent, selected) {
-      return countryContinent.groupBy(['iso_code', 'location'])
-                    .sort(['location'])
-                    .map(ro=> `<option value="${ro.iso_code}" ${ro.location === selected?'selected':''}>${ro.location} 
-                                    
-                               </option>`)
-                    .join('\n');
-    }
-
-    let continentDropdown = `
-    <p class="ui header huge">Select a Continent</p>
-    <select class="ui selection dropdown" 
-            name="continents" id="continents" 
-            onchange="selCountry({R: this.value})">
-      ${options(countryContinent.filter(ro => ro.iso_code === ro.location), 'North America')}
-    </select>`;
-
-    // ================================================================================================================ 
-    // Render dropdowns
-
-
-    $$.D(HTML(countryDropdown),HTML(continentDropdown));
-
-    // =================================================PLOTTING UTILS===================================================
-    // Find out the location fo the current tryit script
-    let dn = $$.executeDiv +'-plot';
-
-
-    var OPTS = ({ C: 'USA', R: 'North America'});
-    var isLinear = true;
-    function selCountry(opts) {
-      console.log(opts);
-      if(opts) {
-        OPTS = Object.assign(OPTS, opts);
-        console.log(OPTS);
-      }
-      doPlotLines(countryContinent,[OPTS.C, OPTS.R], dn,isLinear, {scrollZoom: true});
-    }
-
-
-    // ===================== Plot initial data ============================
-
-    $$.HTML(`<div id="${dn}" class="plot" />`);
-    $$.lastly(true,
-      () => doPlotLines(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
+  let countryDropdown = UIcategoryList(
+      countryContinent.groupBy(['iso_code=ID', 'location=title', 'continent=category']).asObjList(), // list of items to select from
+      { caption: 'Select Country', 
+       onSelect: result => selCountry({C: result.ID})
+       }
     );
-    isLinear = true;
-!md 
 
-## Some UI Test 
+  // ================ Selector for continents ==================
+
+  function options(countryContinent, selected) {
+    return countryContinent.groupBy(['iso_code', 'location'])
+                  .sort(['location'])
+                  .map(ro=> `<option value="${ro.iso_code}" ${ro.location === selected?'selected':''}>${ro.location} 
+                                  
+                             </option>`)
+                  .join('\n');
+  }
+
+  let continentDropdown = `
+  <p class="ui header huge">Select a Continent</p>
+  <select class="ui selection dropdown" 
+          name="continents" id="continents" 
+          onchange="selCountry({R: this.value})">
+    ${options(countryContinent.filter(ro => ro.iso_code === ro.location), 'North America')}
+  </select>`;
+
+  var setLinearOrLog = `<p class="ui header huge">Y Scale</p>
+  <div class="ui form">
+    <div class="inline fields">
+      <div class="field">
+      <input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange = "scaleOnChange(this)"/>
+      <label for="IsLinear"> Linear Axis</label> <br />
+      </div>
+    </div>
+  </div>`;
+
+  function scaleOnChange(element) {
+   selCountry({ isLinear: element.checked});
+  }
+
+
+  // ================================================================================================================ 
+  // Render dropdowns
+
+
+  $$.D(HTML(countryDropdown),HTML(continentDropdown), HTML(setLinearOrLog));
+
+  // =================================================PLOTTING UTILS===================================================
+  // Find out the location fo the current tryit script
+  let dn = $$.executeDiv +'-plot';
+
+
+  var OPTS = ({ C: 'USA', R: 'North America', isLinear: true});
+  var isLinear = true;
+  function selCountry(opts) {
+    console.log(opts);
+    if(opts) {
+      OPTS = Object.assign(OPTS, opts);
+      console.log(OPTS);
+    }
+    doPlotLines(countryContinent,[OPTS.C, OPTS.R], dn,OPTS.isLinear, {scrollZoom: true});
+  }
+
+
+  // ===================== Plot initial data ============================
+
+  $$.HTML(`<div id="${dn}" class="plot" />`);
+  $$.lastly(true,
+    () => doPlotLines(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
+  );
+  isLinear = true;
+        
+
+
+!md 
+  
+  ## Some UI Test 
+
+  This example uses React/jsx for inline rendering using components provided by _react-semantic-ui_
+
+  * https://react.semantic-ui.com/
+
+  This section will demonstrate how to build some custom UI. The following use cases will be used.
+
+  1. Create a dropdown, for a categoryized list of items
+      1. Using UIcategoryList - a function to generate the necessary HTML
+      2. Show how to respond to a selection 
+  2. Use react JSX to create UI components
+  3. Create a simple Recat component (click counter) that manages its 
+
 
 !tryit
+    // Create a dropdown list of categorized items 
     let list =[];
     function add(category, ...values) {
       let base = list.length;
       let newList = values.map((title,ix) =>({id: base+ix, category, title }))
       list = [...list, ...newList];
     }
-    add('alpha', 'ab','bc','ca');
-    add('num', '1','2','3');
+    add('Cities', 'New York','London','Cairo', 'Beijing', 'Sidney', 'Jakarta');
+    add('Math Constants', '3.1416 π','2.71828 e','1.6180 φ golden ratio', '1.6180 sqrt(2)');
     add('punc', '!@a','@#2','#!3');
 
-var xxx = UIcategoryList( list, 
-      {placeholder: 'abc 123 !@#', 
-       caption: 'My Caption', onSelect: r => console.log(r)});
-    $$.D(xxx, HTML('<div style="height: 20rem" />'));
-    
+    var myCatList = UIcategoryList( 
+      list, 
+      {
+       placeholder: 'abc 123 !@#', 
+       caption: 'Select City/Number/Punctuation', onSelect: r => alert(JSON.stringify(r)) 
+      }
+    );
+    $$.D(myCatList, HTML('<div style="height: 20rem" />'));
 
 
-    var EventItem = class {
-      constructor(context, name, value, type, range) {
-        this.context = context;
-        this.name = name; 
-        this._value = value; 
-        this.type = type || getType(value, range); 
-        this.range = range;
-      }
-      get value() {
-      }
+    // Add a green download button 
+    const {Button, Icon} = semanticUIReact;
+    $$.D( // JSX component
+      <Button size='small' color='green' onClick={() => alert('download')}>
+        <Icon name='download' />
+        Download
+     </Button>
+    );
+
+    // Add a red like button
+    $$.D(<Button icon='like' color="red">Like&nbsp; <Icon name="like" /></Button>)     
+
+    // React using functional states, button that counts clicks
+    const { useState } = React;
+
+    function ClickCounter() {
+      // Declare a new state variable, which we'll call "count"
+      const [count, setCount] = useState(0);
+      const incCount = () => setCount(count + 1);
+      return (
+        <div>
+          <Button size="large"  color="blue" onClick={incCount}>
+            Click me ( count: {count} )
+            <Icon name="bell" />
+          </Button>
+        </div>
+      );
     }
-    var EventContext = class {
-      add(name,value,type, range) {
-        let self = this;
-        this[name] = { _value: value=== undefined?type.default():type, type, range, set: function(v) {this.value = v; } };
-        return this;
-      }
-    }
+    $$.D(<ClickCounter />) // render the click counter
+
+
+!html
+<script>
+var EventItem = class {
+  constructor(context, name, value, type, range) {
+    this.context = context;
+    this.name = name; 
+    this._value = value; 
+    this.type = type || getType(value, range); 
+    this.range = range;
+  }
+  get value() {
+  }
+}
+var EventContext = class {
+  add(name,value,type, range) {
+    let self = this;
+    this[name] = { _value: value=== undefined?type.default():type, type, range, set: function(v) {this.value = v; } };
+    return this;
+  }
+}
 
 /*
 
-   cont __ = EventContext.types;
-   let _ = new EventContext();
-   _.add('isLog', true);
-    .add('country', 'USA', __.CATEGOTY_LIST, countryList)
-    .add('continent', 'North America', __.LIST, continentList)
-    .add('columns', ['new_deaths],__.LIST, columnList)
-    .on('country' (_) => {_.continent.set(_.country.value.category)})
-    .trigger((_) => {
-        doPlot(_.country.value.id, _.continent.value.id, _.isLog.value, _.columns.values() );
-        _.continent.value.category);
-    })
+cont __ = EventContext.types;
+let _ = new EventContext();
+_.add('isLog', true);
+.add('country', 'USA', __.CATEGOTY_LIST, countryList)
+.add('continent', 'North America', __.LIST, continentList)
+.add('columns', ['new_deaths],__.LIST, columnList)
+.on('country' (_) => {_.continent.set(_.country.value.category)})
+.trigger((_) => {
+    doPlot(_.country.value.id, _.continent.value.id, _.isLog.value, _.columns.values() );
+    _.continent.value.category);
+})
 
 
- */
+*/
 
 // EventContext.types = {
 //   "boolean"
-  
-// function checkBox(    
 
-      
+// function checkBox(  
+
+
+/// Work in progress
+</script>
+!md      
