@@ -304,7 +304,7 @@
           p = _ref4[0],
           h1 = _ref4[1];
 
-      return lookup[p] = h1.substr(1);
+      return h1 ? lookup[p] = h1.substr(1) : undefined;
     });
     return lookup; // =============================
 

@@ -1,0 +1,22 @@
+!html
+<div class="mermaidx" style="display: none">
+graph LR
+A[(claims)] --> B(bundler)
+R[(bundle rules)] --> B
+B --> E[(Episodes)]
+B --> CC[(claims classifier)]
+B --> K[(Code 'ICD, CPT' Usage by episode)]
+</div>
+
+
+@@include workflow.svg
+!md
+
+```mermaid
+graph LR
+A[(claims)] --> B(bundler)
+R[(bundle rules)] --> B
+B --> E[(Episodes)]
+B --> CC[(claims classifier)]
+B --> K[(Code 'ICD, CPT' Usage by episode)]
+```
