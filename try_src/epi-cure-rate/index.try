@@ -29,7 +29,8 @@ that into which the members can be placed. This is also known as claim bundling.
 !html
 <!-- @@include diagram-editor.try-->
 <img src="epi-cure-rate-arch.png" />
-
+<br />
+<a href="live-diagram-editor.html"><span style="font-size: 2rem">Live Editor</span></a>
 !md
 
 # Web Application

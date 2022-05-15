@@ -1,0 +1,6 @@
+!head
+<title>Live diagram editor</title>
+!md
+# Live diagram editor
+
+@@include not-working-diagram-editor.try
