@@ -35,15 +35,54 @@ that into which the members can be placed. This is also known as claim bundling.
 
 # Web Application
 
+Give overview of the application(s) the purpose they serve...
+
 ## Episode Definition Analyzer
+
+* Show structure of the rules as a terr
+* Show details of the rules for any episode
+* Rules consiste of the following:
+		* Triggers - rule to trigger an episode
+		* Inclusions - rules to determine which services (claim lines) get included in teh edisode
+		* Rules for determining the severity of the condition (risk factors and comorbidities)
+* Rules are based of the following attributes of a claim or claim line
+		* ICD diagnosis code
+		* The service provided (CPT, ICD procedure code, revenue codes)
+		* Modifiers
+		* Place of service
+		* Age
+		* Gender
+		* How much of the claim to include
+* Pricing of the episode (more details below)
+
 
 Lorem ipsum in do tempor reprehenderit in reprehenderit fugiat non commodo id laboris nostrud consequat sint amet. Eiusmod aliquip nulla sint ea amet sint pariatur ad sunt exercitation proident id magna esse irure irure mollit commodo tempor laborum ea commodo mollit culpa sed dolor eiusmod dolore ut minim quis dolor dolor officia eiusmod non consectetur consectetur deserunt ut irure esse veniam sed sunt proident dolor in enim deserunt non nisi occaecat consectetur sunt nulla exercitation dolor commodo anim in excepteur ea dolore dolor aute aliqua est cillum aliqua laboris exercitation aliqua in laborum ex cupidatat voluptate proident proident aliquip dolore ut eu do duis dolore labore est officia dolor sint non anim aliqua amet duis in laborum eu aliquip amet amet exercitation aute sunt adipisicing dolor laboris ea excepteur ullamco aliquip officia dolor aliquip eu et consequat est culpa magna ut fugiat officia aute aute esse occaecat eu ex commodo non elit laborum nisi ad magna ea enim ullamco pariatur amet voluptate id ad in officia nisi ullamco nisi.
 
 ## Rules Editor
 
+This a simple to use editor that can edit individual rule, add new rules an immediately check the rules against large claim cohorts (1 million claim lines) in a few seconds.
+
+* Create ICD code groups
+* Servide code groups
+* Age groups
+* ...
+
+
 Quis in dolor sint fugiat in duis voluptate proident reprehenderit deserunt ut do ut mollit labore ullamco mollit quis esse duis commodo sit ut dolor nulla tempor eiusmod quis amet et sint sunt irure consectetur eiusmod excepteur ea deserunt est amet proident eiusmod deserunt magna enim ullamco sed occaecat eu commodo quis in adipisicing amet dolore occaecat ad aute adipisicing nisi aliquip eiusmod culpa mollit adipisicing tempor nisi ut exercitation ut consequat aute aliqua mollit tempor amet elit esse consequat occaecat adipisicing dolor ea adipisicing incididunt aliquip proident in ut sint et nisi non aliquip magna ex ex consequat nisi duis in cupidatat aliquip occaecat aute cillum culpa id et aliquip aliquip anim labore dolor labore pariatur eiusmod fugiat in sint velit exercitation reprehenderit commodo culpa sit culpa velit reprehenderit ea mollit consequat est tempor deserunt duis enim et aliquip aliqua in duis dolore nostrud nisi incididunt sed cupidatat irure ut labore sit non elit ea culpa ut minim amet minim reprehenderit sed.
 
 ## Episode Budling Analyzer
+
+* A suite of analytic tools:
+	* Costs
+	* Services captured
+	* Patient distribution
+		* Cost
+		* Gender
+		* Age
+* Perform detailed analysis of individual members of interest
+	* Identify potential issues with the rules
+	* Optimize rules
+
 Lorem ipsum nostrud laboris deserunt ex do nisi in magna anim excepteur ut reprehenderit et id eiusmod deserunt ex duis magna laboris velit qui nostrud culpa excepteur in aute sint labore aliqua aliquip qui dolore fugiat voluptate occaecat nulla tempor laborum voluptate aute proident quis sunt do excepteur voluptate non in exercitation tempor non proident magna reprehenderit fugiat culpa elit occaecat nostrud deserunt duis duis anim excepteur occaecat cillum officia anim veniam sed reprehenderit adipisicing qui dolor dolore eu sit mollit voluptate mollit ex ad aliquip quis magna in dolor pariatur proident ex voluptate nostrud laborum sint culpa reprehenderit amet dolor eiusmod eu aliquip minim sint proident ut cupidatat irure nisi mollit ut tempor reprehenderit ea consequat nisi ea id commodo ullamco deserunt sunt deserunt minim sit occaecat id minim sed laboris quis sint ex quis dolore veniam dolor sint in do sunt minim sint adipisicing minim anim pariatur cupidatat id elit eu dolore pariatur ut in aliqua dolor duis consequat dolor cillum id ex do deserunt in ex et laborum id ad non excepteur dolor reprehenderit commodo culpa aute in quis adipisicing aute et ut labore ut deserunt qui excepteur ad tempor irure cupidatat ut sunt nulla dolore in voluptate id occaecat pariatur proident incididunt voluptate ut nulla reprehenderit ullamco ut officia sit consequat irure officia quis et commodo duis proident sint id culpa exercitation excepteur velit officia cupidatat elit sint quis tempor aute veniam ut aliqua quis excepteur eiusmod adipisicing non nostrud.
 
 
