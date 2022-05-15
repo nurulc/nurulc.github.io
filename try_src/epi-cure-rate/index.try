@@ -26,9 +26,9 @@ that into which the members can be placed. This is also known as claim bundling.
 		* The frequency of the vatious service procidec
 		* ...
 
-
---@@include diagram-editor.try
-
+!html
+<!-- @@include diagram-editor.try-->
+<img src="epi-cure-rate-arch.png" />
 
 !md
 
