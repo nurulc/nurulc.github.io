@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Email List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha256-OM6/w5IF5rx5C5pHUE5hWeJGg7f4qx4c4VnHmqYd8QI=" crossorigin="anonymous" />
+  </head>
+  <body>
+    <div class="ui form">
+      <div class="field">
+        <label>Agent:</label>
+        <input type="text" id="agent">
+      </div>
+      <div class="field">
+        <label>Query Type:</label>
+        <input type="text" id="queryType">
+      </div>
+      <div class="field">
+        <label>Date:</label>
+        <input type="text" id="date">
+      </div>
+      <div class="field">
+        <label>Message Body:</label>
+        <textarea id="messageBody"></textarea>
+      </div>
+      <button class="ui button" onclick="addEmail()">Add Email</button>
+    </div>
+    <div class="ui segment">
+      <h2 class="ui header">Email List</h2>
+      <div class="ui divided items" id="emailList"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha256-PVfGsYEkH04rqFp1JZcPHGIR7vAM8RcWV7ggy4y4u/U=" crossorigin="anonymous"></script>
+    <script>
+      const emailList = [
+        { agent: 'Peter A', queryType: 'Query 1', date: '2022-01-01', messageBody: '## Section 1\n\nLorem ipsum *dolor* sit amet, consectetur adipiscing elit.' },
+        { agent: 'Jane B', queryType: 'Query 2', date: '2022-01-02', messageBody: '## Section 2\n\nSed ut perspiciatis **unde** omnis iste natus error sit voluptatem.' },
+        { agent: 'Asish C', queryType: 'Query 3', date: '2022-01-03', messageBody: '## Section 3\n\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' }
+      ];
+
+      function addEmail() {
+        const agentInput = $('#agent');
+        const queryTypeInput = $('#queryType');
+        const dateInput = $('#date');
+        const messageBodyInput = $('#messageBody');
+        const agent = agentInput.val();
+        const queryType = queryTypeInput.val();
+        const date = dateInput.val();
+        const messageBody = messageBodyInput.val();
+
+        if (agent && queryType && date && messageBody) {
+          emailList.push({ agent, queryType, date, messageBody });
+
+          const emailListElement = $('#emailList');
+          const newEmailItem = $('<div>').addClass('item').appendTo(emailListElement);
+          $('<div>').addClass('header').text(`${agent}: ${queryType} (${date})`);
+  $('<div>').addClass('description').html(marked.parse(messageBody)).appendTo(newEmailItem);
+
+          agentInput.val('');
+          queryTypeInput.val('');
+          dateInput.val('');
+          messageBodyInput.val('');
+        }
+      }
+
+      // Display existing email list on page load
+      const emailListElement = $('#emailList');
+      emailList.forEach(email => {
+        const emailItem = $('<div>').addClass('item').appendTo(emailListElement);
+        $('<div>').addClass('header').text(`${email.agent}: ${email.queryType} (${email.date})`).appendTo(emailItem);
+        $('<div>').addClass('description').html(marked.parse(email.messageBody)).appendTo(emailItem);
+      });
+    </script>
+  </body>
+</html>

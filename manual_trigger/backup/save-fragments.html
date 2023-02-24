@@ -1,0 +1,75 @@
+          <div class="ui segment">
+              <div class="field">
+                <label>Interactions</label>
+                <div class="table">
+                  <table class="ui celled table">
+                    <thead>
+                      <tr>
+                        <th>Conseirge</th>
+                        <th>Subject</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody id="message-table-body">
+                      <tr>
+                        <td>John Doe</td>
+                        <td>Claim status</td>
+                        <td>2022-12-01</td>
+                      </tr>
+                      <tr>
+                        <td>Jane Doe</td>
+                        <td>Policy Inquiry</td>
+                        <td>2022-11-20</td>
+                      </tr>
+                      <tr>
+                        <td>Jim Smith</td>
+                        <td>Claim inquiry</td>
+                        <td>2022-10-15</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>  
+          <div class="column">
+            <div class="ui segment">
+                    <div class="field">
+                      <label>Message</label>
+                      <textarea rows="15" readonly id="message-details"></textarea>
+                    </div>
+            </div>
+          </div>
+
+<div class="field">
+  <label>Message</label>
+  <textarea rows="15" readonly id="message-details"></textarea>
+</div>
+
+  <script>
+    // Add event listener to message table to show message details
+    const messageTable = dq("#message-table-body");
+    const messageDetails = dq("#message-details");
+    messageTable.addEventListener("click", function(event) {
+      const selectedMessage = event.target.parentElement;
+      messageDetails.value = `From: ${selectedMessage.children[0].innerText}\nSubject: ${selectedMessage.children[1].innerText}\nDate: ${selectedMessage.children[2].innerText}\n\nMessage:\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in nunc nunc. Praesent commodo efficitur libero vel tincidunt. Nam vel lectus vel quam bibendum commodo vel vel tellus. Aliquam varius, libero at hendrerit dapibus, turpis elit varius magna, vel fringilla diam dolor vel velit. Sed vel risus vel dolor mollis dictum.`;
+    });
+
+    // Add event listener to submit button to clear form
+    const submitButton = dq("#submit-button");
+    submitButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      const supportForm = dq("#support-form");
+      supportForm.reset();
+      messageDetails.value = "";
+      alert("Your message has been sent! A representative will get back to you shortly.");
+    });
+
+    // Add event listener to reset button to clear form and message details
+    const resetButton = dq("#reset-button");
+    resetButton.addEventListener("click", function(event) {
+      const supportForm = dq("#support-form");
+      supportForm.reset();
+      messageDetails.value = "";
+    });
+  </script>

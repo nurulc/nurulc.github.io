@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Specialist Selection</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+	<style type="text/css">
+		@media print {
+			body * {
+				visibility: hidden;
+			}
+			#print-section, #print-section * {
+				visibility: visible;
+			}
+			#print-section {
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="ui container">
+		<img src="images/oxbridge-logo.png" alt="Oxbridge Health" style="max-width: 100%; height: auto; width: 600px; display: inline-block; margin: 0px auto; padding-left: 100px;">
+		<h1 class="ui header">Specialist Selection</h1>
+		<form class="ui form">
+			<div class="field">
+				<label>Name</label>
+				<input type="text" name="name" placeholder="Your Name" value="Lucy Astro">
+			</div>
+			<div class="field">
+				<label>Policy Number</label>
+				<input type="text" name="policy" placeholder="Policy Number" value="123456789">
+			</div>
+			<div class="field">
+				<label>Hip Issue</label>
+				<textarea name="issue" rows="2">Pain in the hip, has been ongoing for for a while..</textarea>
+			</div>
+			<div class="field">
+				<label>Specialists</label>
+				<div class="ui fluid search multiple selection dropdown">
+					<input type="hidden" name="specialists">
+					<i class="dropdown icon"></i>
+					<div class="default text">Select Specialists</div>
+					<div class="menu">
+						<div class="item" data-value="specialist1">
+							<div class="header">Dr. John Smith</div>
+							<div class="description">3 miles away</div>
+							<div class="description">Affiliated with Mercy Hospital</div>
+							<div class="description">Cost: Low</div>
+						</div>
+						<div class="item" data-value="specialist2">
+							<div class="header">Dr. Sarah Johnson</div>
+							<div class="description">5 miles away</div>
+							<div class="description">Affiliated with St. Joseph Hospital and Good Samaritan Hospital</div>
+							<div class="description">Cost: Medium</div>
+						</div>
+						<div class="item" data-value="specialist3">
+							<div class="header">Dr. David Lee</div>
+							<div class="description">8 miles away</div>
+							<div class="description">Affiliated with Baptist Hospital and Memorial Hospital</div>
+							<div class="description">Cost: High</div>
+						</div>
+						<div class="item" data-value="specialist4">
+							<div class="header">Dr. Karen Brown</div>
+							<div class="description">10 miles away</div>
+							<div class="description">Affiliated with Mount Sinai Hospital and NYU Langone Hospital</div>
+							<div class="description">Cost: Medium</div>
+						</div>
+						<div class="item" data-value="specialist5">
+							<div class="header">Dr. James Lee</div>
+							<div class="description">12 miles away</div>
+							<div class="description">Affiliated with Cedars-Sinai Medical Center and UCLA Medical Center</div>
+							<div class="description">Cost: High</div>
+						</div>
+					
+						<div class="item" data-value="specialist6">
+							<div class="header">Dr. Jennifer Kim</div>
+							<div class="description">15 miles away</div>
+							<div class="description">Affiliated with Stanford Hospital and UCSF Medical Center</div>
+							<div class="description">Cost: Medium</div>
+						</div>
+						<div class="item" data-value="specialist7">
+							<div class="header">Dr. William Chen</div>
+							<div class="description">18 miles away</div>
+							<div class="description">Affiliated with Kaiser Permanente and Sutter Health</div>
+							<div class="description">Cost: Low</div>
+						</div>
+						<div class="item" data-value="specialist8">
+							<div class="header">Dr. Nicole Kim</div>
+							<div class="description">20 miles away</div>
+							<div class="description">Affiliated with UCLA Medical Center and Providence St. Joseph Medical Center</div>
+							<div class="description">Cost: High</div>
+						</div>
+						<div class="item" data-value="specialist9">
+							<div class="header">Dr. Michael Johnson</div>
+							<div class="description">22 miles away</div>
+							<div class="description">Affiliated with Memorial Hermann Hospital and Houston Methodist Hospital</div>
+							<div class="description">Cost: Medium</div>
+						</div>
+						<div class="item" data-value="specialist10">
+							<div class="header">Dr. Elizabeth Davis</div>
+							<div class="description">25 miles away</div>
+							<div class="description">Affiliated with Methodist Hospital and Texas Children's Hospital</div>
+							<div class="description">Cost: Low</div>
+						</div>
+						<div class="item" data-value="specialist11">
+							<div class="header">Dr. Richard Martin</div>
+							<div class="description">30 miles away</div>
+							<div class="description">Affiliated with Cleveland Clinic and University Hospitals</div>
+							<div class="description">Cost: High</div>
+						</div>
+						<div class="item" data-value="specialist12">
+							<div class="header">Dr. Laura Rodriguez</div>
+							<div class="description">35 miles away</div>
+							<div class="description">Affiliated with Mayo Clinic and Saint Marys Hospital</div>
+							<div class="description">Cost: Medium</div>
+						</div>
+						<div class="item" data-value="specialist13">
+							<div class="header">Dr. Mark Johnson</div>
+							<div class="description">40 miles away</div>
+							<div class="description">Affiliated with Duke University Hospital and Wake Forest Baptist Medical Center</div>
+							<div class="description">Cost: Low</div>
+						</div>
+						<div class="item" data-value="specialist14">
+							<div class="header">Dr. Anna Kim</div>
+							<div class="description">45 miles away</div>
+							<div class="description">Affiliated with Emory University Hospital and Piedmont Hospital</div>
+							<div class="description">Cost: Medium</div>
+						</div>
+						<div class="item" data-value="specialist15">
+							<div class="header">Dr. William Davis</div>
+							<div class="description">50 miles away</div>
+							<div class="description">
+							<div class="description">Affiliated with NorthShore University HealthSystem and Advocate Lutheran General Hospital</div>
+							<div class="description">Cost: High</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ui button" tabindex="0">Ready</div>
+		</form>
+		<div class="ui segment">
+			<h2 class="ui header">Selected Specialists</h2>
+			<div class="ui list" id="selected-specialists">
+			</div>
+		</div>
+		<div class="ui segment" id="print-section">
+			<h2 class="ui header">Selected Specialists Table</h2>
+			<table class="ui celled table">
+				<thead>
+					<tr>
+						<th>Specialist Name</th>
+						<th>Distance</th>
+						<th>Hospitals</th>
+						<th>Cost</th>
+					</tr>
+				</thead>
+				<tbody id="selected-specialists-table">
+				</tbody>
+			</table>
+			<div class="ui button" onclick="window.print()">Send</div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+	<script>
+		$('.ui.dropdown').dropdown();
+		$('.ui.button').click(function() {
+			var name = $('input[name=name]').val();
+			var policy = $('input[name=policy]').val();
+			var issue = $('textarea[name=issue]').val();
+			var specialists = $('input[name=specialists]').val();
+			var selectedSpecialists = '';
+			var selectedSpecialistsTable = '';
+			$('input[name=specialists]').siblings('.menu').children('.item.active').each(function() {
+				var specialistName = $(this).find('.header').text();
+				var specialistDistance = $(this).find('.description:eq(0)').text();
+				var specialistHospitals = $(this).find('.description:eq(1)').text();
+				var specialistCost = $(this).find('.description:eq(2)').text();
+				selectedSpecialists += '<div class="item"><i class="user icon"></i><div class="content">' + specialistName + '<div class="description">' + specialistDistance + '</div><div class="description">' + specialistHospitals + '</div><div class="description">' + specialistCost + '</div></div></div>';
+				selectedSpecialistsTable += '<tr><td>' + specialistName + '</td><td>' + specialistDistance + '</td><td>' + specialistHospitals + '</td><td>' + specialistCost + '</td></tr>';
+			});
+			$('#selected-specialists').html(selectedSpecialists);
+			$('#selected-specialists-table').html(selectedSpecialistsTable);
+			alert('Name: ' + name + '\nPolicy Number: ' + policy + '\nHip Issue: ' + issue + '\nSpecialists: ' + specialists);
+		});
+	</script>
+</body>
+</html>

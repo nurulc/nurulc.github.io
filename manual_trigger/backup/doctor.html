@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Doctor Info</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="ui raised very padded text container segment">
+    <h2 class="ui header">Doctor Information</h2>
+    <div class="ui grid">
+      <div class="two wide column">
+        <img src="https://via.placeholder.com/150" alt="Doctor photo">
+      </div>
+      <div class="twelve wide column">
+        <h3 class="ui header">Daniel Y. Wang</h3>
+        <p>Specialty: CARDIAC ELECTROPHYSIOLOGY</p>
+        <p>City: White Plains</p>
+        <p>Phone: 914.849.2690</p>
+        <div class="ui list">
+          <div class="item">
+            <div class="header">Affiliation</div>
+            <div class="description">
+              <ul>
+                <li>White Plains Hospital</li>
+                <li>Montefiore Moses Campus</li>
+              </ul>
+            </div>
+          </div>
+          <div class="item">
+            <div class="header">Subspecialties</div>
+            <div class="description">
+              <ul>
+                <li>Arrhythmias</li>
+                <li>Atrial Fibrillation</li>
+                <li>Catheter Ablation</li>
+                <li>Pacemakers/Defibrillators</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="ui dropdown">
+  <div class="text">File</div>
+  <i class="dropdown icon"></i>
+  <div class="menu">
+    <div class="item">New</div>
+    <div class="item">
+      <span class="description">ctrl + o</span>
+      Open...
+    </div>
+    <div class="item">
+      <span class="description">ctrl + s</span>
+      Save as...
+    </div>
+    <div class="item">
+      <span class="description">ctrl + r</span>
+      Rename
+    </div>
+    <div class="item">Make a copy</div>
+    <div class="item">
+      <i class="folder icon"></i>
+      Move to folder
+    </div>
+    <div class="item">
+      <i class="trash icon"></i>
+      Move to trash
+    </div>
+    <div class="divider"></div>
+    <div class="item">Download As...</div>
+    <div class="item">
+      <i class="dropdown icon"></i>
+      Publish To Web
+      <div class="menu">
+        <div class="item">Google Docs</div>
+        <div class="item">Google Drive</div>
+        <div class="item">Dropbox</div>
+        <div class="item">Adobe Creative Cloud</div>
+        <div class="item">Private FTP</div>
+        <div class="item">Another Service...</div>
+      </div>
+    </div>
+    <div class="item">E-mail Collaborators</div>
+  </div>
+</div>
+<div class="ui fluid search">
+  <div class="ui icon input">
+    <input class="prompt" type="text" placeholder="Search...">
+    <i class="search icon"></i>
+  </div>
+  <div class="results"></div>
+</div>
+
+
+<script>
+  const searchList = ['apple', 'banana', 'cherry', 'durian', 'elderberry', 'fig', 'grape', 'honeydew', 'indian gooseberry', 'jackfruit', 'kiwi', 'lemon', 'mango', 'nectarine', 'orange', 'peach', 'quince', 'raspberry', 'strawberry', 'tangerine', 'ugli fruit', 'vanilla bean', 'watermelon', 'xylocarp', 'yellow watermelon', 'zucchini'].sort().map(title => ({title}));
+
+  $('.ui.search').search({
+    source: searchList,
+    minCharacters: 2,
+    maxResults: 10,
+    searchFields: ['title'],
+    searchFullText: true,
+    onSelect: function(result, response) {
+      console.log(result);
+    }
+  });
+</script>
+</body>
+</html>
