@@ -1,4 +1,5 @@
 !head
+	<title>Data Frame Examples</title>
 	@@include head.try
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/se/dt-1.10.22/b-1.6.5/kt-2.5.3/sc-2.0.3/datatables.min.css"/>
 
@@ -10,7 +11,16 @@
 	<h2><a href="package/page-data-frame.html" target="_blank">Package Deep Dive</a></h2>
 
 	You can explore the package and explore the some of the core caplbilities by clicking 
-	<a href="package/page-data-frame.html">Package Deep Dive</a>
+	<a href="package/page-data-frame.html">Package Deep Dive</a><br>
+	<a href="comms-engine.html">Here is another interesting example</a>
+
+	## Code Editor
+	The area below is an example of a code editor where you can try out the code examples. The editor, nor any part of this 
+	page send any data to the server. Everything you see is beeing executed on the browser that does not require a back end server.
+
+	Changes you make to the code in any of the exitors can be retained using the browser local storage, that is locally on the machine you are using. 
+
+
 !tryit
    `Hello ${123} World`
    

@@ -541,6 +541,12 @@
     var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Identity;
 
     try {
+      var execCode = function () {
+        return tryIt(id, editor);
+      }; // qs(`#${id}-run`).onclick = execCode;
+      // function execCode() { return tryIt(id,editor);}
+
+
       // let originalContents = textarea.value;
       // let contents = originalContents;
       // if(editorData[id]) {
@@ -602,12 +608,6 @@
 
       setEditorHeight(editor, lines);
       callback(id, editor);
-
-      function execCode() {
-        return tryIt(id, editor);
-      } // qs(`#${id}-run`).onclick = execCode;
-      // function execCode() { return tryIt(id,editor);}
-
     } catch (err) {
       alert('Error creating editor ' + id + ' ' + err.toString());
     }
@@ -2941,11 +2941,11 @@
   function keydown(event) {
     var LeftArrow = 37,
         RightArrow = 39;
-    var activeElement = document.activeElement;
+    var activeElement = document.activeElement; //if (navigator.platform === 'MacIntel' ? event.metaKey : event.ctrlKey && event.key === 's') {
 
-    if (navigator.platform === 'MacIntel' ? event.metaKey : event.ctrlKey && event.key === 's') {
+    if (event.key === 's' && (navigator.platform.indexOf('Mac') !== -1 ? event.metaKey : event.ctrlKey)) {
       event.preventDefault();
-      saveAll(); // ... your code here ...
+      saveAll();
     } else if ((activeElement === document.body || isTag(activeElement, 'button')) && (event.keyCode === LeftArrow
     /*KeyLeft */
     || event.keyCode === RightArrow

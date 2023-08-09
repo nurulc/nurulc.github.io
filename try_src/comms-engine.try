@@ -1,0 +1,108 @@
+!head
+	@@include head.try
+	<script type="text/javascript" src="https://unpkg.com/marked@7.0.1/marked.min.js"></script>
+!md
+	# Communications Engine
+	A Example of how the Communications Engine could be implemented.
+	This is a JavaScript function that takes a markdown template and replaces placeholders like \`\`\`@name\`\`\` or \`\`\`@name.opt1\`\`\` with actual values fetched from an API:
+
+!tryit
+	function strip(s,tag) {
+	  return s.replaceAll(tag,'');
+	}
+
+
+	async function fillMarkdownTemplate(template, apiFetchFunction) {
+	  const placeholderRegex = /```@([\w\.]+)```/g;
+	  let filledTemplate = template;
+
+	  const matches = filledTemplate.match(placeholderRegex);
+
+	  if (matches) {
+	    for (const match of matches) {
+	      
+	      const placeholder = strip(match,'```').substring(1); // Remove the "@" symbol
+	      const value = await apiFetchFunction(placeholder);
+
+	      if (value !== null && value !== undefined) {
+	        filledTemplate = filledTemplate.replace(match, value);
+	      }
+	    }
+	  }
+
+	  return filledTemplate;
+	}
+
+
+
+!md
+	This function uses a regular expression to find placeholders like \`\`\`@name\`\`\` or \`\`\`@name.opt1\`\`\` in the template. 
+	It then calls the provided API fetch function to get the corresponding value based on the placeholder. 
+	If a value is obtained from the API, the function replaces the placeholder in the template with the actual value.
+
+	Here's how you can use the function:
+	To convert Markdown to HTML in JavaScript, you can use a library like "marked". Here's how you can use it along with the previously defined function to fill placeholders:
+
+	1. First, install the "marked" library using npm or yarn:
+
+   ```bash
+   npm install marked
+   ```
+
+
+const markdownTemplate = `
+Hello \`\`\`@name\`\`\`,
+
+This is some content with an option: \`\`\`@name.opt1\`\`\`.
+
+Thank you!
+`;
+
+
+
+The "marked" library's `marked` function is used to convert the filled markdown template into HTML. The resulting HTML content will be a rendered version of your filled t
+emplate, with placeholders replaced by values and the markdown syntax converted to HTML elements.
+
+!tryit
+	// Assume you have an API fetch function that fetches values based on placeholders
+	async function apiFetchFunction(placeholder) {
+	  // Replace this with your API logic to fetch values
+	  const values = {
+	    name: 'John Doe',
+	    'name.quality': 'is very good'
+	    // Add other placeholder values here
+	  };
+
+	  return values[placeholder] || null;
+	}
+
+	const markdownTemplate = `
+	# Introduction
+	Hello \`\`\`@name\`\`\`,
+
+	Your quality is: \`\`\`@name.quality\`\`\`.
+
+	Thank you!
+
+	`;
+
+	$$.HTML("<hr>")
+	$$.D(markdownTemplate);
+	$$.HTML("<HR>")
+	var res = "";
+	fillMarkdownTemplate(markdownTemplate, apiFetchFunction)
+	  .then(filledTemplate => {
+	    const htmlContent = marked.parse(filledTemplate);
+	    res = htmlContent;
+	    return htmlContent;
+	  })
+	  .catch(error => {
+	    return (['Error:', error]);
+	  });
+
+			
+!md
+	Replace the placeholder values in the `apiFetchFunction` with your actual API logic to fetch values. The function `fillMarkdownTemplate` will return a filled template with placeholders replaced by their corresponding values fetched from the API.
+
+!tryit
+	$$.HTML(res)
