@@ -388,6 +388,20 @@ function genMessage() {
 var generateButton = document.getElementById('generateButton');
 generateButton.addEventListener('click', genMessage);
 
+let timeoutId;
+
+function handleTextareaChange() {
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() =&gt; {
+         genMessage();
+      }, 1000); // 1 second delay
+}
+
+let inputTextarea = document.getElementById('templateTextArea');
+inputTextarea.addEventListener('input', handleTextareaChange);
+
+
 
 			</textarea>
 		</div>
