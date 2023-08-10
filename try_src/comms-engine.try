@@ -106,3 +106,60 @@ emplate, with placeholders replaced by values and the markdown syntax converted 
 
 !tryit
 	$$.HTML(res)
+
+!md 
+	# An Interface
+
+
+
+	Here's an example of an HTML form with a text area for entering a Markdown template and a button to generate the final message:
+
+!tryit
+    function genMessage() {
+      const templateTextArea = document.getElementById('templateTextArea');
+      const template = templateTextArea.value;
+
+      fillMarkdownTemplate(template, apiFetchFunction)
+        .then(filledTemplate => {
+          const markedHtml = marked.parse(filledTemplate); // Assuming you've imported the "marked" library
+          const outputDiv = document.getElementById('output');
+          outputDiv.innerHTML = markedHtml;
+        })
+        .catch(error => {
+          const outputDiv = document.getElementById('output');
+          outputDiv.innerHTML = "Error: "+error;
+        });
+    }
+
+    const generateButton = document.getElementById('generateButton');
+    generateButton.addEventListener('click', genMessage);
+
+
+!html
+  <b>Markdown Template Generator</b>
+  <form id="templateForm">
+    <label for="templateTextArea">Enter Markdown Template:</label><br>
+    <textarea id="templateTextArea" rows="10" cols="50"></textarea><br>
+    <button type="button" id="generateButton">Generate Message</button>
+  </form>
+  <div id="output"></div>
+
+  <script>
+    async function fillMarkdownTemplate(template, apiFetchFunction) {
+      // Your fillMarkdownTemplate function implementation here
+    }
+
+    async function apiFetchFunction(placeholder) {
+      // Your apiFetchFunction implementation here
+    }
+
+!md
+
+In this example, we've created a simple HTML form with a text area to input the Markdown 
+template and a button to trigger the `genMessage` function. When the button is clicked, 
+the `genMessage` function will read the content of the text area, call the `fillMarkdownTemplate` 
+function to fill the placeholders, and then convert the filled template to HTML using the "marked" library. 
+The HTML output will be displayed in a `<div>` with the id "output".
+
+Remember to adjust the code according to your needs, especially the `fillMarkdownTemplate` and `apiFetchFunction` 
+functions based on your requirements and data sources.
