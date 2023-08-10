@@ -6,6 +6,7 @@
 	A Example of how the Communications Engine could be implemented.
 	This is a JavaScript function that takes a markdown template and replaces placeholders like \`\`\`@name\`\`\` or \`\`\`@name.opt1\`\`\` with actual values fetched from an API:
 
+
 !tryit
 	function strip(s,tag) {
 	  return s.replaceAll(tag,'');
@@ -35,6 +36,7 @@
 
 
 
+
 !md
 	This function uses a regular expression to find placeholders like \`\`\`@name\`\`\` or \`\`\`@name.opt1\`\`\` in the template. 
 	It then calls the provided API fetch function to get the corresponding value based on the placeholder. 
@@ -49,31 +51,112 @@
    npm install marked
    ```
 
+   ```javascript
+	const markdownTemplate = `
+	Hello \`\`\`@name\`\`\`,
 
-const markdownTemplate = `
-Hello \`\`\`@name\`\`\`,
+	This is some content with an option: \`\`\`@name.opt1\`\`\`.
 
-This is some content with an option: \`\`\`@name.opt1\`\`\`.
-
-Thank you!
-`;
+	Thank you!
+	`;
+	```
 
 
+	The "marked" library's `marked` function is used to convert the filled markdown template into HTML. The resulting HTML content will be a rendered version of your filled t
+	emplate, with placeholders replaced by values and the markdown syntax converted to HTML elements.
 
-The "marked" library's `marked` function is used to convert the filled markdown template into HTML. The resulting HTML content will be a rendered version of your filled t
-emplate, with placeholders replaced by values and the markdown syntax converted to HTML elements.
+	# Some Helper Functions
+
+
+
+	Some data to play with, somethis the api might fetch
+
+!tryit
+	var jsonData = {
+	  "name": "John Doe",
+	  "name.quality": "is very good",
+	  "member": {
+	    "name": {
+	      "first": "John",
+	      "last": "Doe"
+	    },
+	    "address": {
+	      "streetLocation": "123 Main St, Apt 4B",
+	      "city": "Anytown",
+	      "state": "CA",
+	      "zip5": "12345",
+	      "zip9": "12345-6789"
+	    },
+	    "email": {
+	      "primary": "john.doe@example.com",
+	      "secondary": "johndoe.alt@example.com"
+	    },
+	    "phone": {
+	      "cell": "555-123-4567",
+	      "home": "555-987-6543"
+	    },
+	    "member_id": "123456789",
+	    "isMinor": false
+	  }
+	};
+
+	function getValueFromPath(path, data) {
+	    let r = data && data[path];
+  		if(r) return r;
+		const keys = path.split('.');
+	 	let value = data;
+
+	 	for (const key of keys) {
+		    if (value.hasOwnProperty(key)) {
+		      value = value[key];
+		    } else {
+		      value = null;
+		      break;
+		    }
+		}
+		if(isObject(value)) {
+		      value = flattenObjectValues(value);
+		}
+		return value;
+	}
+
+	function isObject(variable) {
+  		return typeof variable === 'object' && variable !== null && !Array.isArray(variable);
+	}
+
+	function flattenObjectValues(obj) {
+	  let flattened = '';
+
+	  function traverse(value) {
+	    if (typeof value === 'object' && value !== null) {
+	      for (const key in value) {
+	        traverse(value[key]);
+	      }
+	    } else {
+	      flattened += value + ' ';
+	    }
+	  }
+
+	  traverse(obj);
+	  return flattened.trim(); // Remove trailing space
+	}
+
+	
+
+!md
+
 
 !tryit
 	// Assume you have an API fetch function that fetches values based on placeholders
 	async function apiFetchFunction(placeholder) {
 	  // Replace this with your API logic to fetch values
-	  const values = {
-	    name: 'John Doe',
-	    'name.quality': 'is very good'
-	    // Add other placeholder values here
-	  };
+	  // const values = {
+	  //   name: 'John Doe',
+	  //   'name.quality': 'is very good'
+	  //   // Add other placeholder values here
+	  // };
 
-	  return values[placeholder] || null;
+	  return jsonData[placeholder] || getValueFromPath(placeholder,jsonData);
 	}
 
 	const markdownTemplate = `
@@ -137,10 +220,32 @@ emplate, with placeholders replaced by values and the markdown syntax converted 
   <b>Markdown Template Generator</b>
   <form id="templateForm">
     <label for="templateTextArea">Enter Markdown Template:</label><br>
-    <textarea id="templateTextArea" rows="10" cols="50"></textarea><br>
+    <textarea id="templateTextArea" rows="20" cols="150">
+	# Introduction
+	Hello ```@member.name```,
+
+	Your ID: ```@member.member_id```
+	Your quality is: ```@name.quality```.
+
+	Thank you!
+
+
+    </textarea><br>
     <button type="button" id="generateButton">Generate Message</button>
   </form>
-  <div id="output"></div>
+  <div class="ui accordion">
+  	<div class="title active">
+  		<i class="dropdown icon"></i>
+  		Output Doc
+  	</div>
+  	<div class="content active">
+		<div id="output" style="background-color: #eeeeee; border-style: solid; padding: 10px"></div>
+  
+  	</div>
+  </div>
+  <br>
+  <hr>
+  <br>
 
 !md
 
