@@ -110,9 +110,7 @@ emplate, with placeholders replaced by values and the markdown syntax converted 
 !md 
 	# An Interface
 
-
-
-	Here's an example of an HTML form with a text area for entering a Markdown template and a button to generate the final message:
+	Here's an example of an HTML form with a text area for entering a Markdown template and a button to generate the final message'
 
 !tryit
     function genMessage() {
@@ -131,7 +129,7 @@ emplate, with placeholders replaced by values and the markdown syntax converted 
         });
     }
 
-    const generateButton = document.getElementById('generateButton');
+    var generateButton = document.getElementById('generateButton');
     generateButton.addEventListener('click', genMessage);
 
 
@@ -143,15 +141,6 @@ emplate, with placeholders replaced by values and the markdown syntax converted 
     <button type="button" id="generateButton">Generate Message</button>
   </form>
   <div id="output"></div>
-
-  <script>
-    async function fillMarkdownTemplate(template, apiFetchFunction) {
-      // Your fillMarkdownTemplate function implementation here
-    }
-
-    async function apiFetchFunction(placeholder) {
-      // Your apiFetchFunction implementation here
-    }
 
 !md
 
