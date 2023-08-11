@@ -193,7 +193,9 @@
 !md 
 	# An Interface
 
-	Here's an example of an HTML form with a text area for entering a Markdown template and a button to generate the final message'
+	Here's an example of an HTML form with a text area for entering a Markdown template and a button to generate the final message.json
+	The code has also the handler that looks for change (due to editing) and genrates message every time a change is detected. In order to 
+	be more responsive, the handler waits for 300ms for more changes until finally generating output.
 
 !tryit
     function genMessage() {
@@ -222,7 +224,7 @@
 
 	      timeoutId = setTimeout(() => {
 	         genMessage();
-	      }, 1000); // 1 second delay
+	      }, 300); // 1 second delay
 	}
 
 	let inputTextarea = document.getElementById('templateTextArea');
