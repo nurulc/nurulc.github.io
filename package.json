@@ -12,7 +12,7 @@
     "gen:doc": "esdoc",
     "buildx": "nodemon  --ext \"try\" --exec \"tryitjs --src try_src --dest frame/tryit\" ",
     "copy:frame": "copy ../data-frame\\dist\\bundle.js frame\\",
-    "latest": "npm install -g ../tryitjs/tryitjs-0.9.11.tgz && tryitjs data-frame-examples.try"
+    "latest": "npm install -g ../tryitjs/tryitjs-1.0.0.tgz && tryitjs data-frame-examples.try"
   },
   "repository": {
     "type": "git",
@@ -31,12 +31,12 @@
     "esdoc": "^1.1.0",
     "esdoc-standard-plugin": "^1.0.0",
     "esdoc-type-inference-plugin": "^1.0.2",
+    "glob": "^11.0.0",
     "showdown": "^1.9.1",
     "str-data-frame": "^0.2.6",
-    "tryitjs": "^0.9.10"
+    "tryitjs": "^1.0"
   },
   "dependencies": {
-    "glob": "^9.1.2",
     "nodemon": "^3.0.1"
   }
 }
