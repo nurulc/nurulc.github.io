@@ -357,10 +357,10 @@ function multiSelect(opts,list) {
 <div id="toc_utilsfordoinglineplots"class="toc2 toc"> 4.1&nbsp;&nbsp;<a onclick="jumpTag('utilsfordoinglineplots')">Utils for doing line plots</a></div>
 <div id="toc_plotcountrycoviddata"class="toc1 toc"> 5&nbsp;&nbsp;<a onclick="jumpTag('plotcountrycoviddata')">Plot Country Covid data</a></div>
 <div id="toc_somemoredetailsofthecodeabove"class="toc1 toc"> 6&nbsp;&nbsp;<a onclick="jumpTag('somemoredetailsofthecodeabove')">Some more details of the code above</a></div>
-<div id="toc_1countrydropdowncountrydropdown"class="toc2 toc"> 6.1&nbsp;&nbsp;<a onclick="jumpTag('1countrydropdowncountrydropdown')">1. **Country Dropdown (`countryDropdown`)**</a></div>
-<div id="toc_2continentdropdowncontinentdropdown"class="toc2 toc"> 6.2&nbsp;&nbsp;<a onclick="jumpTag('2continentdropdowncontinentdropdown')">2. **Continent Dropdown (`continentDropdown`)**</a></div>
-<div id="toc_3yscalecheckboxsetlinearorlog"class="toc2 toc"> 6.3&nbsp;&nbsp;<a onclick="jumpTag('3yscalecheckboxsetlinearorlog')">3. **Y-Scale Checkbox (`setLinearOrLog`)**</a></div>
-<div id="toc_4renderingtheui"class="toc2 toc"> 6.4&nbsp;&nbsp;<a onclick="jumpTag('4renderingtheui')">4. **Rendering the UI**</a></div>
+<div id="toc_countrydropdowncountrydropdown"class="toc2 toc"> 6.1&nbsp;&nbsp;<a onclick="jumpTag('countrydropdowncountrydropdown')">**Country Dropdown (`countryDropdown`)**</a></div>
+<div id="toc_continentdropdowncontinentdropdown"class="toc2 toc"> 6.2&nbsp;&nbsp;<a onclick="jumpTag('continentdropdowncontinentdropdown')">**Continent Dropdown (`continentDropdown`)**</a></div>
+<div id="toc_yscalecheckboxsetlinearorlog"class="toc2 toc"> 6.3&nbsp;&nbsp;<a onclick="jumpTag('yscalecheckboxsetlinearorlog')">**Y-Scale Checkbox (`setLinearOrLog`)**</a></div>
+<div id="toc_renderingtheui"class="toc2 toc"> 6.4&nbsp;&nbsp;<a onclick="jumpTag('renderingtheui')">**Rendering the UI**</a></div>
 <div id="toc_5plottingthedatadoplotlines"class="toc2 toc"> 6.5&nbsp;&nbsp;<a onclick="jumpTag('5plottingthedatadoplotlines')">5. **Plotting the Data (`doPlotLines`)**</a></div>
 <div id="toc_6globalvariables"class="toc2 toc"> 6.6&nbsp;&nbsp;<a onclick="jumpTag('6globalvariables')">6. **Global Variables**</a></div>
 <div id="toc_summaryofthefunctionality"class="toc2 toc"> 6.7&nbsp;&nbsp;<a onclick="jumpTag('summaryofthefunctionality')">Summary of the Functionality:</a></div>
@@ -2001,7 +2001,7 @@ isLinear = true;
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i>
 The provided code is a combination of JavaScript and HTML that deals with rendering a user interface (UI) for selecting a <strong>country</strong> and a <strong>continent</strong>, along with controlling a plot's Y-axis scale (linear or logarithmic). The code includes dropdowns for selecting these values, handling their events, and triggering a plot update based on the selected options.</p>
 <p>Here’s a breakdown of the key components and functionality:</p>
-<h3 id="1countrydropdowncountrydropdown">1. <strong>Country Dropdown (<code>countryDropdown</code>)</strong></h3>
+<h3 id="countrydropdowncountrydropdown"><strong>Country Dropdown (<code>countryDropdown</code>)</strong></h3>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
 <ul>
 <li>This dropdown is created using the function <code>UIcategoryList</code>. The data is passed to it after grouping by <code>iso_code</code>, <code>location</code>, and <code>continent</code>. The dropdown is populated with countries for selection.</li>
@@ -2016,7 +2016,7 @@ The provided code is a combination of JavaScript and HTML that deals with render
     }
   );
 </code></pre>
-<h3 id="2continentdropdowncontinentdropdown">2. <strong>Continent Dropdown (<code>continentDropdown</code>)</strong></h3>
+<h3 id="continentdropdowncontinentdropdown"><strong>Continent Dropdown (<code>continentDropdown</code>)</strong></h3>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
 <ul>
 <li>A template literal is used to create a <code>&lt;select&gt;</code> dropdown for continents. The <code>options</code> function generates a list of <code>&lt;option&gt;</code> elements based on the available continents in <code>countryContinent</code>. The continent dropdown allows the user to select a continent.</li>
@@ -2036,32 +2036,33 @@ The provided code is a combination of JavaScript and HTML that deals with render
       ${options(countryContinent.filter(ro =&gt; ro.iso_code === ro.location), 'North America')}
     &lt;/select&gt;`;
 </code></pre>
-<h3 id="3yscalecheckboxsetlinearorlog">3. <strong>Y-Scale Checkbox (<code>setLinearOrLog</code>)</strong></h3>
+<h3 id="yscalecheckboxsetlinearorlog"><strong>Y-Scale Checkbox (<code>setLinearOrLog</code>)</strong></h3>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
 <ul>
 <li>A checkbox is created to allow the user to toggle between a <strong>linear</strong> or <strong>logarithmic</strong> Y-axis scale for the plot. It is initially set to linear (<code>checked</code> by default).</li>
 <li><strong>Event Handling</strong>: When the checkbox is toggled, the <code>scaleOnChange</code> function is called, which updates the <code>isLinear</code> property of the <code>OPTS</code> object (representing options for the plot).</li>
 </ul>
-<pre><code class="javascript language-javascript">  var setLinearOrLog = `&lt;p class="ui header huge"&gt;Y Scale&lt;/p&gt;
-  <div   class="ui form">
-    <div   class="inline fields">
-      <div   class="field">
-        &lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange="scaleOnChange(this)" /&gt;
-        &lt;label for="IsLinear"&gt; Linear Axis&lt;/label&gt; &lt;br /&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;`;
+<pre><code class="js language-js">  var setLinearOrLog = `&amp;lt;p class="ui header huge"&amp;gt;Y Scale&amp;lt;/p&amp;gt;
+    &amp;lt;div class="ui form"&amp;gt;
+      &amp;lt;div class="inline fields"&amp;gt;
+        &amp;lt;div class="field"&amp;gt;
+          &amp;lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange="scaleOnChange(this)" /&amp;gt;
+          &amp;lt;label for="IsLinear"&amp;gt; Linear Axis&amp;lt;/label&amp;gt; &amp;lt;br /&amp;gt;
+        &amp;lt;/div&amp;gt;
+      &amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    `;
 
   function scaleOnChange(element) {
     selCountry({ isLinear: element.checked });  // Update plot options
   }
 </code></pre>
-<h3 id="4renderingtheui">4. <strong>Rendering the UI</strong></h3>
+<h3 id="renderingtheui"><strong>Rendering the UI</strong></h3>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
 <ul>
-<li>The <code>$$.D()</code> function is used to render the generated HTML elements for the country dropdown, continent dropdown, and Y-scale toggle. These elements are placed in the document.</li>
+<li>The <code>$$.D()</code> function is a general display data function, to render the string as html we use the function <code>HTML</code> to render the generated string as an the html elements; for the country dropdown, continent dropdown, and Y-scale toggle. These elements are placed in the document.</li>
 </ul>
-<pre><code class="javascript language-javascript">  $$.D(HTML(countryDropdown), HTML(continentDropdown), HTML(setLinearOrLog));
+<pre><code class="js language-js">  $$.D(HTML(countryDropdown), HTML(continentDropdown), HTML(setLinearOrLog));
 </code></pre>
 <h3 id="5plottingthedatadoplotlines">5. <strong>Plotting the Data (<code>doPlotLines</code>)</strong></h3>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
@@ -2070,7 +2071,7 @@ The provided code is a combination of JavaScript and HTML that deals with render
 <li><strong><code>selCountry</code> function</strong>: This function updates the global <code>OPTS</code> object whenever a selection is made (either a country, continent, or axis type). It then re-plots the data using the updated values.</li>
 <li><strong>Plot Initialization</strong>: At the end of the script, the plot is created and initially rendered with default values.</li>
 </ul>
-<pre><code class="javascript language-javascript">  var OPTS = ({ C: 'USA', R: 'North America', isLinear: true });
+<pre><code class="js language-js">  var OPTS = ({ C: 'USA', R: 'North America', isLinear: true });
   var isLinear = true;
 
   function selCountry(opts) {
