@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 	<meta charset="UTF-8">
-<link rel="stylesheet" href="https://unpkg.com/tryitjs@1.0.1/ref/stylesheets/tryit.css" />
+<link rel="stylesheet" href="https://unpkg.com/tryitjs@1.0.0/ref/stylesheets/tryit.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
@@ -40,7 +40,7 @@
 <script src="https://unpkg.com/js-sha1/src/sha1.js"></script>
 <script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dataformsjs/js/react/jsxLoader.min.js"></script>
-<script src="https://unpkg.com/tryitjs@1.0.1/ref/javascript/tryit-min.js"></script>
+<script src="https://unpkg.com/tryitjs@1.0.0/ref/javascript/tryit-min.js"></script>
 <title>Data Frame Examples</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=0.7">
@@ -356,7 +356,15 @@ function multiSelect(opts,list) {
 <div id="toc_plotusacoviddata"class="toc1 toc"> 4&nbsp;&nbsp;<a onclick="jumpTag('plotusacoviddata')">Plot USA Covid data</a></div>
 <div id="toc_utilsfordoinglineplots"class="toc2 toc"> 4.1&nbsp;&nbsp;<a onclick="jumpTag('utilsfordoinglineplots')">Utils for doing line plots</a></div>
 <div id="toc_plotcountrycoviddata"class="toc1 toc"> 5&nbsp;&nbsp;<a onclick="jumpTag('plotcountrycoviddata')">Plot Country Covid data</a></div>
-<div id="toc_someuitest"class="toc1 toc"> 6&nbsp;&nbsp;<a onclick="jumpTag('someuitest')">Some UI Test</a></div>
+<div id="toc_somemoredetailsofthecodeabove"class="toc1 toc"> 6&nbsp;&nbsp;<a onclick="jumpTag('somemoredetailsofthecodeabove')">Some more details of the code above</a></div>
+<div id="toc_1countrydropdowncountrydropdown"class="toc2 toc"> 6.1&nbsp;&nbsp;<a onclick="jumpTag('1countrydropdowncountrydropdown')">1. **Country Dropdown (`countryDropdown`)**</a></div>
+<div id="toc_2continentdropdowncontinentdropdown"class="toc2 toc"> 6.2&nbsp;&nbsp;<a onclick="jumpTag('2continentdropdowncontinentdropdown')">2. **Continent Dropdown (`continentDropdown`)**</a></div>
+<div id="toc_3yscalecheckboxsetlinearorlog"class="toc2 toc"> 6.3&nbsp;&nbsp;<a onclick="jumpTag('3yscalecheckboxsetlinearorlog')">3. **Y-Scale Checkbox (`setLinearOrLog`)**</a></div>
+<div id="toc_4renderingtheui"class="toc2 toc"> 6.4&nbsp;&nbsp;<a onclick="jumpTag('4renderingtheui')">4. **Rendering the UI**</a></div>
+<div id="toc_5plottingthedatadoplotlines"class="toc2 toc"> 6.5&nbsp;&nbsp;<a onclick="jumpTag('5plottingthedatadoplotlines')">5. **Plotting the Data (`doPlotLines`)**</a></div>
+<div id="toc_6globalvariables"class="toc2 toc"> 6.6&nbsp;&nbsp;<a onclick="jumpTag('6globalvariables')">6. **Global Variables**</a></div>
+<div id="toc_summaryofthefunctionality"class="toc2 toc"> 6.7&nbsp;&nbsp;<a onclick="jumpTag('summaryofthefunctionality')">Summary of the Functionality:</a></div>
+<div id="toc_someuitest"class="toc1 toc"> 7&nbsp;&nbsp;<a onclick="jumpTag('someuitest')">Some UI Test</a></div>
 <div id="toc_morecovidframe"class="toc0 toc"> &nbsp;&nbsp;<a onclick="jumpTag('morecovidframe')">More Covid Frame</a></div>
 <div id="toc_showthesizeoftheframeandthecolumnnames"class="toc1 toc"> 1&nbsp;&nbsp;<a onclick="jumpTag('showthesizeoftheframeandthecolumnnames')">Show the size of the frame and the column names</a></div>
 <div id="toc_showthedatasummaryasaframe"class="toc2 toc"> 1.1&nbsp;&nbsp;<a onclick="jumpTag('showthedatasummaryasaframe')">Show the data summary as a Frame</a></div>
@@ -1976,9 +1984,6 @@ $$.lastly(true,
   () =&gt; doPlotLines(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
 );
 isLinear = true;
-      
-
-
 			</textarea>
 		</div>
 		<a class="tryit-anchor" id="_end_tryit20">
@@ -1992,6 +1997,108 @@ isLinear = true;
  &nbsp; <button id="save_20" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
+<h2 id="somemoredetailsofthecodeabove">Some more details of the code above</h2>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i>
+The provided code is a combination of JavaScript and HTML that deals with rendering a user interface (UI) for selecting a <strong>country</strong> and a <strong>continent</strong>, along with controlling a plot's Y-axis scale (linear or logarithmic). The code includes dropdowns for selecting these values, handling their events, and triggering a plot update based on the selected options.</p>
+<p>Here’s a breakdown of the key components and functionality:</p>
+<h3 id="1countrydropdowncountrydropdown">1. <strong>Country Dropdown (<code>countryDropdown</code>)</strong></h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>This dropdown is created using the function <code>UIcategoryList</code>. The data is passed to it after grouping by <code>iso_code</code>, <code>location</code>, and <code>continent</code>. The dropdown is populated with countries for selection.</li>
+<li><strong>Purpose</strong>: To allow users to select a country.</li>
+<li><strong>onSelect Callback</strong>: When a country is selected, the <code>selCountry</code> function is called with the selected country’s <code>iso_code</code> (<code>ID</code>).</li>
+</ul>
+<pre><code class="javascript language-javascript">  let countryDropdown = UIcategoryList(
+    countryContinent.groupBy(['iso_code=ID', 'location=title', 'continent=category']).asObjList(),
+    {
+      caption: 'Select Country', 
+      onSelect: result =&gt; selCountry({ C: result.ID })  // Triggered on country selection
+    }
+  );
+</code></pre>
+<h3 id="2continentdropdowncontinentdropdown">2. <strong>Continent Dropdown (<code>continentDropdown</code>)</strong></h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>A template literal is used to create a <code>&lt;select&gt;</code> dropdown for continents. The <code>options</code> function generates a list of <code>&lt;option&gt;</code> elements based on the available continents in <code>countryContinent</code>. The continent dropdown allows the user to select a continent.</li>
+<li><strong>Purpose</strong>: To allow users to select a continent.</li>
+<li><strong>Event Handling</strong>: When the continent is selected, the <code>onchange</code> event calls the <code>selCountry</code> function, passing the selected continent’s value (<code>R</code>).</li>
+</ul>
+<pre><code class="javascript language-javascript">  function options(countryContinent, selected) {
+    return countryContinent.groupBy(['iso_code', 'location'])
+      .sort(['location'])
+      .map(ro =&gt; `&lt;option value="${ro.iso_code}" ${ro.location === selected ? 'selected' : ''}&gt;${ro.location}&lt;/option&gt;`)
+      .join('\n');
+  }
+
+  let continentDropdown = `
+    &lt;p class="ui header huge"&gt;Select a Continent&lt;/p&gt;
+    &lt;select class="ui selection dropdown" name="continents" id="continents" onchange="selCountry({ R: this.value })"&gt;
+      ${options(countryContinent.filter(ro =&gt; ro.iso_code === ro.location), 'North America')}
+    &lt;/select&gt;`;
+</code></pre>
+<h3 id="3yscalecheckboxsetlinearorlog">3. <strong>Y-Scale Checkbox (<code>setLinearOrLog</code>)</strong></h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>A checkbox is created to allow the user to toggle between a <strong>linear</strong> or <strong>logarithmic</strong> Y-axis scale for the plot. It is initially set to linear (<code>checked</code> by default).</li>
+<li><strong>Event Handling</strong>: When the checkbox is toggled, the <code>scaleOnChange</code> function is called, which updates the <code>isLinear</code> property of the <code>OPTS</code> object (representing options for the plot).</li>
+</ul>
+<pre><code class="javascript language-javascript">  var setLinearOrLog = `&lt;p class="ui header huge"&gt;Y Scale&lt;/p&gt;
+  <div   class="ui form">
+    <div   class="inline fields">
+      <div   class="field">
+        &lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange="scaleOnChange(this)" /&gt;
+        &lt;label for="IsLinear"&gt; Linear Axis&lt;/label&gt; &lt;br /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;`;
+
+  function scaleOnChange(element) {
+    selCountry({ isLinear: element.checked });  // Update plot options
+  }
+</code></pre>
+<h3 id="4renderingtheui">4. <strong>Rendering the UI</strong></h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>The <code>$$.D()</code> function is used to render the generated HTML elements for the country dropdown, continent dropdown, and Y-scale toggle. These elements are placed in the document.</li>
+</ul>
+<pre><code class="javascript language-javascript">  $$.D(HTML(countryDropdown), HTML(continentDropdown), HTML(setLinearOrLog));
+</code></pre>
+<h3 id="5plottingthedatadoplotlines">5. <strong>Plotting the Data (<code>doPlotLines</code>)</strong></h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li>The main function for plotting data is <code>doPlotLines</code>. It is initially triggered with default values: country <code>USA</code>, continent <code>North America</code>, and linear scale.</li>
+<li><strong><code>selCountry</code> function</strong>: This function updates the global <code>OPTS</code> object whenever a selection is made (either a country, continent, or axis type). It then re-plots the data using the updated values.</li>
+<li><strong>Plot Initialization</strong>: At the end of the script, the plot is created and initially rendered with default values.</li>
+</ul>
+<pre><code class="javascript language-javascript">  var OPTS = ({ C: 'USA', R: 'North America', isLinear: true });
+  var isLinear = true;
+
+  function selCountry(opts) {
+    if (opts) {
+      OPTS = Object.assign(OPTS, opts);  // Merge new options with existing options
+    }
+    doPlotLines(countryContinent, [OPTS.C, OPTS.R], dn, OPTS.isLinear, { scrollZoom: true });
+  }
+
+  // Initialize the plot with default country/continent
+  $$.HTML(`<div   id="${dn}" class="plot" />`);
+  $$.lastly(true, () =&gt; doPlotLines(countryContinent, ['USA', 'North America'], dn, isLinear, { scrollZoom: true }));
+</code></pre>
+<h3 id="6globalvariables">6. <strong>Global Variables</strong></h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<ul>
+<li><strong><code>OPTS</code></strong>: This object holds the current state of selected options: <code>C</code> for country, <code>R</code> for region/continent, and <code>isLinear</code> for Y-scale.</li>
+<li><strong><code>dn</code></strong>: A dynamic identifier used to locate the specific plot container in the DOM.</li>
+</ul>
+<h3 id="summaryofthefunctionality">Summary of the Functionality:</h3>
+<p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
+<ol>
+<li><strong>Country Dropdown</strong>: Lets the user select a country from a grouped list.</li>
+<li><strong>Continent Dropdown</strong>: Lets the user select a continent, and defaults to "North America".</li>
+<li><strong>Y-Scale Toggle</strong>: Allows switching between linear and logarithmic Y-axis scaling for the plot.</li>
+<li><strong>Dynamic Plotting</strong>: When the user selects a country, continent, or changes the scale, the plot is updated accordingly.</li>
+<li><strong>Initial Plot</strong>: The plot starts with default values (<code>USA</code>, <code>North America</code>, and a linear scale).</li>
+</ol>
 <h2 id="someuitest">Some UI Test</h2>
 <p><i class="icon tiny sitemap grey icon-right" title="Include path: plotly.try < try&#95;src/data-frame-example/index.try"></i></p>
 <p>This example uses React/jsx for inline rendering using components provided by <em>react-semantic-ui</em></p>
