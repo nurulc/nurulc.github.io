@@ -12,7 +12,7 @@
     "gen:doc": "esdoc",
     "buildx": "nodemon  --ext \"try\" --exec \"tryitjs --src try_src --dest frame/tryit\" ",
     "copy:frame": "copy ../data-frame\\dist\\bundle.js frame\\",
-    "latest": "npm install -g ../tryitjs/tryitjs-1.0.0.tgz && tryitjs data-frame-examples.try"
+    "latest": "npm install -g ../tryitjs/tryitjs-1.0.1.tgz && npm run local"
   },
   "repository": {
     "type": "git",

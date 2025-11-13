@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read & Split - Learn to Read!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #764ba2;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .instructions {
+            background: #e8f4fd;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #2c5282;
+            font-size: 1.1em;
+        }
+
+        .sentence-container {
+            background: #f0f4ff;
+            border-radius: 20px;
+            padding: 40px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            border: 3px dashed #667eea;
+        }
+
+        .sentence {
+            font-size: 2.5em;
+            color: #333;
+            line-height: 1.6;
+            word-spacing: 15px;
+        }
+
+        .word {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            user-select: none;
+        }
+
+        .word:hover {
+            background: #ffd93d;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .word.speaking {
+            animation: pulse 0.8s ease-in-out;
+            background: #ffd93d;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .word-parts {
+            display: none;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 0.6em;
+            white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .word:hover .word-parts {
+            display: block;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .word-parts::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #667eea;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .audio-btn {
+            background: #4CAF50;
+            padding: 12px 25px;
+            font-size: 1em;
+        }
+
+        .audio-btn.muted {
+            background: #f44336;
+        }
+
+        .audio-btn:hover {
+            background: #45a049;
+        }
+
+        .audio-btn.muted:hover {
+            background: #da190b;
+        }
+
+        .progress {
+            flex: 1;
+            text-align: center;
+            font-size: 1.1em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #667eea;
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .speech-status {
+            font-size: 0.9em;
+            color: #4CAF50;
+            margin-top: 10px;
+            height: 20px;
+        }
+
+        .speech-status.speaking {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .sentence { font-size: 1.8em; }
+            .sentence-container { padding: 20px; }
+            button { padding: 12px 20px; font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h1>📚 Read & Split 🎵</h1>
+        <p class="subtitle">Hover to see sounds, Click to hear the word!</p>
+        
+        <div class="instructions">
+            <span class="emoji">💡</span>
+            Hover over words to split them into sounds, Click any word to hear it spoken!
+        </div>
+
+        <div class="audio-controls">
+            <button id="audioToggle" class="audio-btn" onclick="toggleAudio()">
+                🔊 Sound ON
+            </button>
+            <button class="audio-btn" onclick="speakFullSentence()">
+                🔊 Read Full Sentence
+            </button>
+        </div>
+
+        <div class="sentence-container">
+            <div id="sentence" class="sentence"></div>
+        </div>
+
+        <div class="speech-status" id="speechStatus"></div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="previousSentence()">⬅️ Previous</button>
+            <div class="progress">
+                <div>Sentence <span id="currentNum">1</span> of 100</div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill" style="width: 1%"></div>
+                </div>
+            </div>
+            <button id="nextBtn" onclick="nextSentence()">Next ➡️</button>
+        </div>
+    </div>
+
+    <script>
+        // Check for Web Speech API support
+        const speechSupported = 'speechSynthesis' in window;
+        let audioEnabled = speechSupported;
+        let currentSpeech = null;
+
+        // Word splitting dictionary (same as before)
+        const wordSplits = {
+            // ... (keep your existing wordSplits dictionary here)
+            // For brevity, I'll include a shortened version - use your full dictionary
+            'cat': 'c-at', 'dog': 'd-og', 'run': 'r-un', 'sun': 's-un', 'man': 'm-an',
+            'sat': 's-at',
+            'can': 'c-an', 'hat': 'h-at', 'mat': 'm-at', 'bat': 'b-at', 'rat': 'r-at',
+            'big': 'b-ig', 'pig': 'p-ig', 'dig': 'd-ig', 'top': 't-op', 'hop': 'h-op',
+            'pop': 'p-op', 'mop': 'm-op', 'bed': 'b-ed', 'red': 'r-ed', 'sad': 's-ad',
+            'mad': 'm-ad', 'bad': 'b-ad', 'hot': 'h-ot', 'not': 'n-ot', 'pot': 'p-ot',
+            'net': 'n-et', 'wet': 'w-et', 'pet': 'p-et', 'set': 's-et', 'fun': 'f-un',
+            'bun': 'b-un', 'bug': 'b-ug', 'hug': 'h-ug', 'mug': 'm-ug', 'rug': 'r-ug',
+            'leg': 'l-eg', 'peg': 'p-eg', 'log': 'l-og', 'fog': 'f-og', 'cob': 'c-ob',
+            'mob': 'm-ob', 'sob': 's-ob', 'rob': 'r-ob', 'tub': 't-ub', 'cub': 'c-ub',
+            'rub': 'r-ub', 'sub': 's-ub', 'mud': 'm-ud', 'bud': 'b-ud', 'frog': 'fr-og',
+            'stop': 'st-op', 'flag': 'fl-ag', 'spot': 'sp-ot', 'slip': 'sl-ip', 'clip': 'cl-ip',
+            'club': 'cl-ub', 'crab': 'cr-ab', 'drum': 'dr-um', 'grin': 'gr-in', 'step': 'st-ep',
+            'trap': 'tr-ap', 'trip': 'tr-ip', 'twig': 'tw-ig', 'swim': 'sw-im', 'swan': 'sw-an',
+            'spin': 'sp-in', 'ship': 'sh-ip', 'shop': 'sh-op', 'fish': 'f-ish', 'dish': 'd-ish',
+            'wish': 'w-ish', 'bath': 'b-ath', 'path': 'p-ath', 'moth': 'm-oth', 'thin': 'th-in',
+            'thick': 'th-ick', 'chick': 'ch-ick', 'chop': 'ch-op', 'chip': 'ch-ip', 'cake': 'c-ake',
+            'bake': 'b-ake', 'make': 'make', 'take': 't-ake', 'lake': 'l-ake', 'bike': 'b-ike',
+            'like': 'like', 'hike': 'h-ike', 'kite': 'k-ite', 'write': 'wr-ite', 'rope': 'r-ope',
+            'hope': 'h-ope', 'bone': 'b-one', 'stone': 'st-one', 'home': 'h-ome', 'cute': 'c-ute',
+            'flute': 'fl-ute', 'rule': 'r-ule', 'mule': 'm-ule', 'boat': 'b-oa-t', 'goat': 'g-oa-t',
+            'coat': 'c-oa-t', 'soap': 's-oa-p', 'rain': 'r-ai-n', 'pain': 'p-ai-n', 'mail': 'm-ai-l',
+            'meat': 'm-ea-t', 'seat': 's-ea-t', 'beat': 'b-ea-t', 'neat': 'n-ea-t', 'read': 'r-ead',
+            'seed': 's-eed', 'seem': 's-eem', 'peek': 'p-eek', 'feel': 'f-eel', 'tree': 'tr-ee',
+            'free': 'fr-ee', 'three': 'thr-ee', 'pie': 'p-ie', 'tie': 't-ie', 'lie': 'l-ie',
+            'high': 'high', 'light': 'l-ight', 'night': 'n-ight', 'right': 'r-ight', 'sight': 's-ight',
+            'tight': 't-ight', 'fight': 'f-ight', 'might': 'm-ight', 'blow': 'bl-ow', 'slow': 'sl-ow',
+            'low': 'low', 'crow': 'cr-ow', 'grow': 'gr-ow', 'show': 'sh-ow', 'snow': 'sn-ow',
+            'stow': 'st-ow', 'throw': 'thr-ow', 'town': 't-own', 'brown': 'br-own', 'clown': 'cl-own',
+            'down': 'd-own', 'gown': 'g-ow-n', 'frown': 'fr-own', 'crown': 'cr-own', 'drown': 'dr-own',
+            'tune': 't-une', 'June': 'J-une', 'rule': 'r-ule', 'rude': 'r-ude', 'new': 'n-ew',
+            'few': 'f-ew', 'grew': 'gr-ew', 'blew': 'bl-ew', 'drew': 'dr-ew', 'stew': 'st-ew',
+            'threw': 'thr-ew', 'chew': 'ch-ew', 'shoe': 'sh-oe', 'blue': 'bl-ue', 'true': 'tr-ue',
+            'clue': 'cl-ue', 'glue': 'gl-ue', 'car': 'c-ar', 'bar': 'b-ar', 'far': 'f-ar',
+            'jar': 'j-ar', 'star': 'st-ar', 'park': 'p-ark', 'bark': 'b-ark', 'dark': 'd-ark',
+            'mark': 'm-ark', 'shark': 'sh-ark', 'farm': 'f-arm', 'harm': 'h-arm', 'arm': 'arm',
+            'barn': 'b-arn', 'yarn': 'y-arn', 'hard': 'h-ard', 'card': 'c-ard', 'yard': 'y-ard',
+            'her': 'h-er', 'per': 'p-er', 'verb': 'v-erb', 'herd': 'h-erd', 'fern': 'f-ern',
+            'dirt': 'd-irt', 'bird': 'b-ird', 'girl': 'g-irl', 'sir': 's-ir', 'stir': 'st-ir',
+            'third': 'thr-ird', 'first': 'f-irst', 'shirt': 'sh-irt', 'skirt': 'sk-irt', 'squirt': 's-qu-irt',
+            'fur': 'f-ur', 'burn': 'b-urn', 'turn': 't-urn', 'spur': 'sp-ur', 'curl': 'c-url',
+            'hurl': 'hurl', 'nurse': 'nurse', 'purse': 'purse', 'for': 'for', 'fort': 'fort',
+            'fork': 'fork', 'corn': 'co-rn', 'horn': 'h-orn', 'thorn': 'th-orn', 'born': 'b-orn',
+            'torn': 't-orn', 'worn': 'w-orn', 'pork': 'p-ork', 'cord': 'c-ord', 'lord': 'l-ord',
+            'ford': 'f-ord', 'short': 'sh-ort', 'sport': 's-port', 'north': 'no-rth', 'more': 'm-ore',
+            'sore': 's-ore', 'tore': 't-ore', 'wore': 'w-ore', 'store': 'st-ore', 'horse': 'h-or-se',
+            'four': 'f-our', 'your': 'y-our', 'cheer': 'ch-eer', 'deer': 'd-eer', 'here': 'h-ere',
+            'mere': 'm-ere', 'little': 'lit-tle', 'middle': 'mid-dle', 'candle': 'can-dle', 'handle': 'han-dle',
+            'bundle': 'bun-dle', 'wobble': 'wob-ble', 'bubble': 'bub-ble', 'humble': 'hum-ble', 'rumble': 'rum-ble',
+            'stumble': 'stum-ble', 'hundred': 'hun-dred', 'thunder': 'thun-der', 'wonder': 'won-der',
+            'plunder': 'pl-un-der', 'under': 'un-der', 'monster': 'mon-s-ter', 'rooster': 'roo-s-ter',
+            'together': 'to-geth-er', 'forever': 'for-ev-er', 'another': 'a-noth-er', 'other': 'oth-er',
+            'mother': 'mo-the-r', 'father': 'fa-the-r', 'brother': 'bro-the-r', 'sister': 'sis-ter',
+            'kitten': 'kit-ten', 'puppy': 'pup-py', 'bunny': 'bun-ny', 'pony': 'po-ny', 'chicken': 'ch-ick-en',
+            'turkey': 'tur-key', 'robin': 'ro-bin', 'pigeon': 'pi-ge-on', 'spider': 'spi-der', 'lizard': 'li-z-ard',
+            'caterpillar': 'cat-er-pil-lar', 'butterfly': 'but-ter-fly', 'dragonfly': 'drag-on-fly',
+            'butter': 'but-ter', 'flutter': 'flut-ter', 'better': 'bet-ter', 'letter': 'let-ter',
+            'water': 'wa-ter', 'river': 'ri-ver', 'fever': 'fe-ver', 'never': 'n-ev-er', 'ever': 'ev-er',
+            'shovel': 'sho-v-el', 'level': 'le-v-el', 'hovel': 'ho-v-el', 'novel': 'no-v-el', 'travel': 'trav-el',
+            'camel': 'cam-el', 'tunnel': 't-un-nel', 'channel': 'ch-an-nel', 'flannel': 'flan-nel', 'funnel': 'fun-nel',
+            'kennel': 'ken-nel', 'person': 'per-son', 'pigeon': 'pi-ge-on', 'lesson': 'l-ess-on', 'season': 'sea-son',
+            'reason': 'rea-son', 'dragon': 'drag-on', 'wagon': 'wag-on', 'balloon': 'bal-loon', 'saloon': 'sa-loon',
+            'spittoon': 'sp-it-too-n', 'afternoon': 'af-ter-n-oon', 'noon': 'n-oon', 'moon': 'm-oon', 'spoon': 'sp-oon',
+            'cartoon': 'car-toon', 'baboon': 'ba-boon', 'raccoon': 'rac-coon', 'festoon': 'fes-toon',
+            'toddle': 't-odd-le', 'coddle': 'c-odd-le', 'model': 'm-od-el', 'yodel': 'yod-el', 'today': 'to-day',
+            'tonight': 'to-night', 'tomorrow': 'to-mor-row', 'apple': 'ap-ple', 'pear': 'pea-r', 'plum': 'pl-um',
+            'strawberry': 'st-raw-ber-ry', 'orange': 'or-ange', 'cake': 'c-ake', 'pickle': 'pi-ck-le',
+            'cheese': 'cheese', 'salami': 'sa-la-mi', 'lollipop': 'lol-li-pop', 'pie': 'p-ie', 'sausage': 'sau-sage',
+            'cherry': 'ch-er-ry', 'watermelon': 'wa-ter-mel-on', 'red': 'r-ed', 'orange': 'or-ange',
+            'yellow': 'y-el-low', 'green': 'gr-een', 'blue': 'blue', 'purple': 'pur-ple', 'pink': 'p-ink',
+            'brown': 'brown', 'black': 'black', 'white': 'white', 'gray': 'gray', 'one': 'one',
+            'two': 'two', 'three': 'three', 'four': 'four', 'five': 'f-ive', 'six': 'six', 'seven': 'sev-en',
+            'eight': 'eight', 'nine': 'n-ine', 'ten': 'ten', 'sun': 's-un', 'moon': 'moon', 'star': 'st-ar',
+            'cloud': 'cl-ou-d', 'rain': 'r-ai-n', 'bow': 'b-ow', 'rainbow': 'rain-bow', 'storm': 'st-orm',
+            'lightning': 'light-ning', 'thunder': 'thun-der', 'wind': 'w-i-nd', 'breeze': 'br-ee-ze', 'gale': 'g-ale',
+            'forest': 'for-est', 'woods': 'w-o-o-d-s', 'jungle': 'jun-gle', 'rainforest': 'rain-for-est',
+            'taiga': 'tai-ga', 'savanna': 'sa-van-na', 'prairie': 'prair-ie', 'steppe': 'step-pe', 'pampas': 'pam-pas',
+            'tundra': 'tun-dra', 'desert': 'des-ert', 'mountain': 'moun-tain', 'hill': 'h-ill', 'valley': 'vall-ey',
+            'canyon': 'can-yon', 'cliff': 'cl-iff', 'cave': 'c-ave', 'cavern': 'cav-ern', 'rock': 'r-ock',
+            'stone': 'st-one', 'boulder': 'boul-der', 'pebble': 'peb-ble', 'sand': 's-and', 'dune': 'd-une',
+            'beach': 'b-ea-ch', 'shore': 'sh-ore', 'coast': 'co-ast', 'bay': 'b-ay', 'gulf': 'gulf',
+            'sea': 's-ea', 'ocean': 'o-cean', 'river': 'riv-er', 'stream': 'str-eam', 'brook': 'br-oo-k',
+            'creek': 'cr-eek', 'pond': 'p-ond', 'lake': 'l-ake', 'dam': 'd-am', 'waterfall': 'wa-ter-fall',
+            'cascade': 'cas-cade', 'plant': 'pl-ant', 'tree': 'tr-ee', 'bush': 'b-ush', 'shrub': 'shr-ub',
+            'flower': 'fl-ow-er', 'grass': 'gr-ass', 'weed': 'w-eed', 'vine': 'v-ine', 'seed': 's-eed',
+            'sprout': 'spr-out', 'bloom': 'bl-oom', 'petal': 'pet-al', 'leaf': 'l-eaf', 'stem': 'st-em',
+            'root': 'r-oot', 'branch': 'branch', 'twig': 'tw-ig', 'bark': 'bark', 'king': 'k-ing',
+            'queen': 'qu-een', 'prince': 'prince', 'princess': 'prin-cess', 'knight': 'knight', 'castle': 'cas-tle',
+            'tower': 'tow-er', 'moat': 'm-oat', 'dungeon': 'dun-geon', 'throne': 'thr-one', 'crown': 'cr-own',
+            'scepter': 'scep-ter', 'royal': 'roy-al', 'palace': 'pal-ace', 'emperor': 'em-per-or', 'empress': 'em-press',
+            'duke': 'd-uke', 'duchess': 'duch-ess', 'lord': 'lord', 'lady': 'la-dy', 'squire': 's-quire',
+            'page': 'p-age', 'jester': 'jest-er', 'wizard': 'wiz-ard', 'witch': 'witch', 'warlock': 'war-lock',
+            'sorcerer': 'sor-cer-er', 'sorceress': 'sor-cer-ess', 'unicorn': 'u-ni-c-orn', 'mermaid': 'mer-maid',
+            'fairy': 'fair-y', 'pixie': 'pix-ie', 'sprite': 'spr-ite', 'elf': 'elf', 'elves': 'elves',
+            'dwarf': 'dwarf', 'gnome': 'gn-ome', 'ogre': 'o-gre', 'giant': 'gi-ant', 'troll': 'troll',
+            'goblin': 'gob-lin', 'imp': 'imp', 'ghost': 'gh-ost', 'skeleton': 'skel-e-ton', 'vampire': 'vam-pire',
+            'werewolf': 'were-wolf', 'zombie': 'zom-bie', 'mummy': 'mum-my', 'monster': 'mon-ster', 'creature': 'crea-ture',
+            'beast': 'beast', 'fiend': 'fi-end', 'demon': 'de-mon', 'devil': 'dev-il', 'angel': 'an-gel',
+            'saint': 'saint', 'priest': 'pri-est', 'monk': 'm-onk', 'nun': 'nun', 'pilgrim': 'p-il-gr-im',
+            'shepherd': 'shep-herd', 'farmer': 'farm-er', 'peasant': 'peas-ant', 'villager': 'vil-lag-er',
+            'merchant': 'mer-ch-ant', 'trader': 'tra-d-er', 'craftsman': 'crafts-man', 'smith': 's-mi-th',
+            'weaver': 'wea-v-er', 'carpenter': 'car-pen-ter', 'mason': 'ma-son', 'tailor': 'tai-lor',
+            'cobbler': 'cob-bler', 'butcher': 'butch-er', 'baker': 'bak-er', 'cook': 'c-oo-k', 'chef': 'chef',
+            'servant': 'serv-ant', 'maid': 'm- aid', 'butler': 'but-ler', 'sailor': 'sail-or', 'pirate': 'pi-rate',
+            'captain': 'cap-tain', 'mate': 'm-ate', 'crew': 'cr-ew', 'voyage': 'voy-age', 'explore': 'ex-plore',
+            'discover': 'dis-cov-er', 'adventure': 'ad-ven-ture', 'quest': 'quest', 'journey': 'jou-r-ney',
+            'pilgrimage': 'pil-gr-im-age', 'trek': 'tr-ek', 'expedition': 'ex-pe-di-tion', 'safari': 'sa-fa-ri',
+            'hunt': 'hunt', 'hunter': 'hunt-er', 'ranger': 'rang-er', 'scout': 'scout', 'guide': 'g-uide',
+            'tracker': 'track-er', 'pathfinder': 'pa-th-f-ind-er', 'run': 'r-un', 'jump': 'j-ump', 'hop': 'h-op',
+            'skip': 'sk-ip', 'leap': 'l-eap', 'bound': 'b-ou-nd', 'spring': 'spr-ing', 'bounce': 'b-ou-nce',
+            'swim': 'sw-im', 'wade': 'w-ade', 'paddle': 'pad-dle', 'splash': 'splash', 'spray': 'spr-ay',
+            'float': 'fl-oat', 'sink': 's-ink', 'drift': 'dr-ift', 'glide': 'gl-ide', 'soar': 'soar',
+            'fly': 'fl-y', 'flit': 'fl-it', 'flutter': 'flut-ter', 'hover': 'hov-er', 'swoop': 'sw-oop',
+            'dive': 'd-ive', 'plunge': 'plunge', 'climb': 'cl-imb', 'scale': 'sc-ale', 'scramble': 'scram-ble',
+            'crawl': 'cr-awl', 'creep': 'cr-eep', 'skulk': 'skulk', 'sneak': 'sn-eak', 'tiptoe': 'tip-toe',
+            'walk': 'w-alk', 'stroll': 'st-roll', 'saunter': 'saun-ter', 'wander': 'w-and-er', 'roam': 'r-oam',
+            'ramble': 'ram-ble', 'meander': 'me-an-der', 'stride': 'str-ide', 'march': 'm-arch', 'parade': 'pa-rade',
+            'trudge': 'trudge', 'plod': 'pl-od', 'slog': 'slog', 'toil': 't-oil', 'strive': 'str-ive',
+            'struggle': 'strug-gle', 'fight': 'f-ight', 'battle': 'batt-le', 'war': 'w-ar', 'combat': 'com-bat',
+            'duel': 'd-uel', 'feud': 'f-eud', 'contest': 'con-test', 'compete': 'com-pete', 'oppose': 'op-pose',
+            'resist': 're-sist', 'defend': 'de-fend', 'protect': 'pro-tect', 'guard': 'g-uard', 'shield': 'sh-ield',
+            'shelter': 'shel-ter', 'harbor': 'har-bor', 'safeguard': 'safe-guard', 'preserve': 'pre-serve',
+            'save': 's-ave', 'rescue': 'res-cue', 'liberate': 'lib-er-ate', 'free': 'fr-ee', 'release': 're-lease',
+            'work': 'w-or-k', 'labor': 'la-bor', 'drudge': 'dr-udge', 'slave': 'sl-ave', 'strive': 'str-ive',
+            'struggle': 'strug-gle', 'perform': 'per-form', 'execute': 'ex-e-cute', 'do': 'do', 'did': 'did',
+            'done': 'done', 'make': 'make', 'made': 'made', 'form': 'f-orm', 'shape': 'sh-ape',
+            'create': 'cre-ate', 'produce': 'pro-duce', 'build': 'b-u-ild', 'construct': 'con-struct', 'erect': 'e-rect',
+            'raise': 'r- aise', 'assemble': 'as-sem-ble', 'compose': 'com-pose', 'devise': 'de-vise', 'invent': 'in-vent',
+            'originate': 'o-rig-i-nate', 'initiate': 'in-i-ti-ate', 'begin': 'be-gin', 'commence': 'com-mence',
+            'start': 'st-art', 'embark': 'em-bark', 'launch': 'l-aunch', 'institute': 'in-sti-tute', 'establish': 'es-tab-lish',
+            'found': 'f-ou-nd', 'ball': 'b-all', 'fall': 'f-all', 'tall': 't-all', 'call': 'c-all', 
+        };
+
+        // Fallback splitting function
+        function splitWord(word) {
+            if (wordSplits[word.toLowerCase()]) {
+                return wordSplits[word.toLowerCase()];
+            }
+            word = word.toLowerCase();
+            if (word.length <= 2) return word;
+            const suffixes = ['ing', 'ed', 'er', 'est', 'ly', 'en', 'y', 's', 'es'];
+            for (let suffix of suffixes) {
+                if (word.endsWith(suffix) && word.length > suffix.length + 2) {
+                    const base = word.slice(0, -suffix.length);
+                    if (wordSplits[base]) {
+                        return wordSplits[base] + '-' + suffix;
+                    }
+                    return base + '-' + suffix;
+                }
+            }
+            if (word.endsWith('le') && word.length > 3) {
+                const prev = word[word.length - 3];
+                if ('bcdfghjklmnpqrstvwxyz'.includes(prev)) {
+                    return word.slice(0, -3) + '-' + prev + 'le';
+                }
+            }
+            const vowels = 'aeiouy';
+            for (let i = 1; i < word.length - 1; i++) {
+                if (vowels.includes(word[i]) && !vowels.includes(word[i+1])) {
+                    return word.slice(0, i+1) + '-' + word.slice(i+1);
+                }
+            }
+            return word;
+        }
+
+        // 100 sentences
+        const sentences = [
+            "The cat sat on the mat.",
+            "A dog can run fast.",
+            "I see a red ball.",
+            "The sun is bright.",
+            "A bird can fly high.",
+            "The fish swim in the sea.",
+            "I like to eat cake.",
+            "The cow says moo.",
+            "A duck can swim.",
+            "The pig is pink.",
+            "I have a toy car.",
+            "The bee is on the flower.",
+            "A frog can jump.",
+            "The cat is black.",
+            "I see a big tree.",
+            "The dog is brown.",
+            "A bird has wings.",
+            "The sun is warm.",
+            "I like to play.",
+            "The cat is soft.",
+            "A dog can bark.",
+            "The cow is big.",
+            "I see a blue sky.",
+            "The fish is small.",
+            "A duck can quack.",
+            "The pig is fat.",
+            "I have a toy train.",
+            "The bee is busy.",
+            "A frog is green.",
+            "The cat is cute.",
+            "I see a yellow sun.",
+            "The dog is happy.",
+            "A bird can sing.",
+            "The sun is bright again.",
+            "I like to dance.",
+            "The cat is fast.",
+            "A dog can run.",
+            "The cow is gentle.",
+            "I see a green leaf.",
+            "The fish can swim.",
+            "A duck is yellow.",
+            "The pig is pink.",
+            "I have a toy boat.",
+            "The bee is small.",
+            "A frog can hop.",
+            "The cat is quiet.",
+            "I see a white cloud.",
+            "The dog is friendly.",
+            "A bird can fly.",
+            "The sun is hot.",
+            "I like to draw.",
+            "The cat is fluffy.",
+            "A dog can jump.",
+            "The cow is strong.",
+            "I see a red apple.",
+            "The fish is shiny.",
+            "A duck can swim.",
+            "The pig is cute.",
+            "I have a toy plane.",
+            "The bee is buzzing.",
+            "A frog can leap.",
+            "The cat is playful.",
+            "I see a blue lake.",
+            "The dog is loyal.",
+            "A bird can chirp.",
+            "The sun is round.",
+            "I like to sing.",
+            "The cat is warm.",
+            "A dog can fetch.",
+            "The cow is large.",
+            "I see a green hill.",
+            "The fish is smooth.",
+            "A duck can waddle.",
+            "The pig is happy.",
+            "I have a toy truck.",
+            "The bee is sweet.",
+            "A frog can croak.",
+            "The cat is gentle.",
+            "I see a yellow flower.",
+            "The dog is playful.",
+            "A bird can soar.",
+            "The sun is high.",
+            "I like to jump.",
+            "The cat is soft.",
+            "A dog can wag.",
+            "The cow is kind.",
+            "I see a brown bear.",
+            "The fish is wet.",
+            "A duck can paddle.",
+            "The pig is silly.",
+            "I have a toy robot.",
+            "The bee is busy.",
+            "A frog can splash.",
+            "The cat is sleek.",
+            "I see a purple grape.",
+            "The dog is strong.",
+            "A bird can glide.",
+            "The sun is warm.",
+            "I like to laugh.",
+            "The cat is happy.",
+            "A big dog can run fast.",
+            "The little bird can fly high.",
+            "I see a yellow duck in the pond.",
+            "The brown frog jumps in the grass.",
+            "A red fish swims in the blue water.",
+            "The pink pig rolls in the mud.",
+            "I have a small toy car and a big truck.",
+            "The busy bee makes sweet honey.",
+            "A green frog can hop and splash.",
+            "The fluffy cat sleeps on the soft mat."
+        ];
+
+        let currentSentenceIndex = 0;
+        let speechSynthesis = window.speechSynthesis;
+
+        // Initialize the app
+        function init() {
+            renderSentence();
+            updateAudioButton();
+            if (!speechSupported) {
+                document.getElementById('speechStatus').textContent = '🔇 Speech not supported in this browser';
+                document.querySelectorAll('.audio-controls button').forEach(btn => btn.disabled = true);
+            } else {
+                // Set up speech voices when available
+                speechSynthesis.onvoiceschanged = () => {
+                    console.log('Speech voices loaded');
+                };
+            }
+        }
+
+        function renderSentence() {
+            const sentenceDiv = document.getElementById('sentence');
+            const sentence = sentences[currentSentenceIndex];
+            const words = sentence.match(/\w+|[^\w\s]/g) || [];
+            
+            sentenceDiv.innerHTML = '';
+            
+            words.forEach(word => {
+                if (/^\w+$/.test(word)) {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.className = 'word';
+                    wordSpan.textContent = word;
+                    wordSpan.dataset.word = word;
+                    
+                    // Add click event for speech
+                    wordSpan.addEventListener('click', () => speakWord(word));
+                    
+                    // Add hover for split view
+                    const partsSpan = document.createElement('span');
+                    partsSpan.className = 'word-parts';
+                    partsSpan.textContent = splitWord(word);
+                    wordSpan.appendChild(partsSpan);
+                    
+                    sentenceDiv.appendChild(wordSpan);
+                } else {
+                    const punctSpan = document.createElement('span');
+                    punctSpan.textContent = word + ' ';
+                    sentenceDiv.appendChild(punctSpan);
+                }
+                sentenceDiv.appendChild(document.createTextNode(' '));
+            });
+            
+            updateControls();
+        }
+
+        function speakWord(word) {
+            if (!audioEnabled || !speechSupported) return;
+            
+            // Cancel any current speech
+            if (currentSpeech) {
+                speechSynthesis.cancel();
+            }
+            
+            // Update status
+            const status = document.getElementById('speechStatus');
+            status.textContent = '🔊 Speaking: ' + word;
+            status.classList.add('speaking');
+            
+            // Add visual feedback
+            const wordElement = document.querySelector(`[data-word="${word}"]`);
+            if (wordElement) {
+                wordElement.classList.add('speaking');
+            }
+            
+            // Create speech utterance
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.rate = 0.8; // Slower for children
+            utterance.pitch = 1.1; // Slightly higher pitch
+            utterance.volume = 0.8;
+            
+            // Use child-friendly voice if available
+            const voices = speechSynthesis.getVoices();
+            const childVoice = voices.find(voice => 
+                voice.name.includes('female') || 
+                voice.name.includes('woman') ||
+                voice.name.includes('girl')
+            );
+            if (childVoice) {
+                utterance.voice = childVoice;
+            }
+            
+            utterance.onend = () => {
+                status.textContent = '';
+                status.classList.remove('speaking');
+                if (wordElement) {
+                    wordElement.classList.remove('speaking');
+                }
+                currentSpeech = null;
+            };
+            
+            utterance.onerror = () => {
+                status.textContent = 'Speech error';
+                status.classList.remove('speaking');
+                if (wordElement) {
+                    wordElement.classList.remove('speaking');
+                }
+                currentSpeech = null;
+            };
+            
+            currentSpeech = utterance;
+            speechSynthesis.speak(utterance);
+        }
+
+        function speakFullSentence() {
+            if (!audioEnabled || !speechSupported) return;
+            
+            const sentence = sentences[currentSentenceIndex];
+            const status = document.getElementById('speechStatus');
+            
+            if (currentSpeech) {
+                speechSynthesis.cancel();
+            }
+            
+            status.textContent = '🔊 Reading sentence...';
+            status.classList.add('speaking');
+            
+            const utterance = new SpeechSynthesisUtterance(sentence);
+            utterance.rate = 0.7;
+            utterance.pitch = 1.1;
+            utterance.volume = 0.8;
+            
+            const voices = speechSynthesis.getVoices();
+            const childVoice = voices.find(voice => 
+                voice.name.includes('female') || 
+                voice.name.includes('woman') ||
+                voice.name.includes('girl')
+            );
+            if (childVoice) {
+                utterance.voice = childVoice;
+            }
+            
+            utterance.onend = () => {
+                status.textContent = '';
+                status.classList.remove('speaking');
+                currentSpeech = null;
+            };
+            
+            currentSpeech = utterance;
+            speechSynthesis.speak(utterance);
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            updateAudioButton();
+            
+            if (!audioEnabled && currentSpeech) {
+                speechSynthesis.cancel();
+                document.getElementById('speechStatus').textContent = '';
+                document.getElementById('speechStatus').classList.remove('speaking');
+                document.querySelectorAll('.word.speaking').forEach(w => w.classList.remove('speaking'));
+            }
+        }
+
+        function updateAudioButton() {
+            const btn = document.getElementById('audioToggle');
+            if (audioEnabled) {
+                btn.textContent = '🔊 Sound ON';
+                btn.classList.remove('muted');
+            } else {
+                btn.textContent = '🔇 Sound OFF';
+                btn.classList.add('muted');
+            }
+        }
+
+        function updateControls() {
+            document.getElementById('currentNum').textContent = currentSentenceIndex + 1;
+            document.getElementById('progressFill').style.width = ((currentSentenceIndex + 1) / sentences.length * 100) + '%';
+            
+            document.getElementById('prevBtn').disabled = currentSentenceIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSentenceIndex === sentences.length - 1;
+        }
+
+        function nextSentence() {
+            if (currentSentenceIndex < sentences.length - 1) {
+                if (currentSpeech) speechSynthesis.cancel();
+                currentSentenceIndex++;
+                renderSentence();
+            }
+        }
+
+        function previousSentence() {
+            if (currentSentenceIndex > 0) {
+                if (currentSpeech) speechSynthesis.cancel();
+                currentSentenceIndex--;
+                renderSentence();
+            }
+        }
+
+        // Keyboard navigation and shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSentence();
+            if (e.key === 'ArrowLeft') previousSentence();
+            if (e.key === ' ' && audioEnabled) {
+                e.preventDefault();
+                speakFullSentence();
+            }
+        });
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>

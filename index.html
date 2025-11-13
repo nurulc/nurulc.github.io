@@ -1,39 +1,448 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="UTF-8">
-    <title>RxInput demo</title>
-    <script>
-      window.hide_header = true;
-    </script>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Nurul's Home Page</h1>
-      <h2 class="project-tagline">Demo of various components</h2>
+    <title>Nurul's Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #2d3748;
+            padding: 80px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="%23667eea" opacity="0.1"/><circle cx="80" cy="40" r="1.5" fill="%23764ba2" opacity="0.1"/><circle cx="50" cy="80" r="1" fill="%23667eea" opacity="0.1"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            color: #4a5568;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+            min-height: 60vh;
+        }
+
+        .intro-text {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .intro-text p {
+            font-size: 1.2em;
+            color: white;  /* WHITE TEXT FOR CONTRAST */
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 500;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .project-card h4 {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #2d3748;
+        }
+
+        .project-card p {
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .project-link:hover::after {
+            left: 100%;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .github-link {
+            background: #24292e;
+        }
+
+        .github-link:hover {
+            background: #3f4247;
+        }
+
+        .separator {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .separator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(118, 75, 162, 0.3), transparent);
+        }
+
+        .separator span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 20px;
+            color: #764ba2;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        .site-footer {
+            background: rgba(45, 55, 72, 0.95);
+            color: #a0aec0;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .site-footer p {
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .site-footer a {
+            color: #e9d8fd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .site-footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0 40px;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .project-card {
+                padding: 25px;
+            }
+
+            .project-links {
+                flex-direction: column;
+            }
+
+            .project-link {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card {
+            animation: fadeIn 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-card:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <h1>👨‍💻 Nurul's Portfolio</h1>
+            <p>Exploring the intersection of creativity and code through interactive demos and open-source projects</p>
+        </div>
     </section>
 
     <section class="main-content">
-         <p>This is list of some projects I ma publishing</p>
-         <h4>React regexp input mask - </h4> <a href="rxinput.html">Demo</a>
-         This is a react component that supports <i>masked input</i> defined by a regular expression
-          <h4>Path Search - </h4> <a href="path_search.html">Demo</a>
-          <h4>Coronavirus spread modeler - </h4> <a href="/corona.html">Go to modeler</a>
-          <h4>TryITjs  demo / str-data-frame - </h4> <a href="/frame/tryit/data-frame-examples.html">str-data-frame runnable examples</a>
-          <a href="https://github.com/nurulc/react-rxinput">react-rx-input on Git Hub</a>. <a href="https://github.com/nurulc/tryitjs">You can find out how to create your own TryITjs file here</a>
+        <div class="container">
+            <div class="intro-text">
+                <p>Welcome to my digital playground! Here you'll find a collection of interactive projects, experiments, and tools I've built. Each project represents a different facet of web development, from UI components to data visualization.</p>
+            </div>
 
-    </section>         
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>React RegExp Input Mask</h4>
+                    <p>A powerful React component that provides masked input functionality using regular expressions. Perfect for formatted inputs like phone numbers, dates, and custom patterns.</p>
+                    <div class="project-links">
+                        <a href="rxinput.html" class="project-link">
+                            <i class="fas fa-play-circle"></i> Live Demo
+                        </a>
+                        <a href="https://github.com/nurulc/react-rxinput" class="project-link github-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h4>Path Search Algorithm</h4>
+                    <p>An interactive visualization of pathfinding algorithms. Watch as different algorithms navigate through mazes and find optimal routes in real-time.</p>
+                    <div class="project-links">
+                        <a href="path_search.html" class="project-link">
+                            <i class="fas fa-play-circle"></i> Live Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-virus"></i>
+                    </div>
+                    <h4>Coronavirus Spread Modeler</h4>
+                    <p>A data-driven simulation tool that models virus spread patterns. Explore how different variables affect transmission rates and visualize epidemic curves.</p>
+                    <div class="project-links">
+                        <a href="/corona.html" class="project-link">
+                            <i class="fas fa-play-circle"></i> Open Modeler
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-table"></i>
+                    </div>
+                    <h4>TryITjs / str-data-frame</h4>
+                    <p>Interactive runnable examples for str-data-frame. Experience this powerful data manipulation library directly in your browser with live code editing.</p>
+                    <div class="project-links">
+                        <a href="/frame/tryit/data-frame-examples.html" class="project-link">
+                            <i class="fas fa-play-circle"></i> View Examples
+                        </a>
+                        <a href="https://github.com/nurulc/tryitjs" class="project-link github-link">
+                            <i class="fab fa-github"></i> How to Create TryITjs
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NEW CARD FOR READING APP -->
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h4>Read & Split</h4>
+                    <p>This is an application for young children to learn to read.</p>
+                    <div class="project-links">
+                        <a href="reader.html" class="project-link">
+                            <i class="fas fa-play-circle"></i> Open Reader
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer class="site-footer">
+        <div class="container">
+            <p>Crafted with ❤️ and ☕ by Nurul | <a href="https://pages.github.com">GitHub Pages</a> | Theme inspired by <a href="https://twitter.com/jasonlong">Jason Long</a></p>
+        </div>
+    </footer>
 
-    <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-  </footer>
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
 
-
-  </body>
+        // Add subtle parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</body>
 </html>

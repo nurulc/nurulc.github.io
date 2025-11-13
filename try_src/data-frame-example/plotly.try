@@ -180,7 +180,9 @@
 
 
 !md
-
+      - Treat top countries (highest total_cases) as if the were a continent is themselves
+      - And remove the countries from the corresponding continent
+      - For those countries change ther 'continent' column to the country name (location)
 !tryit
     function getContinentSummary(countries, top=0, topColName='total_deaths'){
       var topCountries = topN(top,countries, topColName); // get top 'total_deaths' countries
@@ -189,6 +191,7 @@
         .filter(ro => ro.continent) // remove locations not in a continent
 
          // Treat top countries (highest total_cases) as if the were a continent is themselves
+         // and remove the countries from the corresponding continent
          // for those countries change ther 'continent' to the country name (location)
         .update({ continent: (v,ro) => topCountries.indexOf(ro.location) !== -1?ro.location:v }) // make the top 'top' countries into their own continent
         .groupBy([    
@@ -293,7 +296,9 @@
     Now that we have the **countries** frame and the **continents** frame in the same shape
     we can combile the into one table using the concat method
 
-!tryit
+!tryit Create covid regions
+   // Get list of continents and split off the the high covid cocountries as if they were continents 
+   // in their own right
     var countryContinent = countries.concat(continents); // add the continents to the frame (we hade sure that the both have the same shape - columns)
 
     //Get Data for USA
@@ -324,9 +329,7 @@
     into groups all rows that have the sane value in a column, or a set of columns. On each group we can the apply come aggrication operation on some of thr remaining columns. 
 
       
-!tryit
-  // ================================== UI TO Select a country  and continent ============================
-
+!tryit UI TO Select a country  and continent
 
   // ======================  Selector for country ==================
 
@@ -448,16 +451,15 @@
       - **Event Handling**: When the checkbox is toggled, the `scaleOnChange` function is called, which updates the `isLinear` property of the `OPTS` object (representing options for the plot).
       
       ```js
-      var setLinearOrLog = `&lt;p class="ui header huge"&gt;Y Scale&lt;/p&gt;
-        &lt;div class="ui form"&gt;
-          &lt;div class="inline fields"&gt;
-            &lt;div class="field"&gt;
-              &lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange="scaleOnChange(this)" /&gt;
-              &lt;label for="IsLinear"&gt; Linear Axis&lt;/label&gt; &lt;br /&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-        `;
+      var setLinearOrLog = '<p class="ui header huge">Y Scale</p>'+
+      '<div class="ui form">'+
+        '<div class="inline fields">'+
+          '<div class="field">'+
+            '<input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange="scaleOnChange(this)" />'+
+            '<label for="IsLinear"> Linear Axis</label> <br />'+
+          '</div>'+
+        '</div>'+
+      '</div>';
       
       function scaleOnChange(element) {
         selCountry({ isLinear: element.checked });  // Update plot options
@@ -522,8 +524,8 @@
   3. Create a simple Recat component (click counter) that manages its 
 
 
-!tryit
-    // Create a dropdown list of categorized items 
+!tryit Create a dropdown list of categorized items 
+    // 
     let list =[];
     function add(category, ...values) {
       let base = list.length;
@@ -531,7 +533,7 @@
       list = [...list, ...newList];
     }
     add('Cities', 'New York','London','Cairo', 'Beijing', 'Sidney', 'Jakarta');
-    add('Math Constants', '3.1416 π','2.71828 e','1.6180 φ golden ratio', '1.6180 sqrt(2)');
+    add('Math Constants', '3.1416 π','2.71828 e','1.6180 φ golden ratio', '1.41421356 sqrt(2)');
     add('punc', '!@a','@#2','#!3');
 
     var myCatList = UIcategoryList( 

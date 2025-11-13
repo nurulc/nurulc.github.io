@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 	<meta charset="UTF-8">
-<link rel="stylesheet" href="https://unpkg.com/tryitjs@1.0.0/ref/stylesheets/tryit.css" />
+<link rel="stylesheet" href="./stylesheets/tryit.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
@@ -40,7 +40,7 @@
 <script src="https://unpkg.com/js-sha1/src/sha1.js"></script>
 <script src="https://unpkg.com/lz-string@1.4.4/libs/lz-string.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dataformsjs/js/react/jsxLoader.min.js"></script>
-<script src="https://unpkg.com/tryitjs@1.0.0/ref/javascript/tryit-min.js"></script>
+<script src="./javascript/tryit-min.js"></script>
 <title>Data Frame Examples</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=0.7">
@@ -1445,6 +1445,11 @@ topN(5); // display top 5 countries for deaths
  &nbsp; <button id="save_11" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
+<ul>
+<li>Treat top countries (highest total_cases) as if the were a continent is themselves</li>
+<li>And remove the countries from the corresponding continent</li>
+<li>For those countries change ther 'continent' column to the country name (location)</li>
+</ul>
 
 <a id="_tryit12">&nbsp</a>
 <div class="html ui top attached segment tryit-container " >
@@ -1458,6 +1463,7 @@ function getContinentSummary(countries, top=0, topColName='total_deaths'){
     .filter(ro =&gt; ro.continent) // remove locations not in a continent
 
      // Treat top countries (highest total_cases) as if the were a continent is themselves
+     // and remove the countries from the corresponding continent
      // for those countries change ther 'continent' to the country name (location)
     .update({ continent: (v,ro) =&gt; topCountries.indexOf(ro.location) !== -1?ro.location:v }) // make the top 'top' countries into their own continent
     .groupBy([    
@@ -1797,13 +1803,15 @@ we can combile the into one table using the concat method</p>
 	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
 		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
 			<textarea class="tryit ui " id="tryit18">
-var countryContinent = countries.concat(continents); // add the continents to the frame (we hade sure that the both have the same shape - columns)
+// Get list of continents and split off the the high covid cocountries as if they were continents 
+// in their own right
+ var countryContinent = countries.concat(continents); // add the continents to the frame (we hade sure that the both have the same shape - columns)
 
-//Get Data for USA
-$$.HTML('&lt;p class="huge"&gt;country - USA from March 20202/b&gt;')
-countryContinent.filter(ro =&gt; ro.iso_code === 'USA' &amp;&amp; ro.date &gt; '2020-03') // display data for USA   
-        
-  
+ //Get Data for USA
+ $$.HTML('&lt;p class="huge"&gt;country - USA from March 20202/b&gt;')
+ countryContinent.filter(ro =&gt; ro.iso_code === 'USA' &amp;&amp; ro.date &gt; '2020-03') // display data for USA   
+         
+   
 			</textarea>
 		</div>
 		<a class="tryit-anchor" id="_end_tryit18">
@@ -1814,7 +1822,7 @@ countryContinent.filter(ro =&gt; ro.iso_code === 'USA' &amp;&amp; ro.date &gt; '
 		</div>	</div>	<div class="ui top attached label">
 <i class="caret square down icon large" title="Hide Code"></i>		<button id="tryit18-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit19" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="save_18" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+<div class="center try-title">Create covid regions</div> &nbsp; <button id="save_18" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="plotusacoviddata">Plot USA Covid data</h2>
@@ -1908,82 +1916,79 @@ into groups all rows that have the sane value in a column, or a set of columns. 
 	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
 		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
 			<textarea class="tryit ui " id="tryit20">
-// ================================== UI TO Select a country  and continent ============================
+  // ======================  Selector for country ==================
 
+  let countryDropdown = UIcategoryList(
+      countryContinent.groupBy(['iso_code=ID', 'location=title', 'continent=category']).asObjList(), // list of items to select from
+      { caption: 'Select Country', 
+       onSelect: result =&gt; selCountry({C: result.ID})
+       }
+    );
 
-// ======================  Selector for country ==================
+  // ================ Selector for continents ==================
 
-let countryDropdown = UIcategoryList(
-    countryContinent.groupBy(['iso_code=ID', 'location=title', 'continent=category']).asObjList(), // list of items to select from
-    { caption: 'Select Country', 
-     onSelect: result =&gt; selCountry({C: result.ID})
-     }
-  );
-
-// ================ Selector for continents ==================
-
-function options(countryContinent, selected) {
-  return countryContinent.groupBy(['iso_code', 'location'])
-                .sort(['location'])
-                .map(ro=&gt; `&lt;option value="${ro.iso_code}" ${ro.location === selected?'selected':''}&gt;${ro.location} 
-                                
-                           &lt;/option&gt;`)
-                .join('\n');
-}
-
-let continentDropdown = `
-&lt;p class="ui header huge"&gt;Select a Continent&lt;/p&gt;
-&lt;select class="ui selection dropdown" 
-        name="continents" id="continents" 
-        onchange="selCountry({R: this.value})"&gt;
-  ${options(countryContinent.filter(ro =&gt; ro.iso_code === ro.location), 'North America')}
-&lt;/select&gt;`;
-
-var setLinearOrLog = `&lt;p class="ui header huge"&gt;Y Scale&lt;/p&gt;
-&lt;div class="ui form"&gt;
-  &lt;div class="inline fields"&gt;
-    &lt;div class="field"&gt;
-    &lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange = "scaleOnChange(this)"/&gt;
-    &lt;label for="IsLinear"&gt; Linear Axis&lt;/label&gt; &lt;br /&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;`;
-
-function scaleOnChange(element) {
- selCountry({ isLinear: element.checked});
-}
-
-
-// ================================================================================================================ 
-// Render dropdowns
-
-
-$$.D(HTML(countryDropdown),HTML(continentDropdown), HTML(setLinearOrLog));
-
-// =================================================PLOTTING UTILS===================================================
-// Find out the location fo the current tryit script
-let dn = $$.executeDiv +'-plot';
-
-
-var OPTS = ({ C: 'USA', R: 'North America', isLinear: true});
-var isLinear = true;
-function selCountry(opts) {
-  console.log(opts);
-  if(opts) {
-    OPTS = Object.assign(OPTS, opts);
-    console.log(OPTS);
+  function options(countryContinent, selected) {
+    return countryContinent.groupBy(['iso_code', 'location'])
+                  .sort(['location'])
+                  .map(ro=&gt; `&lt;option value="${ro.iso_code}" ${ro.location === selected?'selected':''}&gt;${ro.location} 
+                                  
+                             &lt;/option&gt;`)
+                  .join('\n');
   }
-  doPlotLines(countryContinent,[OPTS.C, OPTS.R], dn,OPTS.isLinear, {scrollZoom: true});
-}
+
+  let continentDropdown = `
+  &lt;p class="ui header huge"&gt;Select a Continent&lt;/p&gt;
+  &lt;select class="ui selection dropdown" 
+          name="continents" id="continents" 
+          onchange="selCountry({R: this.value})"&gt;
+    ${options(countryContinent.filter(ro =&gt; ro.iso_code === ro.location), 'North America')}
+  &lt;/select&gt;`;
+
+  var setLinearOrLog = `&lt;p class="ui header huge"&gt;Y Scale&lt;/p&gt;
+  &lt;div class="ui form"&gt;
+    &lt;div class="inline fields"&gt;
+      &lt;div class="field"&gt;
+      &lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange = "scaleOnChange(this)"/&gt;
+      &lt;label for="IsLinear"&gt; Linear Axis&lt;/label&gt; &lt;br /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;`;
+
+  function scaleOnChange(element) {
+   selCountry({ isLinear: element.checked});
+  }
 
 
-// ===================== Plot initial data ============================
+  // ================================================================================================================ 
+  // Render dropdowns
 
-$$.HTML(`&lt;div id="${dn}" class="plot" /&gt;`);
-$$.lastly(true,
-  () =&gt; doPlotLines(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
-);
-isLinear = true;
+
+  $$.D(HTML(countryDropdown),HTML(continentDropdown), HTML(setLinearOrLog));
+
+  // =================================================PLOTTING UTILS===================================================
+  // Find out the location fo the current tryit script
+  let dn = $$.executeDiv +'-plot';
+
+
+  var OPTS = ({ C: 'USA', R: 'North America', isLinear: true});
+  var isLinear = true;
+  function selCountry(opts) {
+    console.log(opts);
+    if(opts) {
+      OPTS = Object.assign(OPTS, opts);
+      console.log(OPTS);
+    }
+    doPlotLines(countryContinent,[OPTS.C, OPTS.R], dn,OPTS.isLinear, {scrollZoom: true});
+  }
+
+
+  // ===================== Plot initial data ============================
+
+  $$.HTML(`&lt;div id="${dn}" class="plot" /&gt;`);
+  $$.lastly(true,
+    () =&gt; doPlotLines(countryContinent, ['USA', 'North America'], dn,isLinear,{scrollZoom: true})
+  );
+  isLinear = true;
 			</textarea>
 		</div>
 		<a class="tryit-anchor" id="_end_tryit20">
@@ -1994,7 +1999,7 @@ isLinear = true;
 		</div>	</div>	<div class="ui top attached label">
 <i class="caret square down icon large" title="Hide Code"></i>		<button id="tryit20-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit21" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="save_20" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+<div class="center try-title">UI TO Select a country  and continent</div> &nbsp; <button id="save_20" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <h2 id="somemoredetailsofthecodeabove">Some more details of the code above</h2>
@@ -2042,16 +2047,15 @@ The provided code is a combination of JavaScript and HTML that deals with render
 <li>A checkbox is created to allow the user to toggle between a <strong>linear</strong> or <strong>logarithmic</strong> Y-axis scale for the plot. It is initially set to linear (<code>checked</code> by default).</li>
 <li><strong>Event Handling</strong>: When the checkbox is toggled, the <code>scaleOnChange</code> function is called, which updates the <code>isLinear</code> property of the <code>OPTS</code> object (representing options for the plot).</li>
 </ul>
-<pre><code class="js language-js">  var setLinearOrLog = `&amp;lt;p class="ui header huge"&amp;gt;Y Scale&amp;lt;/p&amp;gt;
-    &amp;lt;div class="ui form"&amp;gt;
-      &amp;lt;div class="inline fields"&amp;gt;
-        &amp;lt;div class="field"&amp;gt;
-          &amp;lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange="scaleOnChange(this)" /&amp;gt;
-          &amp;lt;label for="IsLinear"&amp;gt; Linear Axis&amp;lt;/label&amp;gt; &amp;lt;br /&amp;gt;
-        &amp;lt;/div&amp;gt;
-      &amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-    `;
+<pre><code class="js language-js">  var setLinearOrLog = '&lt;p class="ui header huge"&gt;Y Scale&lt;/p&gt;'+
+  '<div   class="ui form">'+
+    '<div   class="inline fields">'+
+      '<div   class="field">'+
+        '&lt;input class="ui checkbox" type="checkbox" checked id="IsLinear" onchange="scaleOnChange(this)" /&gt;'+
+        '&lt;label for="IsLinear"&gt; Linear Axis&lt;/label&gt; &lt;br /&gt;'+
+      '&lt;/div&gt;'+
+    '&lt;/div&gt;'+
+  '&lt;/div&gt;';
 
   function scaleOnChange(element) {
     selCountry({ isLinear: element.checked });  // Update plot options
@@ -2120,7 +2124,7 @@ The provided code is a combination of JavaScript and HTML that deals with render
 	<div class="tryit-inner ui sizer vertical segment" style="padding-top: 1.9rem; margin-bottom: -3.5rem">
 		<div class="ui sizer vertical segment bottom" style="border-bottom: none;">
 			<textarea class="tryit ui " id="tryit21">
-// Create a dropdown list of categorized items 
+// 
 let list =[];
 function add(category, ...values) {
   let base = list.length;
@@ -2128,7 +2132,7 @@ function add(category, ...values) {
   list = [...list, ...newList];
 }
 add('Cities', 'New York','London','Cairo', 'Beijing', 'Sidney', 'Jakarta');
-add('Math Constants', '3.1416 π','2.71828 e','1.6180 φ golden ratio', '1.6180 sqrt(2)');
+add('Math Constants', '3.1416 π','2.71828 e','1.6180 φ golden ratio', '1.41421356 sqrt(2)');
 add('punc', '!@a','@#2','#!3');
 
 var myCatList = UIcategoryList( 
@@ -2182,7 +2186,7 @@ $$.D(&lt;ClickCounter /&gt;) // render the click counter
 		</div>	</div>	<div class="ui top attached label">
 <i class="caret square down icon large" title="Hide Code"></i>		<button id="tryit21-run" data-tooltip="Execute Script, (execute all previous first)" class="ui  yellow right labeled icon button exec">     <i class="caret square right icon"></i>Run</button> &nbsp; <button id="jump_tryit22" class="circular ui icon yellow button jump_next"><i class="icon angle double down"></i></button>
  &nbsp; <button class="circular ui icon button green jump_back"><i class="icon angle double up"></i></button>
- &nbsp; <button id="save_21" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
+<div class="center try-title">Create a dropdown list of categorized items</div> &nbsp; <button id="save_21" data-tooltip="Save all user modifications" class="ui right floated button circular icon green save_data"> <i class="save icon"></i> </button>
 	</div>
 </div>
 <script>
