@@ -12,15 +12,16 @@
         }
 
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Comic Neue', 'Marker Felt', 'Chalkboard SE', 'Comic Sans MS', -apple-system, cursive, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-
         .app-container {
             background: white;
             border-radius: 30px;
@@ -92,6 +93,24 @@
             animation: pulse 0.8s ease-in-out;
             background: #ffd93d;
         }
+        @media (hover: none) and (pointer: coarse) {
+            /* iPad and other touch devices */
+            .word {
+                padding: 15px 20px; /* Larger tap area */
+                margin: 5px; /* More spacing */
+            }
+            
+            .word:hover {
+                background: transparent; /* Remove hover effect on touch */
+                transform: none;
+                box-shadow: none;
+            }
+            
+            .word:active {
+                background: #ffd93d; /* Show feedback on tap */
+                transform: scale(1.05);
+            }
+        }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1.1); }
@@ -154,7 +173,9 @@
             transition: all 0.3s ease;
             font-family: inherit;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-family: inherit;
         }
+        
 
         button:hover {
             background: #764ba2;
